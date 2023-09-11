@@ -1,0 +1,9 @@
+.git/
+.env
+.vscode/
+
+dist/
+node_modules/
+public/
+
+
