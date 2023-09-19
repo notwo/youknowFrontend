@@ -1,9 +1,14 @@
 .git/
 .env
 .vscode/
+.editorconfig
+.gitattributes
 
 dist/
 node_modules/
 public/
-./package-lock.json
 
+package-lock.json
+yarn-error.log
+.yarn/
+.yarnrc.yml
