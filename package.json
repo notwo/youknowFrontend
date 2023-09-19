@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node app.js", // render.comã‚Å“®ì‚³‚¹‚é‚à‚Ì
+    "start": "node app.js",
     "dev": "vite --host",
     "build": "vite build",
     "preview": "vite preview"
