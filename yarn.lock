@@ -1827,6 +1827,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"yarn@npm:^1.22.19":
+  version: 1.22.19
+  resolution: "yarn@npm:1.22.19"
+  bin:
+    yarn: bin/yarn.js
+    yarnpkg: bin/yarn.js
+  checksum: b43d2cc5fee7e933beb12a8aee7dfceca9e9ef2dd17c5d04d15a12ab7bec5f5744ea34a07b86e013da7f291a18c4e1ad8f70e150f5ed2f4666e6723c7f0a8452
+  languageName: node
+  linkType: hard
+
 "you_know_vue@workspace:.":
   version: 0.0.0-use.local
   resolution: "you_know_vue@workspace:."
@@ -1846,5 +1856,6 @@ __metadata:
     vue: ^3.3.4
     vue-meta: ^2.4.0
     vue-router: ^4.2.4
+    yarn: ^1.22.19
   languageName: unknown
   linkType: soft
