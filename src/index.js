@@ -8,8 +8,8 @@ import App from './App.vue';
 const app = createApp(App);
 app.use(router).use(
   createAuth0({
-    domain: authConfig.domain,
-    clientId: authConfig.clientId,
+    domain: import.meta.env.VITE_DOMAIN,
+    clientId: import.meta.env.VITE_CLIENT_ID,
     authorizationParams: {
       redirect_uri: window.location.origin,
     }
