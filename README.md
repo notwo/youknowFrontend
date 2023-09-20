@@ -3,7 +3,13 @@
 ## Backend(DRF)
 https://github.com/notwo/youknow
 
+
 ## よく使うコマンド
+
+### 作業フォルダに移動
+```Bash
+cd ~/Desktop/work/youknowFrontend
+```
 
 ### VSCode (VueJS)
 ```Bash
