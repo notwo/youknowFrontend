@@ -24,8 +24,10 @@ export default defineComponent({
   name: "App",
   components: { NavigationHeader, FooterInformation },
   setup() {
-    const store = useStore();
-    provide('library', store);
+    const libraryStore = useStore();
+    const categoryStore = useStore();
+    provide('library', libraryStore);
+    provide('category', categoryStore);
   }
 });
 

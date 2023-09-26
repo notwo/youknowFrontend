@@ -3,13 +3,13 @@
     <section class="modal">
       <form action="">
         <span id="close" class="close" @click="closeModal"></span>
-        <label for="library_title" class="required">タイトル</label>
+        <label for="category_title" class="required">タイトル</label>
         <section class="form-field">
           <input type="text"
             :class="[v$.title.$errors.length >= 1 ? 'error' : '']"
             v-model="state.title"
-            id="library_title"
-            placeholder="新規ライブラリのタイトル"
+            id="category_title"
+            placeholder="新規カテゴリのタイトル"
             :error-messages="v$.title.$errors.map((e) => e.$message)"
             @blur="v$.title.$touch"
             @input="v$.title.$touch">
@@ -17,12 +17,12 @@
             <section class="error-message">{{ error.$message }}</section>
           </section>
         </section>
-        <label for="library_content" class="">内容</label>
+        <label for="category_content" class="">内容</label>
         <section class="form-field">
-          <textarea v-model="state.content" id="library_content" placeholder="新規ライブラリの内容"></textarea>
+          <textarea v-model="state.content" id="category_content" placeholder="新規カテゴリの内容"></textarea>
         </section>
         <section class="button">
-          <button type="button" @click="onSubmit" :disabled="(v$.title.$errors.length === 0 && state.title !== '') ? false : true">ライブラリ追加</button>
+          <button type="button" @click="onSubmit" :disabled="(v$.title.$errors.length === 0 && state.title !== '') ? false : true">カテゴリ追加</button>
         </section>
       </form>
     </section>
@@ -31,16 +31,17 @@
 
 <script lang="ts">
 import { defineComponent, reactive, onMounted, inject } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 import axios, { AxiosResponse, AxiosError } from "axios";
 import { useVuelidate } from "@vuelidate/core";
 import { required, helpers } from "@vuelidate/validators";
 import { requiredMsg, duplicateMsg } from '@/plugin/validatorMessage';
 
 export default defineComponent({
-  name: 'LibraryRegistrationForm',
+  name: 'CategoryRegistrationForm',
   components: {},
   setup() {
-    const store = inject('library');
+    const store = inject('category');
 
     let state = reactive({
       title: '',
@@ -72,7 +73,7 @@ export default defineComponent({
       code: String
     };
 
-    interface LibraryRequest {
+    interface CategoryRequest {
       custom_user: String,
       title: String
       content: String
@@ -99,14 +100,16 @@ export default defineComponent({
     });
 
     // ----------------------- events -----------------------
+    const route = useRoute();
     const onSubmit = async (event: HTMLButtonEvent) => {
-      const requestParam: LibraryRequest = {
+      const requestParam: CategoryRequest = {
         custom_user: uuid,
-        title: document.getElementById('library_title').value,
-        content: document.getElementById('library_content').value
+        library: route.params.library_id,
+        title: document.getElementById('category_title').value,
+        content: document.getElementById('category_content').value
       };
 
-      await axios.post('http://127.0.0.1:8000/api/libraries/', requestParam)
+      await axios.post('http://127.0.0.1:8000/api/categories/', requestParam)
       .then((response: AxiosResponse) => {
         store.add(response.data);
         closeModal(event);
@@ -205,7 +208,7 @@ export default defineComponent({
   background-color: red;
 }
 
-#library_content {
+#category_content {
   resize: none;
   width: 40em;
   height: 10em;

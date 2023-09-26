@@ -1,19 +1,17 @@
 <template>
-  <section class="library-item">
-    <a :href="`/libraries/${id}/categories/`">
-      <span @click="removeLibrary" class="delete-item" :data-id="id"></span>
-      <section class="title">{{ title }}</section>
-      <section class="contents">{{ content }}</section>
-    </a>
+  <section class="category-item">
+    <span @click="removeCategory" class="delete-item" :data-id="id"></span>
+    <section class="title">{{ title }}</section>
   </section>
 </template>
 
 <script lang="ts">
 import { defineComponent, inject } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 import axios, { AxiosResponse, AxiosError } from "axios";
 
 export default defineComponent({
-  name: 'LibraryItem',
+  name: 'CategoryItem',
   components: {},
   props: {
     id: Number,
@@ -31,16 +29,17 @@ export default defineComponent({
       code: String
     };
 
-    const store = inject('library');
-    const removeLibrary = async (event: HTMLButtonEvent) => {
-      if (!window.confirm(`ライブラリ「${props.title}」が削除されますが宜しいですか？`)) {
+    const route = useRoute();
+    const store = inject('category');
+    const removeCategory = async (event: HTMLButtonEvent) => {
+      if (!window.confirm(`カテゴリ「${props.title}」が削除されますが宜しいですか？`)) {
         return;
       }
 
       // api実行前に呼ばないとstoreの中身が検索できない
       store.remove(props.id);
       const id = event.currentTarget.getAttribute('data-id');
-      await axios.delete(`http://127.0.0.1:8000/api/libraries/${id}`)
+      await axios.delete(`http://127.0.0.1:8000/api/libraries/${route.params.library_id}/categories/${id}`)
       .then((response: AxiosResponse) => {
       })
       .catch((e: AxiosError<ErrorResponse>) => {
@@ -49,14 +48,14 @@ export default defineComponent({
     };
 
     return {
-      removeLibrary
+      removeCategory
     };
   },
 });
 </script>
 
 <style scoped>
-.library-item {
+.category-item {
   width: calc(30% - 15px);
   margin: 0.6em;
   height: 7em;

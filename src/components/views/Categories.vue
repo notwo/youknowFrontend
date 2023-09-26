@@ -1,15 +1,26 @@
 <template>
-  <h3>category</h3>
+  <DataRegisterModalButton />
+  <CategoryRegistrationForm />
+  <CategorySearchForm />
+  <CategoryList />
 </template>
 
-<script>
-/*
-import { defineComponent } from '@vue/composition-api'
+<script lang="ts">
+import { defineComponent } from 'vue';
+import DataRegisterModalButton from '@/components/DataRegisterModalButton.vue';
+import CategoryRegistrationForm from '@/components/CategoryRegistrationForm.vue';
+import CategorySearchForm from '@/components/CategorySearchForm.vue';
+import CategoryList from '@/components/CategoryList.vue';
 
 export default defineComponent({
-  setup() {
-    
+  name: 'Categories',
+  components: {
+    DataRegisterModalButton,
+    CategoryRegistrationForm,
+    CategorySearchForm,
+    CategoryList
   },
-})
-*/
+  setup () {
+  }
+});
 </script>

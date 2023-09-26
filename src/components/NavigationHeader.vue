@@ -7,7 +7,7 @@
           <ul class="menu-item">
             <li v-if="!auth0.isAuthenticated.value"><button @click="login">ログイン</button></li>
             <li v-if="auth0.isAuthenticated.value"><a class="sp-char-mini" href="/">Profile</a></li>
-            <li v-if="auth0.isAuthenticated.value"><a class="sp-char-mini" :href="'/' + auth0.user.value?.nickname + '/library/'">登録済み<br>ライブラリ</a></li>
+            <li v-if="auth0.isAuthenticated.value"><a class="sp-char-mini" :href="'/' + auth0.user.value?.nickname + '/libraries/'">登録済み<br>ライブラリ</a></li>
             <li v-if="auth0.isAuthenticated.value"><button @click="logout">ログアウト</button></li>
           </ul>
         </section>
