@@ -109,7 +109,7 @@ export default defineComponent({
         content: document.getElementById('category_content').value
       };
 
-      await axios.post('http://127.0.0.1:8000/api/categories/', requestParam)
+      await axios.post(`http://127.0.0.1:8000/api/libraries/${route.params.library_id}/categories/`, requestParam)
       .then((response: AxiosResponse) => {
         store.add(response.data);
         closeModal(event);
