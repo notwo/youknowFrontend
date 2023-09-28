@@ -7,7 +7,7 @@
         :class="[v$.title.$errors.length >= 1 ? 'error' : '']"
         v-model="state.title"
         id="category_title"
-        placeholder="新規カテゴリ名"
+        placeholder="カテゴリ名"
         :error-messages="v$.title.$errors.map((e) => e.$message)"
         @blur="v$.title.$touch"
         @input="v$.title.$touch">
@@ -17,7 +17,7 @@
     </section>
     <label for="category_content" class="">内容</label>
     <section class="form-field">
-      <textarea v-model="state.content" id="category_content" placeholder="新規カテゴリの内容"></textarea>
+      <textarea v-model="state.content" id="category_content" placeholder="カテゴリの内容"></textarea>
     </section>
     <section class="button">
       <button type="button" @click="onSubmit" :disabled="(v$.title.$errors.length === 0 && state.title !== '') ? false : true">カテゴリ追加</button>
