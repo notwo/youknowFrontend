@@ -1,32 +1,28 @@
 <template>
-  <section class="overlay">
-    <section class="modal">
-      <form action="">
-        <span id="close" class="close" @click="closeModal"></span>
-        <label for="category_title" class="required">タイトル</label>
-        <section class="form-field">
-          <input type="text"
-            :class="[v$.title.$errors.length >= 1 ? 'error' : '']"
-            v-model="state.title"
-            id="category_title"
-            placeholder="新規カテゴリのタイトル"
-            :error-messages="v$.title.$errors.map((e) => e.$message)"
-            @blur="v$.title.$touch"
-            @input="v$.title.$touch">
-          <section v-for="error of v$.title.$errors" :key="error.$uid">
-            <section class="error-message">{{ error.$message }}</section>
-          </section>
-        </section>
-        <label for="category_content" class="">内容</label>
-        <section class="form-field">
-          <textarea v-model="state.content" id="category_content" placeholder="新規カテゴリの内容"></textarea>
-        </section>
-        <section class="button">
-          <button type="button" @click="onSubmit" :disabled="(v$.title.$errors.length === 0 && state.title !== '') ? false : true">カテゴリ追加</button>
-        </section>
-      </form>
+  <form action="">
+    <span id="close" class="close" @click="closeModal"></span>
+    <label for="category_title" class="required">カテゴリ名</label>
+    <section class="form-field">
+      <input type="text"
+        :class="[v$.title.$errors.length >= 1 ? 'error' : '']"
+        v-model="state.title"
+        id="category_title"
+        placeholder="新規カテゴリ名"
+        :error-messages="v$.title.$errors.map((e) => e.$message)"
+        @blur="v$.title.$touch"
+        @input="v$.title.$touch">
+      <section v-for="error of v$.title.$errors" :key="error.$uid">
+        <section class="error-message">{{ error.$message }}</section>
+      </section>
     </section>
-  </section>
+    <label for="category_content" class="">内容</label>
+    <section class="form-field">
+      <textarea v-model="state.content" id="category_content" placeholder="新規カテゴリの内容"></textarea>
+    </section>
+    <section class="button">
+      <button type="button" @click="onSubmit" :disabled="(v$.title.$errors.length === 0 && state.title !== '') ? false : true">カテゴリ追加</button>
+    </section>
+  </form>
 </template>
 
 <script lang="ts">
@@ -50,8 +46,8 @@ export default defineComponent({
 
     const rules = {
       title: {
-        required: helpers.withMessage(requiredMsg('タイトル'), required),
-        duplicated: helpers.withMessage(duplicateMsg('タイトル'), function (val: String) {
+        required: helpers.withMessage(requiredMsg('カテゴリ名'), required),
+        duplicated: helpers.withMessage(duplicateMsg('カテゴリ名'), function (val: String) {
           // API経由で結果を返却させるように後で修正
           const _titles = document.getElementsByClassName('title');
           if (_titles.length <= 0) { return true; }
@@ -140,32 +136,6 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.overlay {
-  visibility: hidden;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  transition: .17s;
-  opacity: 0;
-  z-index: 9999;
-  background-color: rgba(0,0,0,0.4);
-}
-.overlay.visible {
-  visibility: visible;
-  opacity: 1;
-}
-
-.modal {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 60%;
-  height: auto;
-  background-color: white;
-}
 
 .modal .close {
   display: block;

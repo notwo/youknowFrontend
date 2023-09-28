@@ -1,6 +1,9 @@
 <template>
   <section class="category-item">
-    <span @click="removeCategory" class="delete-item" :data-id="id"></span>
+    <section>
+      <CategoryEditButton />
+      <span @click="removeCategory" class="delete-item" :data-id="id"></span>
+    </section>
     <section class="title">{{ title }}</section>
   </section>
 </template>
@@ -9,10 +12,13 @@
 import { defineComponent, inject } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import axios, { AxiosResponse, AxiosError } from "axios";
+import CategoryEditButton from "@/components/CategoryEditButton.vue";
 
 export default defineComponent({
   name: 'CategoryItem',
-  components: {},
+  components: {
+    CategoryEditButton
+  },
   props: {
     id: Number,
     title: String,
@@ -50,7 +56,7 @@ export default defineComponent({
     return {
       removeCategory
     };
-  },
+  }
 });
 </script>
 
