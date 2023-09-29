@@ -1,19 +1,19 @@
 <template>
   <section class="overlay">
     <section class="modal">
-      <CategoryRegistrationForm />
+      <CategoryForm />
     </section>
   </section>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import CategoryRegistrationForm from '@/components/CategoryRegistrationForm.vue';
+import CategoryForm from '@/components/modal/CategoryForm.vue';
 
 export default defineComponent({
   name: 'CategoryModal',
   components: {
-    CategoryRegistrationForm
+    CategoryForm
   },
 });
 </script>
