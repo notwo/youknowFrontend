@@ -69,7 +69,6 @@ export default defineComponent({
     return {
       v$,
       state,
-      //onSubmit,
       closeModal,
     };
   }
