@@ -26,8 +26,7 @@
 <script lang="ts">
 import { defineComponent, reactive, onMounted, inject } from 'vue';
 import { useVuelidate } from "@vuelidate/core";
-import { required, helpers } from "@vuelidate/validators";
-import { requiredMsg, duplicateMsg } from '@/plugin/validatorMessage';
+import { registerCategoryRules } from '@/plugin/validatorMessage';
 import CategoryRegistrationFormButton from '@/components/modal/CategoryRegistrationFormButton.vue';
 
 export default defineComponent({
@@ -41,20 +40,7 @@ export default defineComponent({
       content: ''
     });
 
-    const rules = {
-      title: {
-        required: helpers.withMessage(requiredMsg('カテゴリ名'), required),
-        duplicated: helpers.withMessage(duplicateMsg('カテゴリ名'), function (val: String) {
-          // API経由で結果を返却させるように後で修正
-          const _titles = document.getElementsByClassName('title');
-          if (_titles.length <= 0) { return true; }
-          const _target = Array.from(_titles).find((element) => element.innerText === val);
-          return !_target;
-        })
-      }
-    };
-
-    const v$ = useVuelidate(rules, state);
+    const v$ = useVuelidate(registerCategoryRules(), state);
 
     const closeModal = (event: HTMLButtonEvent) => {
       event.preventDefault();
