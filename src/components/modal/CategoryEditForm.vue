@@ -1,6 +1,24 @@
 <template>
+  <label for="edit_category_title" class="required">カテゴリ名</label>
+  <section class="form-field">
+    <input type="text"
+      :class="[v.title.$errors.length >= 1 ? 'error' : '']"
+      v-model="state.title"
+      id="edit_category_title"
+      placeholder="カテゴリ名"
+      :error-messages="v.title.$errors.map((e) => e.$message)"
+      @blur="v.title.$touch"
+      @input="v.title.$touch">
+    <section v-for="error of v.title.$errors" :key="error.$uid">
+      <section class="error-message">{{ error.$message }}</section>
+    </section>
+  </section>
+  <label for="edit_category_content" class="">内容</label>
+  <section class="form-field">
+    <textarea v-model="state.content" id="edit_category_content" placeholder="カテゴリの内容"></textarea>
+  </section>
   <section class="button">
-    <button type="button" @click="onSubmit" :disabled="(v.title.$errors.length === 0 && state.title !== '') ? false : true">カテゴリ追加</button>
+    <button type="button" @click="onSubmit" :disabled="!(v.title.$errors.length === 0 && state.title !== '')">カテゴリを更新する</button>
   </section>
 </template>
 
@@ -10,12 +28,13 @@ import { useRoute, useRouter } from 'vue-router';
 import axios, { AxiosResponse, AxiosError } from "axios";
 
 export default defineComponent({
-  name: 'CategoryRegistrationFormButton',
+  name: 'CategoryEditForm',
   components: {},
   props: {
     state: Object,
     v: Object
   },
+  emits: ['closeEvent'],
   setup(props, context) {
     const store = inject('category');
 
@@ -60,11 +79,11 @@ export default defineComponent({
       const requestParam: CategoryRequest = {
         custom_user: uuid,
         library: route.params.library_id,
-        title: document.getElementById('category_title').value,
-        content: document.getElementById('category_content').value
+        title: document.getElementById('edit_category_title').value,
+        content: document.getElementById('edit_category_content').value
       };
 
-      await axios.post(`http://127.0.0.1:8000/api/libraries/${route.params.library_id}/categories/`, requestParam)
+      await axios.put(`http://127.0.0.1:8000/api/libraries/${route.params.library_id}/categories/${editStore.id}`, requestParam)
       .then((response: AxiosResponse) => {
         store.add(response.data);
         context.emit('closeEvent', event);
@@ -76,7 +95,42 @@ export default defineComponent({
 
     return {
       onSubmit
-    }
+    };
   }
 });
 </script>
+
+<style scoped>
+.modal label {
+  font-size: 1.5em;
+  font-weight: bold;
+}
+.modal label.required::after {
+  position: relative;
+  content: '必須';
+  padding: 0.2em;
+  top: -2px;
+  left: 5px;
+  font-size: 0.5em;
+  font-weight: bold;
+  border-radius: 3px;
+  color: white;
+  background-color: red;
+}
+
+#edit_category_content {
+  resize: none;
+  width: 40em;
+  height: 10em;
+}
+
+input.error {
+  border-color: rgba(220,0,0,0.3);
+  background-color: rgba(220,0,0,0.3);
+}
+
+
+.error-message {
+  color: rgba(220,0,0,0.3);
+}
+</style>

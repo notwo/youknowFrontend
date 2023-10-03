@@ -1,24 +1,26 @@
 <template>
-  <label for="category_title" class="required">カテゴリ名</label>
-  <section class="form-field">
-    <input type="text"
-      :class="[v.title.$errors.length >= 1 ? 'error' : '']"
-      v-model="state.title"
-      id="category_title"
-      placeholder="カテゴリ名"
-      :error-messages="v.title.$errors.map((e) => e.$message)"
-      @blur="v.title.$touch"
-      @input="v.title.$touch">
-    <section v-for="error of v.title.$errors" :key="error.$uid">
-      <section class="error-message">{{ error.$message }}</section>
+  <section class="form-wrap">
+    <label for="category_title" class="required">カテゴリ名</label>
+    <section class="form-field">
+      <input type="text"
+        :class="[v.title.$errors.length >= 1 ? 'error' : '']"
+        v-model="state.title"
+        id="category_title"
+        placeholder="カテゴリ名"
+        :error-messages="v.title.$errors.map((e) => e.$message)"
+        @blur="v.title.$touch"
+        @input="v.title.$touch">
+      <section v-for="error of v.title.$errors" :key="error.$uid">
+        <section class="error-message">{{ error.$message }}</section>
+      </section>
     </section>
-  </section>
-  <label for="category_content" class="">内容</label>
-  <section class="form-field">
-    <textarea v-model="state.content" id="category_content" placeholder="カテゴリの内容"></textarea>
-  </section>
-  <section class="button">
-    <button type="button" @click="onSubmit" :disabled="!(v.title.$errors.length === 0 && state.title !== '')">カテゴリ追加</button>
+    <label for="category_content" class="">内容</label>
+    <section class="form-field">
+      <textarea v-model="state.content" id="category_content" placeholder="カテゴリの内容"></textarea>
+    </section>
+    <section class="button">
+      <button type="button" @click="onSubmit" :disabled="!(v.title.$errors.length === 0 && state.title !== '')">カテゴリを追加する</button>
+    </section>
   </section>
 </template>
 
@@ -26,13 +28,10 @@
 import { defineComponent, reactive, onMounted, inject } from 'vue';
 import axios, { AxiosResponse, AxiosError } from "axios";
 import { useRoute, useRouter } from 'vue-router';
-import CategoryRegistrationFormButton from '@/components/modal/CategoryRegistrationFormButton.vue';
 
 export default defineComponent({
   name: 'CategoryRegistrationForm',
-  components: {
-    CategoryRegistrationFormButton
-  },
+  components: {},
   props: {
     v: Object,
     state: Object

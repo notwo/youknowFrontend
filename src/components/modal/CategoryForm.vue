@@ -1,42 +1,59 @@
 <template>
-  <form action="">
-    <span id="close" class="close" @click="closeModal"></span>
-    <CategoryRegistrationForm :state="state" :v="v$" @closeEvent="closeModal" />
+  <span id="close" class="close" @click="closeModal"></span>
+  <form action="" id="register-form">
+    <CategoryRegistrationForm :state="register_state" :v="register_v$" @closeEvent="closeModal" />
+  </form>
+  <form action="" id="edit-form">
+    <CategoryEditForm :state="edit_state" :v="edit_v$" @closeEvent="closeModal" />
   </form>
 </template>
 
 <script lang="ts">
 import { defineComponent, reactive, inject } from 'vue';
 import { useVuelidate } from "@vuelidate/core";
-import { registerCategoryRules } from '@/plugin/validatorMessage';
+import { registerCategoryRules, editCategoryRules } from '@/plugin/validatorMessage';
 import CategoryRegistrationForm from '@/components/modal/CategoryRegistrationForm.vue';
+import CategoryEditForm from '@/components/modal/CategoryEditForm.vue';
 
 export default defineComponent({
   name: 'CategoryForm',
   components: {
-    CategoryRegistrationForm
+    CategoryRegistrationForm,
+    CategoryEditForm
   },
   setup() {
-    let state = reactive({
+    let register_state = reactive({
+      title: '',
+      content: ''
+    });
+    let edit_state = reactive({
       title: '',
       content: ''
     });
 
-    const v$ = useVuelidate(registerCategoryRules(), state);
+    const register_v$ = useVuelidate(registerCategoryRules(), register_state);
+    const edit_v$ = useVuelidate(editCategoryRules(), edit_state);
 
     const closeModal = (event: HTMLButtonEvent) => {
       event.preventDefault();
       const modal = document.getElementsByClassName('overlay') as HTMLCollectionOf<HTMLElement>;
       modal[0].classList.remove('visible');
       // フォーム初期化
-      state.title = '';
-      state.content = '';
-      v$.value.$reset();
+      register_state.title = '';
+      register_state.content = '';
+      edit_state.title = '';
+      edit_state.content = '';
+      register_v$.value.$reset();
+      edit_v$.value.$reset();
+      document.getElementById('register-form').classList.remove('visible');
+      document.getElementById('edit-form').classList.remove('visible');
     };
 
     return {
-      v$,
-      state,
+      register_v$,
+      edit_v$,
+      register_state,
+      edit_state,
       closeModal,
     };
   }
@@ -68,4 +85,17 @@ export default defineComponent({
 .modal .close::after {
   transform: translate(-50%,-50%) rotate(-45deg);
 }
+.modal #register-form {
+  display: none;
+}
+.modal #edit-form {
+  display: none;
+}
+.modal #register-form.visible {
+  display: block;
+}
+.modal #edit-form.visible {
+  display: block;
+}
+
 </style>

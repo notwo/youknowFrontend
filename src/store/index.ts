@@ -63,3 +63,9 @@ export function useStore() {
 
   return { setUser, getUser, items: readonly(items), setItem, add, remove, search, restore, allClear };
 };
+
+export const editStore = reactive({
+  id: Number,
+  title: String,
+  content: String
+});

@@ -1,10 +1,11 @@
 <template>
   <section class="category-item">
     <section>
-      <CategoryEditButton />
+      <CategoryEditButton :id="id" :title="title" :content="content" />
       <span @click="removeCategory" class="delete-item" :data-id="id"></span>
     </section>
     <section class="title">{{ title }}</section>
+    <section class="content">{{ content }}</section>
   </section>
 </template>
 

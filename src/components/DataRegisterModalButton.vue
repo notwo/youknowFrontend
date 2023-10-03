@@ -8,11 +8,13 @@
 import { defineComponent } from "vue";
 
 export default defineComponent({
-  name: "DataRegisterButton",
+  name: "DataRegisterModalButton",
   setup() {
     const openModal = () => {
       const modal = document.getElementsByClassName('overlay') as HTMLCollectionOf<HTMLElement>;
       modal[0].classList.add('visible');
+      document.getElementById('register-form').classList.add('visible');
+      document.getElementById('edit-form').classList.remove('visible');
     };
 
     return {
