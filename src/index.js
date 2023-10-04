@@ -1,6 +1,5 @@
 import './assets/index.css';
 import { createAuth0 } from '@auth0/auth0-vue';
-import authConfig from "../auth_config.json";
 import router from './router';
 import { createApp } from 'vue';
 import App from './App.vue';

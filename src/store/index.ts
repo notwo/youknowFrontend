@@ -23,6 +23,12 @@ export function useStore() {
     backupList.unshift(item);
   }
 
+  function update<T>(item: T) {
+    let _target = items.list.filter(_obj => _obj.id === item.id);
+    let _updateIndex = items.list.indexOf(_target[0]);
+    items.list.splice(_updateIndex, 1, item);
+  }
+
   function remove(id: Number) {
     let _target = items.list.filter(_obj => _obj.id === id);
     let _removeIndex = items.list.indexOf(_target[0]);
@@ -61,5 +67,11 @@ export function useStore() {
     items.list.splice(0);
   }
 
-  return { setUser, getUser, items: readonly(items), setItem, add, remove, search, restore, allClear };
+  return { setUser, getUser, items: readonly(items), setItem, add, update, remove, search, restore, allClear };
 };
+
+export const editStore = reactive({
+  id: Number,
+  title: String,
+  content: String
+});

@@ -16,7 +16,7 @@
 
 <script lang="ts">
 import { defineComponent, provide } from "vue";
-import { useStore } from '@/store/index';
+import { useStore, editStore } from '@/store/index';
 import NavigationHeader from "@/components/NavigationHeader.vue";
 import FooterInformation from "@/components/FooterInformation.vue";
 
@@ -24,8 +24,12 @@ export default defineComponent({
   name: "App",
   components: { NavigationHeader, FooterInformation },
   setup() {
-    const store = useStore();
-    provide('library', store);
+    const libraryStore = useStore();
+    const categoryStore = useStore();
+    const categoryEditStore = editStore;
+    provide('library', libraryStore);
+    provide('category', categoryStore);
+    provide('categoryEdit', categoryEditStore);
   }
 });
 

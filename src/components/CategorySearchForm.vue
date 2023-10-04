@@ -2,20 +2,22 @@
   <section class="search-form">
     <form action="">
       <input type="text" name="search" id="search">
-      <button type="button" @click="onSearch">ライブラリを検索</button>
+      <button type="button" @click="onSearch">カテゴリを検索</button>
     </form>
   </section>
 </template>
 
 <script lang="ts">
 import { defineComponent, inject } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 import axios, { AxiosResponse, AxiosError } from "axios";
 
 export default defineComponent({
-  name: 'LibrarySearchForm',
+  name: 'CategorySearchForm',
   components: {},
   setup() {
-    const store = inject('library');
+    const route = useRoute();
+    const store = inject('category');
 
     interface ErrorResponse {
       message: String,
@@ -30,7 +32,7 @@ export default defineComponent({
         return;
       }
 
-      await axios.get(`http://127.0.0.1:8000/api/libraries/?title=${word.value}`)
+      await axios.get(`http://127.0.0.1:8000/api/libraries/${route.params.library_id}/categories/?title=${word.value}`)
       .then((response: AxiosResponse) => {
         if (response.data.length <= 0) {
           store.allClear();

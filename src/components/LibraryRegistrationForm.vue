@@ -17,9 +17,9 @@
             <section class="error-message">{{ error.$message }}</section>
           </section>
         </section>
-        <label for="library_content" class="">説明</label>
+        <label for="library_content" class="">内容</label>
         <section class="form-field">
-          <textarea v-model="state.content" id="library_content" placeholder="新規ライブラリの説明"></textarea>
+          <textarea v-model="state.content" id="library_content" placeholder="新規ライブラリの内容"></textarea>
         </section>
         <section class="button">
           <button type="button" @click="onSubmit" :disabled="(v$.title.$errors.length === 0 && state.title !== '') ? false : true">ライブラリ追加</button>
