@@ -1,7 +1,7 @@
 <template>
   <section class="overlay">
     <section class="modal">
-      <CategoryForm />
+      <CategoryForm :edit_state="edit_state" />
     </section>
   </section>
 </template>
@@ -14,6 +14,9 @@ export default defineComponent({
   name: 'CategoryModal',
   components: {
     CategoryForm
+  },
+  props: {
+    edit_state: Object
   },
 });
 </script>

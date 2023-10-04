@@ -26,8 +26,10 @@ export default defineComponent({
   setup() {
     const libraryStore = useStore();
     const categoryStore = useStore();
+    const categoryEditStore = editStore;
     provide('library', libraryStore);
     provide('category', categoryStore);
+    provide('categoryEdit', categoryEditStore);
   }
 });
 

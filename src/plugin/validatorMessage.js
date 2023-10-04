@@ -33,8 +33,8 @@ export const editCategoryRules = (defaultVal) => {
         const _titles = document.getElementsByClassName('title');
         if (_titles.length <= 0) { return true; }
         const _target = Array.from(_titles).find((element) => element.innerText === val);
-        if (_target === defaultVal.title) { return true; }
-        return !_target;
+        if (!_target) { return true; }
+        return _target.innerText === defaultVal.title;
       })
     }
   };

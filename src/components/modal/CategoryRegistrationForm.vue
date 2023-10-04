@@ -25,7 +25,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, onMounted, inject } from 'vue';
+import { defineComponent, onMounted, inject } from 'vue';
 import axios, { AxiosResponse, AxiosError } from "axios";
 import { useRoute, useRouter } from 'vue-router';
 

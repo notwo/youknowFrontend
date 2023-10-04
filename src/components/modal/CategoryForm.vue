@@ -21,18 +21,19 @@ export default defineComponent({
     CategoryRegistrationForm,
     CategoryEditForm
   },
-  setup() {
+  props: {
+    edit_state: Object
+  },
+  setup(props) {
     let register_state = reactive({
       title: '',
       content: ''
     });
-    let edit_state = reactive({
-      title: '',
-      content: ''
-    });
+
+    const store = inject('categoryEdit');
 
     const register_v$ = useVuelidate(registerCategoryRules(), register_state);
-    const edit_v$ = useVuelidate(editCategoryRules(), edit_state);
+    const edit_v$ = useVuelidate(editCategoryRules(store), props.edit_state);
 
     const closeModal = (event: HTMLButtonEvent) => {
       event.preventDefault();
@@ -41,8 +42,8 @@ export default defineComponent({
       // フォーム初期化
       register_state.title = '';
       register_state.content = '';
-      edit_state.title = '';
-      edit_state.content = '';
+      props.edit_state.title = '';
+      props.edit_state.content = '';
       register_v$.value.$reset();
       edit_v$.value.$reset();
       document.getElementById('register-form').classList.remove('visible');
@@ -53,7 +54,6 @@ export default defineComponent({
       register_v$,
       edit_v$,
       register_state,
-      edit_state,
       closeModal,
     };
   }

@@ -37,6 +37,7 @@ export default defineComponent({
   emits: ['closeEvent'],
   setup(props, context) {
     const store = inject('category');
+    const editStore = inject('categoryEdit');
 
     interface UserResponse {
       data: {}
@@ -83,7 +84,7 @@ export default defineComponent({
         content: document.getElementById('edit_category_content').value
       };
 
-      await axios.put(`http://127.0.0.1:8000/api/libraries/${route.params.library_id}/categories/${editStore.id}`, requestParam)
+      await axios.put(`http://127.0.0.1:8000/api/libraries/${route.params.library_id}/categories/${editStore.id}/`, requestParam)
       .then((response: AxiosResponse) => {
         store.add(response.data);
         context.emit('closeEvent', event);

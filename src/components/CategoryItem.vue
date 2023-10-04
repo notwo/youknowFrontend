@@ -1,7 +1,7 @@
 <template>
   <section class="category-item">
     <section>
-      <CategoryEditButton :id="id" :title="title" :content="content" />
+      <CategoryEditButton :edit_state="edit_state" :id="id" :title="title" :content="content" />
       <span @click="removeCategory" class="delete-item" :data-id="id"></span>
     </section>
     <section class="title">{{ title }}</section>
@@ -21,6 +21,7 @@ export default defineComponent({
     CategoryEditButton
   },
   props: {
+    edit_state: Object,
     id: Number,
     title: String,
     content: String,
@@ -43,8 +44,7 @@ export default defineComponent({
         return;
       }
 
-      // api実行前に呼ばないとstoreの中身が検索できない
-      store.remove(props.id);
+      store.remove(props.id); // api実行前に呼ばないとstoreの中身が検索できない
       const id = event.currentTarget.getAttribute('data-id');
       await axios.delete(`http://127.0.0.1:8000/api/libraries/${route.params.library_id}/categories/${id}`)
       .then((response: AxiosResponse) => {

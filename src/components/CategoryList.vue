@@ -1,6 +1,8 @@
 <template>
   <article id="category-list">
+    <CategoryModal :edit_state="edit_state" />
     <CategoryItem
+      :edit_state="edit_state"
       v-for="category in CategoryList"
       :key="category.id"
       :id="category.id"
@@ -15,20 +17,26 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, onMounted, inject } from 'vue';
+import { defineComponent, reactive, ref, onMounted, inject } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import axios, { AxiosResponse, AxiosError } from "axios";
+import CategoryModal from '@/components/modal/CategoryModal.vue';
 import CategoryItem from "@/components/CategoryItem.vue";
 
 export default defineComponent({
   name: 'CategoryList',
   components: {
+    CategoryModal,
     CategoryItem
   },
   setup() {
     const CategoryList = ref([]);
     const store = inject('category');
-    const auth0 = store.getUser();
+
+    let edit_state = reactive({
+      title: '',
+      content: ''
+    });
 
     const route = useRoute();
     onMounted(() => {
@@ -55,6 +63,7 @@ export default defineComponent({
     });
 
     return {
+      edit_state,
       CategoryList
     };
   },
