@@ -86,7 +86,7 @@ export default defineComponent({
 
       await axios.put(`http://127.0.0.1:8000/api/libraries/${route.params.library_id}/categories/${editStore.id}/`, requestParam)
       .then((response: AxiosResponse) => {
-        store.add(response.data);
+        store.update(response.data);
         context.emit('closeEvent', event);
       })
       .catch((e: AxiosError<ErrorResponse>) => {

@@ -11,8 +11,7 @@ export const registerCategoryRules = () => {
   return {
     title: {
       required: helpers.withMessage(requiredMsg('カテゴリ名'), required),
-//      duplicated: helpers.withMessage(duplicateMsg('カテゴリ名'), function (val: String) {
-      duplicated: helpers.withMessage(duplicateMsg('カテゴリ名'), function (val) {
+      duplicated: helpers.withMessage(duplicateMsg('カテゴリ名'), function (val: String) {
         // API経由で結果を返却させるように後で修正
         const _titles = document.getElementsByClassName('title');
         if (_titles.length <= 0) { return true; }
@@ -27,8 +26,7 @@ export const editCategoryRules = (defaultVal) => {
   return {
     title: {
       required: helpers.withMessage(requiredMsg('カテゴリ名'), required),
-//      duplicated: helpers.withMessage(duplicateMsg('カテゴリ名'), function (val: String) {
-      duplicated: helpers.withMessage(duplicateMsg('カテゴリ名'), function (val) {
+      duplicated: helpers.withMessage(duplicateMsg('カテゴリ名'), function (val: String) {
         // API経由で結果を返却させるように後で修正
         const _titles = document.getElementsByClassName('title');
         if (_titles.length <= 0) { return true; }
