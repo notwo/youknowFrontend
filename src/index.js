@@ -5,13 +5,12 @@ import { createApp } from 'vue';
 import App from './App.vue';
 
 const app = createApp(App);
-app.use(router).use(
-  createAuth0({
-    domain: import.meta.env.VITE_DOMAIN,
-    clientId: import.meta.env.VITE_CLIENT_ID,
-    authorizationParams: {
-      redirect_uri: window.location.origin,
-    }
-  })
-);
+const auth = createAuth0({
+  domain: import.meta.env.VITE_DOMAIN,
+  clientId: import.meta.env.VITE_CLIENT_ID,
+  authorizationParams: {
+    redirect_uri: `${import.meta.env.VITE_BASE_URL}/callback`,
+  }
+});
+app.use(router).use(auth);
 app.mount('#app');
