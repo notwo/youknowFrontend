@@ -49,7 +49,7 @@ export default defineComponent({
 .container {
   margin: 0 auto;
   max-width: 1100px;
-  background: rgb(240, 242, 242);
+  background: rgb(240, 242, 242); /** 一通りデザインを当ててコンテンツを配置し終わったら消す */
 }
 
 .main-right-pane  {

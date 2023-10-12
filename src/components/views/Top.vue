@@ -3,11 +3,12 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted } from 'vue';
+import { defineComponent } from 'vue';
 import axios, { AxiosResponse, AxiosError } from "axios";
 import { useAuth0 } from '@auth0/auth0-vue';
 
 export default defineComponent({
+  name: 'Top',
   setup() {
     const { user, isAuthenticated, logout } = useAuth0();
     if (isAuthenticated.value) {
@@ -30,15 +31,14 @@ export default defineComponent({
         };
         axios.post(`${import.meta.env.VITE_API_URL}/api/users2/`, requestParam)
           .then((response: AxiosResponse) => {
-        })
-        .catch((e: AxiosError<ErrorResponse>) => {
-          // 何かしらエラーが起きてアカウント登録できていないためログアウトさせる
-          logout({ logoutParams: { returnTo: `${import.meta.env.VITE_BASE_URL}` } });
-          // このタイミングで画面上にエラーが起きてログインできなかった旨をポップアップ表示する
-        });
+          })
+          .catch((e: AxiosError<ErrorResponse>) => {
+            // 何かしらエラーが起きてアカウント登録できていないため、アラート表記の上ログアウトさせる
+            logout();
+            alert('アカウント登録時に異常が発生しました。お手数ですが、しばらく経ってから再度お試しください。');
+          });
       };
 
-      // ユーザ登録済みかどうかで処理を分ける(subで検索)
       const registerOrUpdate = async () => {
         const response = await axios.get<UserResponse>(`${import.meta.env.VITE_API_URL}/api/users2/?sub=${user.value.sub}`);
         if (response.data.length === 0) {
