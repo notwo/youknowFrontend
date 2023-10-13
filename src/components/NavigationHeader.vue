@@ -17,28 +17,23 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, inject } from 'vue'
+import { defineComponent } from 'vue'
 import { useAuth0 } from '@auth0/auth0-vue';
 
 export default defineComponent({
   name: 'Login',
   components: {},
   setup() {
-    const store = inject('library');
-    if (store.getUser()) { console.log('aho') }
-
     const auth0 = useAuth0();
     const { logout } = useAuth0();
-
-    store.setUser(auth0);
 
     return {
       auth0,
       login: () => {
-        auth0.loginWithRedirect();
+        auth0.loginWithRedirect()
       },
       logout: () => {
-        logout({ logoutParams: { returnTo: window.location.origin } });
+        logout({ logoutParams: { returnTo: `${import.meta.env.VITE_BASE_URL}` } });
       }
     };
   }
