@@ -17,6 +17,7 @@
 <script lang="ts">
 import { defineComponent, ref, onMounted, inject } from 'vue';
 import axios, { AxiosResponse, AxiosError } from "axios";
+import { useAuth0 } from '@auth0/auth0-vue';
 import LibraryItem from "@/components/LibraryItem.vue";
 
 export default defineComponent({
@@ -25,10 +26,15 @@ export default defineComponent({
     LibraryItem
   },
   setup() {
+    const { user, isAuthenticated } = useAuth0();
     const libraryList = ref([]);
     const store = inject('library');
 
     onMounted(() => {
+      if (!isAuthenticated || !user.value.sub) {
+        location.href = window.location.origin;
+      }
+
       interface LibraryResponse {
         data: []
       };
@@ -36,18 +42,15 @@ export default defineComponent({
         error: string
       };
 
-      // ----------------------- events -----------------------
-      (async () => {
-        await axios.get<LibraryResponse>('http://127.0.0.1:8000/api/libraries/')
-          .then((response: AxiosResponse) => {
-            if (response.data.length >= 1) {
-              libraryList.value = response.data;
-              store.setItem(response.data);
-            }
-          })
-          .catch((e: AxiosError<ErrorResponse>) => {
-          });
-      })();
+      axios.get<LibraryResponse>(`${import.meta.env.VITE_API_URL}/api/users/${user.value.sub}/libraries/`)
+        .then((response: AxiosResponse) => {
+          if (response.data.length >= 1) {
+            libraryList.value = response.data;
+            store.setItem(response.data);
+          }
+        })
+        .catch((e: AxiosError<ErrorResponse>) => {
+        });
     });
 
     return {

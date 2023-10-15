@@ -1,7 +1,7 @@
 <template>
   <section class="overlay">
     <section class="modal">
-      <form action="">
+      <form action="" id="register-form">
         <span id="close" class="close" @click="closeModal"></span>
         <label for="library_title" class="required">タイトル</label>
         <section class="form-field">
@@ -9,7 +9,7 @@
             :class="[v$.title.$errors.length >= 1 ? 'error' : '']"
             v-model="state.title"
             id="library_title"
-            placeholder="新規ライブラリのタイトル"
+            placeholder="ライブラリのタイトル"
             :error-messages="v$.title.$errors.map((e) => e.$message)"
             @blur="v$.title.$touch"
             @input="v$.title.$touch">
@@ -19,7 +19,7 @@
         </section>
         <label for="library_content" class="">内容</label>
         <section class="form-field">
-          <textarea v-model="state.content" id="library_content" placeholder="新規ライブラリの内容"></textarea>
+          <textarea v-model="state.content" id="library_content" placeholder="ライブラリの内容"></textarea>
         </section>
         <section class="button">
           <button type="button" @click="onSubmit" :disabled="(v$.title.$errors.length === 0 && state.title !== '') ? false : true">ライブラリ追加</button>
