@@ -28,6 +28,7 @@
 import { defineComponent, onMounted, inject } from 'vue';
 import axios, { AxiosResponse, AxiosError } from "axios";
 import { useRoute, useRouter } from 'vue-router';
+import { useAuth0 } from '@auth0/auth0-vue';
 
 export default defineComponent({
   name: 'CategoryRegistrationForm',
@@ -38,6 +39,7 @@ export default defineComponent({
   },
   emits: ['closeEvent'],
   setup(props, context) {
+    const { user } = useAuth0();
     const store = inject('category');
 
     interface UserResponse {
@@ -56,36 +58,16 @@ export default defineComponent({
       content: String
     };
 
-    const uuid = window.localStorage.getItem(['UUID']);
-    const username = window.localStorage.getItem(['USERNAME']);
-
-    // あとで消す
-    onMounted(() => {
-      if (!uuid) {
-        (async () => {
-          await axios.get<UserResponse>('http://127.0.0.1:8000/api/users/', {
-            params: { username: username }
-          })
-          .then((response: AxiosResponse) => {
-            window.localStorage.setItem(['UUID'], response.data[0].uuid);
-          })
-          .catch((e: AxiosError<ErrorResponse>) => {
-            console.log(`${e.message} ( ${e.name} ) code: ${e.code}`);
-          });
-        })();
-      }
-    });
-
     const route = useRoute();
-    const onSubmit = async (event: HTMLButtonEvent) => {
+    const onSubmit = (event: HTMLButtonEvent) => {
       const requestParam: CategoryRequest = {
-        custom_user: uuid,
+        custom_user: user.value.sub,
         library: route.params.library_id,
         title: document.getElementById('category_title').value,
         content: document.getElementById('category_content').value
       };
 
-      await axios.post(`http://127.0.0.1:8000/api/libraries/${route.params.library_id}/categories/`, requestParam)
+      axios.post(`${import.meta.env.VITE_API_URL}/api/users/${user.value.sub}/libraries/${route.params.library_id}/categories/`, requestParam)
       .then((response: AxiosResponse) => {
         store.add(response.data);
         context.emit('closeEvent', event);

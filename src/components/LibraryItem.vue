@@ -35,7 +35,7 @@ export default defineComponent({
   setup(props) {
     const { user } = useAuth0();
     const store = inject('library');
-    const removeLibrary = async (event: HTMLButtonEvent) => {
+    const removeLibrary = (event: HTMLButtonEvent) => {
       if (!window.confirm(`ライブラリ「${props.title}」が削除されますが宜しいですか？`)) {
         return;
       }
@@ -46,10 +46,9 @@ export default defineComponent({
         code: String
       };
 
-      // api実行前に呼ばないとstoreの中身が検索できない
-      store.remove(props.id);
+      store.remove(props.id); // api実行前に呼ばないとstoreの中身が検索できない
       const id = event.currentTarget.getAttribute('data-id');
-      await axios.delete(`${import.meta.env.VITE_API_URL}/api/users/${user.value.sub}/libraries/${id}`)
+      axios.delete(`${import.meta.env.VITE_API_URL}/api/users/${user.value.sub}/libraries/${id}`)
       .then((response: AxiosResponse) => {
       })
       .catch((e: AxiosError<ErrorResponse>) => {

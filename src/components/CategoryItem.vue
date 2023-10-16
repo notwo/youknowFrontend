@@ -13,6 +13,7 @@
 import { defineComponent, inject } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import axios, { AxiosResponse, AxiosError } from "axios";
+import { useAuth0 } from '@auth0/auth0-vue';
 import CategoryEditButton from "@/components/CategoryEditButton.vue";
 
 export default defineComponent({
@@ -31,6 +32,8 @@ export default defineComponent({
     updated_at: String,
   },
   setup(props) {
+    const { user } = useAuth0();
+
     interface ErrorResponse {
       message: String,
       name: String,
@@ -39,14 +42,14 @@ export default defineComponent({
 
     const route = useRoute();
     const store = inject('category');
-    const removeCategory = async (event: HTMLButtonEvent) => {
+    const removeCategory = (event: HTMLButtonEvent) => {
       if (!window.confirm(`カテゴリ「${props.title}」が削除されますが宜しいですか？`)) {
         return;
       }
 
       store.remove(props.id); // api実行前に呼ばないとstoreの中身が検索できない
       const id = event.currentTarget.getAttribute('data-id');
-      await axios.delete(`http://127.0.0.1:8000/api/libraries/${route.params.library_id}/categories/${id}`)
+      axios.delete(`${import.meta.env.VITE_API_URL}/api/users/${user.value.sub}/libraries/${route.params.library_id}/categories/${id}`)
       .then((response: AxiosResponse) => {
       })
       .catch((e: AxiosError<ErrorResponse>) => {
