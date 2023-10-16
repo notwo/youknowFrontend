@@ -29,7 +29,7 @@ export default defineComponent({
           //email_verified: user.value.email_verified,
           //picture: user.value.picture,
         };
-        axios.post(`${import.meta.env.VITE_API_URL}/api/users2/`, requestParam)
+        axios.post(`${import.meta.env.VITE_API_URL}/api/users/`, requestParam)
           .then((response: AxiosResponse) => {
           })
           .catch((e: AxiosError<ErrorResponse>) => {
@@ -40,7 +40,7 @@ export default defineComponent({
       };
 
       const registerOrUpdate = async () => {
-        const response = await axios.get<UserResponse>(`${import.meta.env.VITE_API_URL}/api/users2/?sub=${user.value.sub}`);
+        const response = await axios.get<UserResponse>(`${import.meta.env.VITE_API_URL}/api/users/?sub=${user.value.sub}`);
         if (response.data.length === 0) {
           registerUser();
         }
