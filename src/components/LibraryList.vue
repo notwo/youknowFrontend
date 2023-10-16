@@ -1,7 +1,9 @@
 <template>
   <article id="library-list">
+    <LibraryModal :edit_state="edit_state" />
     <LibraryItem
-      v-for="library in libraryList"
+      :edit_state="edit_state"
+      v-for="library in LibraryList"
       :key="library.id"
       :id="library.id"
       :title="library.title"
@@ -15,20 +17,33 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, onMounted, inject } from 'vue';
+import { defineComponent, ref, reactive, onMounted, inject } from 'vue';
 import axios, { AxiosResponse, AxiosError } from "axios";
+import { useAuth0 } from '@auth0/auth0-vue';
+import LibraryModal from '@/components/modal/LibraryModal.vue';
 import LibraryItem from "@/components/LibraryItem.vue";
 
 export default defineComponent({
   name: 'LibraryList',
   components: {
+    LibraryModal,
     LibraryItem
   },
   setup() {
-    const libraryList = ref([]);
+    const { user, isAuthenticated } = useAuth0();
+    const LibraryList = ref([]);
     const store = inject('library');
 
+    let edit_state = reactive({
+      title: '',
+      content: ''
+    });
+
     onMounted(() => {
+      if (!isAuthenticated || !user.value.sub) {
+        location.href = window.location.origin;
+      }
+
       interface LibraryResponse {
         data: []
       };
@@ -36,22 +51,20 @@ export default defineComponent({
         error: string
       };
 
-      // ----------------------- events -----------------------
-      (async () => {
-        await axios.get<LibraryResponse>('http://127.0.0.1:8000/api/libraries/')
-          .then((response: AxiosResponse) => {
-            if (response.data.length >= 1) {
-              libraryList.value = response.data;
-              store.setItem(response.data);
-            }
-          })
-          .catch((e: AxiosError<ErrorResponse>) => {
-          });
-      })();
+      axios.get<LibraryResponse>(`${import.meta.env.VITE_API_URL}/api/users/${user.value.sub}/libraries/`)
+        .then((response: AxiosResponse) => {
+          if (response.data.length >= 1) {
+            LibraryList.value = response.data;
+            store.setItem(response.data);
+          }
+        })
+        .catch((e: AxiosError<ErrorResponse>) => {
+        });
     });
 
     return {
-      libraryList
+      edit_state,
+      LibraryList
     };
   },
 });

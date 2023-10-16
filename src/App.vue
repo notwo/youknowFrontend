@@ -25,10 +25,12 @@ export default defineComponent({
   components: { NavigationHeader, FooterInformation },
   setup() {
     const libraryStore = useStore();
+    const libraryEditStore = editStore;
     const categoryStore = useStore();
     const categoryEditStore = editStore;
     provide('library', libraryStore);
     provide('category', categoryStore);
+    provide('libraryEdit', libraryEditStore);
     provide('categoryEdit', categoryEditStore);
   }
 });

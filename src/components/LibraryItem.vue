@@ -1,21 +1,29 @@
 <template>
   <section class="library-item">
-    <a :href="`/libraries/${id}/categories/`">
+    <section>
+      <LibraryEditButton :edit_state="edit_state" :id="id" :title="title" :content="content" />
       <span @click="removeLibrary" class="delete-item" :data-id="id"></span>
+    </section>
+    <router-link :to="{ name: 'categories', params: { username: String($route.params.username), library_id: id } }">
       <section class="title">{{ title }}</section>
       <section class="contents">{{ content }}</section>
-    </a>
+    </router-link>
   </section>
 </template>
 
 <script lang="ts">
 import { defineComponent, inject } from 'vue';
 import axios, { AxiosResponse, AxiosError } from "axios";
+import { useAuth0 } from '@auth0/auth0-vue';
+import LibraryEditButton from "@/components/LibraryEditButton.vue";
 
 export default defineComponent({
   name: 'LibraryItem',
-  components: {},
+  components: {
+    LibraryEditButton
+  },
   props: {
+    edit_state: Object,
     id: Number,
     title: String,
     content: String,
@@ -25,22 +33,23 @@ export default defineComponent({
     updated_at: String,
   },
   setup(props) {
-    interface ErrorResponse {
-      message: String,
-      name: String,
-      code: String
-    };
-
+    const { user } = useAuth0();
     const store = inject('library');
     const removeLibrary = async (event: HTMLButtonEvent) => {
       if (!window.confirm(`ライブラリ「${props.title}」が削除されますが宜しいですか？`)) {
         return;
       }
 
+      interface ErrorResponse {
+        message: String,
+        name: String,
+        code: String
+      };
+
       // api実行前に呼ばないとstoreの中身が検索できない
       store.remove(props.id);
       const id = event.currentTarget.getAttribute('data-id');
-      await axios.delete(`http://127.0.0.1:8000/api/libraries/${id}`)
+      await axios.delete(`${import.meta.env.VITE_API_URL}/api/users/${user.value.sub}/libraries/${id}`)
       .then((response: AxiosResponse) => {
       })
       .catch((e: AxiosError<ErrorResponse>) => {
@@ -49,6 +58,7 @@ export default defineComponent({
     };
 
     return {
+      user,
       removeLibrary
     };
   },
