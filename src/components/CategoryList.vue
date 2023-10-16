@@ -20,6 +20,7 @@
 import { defineComponent, reactive, ref, onMounted, inject } from 'vue';
 import axios, { AxiosResponse, AxiosError } from "axios";
 import { useRoute, useRouter } from 'vue-router';
+import { useAuth0 } from '@auth0/auth0-vue';
 import CategoryModal from '@/components/modal/CategoryModal.vue';
 import CategoryItem from "@/components/CategoryItem.vue";
 
@@ -30,6 +31,7 @@ export default defineComponent({
     CategoryItem
   },
   setup() {
+    const { user, isAuthenticated } = useAuth0();
     const CategoryList = ref([]);
     const store = inject('category');
 
@@ -40,6 +42,10 @@ export default defineComponent({
 
     const route = useRoute();
     onMounted(() => {
+      if (!isAuthenticated || !user.value.sub) {
+        location.href = window.location.origin;
+      }
+
       interface CategoryResponse {
         data: []
       };
@@ -47,19 +53,16 @@ export default defineComponent({
         error: string
       };
 
-      // ----------------------- events -----------------------
-      (async () => {
-        await axios.get<CategoryResponse>(`http://127.0.0.1:8000/api/libraries/${route.params.library_id}/categories/`)
-          .then((response: AxiosResponse) => {
-            if (response.data.length >= 1) {
-              CategoryList.value = response.data;
-              store.setItem(response.data);
-            }
-          })
-          .catch((e: AxiosError<ErrorResponse>) => {
-            console.log(`${e.message} ( ${e.name} ) code: ${e.code}`);
-          });
-      })();
+      axios.get<CategoryResponse>(`${import.meta.env.VITE_API_URL}/api/users/${user.value.sub}/libraries/${route.params.library_id}/categories/`)
+        .then((response: AxiosResponse) => {
+          if (response.data.length >= 1) {
+            CategoryList.value = response.data;
+            store.setItem(response.data);
+          }
+        })
+        .catch((e: AxiosError<ErrorResponse>) => {
+          console.log(`${e.message} ( ${e.name} ) code: ${e.code}`);
+        });
     });
 
     return {

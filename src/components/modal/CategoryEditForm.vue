@@ -25,6 +25,7 @@
 <script lang="ts">
 import { defineComponent, onMounted, inject } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
+import { useAuth0 } from '@auth0/auth0-vue';
 import axios, { AxiosResponse, AxiosError } from "axios";
 
 export default defineComponent({
@@ -36,6 +37,7 @@ export default defineComponent({
   },
   emits: ['closeEvent'],
   setup(props, context) {
+    const { user } = useAuth0();
     const store = inject('category');
     const editStore = inject('categoryEdit');
 
@@ -55,36 +57,16 @@ export default defineComponent({
       content: String
     };
 
-    const uuid = window.localStorage.getItem(['UUID']);
-    const username = window.localStorage.getItem(['USERNAME']);
-
-    // あとで消す
-    onMounted(() => {
-      if (!uuid) {
-        (async () => {
-          await axios.get<UserResponse>('http://127.0.0.1:8000/api/users/', {
-            params: { username: username }
-          })
-          .then((response: AxiosResponse) => {
-            window.localStorage.setItem(['UUID'], response.data[0].uuid);
-          })
-          .catch((e: AxiosError<ErrorResponse>) => {
-            console.log(`${e.message} ( ${e.name} ) code: ${e.code}`);
-          });
-        })();
-      }
-    });
-
     const route = useRoute();
-    const onSubmit = async (event: HTMLButtonEvent) => {
+    const onSubmit = (event: HTMLButtonEvent) => {
       const requestParam: CategoryRequest = {
-        custom_user: uuid,
+        custom_user: user.value.sub,
         library: route.params.library_id,
         title: document.getElementById('edit_category_title').value,
         content: document.getElementById('edit_category_content').value
       };
 
-      await axios.put(`http://127.0.0.1:8000/api/libraries/${route.params.library_id}/categories/${editStore.id}/`, requestParam)
+      axios.put(`${import.meta.env.VITE_API_URL}/api/users/${user.value.sub}/libraries/${route.params.library_id}/categories/${editStore.id}/`, requestParam)
       .then((response: AxiosResponse) => {
         store.update(response.data);
         context.emit('closeEvent', event);
