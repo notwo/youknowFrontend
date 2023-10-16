@@ -18,8 +18,8 @@
 
 <script lang="ts">
 import { defineComponent, reactive, ref, onMounted, inject } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
 import axios, { AxiosResponse, AxiosError } from "axios";
+import { useRoute, useRouter } from 'vue-router';
 import CategoryModal from '@/components/modal/CategoryModal.vue';
 import CategoryItem from "@/components/CategoryItem.vue";
 

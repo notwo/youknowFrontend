@@ -1,7 +1,9 @@
 <template>
   <article id="library-list">
+    <LibraryModal :edit_state="edit_state" />
     <LibraryItem
-      v-for="library in libraryList"
+      :edit_state="edit_state"
+      v-for="library in LibraryList"
       :key="library.id"
       :id="library.id"
       :title="library.title"
@@ -15,20 +17,27 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, onMounted, inject } from 'vue';
+import { defineComponent, ref, reactive, onMounted, inject } from 'vue';
 import axios, { AxiosResponse, AxiosError } from "axios";
 import { useAuth0 } from '@auth0/auth0-vue';
+import LibraryModal from '@/components/modal/LibraryModal.vue';
 import LibraryItem from "@/components/LibraryItem.vue";
 
 export default defineComponent({
   name: 'LibraryList',
   components: {
+    LibraryModal,
     LibraryItem
   },
   setup() {
     const { user, isAuthenticated } = useAuth0();
-    const libraryList = ref([]);
+    const LibraryList = ref([]);
     const store = inject('library');
+
+    let edit_state = reactive({
+      title: '',
+      content: ''
+    });
 
     onMounted(() => {
       if (!isAuthenticated || !user.value.sub) {
@@ -45,7 +54,7 @@ export default defineComponent({
       axios.get<LibraryResponse>(`${import.meta.env.VITE_API_URL}/api/users/${user.value.sub}/libraries/`)
         .then((response: AxiosResponse) => {
           if (response.data.length >= 1) {
-            libraryList.value = response.data;
+            LibraryList.value = response.data;
             store.setItem(response.data);
           }
         })
@@ -54,7 +63,8 @@ export default defineComponent({
     });
 
     return {
-      libraryList
+      edit_state,
+      LibraryList
     };
   },
 });

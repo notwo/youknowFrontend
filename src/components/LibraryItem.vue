@@ -1,6 +1,9 @@
 <template>
   <section class="library-item">
-    <span @click="removeLibrary" class="delete-item" :data-id="id"></span>
+    <section>
+      <LibraryEditButton :edit_state="edit_state" :id="id" :title="title" :content="content" />
+      <span @click="removeLibrary" class="delete-item" :data-id="id"></span>
+    </section>
     <router-link :to="{ name: 'categories', params: { username: String($route.params.username), library_id: id } }">
       <section class="title">{{ title }}</section>
       <section class="contents">{{ content }}</section>
@@ -10,13 +13,17 @@
 
 <script lang="ts">
 import { defineComponent, inject } from 'vue';
-import { useAuth0 } from '@auth0/auth0-vue';
 import axios, { AxiosResponse, AxiosError } from "axios";
+import { useAuth0 } from '@auth0/auth0-vue';
+import LibraryEditButton from "@/components/LibraryEditButton.vue";
 
 export default defineComponent({
   name: 'LibraryItem',
-  components: {},
+  components: {
+    LibraryEditButton
+  },
   props: {
+    edit_state: Object,
     id: Number,
     title: String,
     content: String,
@@ -26,7 +33,7 @@ export default defineComponent({
     updated_at: String,
   },
   setup(props) {
-    const { user, isAuthenticated } = useAuth0();
+    const { user } = useAuth0();
     const store = inject('library');
     const removeLibrary = async (event: HTMLButtonEvent) => {
       if (!window.confirm(`ライブラリ「${props.title}」が削除されますが宜しいですか？`)) {
@@ -51,7 +58,6 @@ export default defineComponent({
     };
 
     return {
-      isAuthenticated,
       user,
       removeLibrary
     };
