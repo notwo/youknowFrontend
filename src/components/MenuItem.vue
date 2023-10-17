@@ -1,13 +1,19 @@
 <script setup lang="ts">
 import { useAuth0 } from '@auth0/auth0-vue';
+import { inject } from 'vue';
 
 const auth0 = useAuth0();
 const { logout } = useAuth0();
+
+const libraryStore = inject('library');
+const categoryStore = inject('category');
 
 const login = () => {
   auth0.loginWithRedirect();
 }
 const startLogout = () => {
+  libraryStore.allClear();
+  categoryStore.allClear();
   logout({ logoutParams: { returnTo: `${import.meta.env.VITE_BASE_URL}` } });
 }
 

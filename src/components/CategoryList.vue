@@ -55,10 +55,8 @@ export default defineComponent({
 
       axios.get<CategoryResponse>(`${import.meta.env.VITE_API_URL}/api/users/${user.value.sub}/libraries/${route.params.library_id}/categories/`)
         .then((response: AxiosResponse) => {
-          if (response.data.length >= 1) {
-            CategoryList.value = response.data;
-            store.setItem(response.data);
-          }
+          CategoryList.value = response.data;
+          store.setItem(response.data);
         })
         .catch((e: AxiosError<ErrorResponse>) => {
           console.log(`${e.message} ( ${e.name} ) code: ${e.code}`);

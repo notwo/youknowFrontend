@@ -4,8 +4,6 @@ export function useStore() {
   const items = reactive({ list: [] });
   let backupList = [];
 
-  const auth0 = reactive({ auth: null });
-
   function setItem<T>(list: T[]) {
     items.list = ref(list);
     backupList = list.concat();
@@ -60,7 +58,11 @@ export function useStore() {
     items.list.splice(0);
   }
 
-  return { items: readonly(items), setItem, add, update, remove, search, restore, allClear };
+  function confirmItems() {
+    console.log(items);
+  }
+
+  return { items: readonly(items), setItem, add, update, remove, search, restore, allClear, confirmItems };
 };
 
 export const editStore = reactive({

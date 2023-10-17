@@ -11,7 +11,6 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import { useAuth0 } from '@auth0/auth0-vue';
 import MenuItem from "@/components/MenuItem.vue";
 
 export default defineComponent({
