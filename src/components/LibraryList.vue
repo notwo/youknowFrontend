@@ -53,10 +53,8 @@ export default defineComponent({
 
       axios.get<LibraryResponse>(`${import.meta.env.VITE_API_URL}/api/users/${user.value.sub}/libraries/`)
         .then((response: AxiosResponse) => {
-          if (response.data.length >= 1) {
-            LibraryList.value = response.data;
-            store.setItem(response.data);
-          }
+          LibraryList.value = response.data;
+          store.setItem(response.data);
         })
         .catch((e: AxiosError<ErrorResponse>) => {
         });
