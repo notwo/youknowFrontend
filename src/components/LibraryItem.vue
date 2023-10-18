@@ -1,5 +1,5 @@
 <template>
-  <section class="library-item">
+  <section class="library-item-wrap">
     <section>
       <LibraryEditButton :edit_state="edit_state" :id="id" :title="title" :content="content" />
       <span @click="removeLibrary" class="delete-item" :data-id="id"></span>
@@ -65,7 +65,7 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.library-item {
+.library-item-wrap {
   width: calc(30% - 15px);
   margin: 0.6em;
   height: 7em;

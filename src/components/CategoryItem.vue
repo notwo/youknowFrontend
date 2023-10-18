@@ -1,5 +1,5 @@
 <template>
-  <section class="category-item">
+  <section class="category-item-wrap">
     <section>
       <CategoryEditButton :edit_state="edit_state" :id="id" :title="title" :content="content" />
       <span @click="removeCategory" class="delete-item" :data-id="id"></span>
@@ -65,7 +65,7 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.category-item {
+.category-item-wrap {
   width: calc(30% - 15px);
   margin: 0.6em;
   height: 7em;
