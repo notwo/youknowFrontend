@@ -14,6 +14,14 @@ export function useStore() {
     backupList.unshift(item);
   }
 
+  function concat<T>(list: T[]) {
+    // items.listには純粋にArray.concatしても反映されないので1つずつケツに追加する
+    list.map((_obj: object) => {
+      items.list.push(_obj)
+    });
+    backupList.concat(list);
+  }
+
   function update<T>(item: T) {
     let _target = items.list.filter(_obj => _obj.id === item.id);
     let _updateIndex = items.list.indexOf(_target[0]);
@@ -56,13 +64,14 @@ export function useStore() {
 
   function allClear() {
     items.list.splice(0);
+    backupList.splice(0);
   }
 
   function confirmItems() {
     console.log(items);
   }
 
-  return { items: readonly(items), setItem, add, update, remove, search, restore, allClear, confirmItems };
+  return { items: readonly(items), setItem, add, concat, update, remove, search, restore, allClear, confirmItems };
 };
 
 export const editStore = reactive({

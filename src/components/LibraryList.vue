@@ -53,13 +53,36 @@ export default defineComponent({
         error: string
       };
 
-      axios.get<LibraryResponse>(`${import.meta.env.VITE_API_URL}/api/users/${user.value.sub}/libraries/?limit=15&offset=0`)
+      let canLoadNext = true;
+
+      const showLibraryList = async () => {
+        axios.get<LibraryResponse>(`${import.meta.env.VITE_API_URL}/api/users/${user.value.sub}/libraries/?limit=15&offset=0`)
         .then((response: AxiosResponse) => {
           LibraryList.value = response.data.results;
           store.setItem(response.data.results);
         })
         .catch((e: AxiosError<ErrorResponse>) => {
         });
+
+        const showMoreLibraryList = (event) => {
+          // 仮に下限まで残り100px程度になったら自動読み込み
+          if (document.body.scrollHeight - document.body.clientHeight - window.scrollY <= 100 && canLoadNext) {
+            loadNext();
+          }
+        };
+
+        window.addEventListener("scroll", showMoreLibraryList, false);
+      };
+
+      const loadNext = async () => {
+        const response = await axios.get<LibraryResponse>(`${import.meta.env.VITE_API_URL}/api/users/${user.value.sub}/libraries/?limit=15&offset=15`);
+        if (response.data.next === null) {
+          canLoadNext = false;
+        }
+        store.concat(response.data.results);
+      };
+
+      showLibraryList();
     });
 
     return {
