@@ -24,6 +24,8 @@ import axios, { AxiosResponse, AxiosError } from "axios";
 import { useAuth0 } from '@auth0/auth0-vue';
 import LibraryModal from '@/components/modal/LibraryModal.vue';
 import LibraryItem from "@/components/LibraryItem.vue";
+import { pagination } from "@/../config.json";
+import { libraryListUrl } from '@/plugin/apis';
 
 export default defineComponent({
   name: 'LibraryList',
@@ -54,10 +56,12 @@ export default defineComponent({
       };
 
       let canLoadNext = true;
+      let currentPage = 1;
 
       const showLibraryList = async () => {
-        axios.get<LibraryResponse>(`${import.meta.env.VITE_API_URL}/api/users/${user.value.sub}/libraries/?limit=15&offset=0`)
+        axios.get<LibraryResponse>(libraryListUrl(user.value.sub, pagination.library.content_num))
         .then((response: AxiosResponse) => {
+          canLoadNext = (response.data.next !== null);
           LibraryList.value = response.data.results;
           store.setItem(response.data.results);
         })
@@ -67,6 +71,7 @@ export default defineComponent({
         const showMoreLibraryList = (event) => {
           // 仮に下限まで残り100px程度になったら自動読み込み
           if (document.body.scrollHeight - document.body.clientHeight - window.scrollY <= 100 && canLoadNext) {
+            currentPage++;
             loadNext();
           }
         };
@@ -75,7 +80,9 @@ export default defineComponent({
       };
 
       const loadNext = async () => {
-        const response = await axios.get<LibraryResponse>(`${import.meta.env.VITE_API_URL}/api/users/${user.value.sub}/libraries/?limit=15&offset=15`);
+        const response = await axios.get<LibraryResponse>(
+          libraryListUrl(user.value.sub, pagination.library.content_num, pagination.library.content_num * (currentPage -1))
+        );
         if (response.data.next === null) {
           canLoadNext = false;
         }

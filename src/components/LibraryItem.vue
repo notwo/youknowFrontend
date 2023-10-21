@@ -16,6 +16,7 @@ import { defineComponent, inject } from 'vue';
 import axios, { AxiosResponse, AxiosError } from "axios";
 import { useAuth0 } from '@auth0/auth0-vue';
 import LibraryEditButton from "@/components/LibraryEditButton.vue";
+import { libraryDeleteUrl } from '@/plugin/apis';
 
 export default defineComponent({
   name: 'LibraryItem',
@@ -48,7 +49,7 @@ export default defineComponent({
 
       store.remove(props.id); // api実行前に呼ばないとstoreの中身が検索できない
       const id = event.currentTarget.getAttribute('data-id');
-      axios.delete(`${import.meta.env.VITE_API_URL}/api/users/${user.value.sub}/libraries/${id}`)
+      axios.delete(libraryDeleteUrl(user.value.sub, id))
       .then((response: AxiosResponse) => {
       })
       .catch((e: AxiosError<ErrorResponse>) => {

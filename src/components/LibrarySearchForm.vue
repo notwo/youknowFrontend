@@ -11,6 +11,7 @@
 import { defineComponent, inject } from 'vue';
 import { useAuth0 } from '@auth0/auth0-vue';
 import axios, { AxiosResponse, AxiosError } from "axios";
+import { librarySearchUrl } from '@/plugin/apis';
 
 export default defineComponent({
   name: 'LibrarySearchForm',
@@ -32,14 +33,13 @@ export default defineComponent({
         return;
       }
 
-      axios.get(`${import.meta.env.VITE_API_URL}/api/users/${user.value.sub}/libraries/?title=${word.value}`)
+      axios.get(librarySearchUrl(user.value.sub, word.value))
       .then((response: AxiosResponse) => {
-        console.log(response.data)
-        if (response.data.length <= 0) {
+        if (response.data.results.length <= 0) {
           store.allClear();
           return;
         }
-        store.search(response.data);
+        store.search(response.data.results);
       })
       .catch((e: AxiosError<ErrorResponse>) => {
         store.allClear();

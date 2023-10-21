@@ -1,0 +1,10 @@
+{
+  "pagination": {
+    "library": {
+      "content_num": 15
+    },
+    "category": {
+      "content_num": 15
+    }
+  }
+}

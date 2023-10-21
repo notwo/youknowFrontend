@@ -18,6 +18,7 @@ export function useStore() {
     // items.listには純粋にArray.concatしても反映されないので1つずつケツに追加する
     list.map((_obj: object) => {
       items.list.push(_obj)
+      backupList.push(_obj)
     });
     backupList.concat(list);
   }
@@ -53,18 +54,14 @@ export function useStore() {
   function restore() {
     if (items.list.length === backupList.length) { return; }
 
-    const length = items.list.length;
+    items.list.length = 0;
     backupList.map((_obj: Object) => {
       items.list.push(_obj);
     });
-    for(let _i = 0;_i < length;_i++) {
-      items.list.shift();
-    }
   }
 
   function allClear() {
     items.list.splice(0);
-    backupList.splice(0);
   }
 
   function confirmItems() {
