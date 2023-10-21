@@ -49,6 +49,12 @@ export function useStore() {
         items.list.splice(_removeIndex, 1);
       });
     });
+    // 検索対象が現状のページに見当たらない場合でもDBにはあるはず
+    if (items.list.length === 0) {
+      list.map((_obj: object) => {
+        items.list.unshift(_obj);
+      });
+    }
   }
 
   function restore() {
