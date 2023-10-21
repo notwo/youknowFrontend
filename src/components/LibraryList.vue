@@ -70,7 +70,6 @@ export default defineComponent({
 
         const showMoreLibraryList = (event) => {
           // 仮に下限まで残り100px程度になったら自動読み込み
-          console.log(store.isSearched())
           if (document.body.scrollHeight - document.body.clientHeight - window.scrollY <= 100 && canLoadNext && !store.isSearched()) {
             currentPage++;
             loadNext();

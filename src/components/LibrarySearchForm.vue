@@ -35,11 +35,14 @@ export default defineComponent({
 
       axios.get(librarySearchUrl(user.value.sub, word.value))
       .then((response: AxiosResponse) => {
-        if (response.data.results.length <= 0) {
+        // 検索後は一括で結果を返すようにしておく。今後検索後に対してもページングする場合はコメントアウトを外す(更にAPIの修正も必要)
+        //if (response.data.results.length <= 0) {
+        if (response.data.length <= 0) {
           store.allClear();
           return;
         }
-        store.search(response.data.results);
+        //store.search(response.data.results);
+        store.search(response.data);
       })
       .catch((e: AxiosError<ErrorResponse>) => {
         store.allClear();
