@@ -2,7 +2,8 @@ import { ref, reactive, readonly } from "vue";
 
 export function useStore() {
   const items = reactive({ list: [] });
-  let backupList = [];
+  let backupList: Array<Object> = [];
+  let searched = ref(false);
 
   function setItem<T>(list: T[]) {
     items.list = ref(list);
@@ -55,6 +56,7 @@ export function useStore() {
         items.list.unshift(_obj);
       });
     }
+    searched.value = true;
   }
 
   function restore() {
@@ -66,6 +68,10 @@ export function useStore() {
     });
   }
 
+  function isSearched() {
+    return searched.value;
+  }
+
   function allClear() {
     items.list.splice(0);
   }
@@ -74,7 +80,7 @@ export function useStore() {
     console.log(items);
   }
 
-  return { items: readonly(items), setItem, add, concat, update, remove, search, restore, allClear, confirmItems };
+  return { items: readonly(items), setItem, add, concat, update, remove, search, restore, isSearched, allClear, confirmItems };
 };
 
 export const editStore = reactive({
