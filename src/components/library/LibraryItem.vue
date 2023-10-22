@@ -1,26 +1,27 @@
 <template>
-  <section class="category-item-wrap">
+  <section class="library-item-wrap">
     <section>
-      <CategoryEditButton :edit_state="edit_state" :id="id" :title="title" :content="content" />
-      <span @click="removeCategory" class="delete-item" :data-id="id"></span>
+      <LibraryEditButton :edit_state="edit_state" :id="id" :title="title" :content="content" />
+      <span @click="removeLibrary" class="delete-item" :data-id="id"></span>
     </section>
-    <section class="title">{{ title }}</section>
-    <section class="content">{{ content }}</section>
+    <router-link :to="{ name: 'categories', params: { username: String($route.params.username), library_id: id } }">
+      <section class="title">{{ title }}</section>
+      <section class="contents">{{ content }}</section>
+    </router-link>
   </section>
 </template>
 
 <script lang="ts">
 import { defineComponent, inject } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
 import axios, { AxiosResponse, AxiosError } from "axios";
 import { useAuth0 } from '@auth0/auth0-vue';
-import CategoryEditButton from "@/components/CategoryEditButton.vue";
-import { categoryDeleteUrl } from '@/plugin/apis';
+import LibraryEditButton from "@/components/library/LibraryEditButton.vue";
+import { libraryDeleteUrl } from '@/plugin/apis';
 
 export default defineComponent({
-  name: 'CategoryItem',
+  name: 'LibraryItem',
   components: {
-    CategoryEditButton
+    LibraryEditButton
   },
   props: {
     edit_state: Object,
@@ -34,23 +35,21 @@ export default defineComponent({
   },
   setup(props) {
     const { user } = useAuth0();
-
-    interface ErrorResponse {
-      message: String,
-      name: String,
-      code: String
-    };
-
-    const route = useRoute();
-    const store = inject('category');
-    const removeCategory = (event: HTMLButtonEvent) => {
-      if (!window.confirm(`カテゴリ「${props.title}」が削除されますが宜しいですか？`)) {
+    const store = inject('library');
+    const removeLibrary = (event: HTMLButtonEvent) => {
+      if (!window.confirm(`ライブラリ「${props.title}」が削除されますが宜しいですか？`)) {
         return;
       }
 
+      interface ErrorResponse {
+        message: String,
+        name: String,
+        code: String
+      };
+
       store.remove(props.id); // api実行前に呼ばないとstoreの中身が検索できない
       const id = event.currentTarget.getAttribute('data-id');
-      axios.delete(categoryDeleteUrl(user.value.sub, route.params.library_id, id))
+      axios.delete(libraryDeleteUrl(user.value.sub, id))
       .then((response: AxiosResponse) => {
       })
       .catch((e: AxiosError<ErrorResponse>) => {
@@ -59,14 +58,15 @@ export default defineComponent({
     };
 
     return {
-      removeCategory
+      user,
+      removeLibrary
     };
-  }
+  },
 });
 </script>
 
 <style scoped>
-.category-item-wrap {
+.library-item-wrap {
   width: calc(30% - 15px);
   margin: 0.6em;
   height: 7em;
