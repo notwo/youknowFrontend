@@ -51,7 +51,7 @@ export function useStore() {
   function restore() {
     if (items.list.length === backupList.length) { return; }
 
-    items.list.length = 0;
+    allClear();
     backupList.map((_obj: Object) => {
       items.list.push(_obj);
     });
@@ -63,7 +63,7 @@ export function useStore() {
   }
 
   function allClear() {
-    items.list.splice(0);
+    items.list.length = 0;
   }
 
   function confirmItems() {
