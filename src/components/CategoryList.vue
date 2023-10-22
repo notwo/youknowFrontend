@@ -1,18 +1,20 @@
 <template>
   <article id="category-list">
     <CategoryModal :edit_state="edit_state" />
-    <CategoryItem
-      :edit_state="edit_state"
-      v-for="category in CategoryList"
-      :key="category.id"
-      :id="category.id"
-      :title="category.title"
-      :content="category.content"
-      :custom_user="category.custom_user"
-      :custom_user_id="category.custom_user_id"
-      :created_at="category.created_at"
-      :updated_at="category.updated_at"
-    />
+    <section class="category-item">
+      <CategoryItem
+        :edit_state="edit_state"
+        v-for="category in CategoryList"
+        :key="category.id"
+        :id="category.id"
+        :title="category.title"
+        :content="category.content"
+        :custom_user="category.custom_user"
+        :custom_user_id="category.custom_user_id"
+        :created_at="category.created_at"
+        :updated_at="category.updated_at"
+      />
+    </section>
   </article>
 </template>
 
@@ -23,6 +25,8 @@ import { useRoute, useRouter } from 'vue-router';
 import { useAuth0 } from '@auth0/auth0-vue';
 import CategoryModal from '@/components/modal/CategoryModal.vue';
 import CategoryItem from "@/components/CategoryItem.vue";
+import { pagination } from "@/../config.json";
+import { categoryListUrl } from '@/plugin/apis';
 
 export default defineComponent({
   name: 'CategoryList',
@@ -40,6 +44,9 @@ export default defineComponent({
       content: ''
     });
 
+    // カテゴリ一覧に遷移した際にスクロール位置が戻っていないので、強制的にスクロールさせる
+    document.documentElement.scrollTop = 0;
+
     const route = useRoute();
     onMounted(() => {
       if (!isAuthenticated || !user.value.sub) {
@@ -53,14 +60,41 @@ export default defineComponent({
         error: string
       };
 
-      axios.get<CategoryResponse>(`${import.meta.env.VITE_API_URL}/api/users/${user.value.sub}/libraries/${route.params.library_id}/categories/`)
+      let canLoadNext = true;
+      let currentPage = 1;
+
+      const showCategoryList = async () => {
+        await axios.get<CategoryResponse>(categoryListUrl(user.value.sub, route.params.library_id, pagination.category.content_num))
         .then((response: AxiosResponse) => {
-          CategoryList.value = response.data;
-          store.setItem(response.data);
+          CategoryList.value = response.data.results;
+          store.setItem(response.data.results);
         })
         .catch((e: AxiosError<ErrorResponse>) => {
           console.log(`${e.message} ( ${e.name} ) code: ${e.code}`);
         });
+
+        const showMoreCategoryList = (event) => {
+          // 仮に下限まで残り100px程度になったら自動読み込み
+          if (document.body.scrollHeight - document.body.clientHeight - window.scrollY <= 100 && canLoadNext && !store.isSearched()) {
+            currentPage++;
+            loadNext();
+          }
+        };
+
+        window.addEventListener("scroll", showMoreCategoryList, false);
+      };
+
+      const loadNext = async () => {
+        const response = await axios.get<CategoryResponse>(
+          categoryListUrl(user.value.sub, route.params.library_id, pagination.category.content_num, pagination.category.content_num * (currentPage -1))
+        );
+        if (response.data.next === null) {
+          canLoadNext = false;
+        }
+        store.concat(response.data.results);
+      };
+
+      showCategoryList();
     });
 
     return {
@@ -72,9 +106,9 @@ export default defineComponent({
 </script>
 
 <style scoped>
-#category-list {
+.category-item {
   display: flex;
-  justify-content: space-around;
+  justify-content: start;
   flex-wrap: wrap;
 }
 </style>

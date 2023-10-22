@@ -1,5 +1,5 @@
 <template>
-  <section class="category-item">
+  <section class="category-item-wrap">
     <section>
       <CategoryEditButton :edit_state="edit_state" :id="id" :title="title" :content="content" />
       <span @click="removeCategory" class="delete-item" :data-id="id"></span>
@@ -15,6 +15,7 @@ import { useRoute, useRouter } from 'vue-router';
 import axios, { AxiosResponse, AxiosError } from "axios";
 import { useAuth0 } from '@auth0/auth0-vue';
 import CategoryEditButton from "@/components/CategoryEditButton.vue";
+import { categoryDeleteUrl } from '@/plugin/apis';
 
 export default defineComponent({
   name: 'CategoryItem',
@@ -49,7 +50,7 @@ export default defineComponent({
 
       store.remove(props.id); // api実行前に呼ばないとstoreの中身が検索できない
       const id = event.currentTarget.getAttribute('data-id');
-      axios.delete(`${import.meta.env.VITE_API_URL}/api/users/${user.value.sub}/libraries/${route.params.library_id}/categories/${id}`)
+      axios.delete(categoryDeleteUrl(user.value.sub, route.params.library_id, id))
       .then((response: AxiosResponse) => {
       })
       .catch((e: AxiosError<ErrorResponse>) => {
@@ -65,7 +66,7 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.category-item {
+.category-item-wrap {
   width: calc(30% - 15px);
   margin: 0.6em;
   height: 7em;

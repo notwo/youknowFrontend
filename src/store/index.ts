@@ -2,7 +2,8 @@ import { ref, reactive, readonly } from "vue";
 
 export function useStore() {
   const items = reactive({ list: [] });
-  let backupList = [];
+  let backupList: Array<Object> = [];
+  let searched = ref(false);
 
   function setItem<T>(list: T[]) {
     items.list = ref(list);
@@ -12,6 +13,15 @@ export function useStore() {
   function add<T>(item: T) {
     items.list.unshift(item);
     backupList.unshift(item);
+  }
+
+  function concat<T>(list: T[]) {
+    // items.listには純粋にArray.concatしても反映されないので1つずつケツに追加する
+    list.map((_obj: object) => {
+      items.list.push(_obj)
+      backupList.push(_obj)
+    });
+    backupList.concat(list);
   }
 
   function update<T>(item: T) {
@@ -31,38 +41,36 @@ export function useStore() {
   }
 
   function search<T>(list: T[]) {
-    restore();
-    const _target_ids = list.map((_obj: Object) => { return _obj.id });
+    allClear();
     list.map((_obj: object) => {
-      const _target = items.list.filter(_item => !_target_ids.includes(_item.id));
-      _target.map((_deleteTarget: Object) => {
-        const _removeIndex = items.list.indexOf(_deleteTarget);
-        items.list.splice(_removeIndex, 1);
-      });
+      items.list.unshift(_obj);
     });
+    searched.value = true;
   }
 
   function restore() {
     if (items.list.length === backupList.length) { return; }
 
-    const length = items.list.length;
+    allClear();
     backupList.map((_obj: Object) => {
       items.list.push(_obj);
     });
-    for(let _i = 0;_i < length;_i++) {
-      items.list.shift();
-    }
+    searched.value = false;
+  }
+
+  function isSearched() {
+    return searched.value;
   }
 
   function allClear() {
-    items.list.splice(0);
+    items.list.length = 0;
   }
 
   function confirmItems() {
     console.log(items);
   }
 
-  return { items: readonly(items), setItem, add, update, remove, search, restore, allClear, confirmItems };
+  return { items: readonly(items), setItem, add, concat, update, remove, search, restore, isSearched, allClear, confirmItems };
 };
 
 export const editStore = reactive({

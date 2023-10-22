@@ -1,18 +1,20 @@
 <template>
   <article id="library-list">
     <LibraryModal :edit_state="edit_state" />
-    <LibraryItem
-      :edit_state="edit_state"
-      v-for="library in LibraryList"
-      :key="library.id"
-      :id="library.id"
-      :title="library.title"
-      :content="library.content"
-      :custom_user="library.custom_user"
-      :custom_user_id="library.custom_user_id"
-      :created_at="library.created_at"
-      :updated_at="library.updated_at"
-    />
+    <section class="library-item">
+      <LibraryItem
+        :edit_state="edit_state"
+        v-for="library in LibraryList"
+        :key="library.id"
+        :id="library.id"
+        :title="library.title"
+        :content="library.content"
+        :custom_user="library.custom_user"
+        :custom_user_id="library.custom_user_id"
+        :created_at="library.created_at"
+        :updated_at="library.updated_at"
+      />
+    </section>
   </article>
 </template>
 
@@ -22,6 +24,8 @@ import axios, { AxiosResponse, AxiosError } from "axios";
 import { useAuth0 } from '@auth0/auth0-vue';
 import LibraryModal from '@/components/modal/LibraryModal.vue';
 import LibraryItem from "@/components/LibraryItem.vue";
+import { pagination } from "@/../config.json";
+import { libraryListUrl } from '@/plugin/apis';
 
 export default defineComponent({
   name: 'LibraryList',
@@ -51,13 +55,41 @@ export default defineComponent({
         error: string
       };
 
-      axios.get<LibraryResponse>(`${import.meta.env.VITE_API_URL}/api/users/${user.value.sub}/libraries/`)
+      let canLoadNext = true;
+      let currentPage = 1;
+
+      const showLibraryList = async () => {
+        await axios.get<LibraryResponse>(libraryListUrl(user.value.sub, pagination.library.content_num))
         .then((response: AxiosResponse) => {
-          LibraryList.value = response.data;
-          store.setItem(response.data);
+          canLoadNext = (response.data.next !== null);
+          LibraryList.value = response.data.results;
+          store.setItem(response.data.results);
         })
         .catch((e: AxiosError<ErrorResponse>) => {
         });
+
+        const showMoreLibraryList = (event) => {
+          // 仮に下限まで残り100px程度になったら自動読み込み
+          if (document.body.scrollHeight - document.body.clientHeight - window.scrollY <= 100 && canLoadNext && !store.isSearched()) {
+            currentPage++;
+            loadNext();
+          }
+        };
+
+        window.addEventListener("scroll", showMoreLibraryList, false);
+      };
+
+      const loadNext = async () => {
+        const response = await axios.get<LibraryResponse>(
+          libraryListUrl(user.value.sub, pagination.library.content_num, pagination.library.content_num * (currentPage -1))
+        );
+        if (response.data.next === null) {
+          canLoadNext = false;
+        }
+        store.concat(response.data.results);
+      };
+
+      showLibraryList();
     });
 
     return {
@@ -69,9 +101,10 @@ export default defineComponent({
 </script>
 
 <style scoped>
-#library-list {
+.library-item {
   display: flex;
-  justify-content: space-around;
+  justify-content: start;
   flex-wrap: wrap;
 }
+
 </style>

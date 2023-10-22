@@ -12,6 +12,7 @@ import { defineComponent, inject } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useAuth0 } from '@auth0/auth0-vue';
 import axios, { AxiosResponse, AxiosError } from "axios";
+import { categorySearchUrl } from '@/plugin/apis';
 
 export default defineComponent({
   name: 'CategorySearchForm',
@@ -34,12 +35,15 @@ export default defineComponent({
         return;
       }
 
-      axios.get(`${import.meta.env.VITE_API_URL}/api/users/${user.value.sub}/libraries/${route.params.library_id}/categories/?title=${word.value}`)
+      axios.get(categorySearchUrl(user.value.sub, route.params.library_id, word.value))
       .then((response: AxiosResponse) => {
+        // 検索後は一括で結果を返すようにしておく。今後検索後に対してもページングする場合はコメントアウトを外す(更にAPIの修正も必要)
+        //if (response.data.results.length <= 0) {
         if (response.data.length <= 0) {
           store.allClear();
           return;
         }
+        //store.search(response.data.results);
         store.search(response.data);
       })
       .catch((e: AxiosError<ErrorResponse>) => {
