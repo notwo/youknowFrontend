@@ -41,21 +41,10 @@ export function useStore() {
   }
 
   function search<T>(list: T[]) {
-    restore();
-    const _target_ids = list.map((_obj: Object) => { return _obj.id });
+    allClear();
     list.map((_obj: object) => {
-      const _target = items.list.filter(_item => !_target_ids.includes(_item.id));
-      _target.map((_deleteTarget: Object) => {
-        const _removeIndex = items.list.indexOf(_deleteTarget);
-        items.list.splice(_removeIndex, 1);
-      });
+      items.list.unshift(_obj);
     });
-    // 検索対象が現状のページに見当たらない場合でもDBにはあるはず
-    if (items.list.length === 0) {
-      list.map((_obj: object) => {
-        items.list.unshift(_obj);
-      });
-    }
     searched.value = true;
   }
 
@@ -66,6 +55,7 @@ export function useStore() {
     backupList.map((_obj: Object) => {
       items.list.push(_obj);
     });
+    searched.value = false;
   }
 
   function isSearched() {

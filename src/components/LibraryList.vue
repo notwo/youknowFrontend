@@ -59,7 +59,7 @@ export default defineComponent({
       let currentPage = 1;
 
       const showLibraryList = async () => {
-        axios.get<LibraryResponse>(libraryListUrl(user.value.sub, pagination.library.content_num))
+        await axios.get<LibraryResponse>(libraryListUrl(user.value.sub, pagination.library.content_num))
         .then((response: AxiosResponse) => {
           canLoadNext = (response.data.next !== null);
           LibraryList.value = response.data.results;
