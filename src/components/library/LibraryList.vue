@@ -23,7 +23,7 @@ import { defineComponent, ref, reactive, onMounted, inject } from 'vue';
 import axios, { AxiosResponse, AxiosError } from "axios";
 import { useAuth0 } from '@auth0/auth0-vue';
 import LibraryModal from '@/components/modal/LibraryModal.vue';
-import LibraryItem from "@/components/LibraryItem.vue";
+import LibraryItem from "@/components/library/LibraryItem.vue";
 import { pagination } from "@/../config.json";
 import { libraryListUrl } from '@/plugin/apis';
 

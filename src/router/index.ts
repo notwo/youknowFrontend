@@ -8,7 +8,7 @@ const routes: Array<RouteRecordRaw> = [
     children: [
       {
         path: 'libraries',
-        component: () => import('../components/LibraryList.vue'),
+        component: () => import('../components/library/LibraryList.vue'),
       },
     ]
   },

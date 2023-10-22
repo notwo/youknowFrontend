@@ -24,7 +24,7 @@ import axios, { AxiosResponse, AxiosError } from "axios";
 import { useRoute, useRouter } from 'vue-router';
 import { useAuth0 } from '@auth0/auth0-vue';
 import CategoryModal from '@/components/modal/CategoryModal.vue';
-import CategoryItem from "@/components/CategoryItem.vue";
+import CategoryItem from "@/components/category/CategoryItem.vue";
 import { pagination } from "@/../config.json";
 import { categoryListUrl } from '@/plugin/apis';
 
