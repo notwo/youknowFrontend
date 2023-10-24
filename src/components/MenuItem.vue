@@ -7,6 +7,7 @@ const { logout } = useAuth0();
 
 const libraryStore = inject('library');
 const categoryStore = inject('category');
+const keywordStore = inject('keyword');
 
 const login = () => {
   auth0.loginWithRedirect();
@@ -14,6 +15,7 @@ const login = () => {
 const startLogout = () => {
   libraryStore.allClear();
   categoryStore.allClear();
+  keywordStore.allClear();
   logout({ logoutParams: { returnTo: `${import.meta.env.VITE_BASE_URL}` } });
 }
 

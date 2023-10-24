@@ -1,0 +1,51 @@
+<template>
+  <section class="overlay">
+    <section class="modal">
+      <KeywordForm :edit_state="edit_state" />
+    </section>
+  </section>
+</template>
+
+<script lang="ts">
+import { defineComponent } from 'vue';
+import KeywordForm from '@/components/modal/KeywordForm.vue';
+
+export default defineComponent({
+  name: 'KeywordModal',
+  components: {
+    KeywordForm
+  },
+  props: {
+    edit_state: Object
+  },
+});
+</script>
+
+<style scoped>
+.overlay {
+  visibility: hidden;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transition: .17s;
+  opacity: 0;
+  z-index: 9999;
+  background-color: rgba(0,0,0,0.4);
+}
+.overlay.visible {
+  visibility: visible;
+  opacity: 1;
+}
+
+.modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 60%;
+  height: auto;
+  background-color: white;
+}
+</style>

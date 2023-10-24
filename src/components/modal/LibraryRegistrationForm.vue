@@ -28,6 +28,7 @@
 import { defineComponent, onMounted, inject } from 'vue';
 import axios, { AxiosResponse, AxiosError } from "axios";
 import { useAuth0 } from '@auth0/auth0-vue';
+import { libraryCreateUrl } from '@/plugin/apis';
 
 export default defineComponent({
   name: 'LibraryRegistrationForm',
@@ -60,7 +61,7 @@ export default defineComponent({
         content: document.getElementById('library_content').value
       };
 
-      axios.post(`${import.meta.env.VITE_API_URL}/api/users/${user.value.sub}/libraries/`, requestParam)
+      axios.post(libraryCreateUrl(user.value.sub), requestParam)
       .then((response: AxiosResponse) => {
         store.add(response.data);
         context.emit('closeEvent', event);
