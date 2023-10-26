@@ -4,11 +4,6 @@
       <KeywordEditButton :edit_state="edit_state" :id="id" :title="title" :content="content" />
       <span @click="removeKeyword" class="delete-item" :data-id="id"></span>
     </section>
-    <!--<router-link :to="{ name: 'categories', params: { username: String($route.params.username), keyword_id: id } }">
-      <section class="title">{{ title }}</section>
-      <section class="contents">{{ content }}</section>
-    </router-link>
-    -->
     <section class="title">{{ title }}</section>
     <section class="contents">{{ content }}</section>
   </section>

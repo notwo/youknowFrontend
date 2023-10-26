@@ -1,11 +1,11 @@
 <template>
-  <label for="edit_keyword_title" class="required">カテゴリ名</label>
+  <label for="edit_keyword_title" class="required">キーワード名</label>
   <section class="form-field">
     <input type="text"
       :class="[v.title.$errors.length >= 1 ? 'error' : '']"
       v-model="state.title"
       id="edit_keyword_title"
-      placeholder="カテゴリ名"
+      placeholder="キーワード名"
       :error-messages="v.title.$errors.map((e) => e.$message)"
       @blur="v.title.$touch"
       @input="v.title.$touch">
@@ -15,10 +15,10 @@
   </section>
   <label for="edit_keyword_content" class="">内容</label>
   <section class="form-field">
-    <textarea v-model="state.content" id="edit_keyword_content" placeholder="カテゴリの内容"></textarea>
+    <textarea v-model="state.content" id="edit_keyword_content" placeholder="キーワードの内容"></textarea>
   </section>
   <section class="button">
-    <button type="button" @click="onSubmit" :disabled="!(v.title.$errors.length === 0 && state.title !== '')">カテゴリを更新する</button>
+    <button type="button" @click="onSubmit" :disabled="!(v.title.$errors.length === 0 && state.title !== '')">キーワードを更新する</button>
   </section>
 </template>
 
@@ -27,6 +27,7 @@ import { defineComponent, onMounted, inject } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useAuth0 } from '@auth0/auth0-vue';
 import axios, { AxiosResponse, AxiosError } from "axios";
+import { keywordEditUrl } from '@/plugin/apis';
 
 export default defineComponent({
   name: 'KeywordEditForm',
@@ -40,10 +41,6 @@ export default defineComponent({
     const { user } = useAuth0();
     const store = inject('keyword');
     const editStore = inject('keywordEdit');
-
-    interface UserResponse {
-      data: {}
-    };
 
     interface ErrorResponse {
       message: String,
@@ -66,7 +63,7 @@ export default defineComponent({
         content: document.getElementById('edit_keyword_content').value
       };
 
-      axios.put(`${import.meta.env.VITE_API_URL}/api/users/${user.value.sub}/libraries/${route.params.library_id}/categories/${editStore.id}/`, requestParam)
+      axios.put(keywordEditUrl(user.value.sub, route.params.library_id, route.params.category_id, editStore.id), requestParam)
       .then((response: AxiosResponse) => {
         store.update(response.data);
         context.emit('closeEvent', event);

@@ -67,7 +67,6 @@ export default defineComponent({
       const response = await axios.get<KeywordResponse>(
         keywordListUrl(user.value.sub, route.params.library_id, route.params.category_id, pagination.keyword.content_num, pagination.keyword.content_num * (currentPage -1))
       );
-      console.log(response.data)
       if (response.data.next === null) {
         canLoadNext = false;
       }

@@ -27,6 +27,7 @@ import { defineComponent, onMounted, inject } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useAuth0 } from '@auth0/auth0-vue';
 import axios, { AxiosResponse, AxiosError } from "axios";
+import { categoryEditUrl } from '@/plugin/apis';
 
 export default defineComponent({
   name: 'CategoryEditForm',
@@ -40,10 +41,6 @@ export default defineComponent({
     const { user } = useAuth0();
     const store = inject('category');
     const editStore = inject('categoryEdit');
-
-    interface UserResponse {
-      data: {}
-    };
 
     interface ErrorResponse {
       message: String,
@@ -66,7 +63,7 @@ export default defineComponent({
         content: document.getElementById('edit_category_content').value
       };
 
-      axios.put(`${import.meta.env.VITE_API_URL}/api/users/${user.value.sub}/libraries/${route.params.library_id}/categories/${editStore.id}/`, requestParam)
+      axios.put(categoryEditUrl(user.value.sub, route.params.library_id, editStore.id), requestParam)
       .then((response: AxiosResponse) => {
         store.update(response.data);
         context.emit('closeEvent', event);

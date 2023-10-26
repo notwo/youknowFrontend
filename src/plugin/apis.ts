@@ -14,6 +14,10 @@ export function libraryCreateUrl(user_id: String) {
   return `${import.meta.env.VITE_API_URL}/api/users/${user_id}/libraries/`;
 };
 
+export function libraryEditUrl(user_id: String, id: Number) {
+  return `${import.meta.env.VITE_API_URL}/api/users/${user_id}/libraries/${id}/`;
+};
+
 export function libraryDeleteUrl(user_id: String, id: Number) {
   return `${import.meta.env.VITE_API_URL}/api/users/${user_id}/libraries/${id}`;
 };
@@ -30,6 +34,10 @@ export function categoryCreateUrl(user_id: String, library_id: Number) {
   return `${import.meta.env.VITE_API_URL}/api/users/${user_id}/libraries/${library_id}/categories/`;
 };
 
+export function categoryEditUrl(user_id: String, library_id: Number, id: Number) {
+  return `${import.meta.env.VITE_API_URL}/api/users/${user_id}/libraries/${library_id}/categories/${id}/`;
+};
+
 export function categoryDeleteUrl(user_id: String, library_id: Number, id: Number) {
   return `${import.meta.env.VITE_API_URL}/api/users/${user_id}/libraries/${library_id}/categories/${id}`;
 };
@@ -44,6 +52,10 @@ export function keywordListUrl(user_id: String, library_id: Number, category_id:
 
 export function keywordCreateUrl(user_id: String, library_id: Number, category_id: Number) {
   return `${import.meta.env.VITE_API_URL}/api/users/${user_id}/libraries/${library_id}/categories/${category_id}/keywords/`;
+};
+
+export function keywordEditUrl(user_id: String, library_id: Number, category_id: Number, id: Number) {
+  return `${import.meta.env.VITE_API_URL}/api/users/${user_id}/libraries/${library_id}/categories/${category_id}/keywords/${id}/`;
 };
 
 export function keywordDeleteUrl(user_id: String, library_id: Number, category_id: Number, id: Number) {
