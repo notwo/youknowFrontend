@@ -6,7 +6,7 @@
     </section>
     <router-link :to="{ name: 'keywords', params: { username: String($route.params.username), library_id: $route.params.library_id, category_id: id } }">
       <section class="title">{{ title }}</section>
-      <section class="content">{{ content }}</section>
+      <section class="contents">{{ content }}</section>
     </router-link>
   </section>
 </template>

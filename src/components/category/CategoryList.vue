@@ -19,7 +19,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, ref, onMounted, inject } from 'vue';
+import { defineComponent, reactive, ref, onMounted, onUnmounted, inject } from 'vue';
 import axios, { AxiosResponse, AxiosError } from "axios";
 import { useRoute, useRouter } from 'vue-router';
 import { useAuth0 } from '@auth0/auth0-vue';
@@ -44,8 +44,33 @@ export default defineComponent({
       content: ''
     });
 
-    // カテゴリ一覧に遷移した際にスクロール位置が戻っていないので、強制的にスクロールさせる
-    document.documentElement.scrollTop = 0;
+    interface CategoryResponse {
+      data: []
+    };
+    interface ErrorResponse {
+      error: string
+    };
+
+    let canLoadNext = true;
+    let currentPage = 1;
+
+    const showMoreCategoryList = (event) => {
+      // 仮に下限まで残り100px程度になったら自動読み込み
+      if (document.body.scrollHeight - document.body.clientHeight - window.scrollY <= 100 && canLoadNext && !store.isSearched()) {
+        currentPage++;
+        loadNext();
+      }
+    };
+
+    const loadNext = async () => {
+      const response = await axios.get<CategoryResponse>(
+        categoryListUrl(user.value.sub, route.params.library_id, pagination.category.content_num, pagination.category.content_num * (currentPage -1))
+      );
+      if (response.data.next === null) {
+        canLoadNext = false;
+      }
+      store.concat(response.data.results);
+    };
 
     const route = useRoute();
     onMounted(() => {
@@ -53,19 +78,13 @@ export default defineComponent({
         location.href = window.location.origin;
       }
 
-      interface CategoryResponse {
-        data: []
-      };
-      interface ErrorResponse {
-        error: string
-      };
-
-      let canLoadNext = true;
-      let currentPage = 1;
+      // カテゴリ一覧に遷移した際にスクロール位置が戻っていないので、強制的にスクロールさせる
+      document.documentElement.scrollTop = 0;
 
       const showCategoryList = async () => {
         await axios.get<CategoryResponse>(categoryListUrl(user.value.sub, route.params.library_id, pagination.category.content_num))
         .then((response: AxiosResponse) => {
+          canLoadNext = (response.data.next !== null);
           CategoryList.value = response.data.results;
           store.setItem(response.data.results);
         })
@@ -73,28 +92,14 @@ export default defineComponent({
           console.log(`${e.message} ( ${e.name} ) code: ${e.code}`);
         });
 
-        const showMoreCategoryList = (event) => {
-          // 仮に下限まで残り100px程度になったら自動読み込み
-          if (document.body.scrollHeight - document.body.clientHeight - window.scrollY <= 100 && canLoadNext && !store.isSearched()) {
-            currentPage++;
-            loadNext();
-          }
-        };
-
         window.addEventListener("scroll", showMoreCategoryList, false);
       };
 
-      const loadNext = async () => {
-        const response = await axios.get<CategoryResponse>(
-          categoryListUrl(user.value.sub, route.params.library_id, pagination.category.content_num, pagination.category.content_num * (currentPage -1))
-        );
-        if (response.data.next === null) {
-          canLoadNext = false;
-        }
-        store.concat(response.data.results);
-      };
-
       showCategoryList();
+    });
+
+    onUnmounted(() => {
+      window.removeEventListener('scroll', showMoreCategoryList, false);
     });
 
     return {

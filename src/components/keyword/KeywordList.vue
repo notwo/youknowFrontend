@@ -19,7 +19,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, reactive, onMounted, inject } from 'vue';
+import { defineComponent, ref, reactive, onMounted, onUnmounted, inject } from 'vue';
 import axios, { AxiosResponse, AxiosError } from "axios";
 import { useRoute, useRouter } from 'vue-router';
 import { useAuth0 } from '@auth0/auth0-vue';
@@ -44,21 +44,42 @@ export default defineComponent({
       content: ''
     });
 
+    interface KeywordResponse {
+      data: []
+    };
+    interface ErrorResponse {
+      error: string
+    };
+
+    let canLoadNext = true;
+    let currentPage = 1;
+
+    const showMoreKeywordList = (event) => {
+      // 仮に下限まで残り100px程度になったら自動読み込み
+      if (document.body.scrollHeight - document.body.clientHeight - window.scrollY <= 100 && canLoadNext && !store.isSearched()) {
+        currentPage++;
+        loadNext();
+      }
+    };
+
+    const loadNext = async () => {
+      const response = await axios.get<KeywordResponse>(
+        keywordListUrl(user.value.sub, route.params.library_id, route.params.category_id, pagination.keyword.content_num, pagination.keyword.content_num * (currentPage -1))
+      );
+      if (response.data.next === null) {
+        canLoadNext = false;
+      }
+      store.concat(response.data.results);
+    };
+
     const route = useRoute();
     onMounted(() => {
       if (!isAuthenticated || !user.value.sub) {
         location.href = window.location.origin;
       }
 
-      interface KeywordResponse {
-        data: []
-      };
-      interface ErrorResponse {
-        error: string
-      };
-
-      let canLoadNext = true;
-      let currentPage = 1;
+      // キーワード一覧に遷移した際にスクロール位置が戻っていないので、強制的にスクロールさせる
+      document.documentElement.scrollTop = 0;
 
       const showKeywordList = async () => {
         await axios.get<KeywordResponse>(keywordListUrl(user.value.sub, route.params.library_id, route.params.category_id, pagination.keyword.content_num))
@@ -68,30 +89,17 @@ export default defineComponent({
           store.setItem(response.data.results);
         })
         .catch((e: AxiosError<ErrorResponse>) => {
+          console.log(`${e.message} ( ${e.name} ) code: ${e.code}`);
         });
-
-        const showMoreKeywordList = (event) => {
-          // 仮に下限まで残り100px程度になったら自動読み込み
-          if (document.body.scrollHeight - document.body.clientHeight - window.scrollY <= 100 && canLoadNext && !store.isSearched()) {
-            currentPage++;
-            loadNext();
-          }
-        };
 
         window.addEventListener("scroll", showMoreKeywordList, false);
       };
 
-      const loadNext = async () => {
-        const response = await axios.get<KeywordResponse>(
-          keywordListUrl(user.value.sub, pagination.keyword.content_num, pagination.keyword.content_num * (currentPage -1))
-        );
-        if (response.data.next === null) {
-          canLoadNext = false;
-        }
-        store.concat(response.data.results);
-      };
-
       showKeywordList();
+    });
+
+    onUnmounted(() => {
+      window.removeEventListener('scroll', showMoreKeywordList, false);
     });
 
     return {
