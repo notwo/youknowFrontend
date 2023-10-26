@@ -54,6 +54,7 @@ export default defineComponent({
     let canLoadNext = true;
     let currentPage = 1;
 
+    const route = useRoute();
     const showMoreKeywordList = (event) => {
       // 仮に下限まで残り100px程度になったら自動読み込み
       if (document.body.scrollHeight - document.body.clientHeight - window.scrollY <= 100 && canLoadNext && !store.isSearched()) {
@@ -66,13 +67,13 @@ export default defineComponent({
       const response = await axios.get<KeywordResponse>(
         keywordListUrl(user.value.sub, route.params.library_id, route.params.category_id, pagination.keyword.content_num, pagination.keyword.content_num * (currentPage -1))
       );
+      console.log(response.data)
       if (response.data.next === null) {
         canLoadNext = false;
       }
       store.concat(response.data.results);
     };
 
-    const route = useRoute();
     onMounted(() => {
       if (!isAuthenticated || !user.value.sub) {
         location.href = window.location.origin;

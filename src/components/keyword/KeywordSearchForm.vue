@@ -9,6 +9,7 @@
 
 <script lang="ts">
 import { defineComponent, inject } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 import { useAuth0 } from '@auth0/auth0-vue';
 import axios, { AxiosResponse, AxiosError } from "axios";
 import { keywordSearchUrl } from '@/plugin/apis';
@@ -17,6 +18,7 @@ export default defineComponent({
   name: 'KeywordSearchForm',
   components: {},
   setup() {
+    const route = useRoute();
     const { user } = useAuth0();
     const store = inject('keyword');
 

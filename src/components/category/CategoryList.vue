@@ -54,6 +54,7 @@ export default defineComponent({
     let canLoadNext = true;
     let currentPage = 1;
 
+    const route = useRoute();
     const showMoreCategoryList = (event) => {
       // 仮に下限まで残り100px程度になったら自動読み込み
       if (document.body.scrollHeight - document.body.clientHeight - window.scrollY <= 100 && canLoadNext && !store.isSearched()) {
@@ -72,7 +73,6 @@ export default defineComponent({
       store.concat(response.data.results);
     };
 
-    const route = useRoute();
     onMounted(() => {
       if (!isAuthenticated || !user.value.sub) {
         location.href = window.location.origin;
