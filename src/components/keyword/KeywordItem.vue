@@ -15,7 +15,7 @@ import axios, { AxiosResponse, AxiosError } from "axios";
 import { useRoute, useRouter } from 'vue-router';
 import { useAuth0 } from '@auth0/auth0-vue';
 import KeywordEditButton from "@/components/keyword/KeywordEditButton.vue";
-import { keywordDeleteUrl } from '@/plugin/apis';
+import { keywordApi } from '@/plugin/apis';
 
 export default defineComponent({
   name: 'KeywordItem',
@@ -35,6 +35,7 @@ export default defineComponent({
   setup(props) {
     const { user } = useAuth0();
     const store = inject('keyword');
+    const api = keywordApi();
     const route = useRoute();
     const removeKeyword = (event: HTMLButtonEvent) => {
       if (!window.confirm(`キーワード「${props.title}」が削除されますが宜しいですか？`)) {
@@ -49,7 +50,7 @@ export default defineComponent({
 
       store.remove(props.id); // api実行前に呼ばないとstoreの中身が検索できない
       const id = event.currentTarget.getAttribute('data-id');
-      axios.delete(keywordDeleteUrl(user.value.sub, route.params.library_id, route.params.category_id, id))
+      axios.delete(api.deleteUrl(user.value.sub, route.params.library_id, route.params.category_id, id))
       .then((response: AxiosResponse) => {
       })
       .catch((e: AxiosError<ErrorResponse>) => {

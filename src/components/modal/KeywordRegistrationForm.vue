@@ -29,7 +29,7 @@ import { defineComponent, onMounted, inject } from 'vue';
 import axios, { AxiosResponse, AxiosError } from "axios";
 import { useRoute, useRouter } from 'vue-router';
 import { useAuth0 } from '@auth0/auth0-vue';
-import { keywordCreateUrl } from '@/plugin/apis';
+import { keywordApi } from '@/plugin/apis';
 
 export default defineComponent({
   name: 'KeywordRegistrationForm',
@@ -55,6 +55,7 @@ export default defineComponent({
       content: String
     };
 
+    const api = keywordApi();
     const route = useRoute();
     const onSubmit = (event: HTMLButtonEvent) => {
       const requestParam: KeywordRequest = {
@@ -65,7 +66,7 @@ export default defineComponent({
         content: document.getElementById('keyword_content').value
       };
 
-      axios.post(keywordCreateUrl(user.value.sub, route.params.library_id, user.value.sub, route.params.category_id), requestParam)
+      axios.post(api.createUrl(user.value.sub, route.params.library_id, user.value.sub, route.params.category_id), requestParam)
       .then((response: AxiosResponse) => {
         store.add(response.data);
         context.emit('closeEvent', event);

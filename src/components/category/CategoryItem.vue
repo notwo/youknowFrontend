@@ -17,7 +17,7 @@ import { useRoute, useRouter } from 'vue-router';
 import axios, { AxiosResponse, AxiosError } from "axios";
 import { useAuth0 } from '@auth0/auth0-vue';
 import CategoryEditButton from "@/components/category/CategoryEditButton.vue";
-import { categoryDeleteUrl } from '@/plugin/apis';
+import { categoryApi } from '@/plugin/apis';
 
 export default defineComponent({
   name: 'CategoryItem',
@@ -43,6 +43,7 @@ export default defineComponent({
       code: String
     };
 
+    const api = categoryApi();
     const route = useRoute();
     const store = inject('category');
     const removeCategory = (event: HTMLButtonEvent) => {
@@ -52,7 +53,7 @@ export default defineComponent({
 
       store.remove(props.id); // api実行前に呼ばないとstoreの中身が検索できない
       const id = event.currentTarget.getAttribute('data-id');
-      axios.delete(categoryDeleteUrl(user.value.sub, route.params.library_id, id))
+      axios.delete(api.deleteUrl(user.value.sub, route.params.library_id, id))
       .then((response: AxiosResponse) => {
       })
       .catch((e: AxiosError<ErrorResponse>) => {

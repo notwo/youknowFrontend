@@ -26,7 +26,7 @@
 import { defineComponent, onMounted, inject } from 'vue';
 import { useAuth0 } from '@auth0/auth0-vue';
 import axios, { AxiosResponse, AxiosError } from "axios";
-import { libraryEditUrl } from '@/plugin/apis';
+import { libraryApi } from '@/plugin/apis';
 
 export default defineComponent({
   name: 'LibraryEditForm',
@@ -53,6 +53,7 @@ export default defineComponent({
       content: String
     };
 
+    const api = libraryApi();
     const onSubmit = (event: HTMLButtonEvent) => {
       const requestParam: LibraryRequest = {
         custom_user: user.value.sub,
@@ -60,7 +61,7 @@ export default defineComponent({
         content: document.getElementById('edit_library_content').value
       };
 
-      axios.put(libraryEditUrl(user.value.sub, editStore.id), requestParam)
+      axios.put(api.editUrl(user.value.sub, editStore.id), requestParam)
       .then((response: AxiosResponse) => {
         store.update(response.data);
         context.emit('closeEvent', event);

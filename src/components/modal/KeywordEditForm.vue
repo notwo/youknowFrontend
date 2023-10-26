@@ -27,7 +27,7 @@ import { defineComponent, onMounted, inject } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useAuth0 } from '@auth0/auth0-vue';
 import axios, { AxiosResponse, AxiosError } from "axios";
-import { keywordEditUrl } from '@/plugin/apis';
+import { keywordApi } from '@/plugin/apis';
 
 export default defineComponent({
   name: 'KeywordEditForm',
@@ -54,6 +54,7 @@ export default defineComponent({
       content: String
     };
 
+    const api = keywordApi();
     const route = useRoute();
     const onSubmit = (event: HTMLButtonEvent) => {
       const requestParam: KeywordRequest = {
@@ -63,7 +64,7 @@ export default defineComponent({
         content: document.getElementById('edit_keyword_content').value
       };
 
-      axios.put(keywordEditUrl(user.value.sub, route.params.library_id, route.params.category_id, editStore.id), requestParam)
+      axios.put(api.editUrl(user.value.sub, route.params.library_id, route.params.category_id, editStore.id), requestParam)
       .then((response: AxiosResponse) => {
         store.update(response.data);
         context.emit('closeEvent', event);

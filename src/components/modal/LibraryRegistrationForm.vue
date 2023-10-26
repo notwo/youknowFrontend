@@ -28,7 +28,7 @@
 import { defineComponent, onMounted, inject } from 'vue';
 import axios, { AxiosResponse, AxiosError } from "axios";
 import { useAuth0 } from '@auth0/auth0-vue';
-import { libraryCreateUrl } from '@/plugin/apis';
+import { libraryApi } from '@/plugin/apis';
 
 export default defineComponent({
   name: 'LibraryRegistrationForm',
@@ -54,6 +54,7 @@ export default defineComponent({
       content: String
     };
 
+    const api = libraryApi();
     const onSubmit = (event: HTMLButtonEvent) => {
       const requestParam: LibraryRequest = {
         custom_user: user.value.sub,
@@ -61,7 +62,7 @@ export default defineComponent({
         content: document.getElementById('library_content').value
       };
 
-      axios.post(libraryCreateUrl(user.value.sub), requestParam)
+      axios.post(api.createUrl(user.value.sub), requestParam)
       .then((response: AxiosResponse) => {
         store.add(response.data);
         context.emit('closeEvent', event);
