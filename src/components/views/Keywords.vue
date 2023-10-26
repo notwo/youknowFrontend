@@ -1,15 +1,11 @@
 <template>
-  <h3>keyword</h3>
+  <DataRegisterModalButton />
+  <KeywordSearchForm />
+  <KeywordList />
 </template>
 
-<script>
-/*
-import { defineComponent } from '@vue/composition-api'
-
-export default defineComponent({
-  setup() {
-    
-  },
-})
-*/
+<script setup lang="ts">
+import DataRegisterModalButton from '@/components/DataRegisterModalButton.vue';
+import KeywordSearchForm from '@/components/keyword/KeywordSearchForm.vue';
+import KeywordList from '@/components/keyword/KeywordList.vue';
 </script>

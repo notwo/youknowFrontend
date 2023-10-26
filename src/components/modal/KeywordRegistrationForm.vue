@@ -1,12 +1,12 @@
 <template>
   <section class="form-wrap">
-    <label for="category_title" class="required">カテゴリ名</label>
+    <label for="keyword_title" class="required">キーワード名</label>
     <section class="form-field">
       <input type="text"
         :class="[v.title.$errors.length >= 1 ? 'error' : '']"
         v-model="state.title"
-        id="category_title"
-        placeholder="カテゴリ名"
+        id="keyword_title"
+        placeholder="キーワード名"
         :error-messages="v.title.$errors.map((e) => e.$message)"
         @blur="v.title.$touch"
         @input="v.title.$touch">
@@ -14,12 +14,12 @@
         <section class="error-message">{{ error.$message }}</section>
       </section>
     </section>
-    <label for="category_content" class="">内容</label>
+    <label for="keyword_content" class="">内容</label>
     <section class="form-field">
-      <textarea v-model="state.content" id="category_content" placeholder="カテゴリの内容"></textarea>
+      <textarea v-model="state.content" id="keyword_content" placeholder="キーワードの内容"></textarea>
     </section>
     <section class="button">
-      <button type="button" @click="onSubmit" :disabled="!(v.title.$errors.length === 0 && state.title !== '')">カテゴリを追加する</button>
+      <button type="button" @click="onSubmit" :disabled="!(v.title.$errors.length === 0 && state.title !== '')">キーワードを追加する</button>
     </section>
   </section>
 </template>
@@ -29,10 +29,10 @@ import { defineComponent, onMounted, inject } from 'vue';
 import axios, { AxiosResponse, AxiosError } from "axios";
 import { useRoute, useRouter } from 'vue-router';
 import { useAuth0 } from '@auth0/auth0-vue';
-import { categoryCreateUrl } from '@/plugin/apis';
+import { keywordCreateUrl } from '@/plugin/apis';
 
 export default defineComponent({
-  name: 'CategoryRegistrationForm',
+  name: 'KeywordRegistrationForm',
   components: {},
   props: {
     v: Object,
@@ -41,7 +41,7 @@ export default defineComponent({
   emits: ['closeEvent'],
   setup(props, context) {
     const { user } = useAuth0();
-    const store = inject('category');
+    const store = inject('keyword');
 
     interface ErrorResponse {
       message: String,
@@ -49,7 +49,7 @@ export default defineComponent({
       code: String
     };
 
-    interface CategoryRequest {
+    interface KeywordRequest {
       custom_user: String,
       title: String
       content: String
@@ -57,14 +57,15 @@ export default defineComponent({
 
     const route = useRoute();
     const onSubmit = (event: HTMLButtonEvent) => {
-      const requestParam: CategoryRequest = {
+      const requestParam: KeywordRequest = {
         custom_user: user.value.sub,
         library: route.params.library_id,
-        title: document.getElementById('category_title').value,
-        content: document.getElementById('category_content').value
+        category: route.params.category_id,
+        title: document.getElementById('keyword_title').value,
+        content: document.getElementById('keyword_content').value
       };
 
-      axios.post(categoryCreateUrl(user.value.sub, route.params.library_id), requestParam)
+      axios.post(keywordCreateUrl(user.value.sub, route.params.library_id, user.value.sub, route.params.category_id), requestParam)
       .then((response: AxiosResponse) => {
         store.add(response.data);
         context.emit('closeEvent', event);
@@ -99,7 +100,7 @@ export default defineComponent({
   background-color: red;
 }
 
-#category_content {
+#keyword_content {
   resize: none;
   width: 40em;
   height: 10em;

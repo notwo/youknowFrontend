@@ -1,50 +1,50 @@
 <template>
-  <article id="category-list">
-    <CategoryModal :edit_state="edit_state" />
-    <section class="category-item">
-      <CategoryItem
+  <article id="keyword-list">
+    <KeywordModal :edit_state="edit_state" />
+    <section class="keyword-item">
+      <KeywordItem
         :edit_state="edit_state"
-        v-for="category in CategoryList"
-        :key="category.id"
-        :id="category.id"
-        :title="category.title"
-        :content="category.content"
-        :custom_user="category.custom_user"
-        :custom_user_id="category.custom_user_id"
-        :created_at="category.created_at"
-        :updated_at="category.updated_at"
+        v-for="keyword in KeywordList"
+        :key="keyword.id"
+        :id="keyword.id"
+        :title="keyword.title"
+        :content="keyword.content"
+        :custom_user="keyword.custom_user"
+        :custom_user_id="keyword.custom_user_id"
+        :created_at="keyword.created_at"
+        :updated_at="keyword.updated_at"
       />
     </section>
   </article>
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, ref, onMounted, onUnmounted, inject } from 'vue';
+import { defineComponent, ref, reactive, onMounted, onUnmounted, inject } from 'vue';
 import axios, { AxiosResponse, AxiosError } from "axios";
 import { useRoute, useRouter } from 'vue-router';
 import { useAuth0 } from '@auth0/auth0-vue';
-import CategoryModal from '@/components/modal/CategoryModal.vue';
-import CategoryItem from "@/components/category/CategoryItem.vue";
+import KeywordModal from '@/components/modal/KeywordModal.vue';
+import KeywordItem from "@/components/keyword/KeywordItem.vue";
 import { pagination } from "@/../config.json";
-import { categoryListUrl } from '@/plugin/apis';
+import { keywordListUrl } from '@/plugin/apis';
 
 export default defineComponent({
-  name: 'CategoryList',
+  name: 'KeywordList',
   components: {
-    CategoryModal,
-    CategoryItem
+    KeywordModal,
+    KeywordItem
   },
   setup() {
     const { user, isAuthenticated } = useAuth0();
-    const CategoryList = ref([]);
-    const store = inject('category');
+    const KeywordList = ref([]);
+    const store = inject('keyword');
 
     let edit_state = reactive({
       title: '',
       content: ''
     });
 
-    interface CategoryResponse {
+    interface KeywordResponse {
       data: []
     };
     interface ErrorResponse {
@@ -55,7 +55,7 @@ export default defineComponent({
     let currentPage = 1;
 
     const route = useRoute();
-    const showMoreCategoryList = (event) => {
+    const showMoreKeywordList = (event) => {
       // 仮に下限まで残り100px程度になったら自動読み込み
       if (document.body.scrollHeight - document.body.clientHeight - window.scrollY <= 100 && canLoadNext && !store.isSearched()) {
         currentPage++;
@@ -64,8 +64,8 @@ export default defineComponent({
     };
 
     const loadNext = async () => {
-      const response = await axios.get<CategoryResponse>(
-        categoryListUrl(user.value.sub, route.params.library_id, pagination.category.content_num, pagination.category.content_num * (currentPage -1))
+      const response = await axios.get<KeywordResponse>(
+        keywordListUrl(user.value.sub, route.params.library_id, route.params.category_id, pagination.keyword.content_num, pagination.keyword.content_num * (currentPage -1))
       );
       if (response.data.next === null) {
         canLoadNext = false;
@@ -78,40 +78,40 @@ export default defineComponent({
         location.href = window.location.origin;
       }
 
-      // カテゴリ一覧に遷移した際にスクロール位置が戻っていないので、強制的にスクロールさせる
+      // キーワード一覧に遷移した際にスクロール位置が戻っていないので、強制的にスクロールさせる
       document.documentElement.scrollTop = 0;
 
-      const showCategoryList = async () => {
-        await axios.get<CategoryResponse>(categoryListUrl(user.value.sub, route.params.library_id, pagination.category.content_num))
+      const showKeywordList = async () => {
+        await axios.get<KeywordResponse>(keywordListUrl(user.value.sub, route.params.library_id, route.params.category_id, pagination.keyword.content_num))
         .then((response: AxiosResponse) => {
           canLoadNext = (response.data.next !== null);
-          CategoryList.value = response.data.results;
+          KeywordList.value = response.data.results;
           store.setItem(response.data.results);
         })
         .catch((e: AxiosError<ErrorResponse>) => {
           console.log(`${e.message} ( ${e.name} ) code: ${e.code}`);
         });
 
-        window.addEventListener("scroll", showMoreCategoryList, false);
+        window.addEventListener("scroll", showMoreKeywordList, false);
       };
 
-      showCategoryList();
+      showKeywordList();
     });
 
     onUnmounted(() => {
-      window.removeEventListener('scroll', showMoreCategoryList, false);
+      window.removeEventListener('scroll', showMoreKeywordList, false);
     });
 
     return {
       edit_state,
-      CategoryList
+      KeywordList
     };
-  },
+  }
 });
 </script>
 
 <style scoped>
-.category-item {
+.keyword-item {
   display: flex;
   justify-content: start;
   flex-wrap: wrap;

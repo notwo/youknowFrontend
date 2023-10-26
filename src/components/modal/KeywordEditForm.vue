@@ -1,11 +1,11 @@
 <template>
-  <label for="edit_category_title" class="required">カテゴリ名</label>
+  <label for="edit_keyword_title" class="required">キーワード名</label>
   <section class="form-field">
     <input type="text"
       :class="[v.title.$errors.length >= 1 ? 'error' : '']"
       v-model="state.title"
-      id="edit_category_title"
-      placeholder="カテゴリ名"
+      id="edit_keyword_title"
+      placeholder="キーワード名"
       :error-messages="v.title.$errors.map((e) => e.$message)"
       @blur="v.title.$touch"
       @input="v.title.$touch">
@@ -13,12 +13,12 @@
       <section class="error-message">{{ error.$message }}</section>
     </section>
   </section>
-  <label for="edit_category_content" class="">内容</label>
+  <label for="edit_keyword_content" class="">内容</label>
   <section class="form-field">
-    <textarea v-model="state.content" id="edit_category_content" placeholder="カテゴリの内容"></textarea>
+    <textarea v-model="state.content" id="edit_keyword_content" placeholder="キーワードの内容"></textarea>
   </section>
   <section class="button">
-    <button type="button" @click="onSubmit" :disabled="!(v.title.$errors.length === 0 && state.title !== '')">カテゴリを更新する</button>
+    <button type="button" @click="onSubmit" :disabled="!(v.title.$errors.length === 0 && state.title !== '')">キーワードを更新する</button>
   </section>
 </template>
 
@@ -27,10 +27,10 @@ import { defineComponent, onMounted, inject } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useAuth0 } from '@auth0/auth0-vue';
 import axios, { AxiosResponse, AxiosError } from "axios";
-import { categoryEditUrl } from '@/plugin/apis';
+import { keywordEditUrl } from '@/plugin/apis';
 
 export default defineComponent({
-  name: 'CategoryEditForm',
+  name: 'KeywordEditForm',
   components: {},
   props: {
     state: Object,
@@ -39,8 +39,8 @@ export default defineComponent({
   emits: ['closeEvent'],
   setup(props, context) {
     const { user } = useAuth0();
-    const store = inject('category');
-    const editStore = inject('categoryEdit');
+    const store = inject('keyword');
+    const editStore = inject('keywordEdit');
 
     interface ErrorResponse {
       message: String,
@@ -48,7 +48,7 @@ export default defineComponent({
       code: String
     };
 
-    interface CategoryRequest {
+    interface KeywordRequest {
       custom_user: String,
       title: String
       content: String
@@ -56,14 +56,14 @@ export default defineComponent({
 
     const route = useRoute();
     const onSubmit = (event: HTMLButtonEvent) => {
-      const requestParam: CategoryRequest = {
+      const requestParam: KeywordRequest = {
         custom_user: user.value.sub,
         library: route.params.library_id,
-        title: document.getElementById('edit_category_title').value,
-        content: document.getElementById('edit_category_content').value
+        title: document.getElementById('edit_keyword_title').value,
+        content: document.getElementById('edit_keyword_content').value
       };
 
-      axios.put(categoryEditUrl(user.value.sub, route.params.library_id, editStore.id), requestParam)
+      axios.put(keywordEditUrl(user.value.sub, route.params.library_id, route.params.category_id, editStore.id), requestParam)
       .then((response: AxiosResponse) => {
         store.update(response.data);
         context.emit('closeEvent', event);
@@ -98,7 +98,7 @@ export default defineComponent({
   background-color: red;
 }
 
-#edit_category_content {
+#edit_keyword_content {
   resize: none;
   width: 40em;
   height: 10em;

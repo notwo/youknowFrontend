@@ -1,28 +1,26 @@
 <template>
-  <section class="category-item-wrap">
+  <section class="keyword-item-wrap">
     <section>
-      <CategoryEditButton :edit_state="edit_state" :id="id" :title="title" :content="content" />
-      <span @click="removeCategory" class="delete-item" :data-id="id"></span>
+      <KeywordEditButton :edit_state="edit_state" :id="id" :title="title" :content="content" />
+      <span @click="removeKeyword" class="delete-item" :data-id="id"></span>
     </section>
-    <router-link :to="{ name: 'keywords', params: { username: String($route.params.username), library_id: $route.params.library_id, category_id: id } }">
-      <section class="title">{{ title }}</section>
-      <section class="contents">{{ content }}</section>
-    </router-link>
+    <section class="title">{{ title }}</section>
+    <section class="contents">{{ content }}</section>
   </section>
 </template>
 
 <script lang="ts">
 import { defineComponent, inject } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
 import axios, { AxiosResponse, AxiosError } from "axios";
+import { useRoute, useRouter } from 'vue-router';
 import { useAuth0 } from '@auth0/auth0-vue';
-import CategoryEditButton from "@/components/category/CategoryEditButton.vue";
-import { categoryDeleteUrl } from '@/plugin/apis';
+import KeywordEditButton from "@/components/keyword/KeywordEditButton.vue";
+import { keywordDeleteUrl } from '@/plugin/apis';
 
 export default defineComponent({
-  name: 'CategoryItem',
+  name: 'KeywordItem',
   components: {
-    CategoryEditButton
+    KeywordEditButton
   },
   props: {
     edit_state: Object,
@@ -36,23 +34,22 @@ export default defineComponent({
   },
   setup(props) {
     const { user } = useAuth0();
-
-    interface ErrorResponse {
-      message: String,
-      name: String,
-      code: String
-    };
-
+    const store = inject('keyword');
     const route = useRoute();
-    const store = inject('category');
-    const removeCategory = (event: HTMLButtonEvent) => {
-      if (!window.confirm(`カテゴリ「${props.title}」が削除されますが宜しいですか？`)) {
+    const removeKeyword = (event: HTMLButtonEvent) => {
+      if (!window.confirm(`キーワード「${props.title}」が削除されますが宜しいですか？`)) {
         return;
       }
 
+      interface ErrorResponse {
+        message: String,
+        name: String,
+        code: String
+      };
+
       store.remove(props.id); // api実行前に呼ばないとstoreの中身が検索できない
       const id = event.currentTarget.getAttribute('data-id');
-      axios.delete(categoryDeleteUrl(user.value.sub, route.params.library_id, id))
+      axios.delete(keywordDeleteUrl(user.value.sub, route.params.library_id, route.params.category_id, id))
       .then((response: AxiosResponse) => {
       })
       .catch((e: AxiosError<ErrorResponse>) => {
@@ -61,14 +58,15 @@ export default defineComponent({
     };
 
     return {
-      removeCategory
+      user,
+      removeKeyword
     };
   }
 });
 </script>
 
 <style scoped>
-.category-item-wrap {
+.keyword-item-wrap {
   width: calc(30% - 15px);
   margin: 0.6em;
   height: 7em;

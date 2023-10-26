@@ -38,7 +38,6 @@ export const editLibraryRules = (defaultVal) => {
   };
 };
 
-
 export const registerCategoryRules = () => {
   return {
     title: {
@@ -59,6 +58,37 @@ export const editCategoryRules = (defaultVal) => {
     title: {
       required: helpers.withMessage(requiredMsg('カテゴリ名'), required),
       duplicated: helpers.withMessage(duplicateMsg('カテゴリ名'), function (val: String) {
+        // API経由で結果を返却させるように後で修正
+        const _titles = document.getElementsByClassName('title');
+        if (_titles.length <= 0) { return true; }
+        const _target = Array.from(_titles).find((element) => element.innerText === val);
+        if (!_target) { return true; }
+        return _target.innerText === defaultVal.title;
+      })
+    }
+  };
+};
+
+export const registerKeywordRules = () => {
+  return {
+    title: {
+      required: helpers.withMessage(requiredMsg('キーワード名'), required),
+      duplicated: helpers.withMessage(duplicateMsg('キーワード名'), function (val: String) {
+        // API経由で結果を返却させるように後で修正
+        const _titles = document.getElementsByClassName('title');
+        if (_titles.length <= 0) { return true; }
+        const _target = Array.from(_titles).find((element) => element.innerText === val);
+        return !_target;
+      })
+    }
+  };
+};
+
+export const editKeywordRules = (defaultVal) => {
+  return {
+    title: {
+      required: helpers.withMessage(requiredMsg('キーワード名'), required),
+      duplicated: helpers.withMessage(duplicateMsg('キーワード名'), function (val: String) {
         // API経由で結果を返却させるように後で修正
         const _titles = document.getElementsByClassName('title');
         if (_titles.length <= 0) { return true; }

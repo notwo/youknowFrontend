@@ -28,10 +28,14 @@ export default defineComponent({
     const libraryEditStore = editStore;
     const categoryStore = useStore();
     const categoryEditStore = editStore;
+    const keywordStore = useStore();
+    const keywordEditStore = editStore;
     provide('library', libraryStore);
     provide('category', categoryStore);
+    provide('keyword', keywordStore);
     provide('libraryEdit', libraryEditStore);
     provide('categoryEdit', categoryEditStore);
+    provide('keywordEdit', keywordEditStore);
   }
 });
 

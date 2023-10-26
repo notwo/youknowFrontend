@@ -6,6 +6,7 @@
 import { defineComponent } from 'vue';
 import axios, { AxiosResponse, AxiosError } from "axios";
 import { useAuth0 } from '@auth0/auth0-vue';
+import { userCreateUrl, userDetailUrl } from '@/plugin/apis';
 
 export default defineComponent({
   name: 'Top',
@@ -21,6 +22,12 @@ export default defineComponent({
         data: [],
       };
 
+      interface ErrorResponse {
+        message: String,
+        name: String,
+        code: String
+      };
+
       const registerUser = async () => {
         const requestParam: UserRequest = {
           sub: user.value.sub,
@@ -29,7 +36,7 @@ export default defineComponent({
           //email_verified: user.value.email_verified,
           //picture: user.value.picture,
         };
-        axios.post(`${import.meta.env.VITE_API_URL}/api/users/`, requestParam)
+        axios.post(userCreateUrl(), requestParam)
           .then((response: AxiosResponse) => {
           })
           .catch((e: AxiosError<ErrorResponse>) => {
@@ -40,7 +47,7 @@ export default defineComponent({
       };
 
       const registerOrUpdate = async () => {
-        const response = await axios.get<UserResponse>(`${import.meta.env.VITE_API_URL}/api/users/?sub=${user.value.sub}`);
+        const response = await axios.get<UserResponse>(userDetailUrl(user.value.sub));
         if (response.data.length === 0) {
           registerUser();
         }
@@ -49,7 +56,7 @@ export default defineComponent({
       registerOrUpdate();
     }
   },
-})
+});
 </script>
 
 <style scoped>

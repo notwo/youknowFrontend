@@ -12,8 +12,22 @@ const routes: Array<RouteRecordRaw> = [
       },
     ]
   },
-  { path: '/:username/libraries/:library_id/categories', name: 'categories', component: () => import('../components/views/Categories.vue') },
-  { path: '/keyword', name: 'keywords', component: () => import('../components/views/Keywords.vue') },
+  { path: '/:username/libraries/:library_id/categories', name: 'categories', component: () => import('../components/views/Categories.vue'),
+    children: [
+      {
+        path: 'categories',
+        component: () => import('../components/category/CategoryList.vue'),
+      },
+    ]
+  },
+  { path: '/:username/libraries/:library_id/categories/:category_id/keywords', name: 'keywords', component: () => import('../components/views/Keywords.vue'),
+    children: [
+      {
+        path: 'keywords',
+        component: () => import('../components/keyword/KeywordList.vue'),
+      },
+    ]
+  },
 ];
 
 const router = createRouter({
