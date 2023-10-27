@@ -27,7 +27,7 @@ import { defineComponent, onMounted, inject } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useAuth0 } from '@auth0/auth0-vue';
 import axios, { AxiosResponse, AxiosError } from "axios";
-import { categoryEditUrl } from '@/plugin/apis';
+import { categoryApi } from '@/plugin/apis';
 
 export default defineComponent({
   name: 'CategoryEditForm',
@@ -54,6 +54,7 @@ export default defineComponent({
       content: String
     };
 
+    const api = categoryApi();
     const route = useRoute();
     const onSubmit = (event: HTMLButtonEvent) => {
       const requestParam: CategoryRequest = {
@@ -63,7 +64,7 @@ export default defineComponent({
         content: document.getElementById('edit_category_content').value
       };
 
-      axios.put(categoryEditUrl(user.value.sub, route.params.library_id, editStore.id), requestParam)
+      axios.put(api.editUrl(user.value.sub, route.params.library_id, editStore.id), requestParam)
       .then((response: AxiosResponse) => {
         store.update(response.data);
         context.emit('closeEvent', event);

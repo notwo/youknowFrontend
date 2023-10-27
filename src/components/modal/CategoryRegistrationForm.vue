@@ -29,7 +29,7 @@ import { defineComponent, onMounted, inject } from 'vue';
 import axios, { AxiosResponse, AxiosError } from "axios";
 import { useRoute, useRouter } from 'vue-router';
 import { useAuth0 } from '@auth0/auth0-vue';
-import { categoryCreateUrl } from '@/plugin/apis';
+import { categoryApi } from '@/plugin/apis';
 
 export default defineComponent({
   name: 'CategoryRegistrationForm',
@@ -55,6 +55,7 @@ export default defineComponent({
       content: String
     };
 
+    const api = categoryApi();
     const route = useRoute();
     const onSubmit = (event: HTMLButtonEvent) => {
       const requestParam: CategoryRequest = {
@@ -64,7 +65,7 @@ export default defineComponent({
         content: document.getElementById('category_content').value
       };
 
-      axios.post(categoryCreateUrl(user.value.sub, route.params.library_id), requestParam)
+      axios.post(api.createUrl(user.value.sub, route.params.library_id), requestParam)
       .then((response: AxiosResponse) => {
         store.add(response.data);
         context.emit('closeEvent', event);

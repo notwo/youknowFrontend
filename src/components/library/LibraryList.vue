@@ -25,7 +25,7 @@ import { useAuth0 } from '@auth0/auth0-vue';
 import LibraryModal from '@/components/modal/LibraryModal.vue';
 import LibraryItem from "@/components/library/LibraryItem.vue";
 import { pagination } from "@/../config.json";
-import { libraryListUrl } from '@/plugin/apis';
+import { libraryApi } from '@/plugin/apis';
 
 export default defineComponent({
   name: 'LibraryList',
@@ -53,9 +53,10 @@ export default defineComponent({
     let canLoadNext = true;
     let currentPage = 1;
 
+    const api = libraryApi();
     const loadNext = async () => {
       const response = await axios.get<LibraryResponse>(
-        libraryListUrl(user.value.sub, pagination.library.content_num, pagination.library.content_num * (currentPage -1))
+        api.listUrl(user.value.sub, pagination.library.content_num, pagination.library.content_num * (currentPage -1))
       );
       if (response.data.next === null) {
         canLoadNext = false;
@@ -80,7 +81,7 @@ export default defineComponent({
       document.documentElement.scrollTop = 0;
 
       const showLibraryList = async () => {
-        await axios.get<LibraryResponse>(libraryListUrl(user.value.sub, pagination.library.content_num))
+        await axios.get<LibraryResponse>(api.listUrl(user.value.sub, pagination.library.content_num))
         .then((response: AxiosResponse) => {
           canLoadNext = (response.data.next !== null);
           LibraryList.value = response.data.results;

@@ -26,7 +26,7 @@ import { useAuth0 } from '@auth0/auth0-vue';
 import KeywordModal from '@/components/modal/KeywordModal.vue';
 import KeywordItem from "@/components/keyword/KeywordItem.vue";
 import { pagination } from "@/../config.json";
-import { keywordListUrl } from '@/plugin/apis';
+import { keywordApi } from '@/plugin/apis';
 
 export default defineComponent({
   name: 'KeywordList',
@@ -54,6 +54,7 @@ export default defineComponent({
     let canLoadNext = true;
     let currentPage = 1;
 
+    const api = keywordApi();
     const route = useRoute();
     const showMoreKeywordList = (event) => {
       // 仮に下限まで残り100px程度になったら自動読み込み
@@ -65,7 +66,7 @@ export default defineComponent({
 
     const loadNext = async () => {
       const response = await axios.get<KeywordResponse>(
-        keywordListUrl(user.value.sub, route.params.library_id, route.params.category_id, pagination.keyword.content_num, pagination.keyword.content_num * (currentPage -1))
+        api.listUrl(user.value.sub, route.params.library_id, route.params.category_id, pagination.keyword.content_num, pagination.keyword.content_num * (currentPage -1))
       );
       if (response.data.next === null) {
         canLoadNext = false;
@@ -82,7 +83,7 @@ export default defineComponent({
       document.documentElement.scrollTop = 0;
 
       const showKeywordList = async () => {
-        await axios.get<KeywordResponse>(keywordListUrl(user.value.sub, route.params.library_id, route.params.category_id, pagination.keyword.content_num))
+        await axios.get<KeywordResponse>(api.listUrl(user.value.sub, route.params.library_id, route.params.category_id, pagination.keyword.content_num))
         .then((response: AxiosResponse) => {
           canLoadNext = (response.data.next !== null);
           KeywordList.value = response.data.results;

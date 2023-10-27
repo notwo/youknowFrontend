@@ -26,7 +26,7 @@ import { useAuth0 } from '@auth0/auth0-vue';
 import CategoryModal from '@/components/modal/CategoryModal.vue';
 import CategoryItem from "@/components/category/CategoryItem.vue";
 import { pagination } from "@/../config.json";
-import { categoryListUrl } from '@/plugin/apis';
+import { categoryApi } from '@/plugin/apis';
 
 export default defineComponent({
   name: 'CategoryList',
@@ -54,6 +54,7 @@ export default defineComponent({
     let canLoadNext = true;
     let currentPage = 1;
 
+    const api = categoryApi();
     const route = useRoute();
     const showMoreCategoryList = (event) => {
       // 仮に下限まで残り100px程度になったら自動読み込み
@@ -65,7 +66,7 @@ export default defineComponent({
 
     const loadNext = async () => {
       const response = await axios.get<CategoryResponse>(
-        categoryListUrl(user.value.sub, route.params.library_id, pagination.category.content_num, pagination.category.content_num * (currentPage -1))
+        api.listUrl(user.value.sub, route.params.library_id, pagination.category.content_num, pagination.category.content_num * (currentPage -1))
       );
       if (response.data.next === null) {
         canLoadNext = false;
@@ -82,7 +83,7 @@ export default defineComponent({
       document.documentElement.scrollTop = 0;
 
       const showCategoryList = async () => {
-        await axios.get<CategoryResponse>(categoryListUrl(user.value.sub, route.params.library_id, pagination.category.content_num))
+        await axios.get<CategoryResponse>(api.listUrl(user.value.sub, route.params.library_id, pagination.category.content_num))
         .then((response: AxiosResponse) => {
           canLoadNext = (response.data.next !== null);
           CategoryList.value = response.data.results;
