@@ -28,6 +28,7 @@ const routes: Array<RouteRecordRaw> = [
       },
     ]
   },
+  { path: '/:matchAll(.*)', name: 'error', component: () => import('../components/views/404.vue') }
 ];
 
 const router = createRouter({
