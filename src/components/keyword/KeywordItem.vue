@@ -4,8 +4,15 @@
       <KeywordEditButton :edit_state="edit_state" :id="id" :title="title" :content="content" />
       <span @click="removeKeyword" class="delete-item" :data-id="id"></span>
     </section>
-    <section class="title">{{ title }}</section>
-    <section class="contents">{{ content }}</section>
+    <router-link :to="{ name: 'keyword', params: {
+        username: String($route.params.username),
+        library_id: $route.params.library_id,
+        category_id: $route.params.category_id,
+        keyword_id: id
+      } }">
+      <section class="title">{{ title }}</section>
+      <section class="contents">{{ content }}</section>
+    </router-link>
   </section>
 </template>
 
@@ -50,7 +57,7 @@ export default defineComponent({
 
       store.remove(props.id); // api実行前に呼ばないとstoreの中身が検索できない
       const id = event.currentTarget.getAttribute('data-id');
-      axios.delete(api.deleteUrl(user.value.sub, route.params.library_id, route.params.category_id, id))
+      axios.delete(api.detailtUrl(user.value.sub, route.params.library_id, route.params.category_id, id))
       .then((response: AxiosResponse) => {
       })
       .catch((e: AxiosError<ErrorResponse>) => {

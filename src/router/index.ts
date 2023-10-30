@@ -28,7 +28,8 @@ const routes: Array<RouteRecordRaw> = [
       },
     ]
   },
-  { path: '/:matchAll(.*)', name: 'error', component: () => import('../components/views/404.vue') }
+  { path: '/:username/libraries/:library_id/categories/:category_id/keywords/:keyword_id', name: 'keyword', component: () => import('../components/keyword/KeywordDetail.vue') },
+  { path: '/:matchAll(.*)', name: 'error', component: () => import('../components/views/404.vue') },
 ];
 
 const router = createRouter({
