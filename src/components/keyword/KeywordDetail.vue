@@ -3,6 +3,7 @@ import { ref, inject, onMounted } from 'vue';
 import axios, { AxiosResponse, AxiosError } from "axios";
 import { useRoute, useRouter } from 'vue-router';
 import { useAuth0 } from '@auth0/auth0-vue';
+import Breadcrumb from '@/components/Breadcrumb.vue';
 import { keywordApi } from '@/plugin/apis';
 
 const { user, isAuthenticated } = useAuth0();
@@ -38,6 +39,7 @@ onMounted(() => {
 </script>
 
 <template>
+  <Breadcrumb />
   <section>keyword詳細</section>
   <section class="title">{{ Keyword.title }}</section>
   <section class="contents">{{ Keyword.content }}</section>

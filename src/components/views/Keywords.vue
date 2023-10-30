@@ -7,6 +7,7 @@ import KeywordList from '@/components/keyword/KeywordList.vue';
 
 <template>
   <DataRegisterModalButton />
+  <Breadcrumb />
   <KeywordSearchForm />
   <KeywordList />
 </template>
