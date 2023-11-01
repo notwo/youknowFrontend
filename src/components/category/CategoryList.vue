@@ -5,14 +5,14 @@
       <CategoryItem
         :edit_state="edit_state"
         v-for="category in CategoryList"
-        :key="category.id"
-        :id="category.id"
-        :title="category.title"
-        :content="category.content"
-        :custom_user="category.custom_user"
-        :custom_user_id="category.custom_user_id"
-        :created_at="category.created_at"
-        :updated_at="category.updated_at"
+          :key="category.id"
+          :id="category.id"
+          :title="category.title"
+          :content="category.content"
+          :custom_user="category.custom_user"
+          :custom_user_id="category.custom_user_id"
+          :created_at="category.created_at"
+          :updated_at="category.updated_at"
       />
     </section>
   </article>
