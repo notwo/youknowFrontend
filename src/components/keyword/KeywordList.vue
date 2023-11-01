@@ -5,14 +5,14 @@
       <KeywordItem
         :edit_state="edit_state"
         v-for="keyword in KeywordList"
-        :key="keyword.id"
-        :id="keyword.id"
-        :title="keyword.title"
-        :content="keyword.content"
-        :custom_user="keyword.custom_user"
-        :custom_user_id="keyword.custom_user_id"
-        :created_at="keyword.created_at"
-        :updated_at="keyword.updated_at"
+          :key="keyword.id"
+          :id="keyword.id"
+          :title="keyword.title"
+          :content="keyword.content"
+          :custom_user="keyword.custom_user"
+          :custom_user_id="keyword.custom_user_id"
+          :created_at="keyword.created_at"
+          :updated_at="keyword.updated_at"
       />
     </section>
   </article>
@@ -87,7 +87,7 @@ export default defineComponent({
         .then((response: AxiosResponse) => {
           canLoadNext = (response.data.next !== null);
           KeywordList.value = response.data.results;
-          store.setItem(response.data.results);
+          store.setItem(KeywordList.value);
         })
         .catch((e: AxiosError<ErrorResponse>) => {
           console.log(`${e.message} ( ${e.name} ) code: ${e.code}`);

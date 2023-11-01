@@ -85,7 +85,7 @@ export default defineComponent({
         .then((response: AxiosResponse) => {
           canLoadNext = (response.data.next !== null);
           LibraryList.value = response.data.results;
-          store.setItem(response.data.results);
+          store.setItem(LibraryList.value);
         })
         .catch((e: AxiosError<ErrorResponse>) => {
         });

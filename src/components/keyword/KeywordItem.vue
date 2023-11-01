@@ -57,7 +57,7 @@ export default defineComponent({
 
       store.remove(props.id); // api実行前に呼ばないとstoreの中身が検索できない
       const id = event.currentTarget.getAttribute('data-id');
-      axios.delete(api.detailtUrl(user.value.sub, route.params.library_id, route.params.category_id, id))
+      axios.delete(api.detailUrl(user.value.sub, route.params.library_id, route.params.category_id, id))
       .then((response: AxiosResponse) => {
       })
       .catch((e: AxiosError<ErrorResponse>) => {

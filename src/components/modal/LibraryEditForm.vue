@@ -61,7 +61,7 @@ export default defineComponent({
         content: document.getElementById('edit_library_content').value
       };
 
-      axios.put(api.detailtUrl(user.value.sub, editStore.id), requestParam)
+      axios.put(api.detailUrl(user.value.sub, editStore.id), requestParam)
       .then((response: AxiosResponse) => {
         store.update(response.data);
         context.emit('closeEvent', event);

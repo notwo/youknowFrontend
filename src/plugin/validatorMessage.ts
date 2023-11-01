@@ -99,3 +99,18 @@ export const editKeywordRules = (defaultVal) => {
     }
   };
 };
+
+export const registerTagRules = () => {
+  return {
+    title: {
+      required: helpers.withMessage(requiredMsg('タグ名'), required),
+      duplicated: helpers.withMessage(duplicateMsg('タグ名'), function (val: String) {
+        // API経由で結果を返却させるように後で修正
+        const _titles = document.getElementsByClassName('title');
+        if (_titles.length <= 0) { return true; }
+        const _target = Array.from(_titles).find((element) => element.innerText === val);
+        return !_target;
+      })
+    }
+  };
+};

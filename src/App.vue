@@ -30,9 +30,11 @@ export default defineComponent({
     const categoryEditStore = editStore;
     const keywordStore = useStore();
     const keywordEditStore = editStore;
+    const tagStore = useStore();
     provide('library', libraryStore);
     provide('category', categoryStore);
     provide('keyword', keywordStore);
+    provide('tag', tagStore);
     provide('libraryEdit', libraryEditStore);
     provide('categoryEdit', categoryEditStore);
     provide('keywordEdit', keywordEditStore);

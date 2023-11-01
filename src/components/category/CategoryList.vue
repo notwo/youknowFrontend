@@ -87,7 +87,7 @@ export default defineComponent({
         .then((response: AxiosResponse) => {
           canLoadNext = (response.data.next !== null);
           CategoryList.value = response.data.results;
-          store.setItem(response.data.results);
+          store.setItem(CategoryList.value);
         })
         .catch((e: AxiosError<ErrorResponse>) => {
           console.log(`${e.message} ( ${e.name} ) code: ${e.code}`);
