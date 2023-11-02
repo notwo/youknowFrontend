@@ -1,12 +1,14 @@
 <script setup lang="ts">
 import { ref, reactive, inject, onMounted } from 'vue';
 import axios, { AxiosResponse, AxiosError } from "axios";
+import { useRoute, useRouter } from 'vue-router';
 import { useVuelidate } from "@vuelidate/core";
 import { registerTagRules } from '@/plugin/validatorMessage';
 import { tagApi } from '@/plugin/apis';
 import { useAuth0 } from '@auth0/auth0-vue';
 
 const { user, isAuthenticated } = useAuth0();
+const route = useRoute();
 const store = inject('tag');
 const api = tagApi();
 
@@ -24,13 +26,15 @@ interface ErrorResponse {
 
 interface TagRequest {
   custom_user: String,
-  title: String
+  title: String,
+  keyword_id: Number
 };
 
 const addTag = (event: HTMLButtonEvent) => {
   const requestParam: TagRequest = {
     custom_user: user.value.sub,
     title: document.getElementById('tag_title').value,
+    keyword_id: Number(route.params.keyword_id)
   };
 
   axios.post(api.createUrl(user.value.sub), requestParam)

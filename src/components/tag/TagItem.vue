@@ -2,6 +2,7 @@
 import { inject } from 'vue';
 import axios, { AxiosResponse, AxiosError } from "axios";
 import { useAuth0 } from '@auth0/auth0-vue';
+import { item } from "@/../config.json";
 import { tagApi } from '@/plugin/apis';
 
 const { user } = useAuth0();
@@ -33,13 +34,15 @@ const removeTag = (event: HTMLButtonEvent) => {
       console.log(`${e.message} ( ${e.name} ) code: ${e.code}`);
     });
 };
+
+const titleView = props.title.length > item.tag.titleMaxLength ? props.title.substring(0, item.tag.titleMaxLength) + '...' : props.title;
 </script>
 
 <style scoped>
 .tag-item-wrap {
   margin: 0.2em;
   padding: 1em;
-  background: rgba(200, 0,0,0.9);
+  background: rgba(221, 26, 26, 0.9);
 }
 </style>
 
@@ -48,6 +51,6 @@ const removeTag = (event: HTMLButtonEvent) => {
     <section>
       <span @click="removeTag" class="delete-item" :data-id="id">☓</span>
     </section>
-    <section class="title">{{ title }}</section>
+    <section class="title">{{ titleView }}</section>
   </section>
 </template>

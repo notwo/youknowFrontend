@@ -12,5 +12,19 @@
     "tag": {
       "content_num": 50
     }
+  },
+  "item": {
+    "library": {
+      "titleMaxLength": 30
+    },
+    "category": {
+      "titleMaxLength": 30
+    },
+    "keyword": {
+      "titleMaxLength": 20
+    },
+    "tag": {
+      "titleMaxLength": 15
+    }
   }
 }
