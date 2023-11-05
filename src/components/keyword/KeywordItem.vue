@@ -12,7 +12,11 @@
       } }">
       <section class="title">{{ title }}</section>
       <section class="contents">{{ content }}</section>
-      <section class="tags">{{ tags }}</section>
+      <section class="tags">
+        <section v-for="tag of tags" :key="tag.id">
+          {{ tag.title }}
+        </section>
+      </section>
     </router-link>
   </section>
 </template>

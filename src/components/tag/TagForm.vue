@@ -4,13 +4,16 @@ import axios, { AxiosResponse, AxiosError } from "axios";
 import { useRoute, useRouter } from 'vue-router';
 import { useVuelidate } from "@vuelidate/core";
 import { registerTagRules } from '@/plugin/validatorMessage';
-import { tagApi } from '@/plugin/apis';
+import { keywordApi, tagApi } from '@/plugin/apis';
 import { useAuth0 } from '@auth0/auth0-vue';
 
 const { user, isAuthenticated } = useAuth0();
 const route = useRoute();
 const store = inject('tag');
-const api = tagApi();
+const api = {
+  keyword: keywordApi(),
+  tag: tagApi()
+};
 
 let register_state = reactive({
   title: '',
@@ -30,6 +33,30 @@ interface TagRequest {
   keyword_id: Number
 };
 
+
+interface KeywordRequest {
+  custom_user: String,
+  tags: Array<Object>
+};
+
+const AttachTag = (tagId: Number) => {
+  const requestParam: KeywordRequest = {
+    custom_user: user.value.sub,
+    tags: store.items.list.map((tag) =>
+      {
+        return { id: tag.id };
+      }
+    ).concat({ id: tagId })
+  };
+
+  axios.patch(api.keyword.detailUrl(user.value.sub, route.params.library_id, route.params.category_id, route.params.keyword_id), requestParam)
+    .then((response: AxiosResponse) => {
+    })
+    .catch((e: AxiosError<ErrorResponse>) => {
+      console.log(`${e.message} ( ${e.name} ) code: ${e.code}`);
+    });
+}
+
 const addTag = (event: HTMLButtonEvent) => {
   const requestParam: TagRequest = {
     custom_user: user.value.sub,
@@ -37,11 +64,12 @@ const addTag = (event: HTMLButtonEvent) => {
     keyword_id: Number(route.params.keyword_id)
   };
 
-  axios.post(api.createUrl(user.value.sub), requestParam)
+  axios.post(api.tag.createUrl(user.value.sub), requestParam)
     .then((response: AxiosResponse) => {
       store.add(response.data);
       register_v$.value.$reset();
       register_state.title = '';
+      AttachTag(response.data.id);
     })
     .catch((e: AxiosError<ErrorResponse>) => {
       console.log(`${e.message} ( ${e.name} ) code: ${e.code}`);

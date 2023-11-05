@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, inject, onMounted } from 'vue';
+import { ref, inject, onMounted, onUnmounted } from 'vue';
 import axios, { AxiosResponse, AxiosError } from "axios";
 import { useRoute, useRouter } from 'vue-router';
 import { useAuth0 } from '@auth0/auth0-vue';
@@ -10,6 +10,7 @@ import TagList from "@/components/tag/TagList.vue";
 const { user, isAuthenticated } = useAuth0();
 const api = keywordApi();
 const route = useRoute();
+const store = inject('tag');
 const Keyword = ref({
   title: '',
   content: ''
@@ -30,13 +31,21 @@ onMounted(() => {
   axios.get<KeywordResponse>(api.detailUrl(user.value.sub, route.params.library_id, route.params.category_id, route.params.keyword_id))
     .then((response: AxiosResponse) => {
       Keyword.value = response.data;
+      store.setItem(Keyword.value.tags);
     })
     .catch((e: AxiosError<ErrorResponse>) => {
       console.log(`${e.message} ( ${e.name} ) code: ${e.code}`);
     });
 });
 
+onUnmounted(() => {
+  store.allClear();
+});
 </script>
+
+<style scoped>
+
+</style>
 
 <template>
   <Breadcrumb />

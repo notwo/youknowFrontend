@@ -59,7 +59,7 @@ export default defineComponent({
     const onSubmit = (event: HTMLButtonEvent) => {
       const requestParam: KeywordRequest = {
         custom_user: user.value.sub,
-        library: route.params.library_id,
+        //library: route.params.library_id,
         title: document.getElementById('edit_keyword_title').value,
         content: document.getElementById('edit_keyword_content').value
       };
