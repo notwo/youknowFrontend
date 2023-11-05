@@ -12,6 +12,7 @@
       } }">
       <section class="title">{{ title }}</section>
       <section class="contents">{{ content }}</section>
+      <section class="tags">{{ tags }}</section>
     </router-link>
   </section>
 </template>
@@ -38,6 +39,7 @@ export default defineComponent({
     custom_user_id: String,
     created_at: String,
     updated_at: String,
+    tags: Array
   },
   setup(props) {
     const { user } = useAuth0();

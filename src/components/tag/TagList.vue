@@ -30,7 +30,6 @@ onMounted(() => {
 
   axios.get<TagResponse>(api.listUrl(user.value.sub, pagination.tag.content_num, pagination.tag.content_num * (currentPage -1)))
     .then((response: AxiosResponse) => {
-      console.log(response)
       TagList.value = response.data.results;
       store.setItem(TagList.value);
     })

@@ -13,6 +13,7 @@
           :custom_user_id="keyword.custom_user_id"
           :created_at="keyword.created_at"
           :updated_at="keyword.updated_at"
+          :tags="keyword.tags"
       />
     </section>
   </article>
