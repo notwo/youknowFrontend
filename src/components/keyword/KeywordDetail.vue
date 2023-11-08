@@ -6,6 +6,7 @@ import { useAuth0 } from '@auth0/auth0-vue';
 import Breadcrumb from '@/components/Breadcrumb.vue';
 import { keywordApi } from '@/plugin/apis';
 import TagList from "@/components/tag/TagList.vue";
+import UnattachedTagList from "@/components/tag/UnattachedTagList.vue";
 
 const { user, isAuthenticated } = useAuth0();
 const api = keywordApi();
@@ -49,8 +50,8 @@ onUnmounted(() => {
 
 <template>
   <Breadcrumb />
-  <section>keyword詳細</section>
   <section class="title">{{ Keyword.title }}</section>
   <section class="contents">{{ Keyword.content }}</section>
   <TagList />
+  <UnattachedTagList />
 </template>

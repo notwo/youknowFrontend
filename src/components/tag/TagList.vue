@@ -1,8 +1,6 @@
 <script setup lang="ts">
-import { ref, inject, onMounted } from 'vue';
+import { inject, onMounted } from 'vue';
 import { useAuth0 } from '@auth0/auth0-vue';
-import { pagination } from "@/../config.json";
-import { keywordApi } from '@/plugin/apis';
 import TagItem from "@/components/tag/TagItem.vue";
 import TagForm from "@/components/tag/TagForm.vue";
 

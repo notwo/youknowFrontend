@@ -81,7 +81,10 @@ export function keywordApi() {
 };
 
 export function tagApi() {
-  function listUrl(user_id: String, content_num: Number, page: Number = 0) {
+  function listUrl(user_id: String, keyword_id: Number, content_num: Number, page: Number = 0) {
+    if (keyword_id > 1) {
+      return `${apiBaseUrl}/api/users/${user_id}/tags?limit=${content_num}&offset=${page}&keyword_id=${keyword_id}`;
+    }
     return `${apiBaseUrl}/api/users/${user_id}/tags?limit=${content_num}&offset=${page}`;
   }
   function createUrl(user_id: String) {
