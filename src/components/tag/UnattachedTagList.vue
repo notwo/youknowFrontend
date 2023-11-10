@@ -6,6 +6,7 @@ import { useAuth0 } from '@auth0/auth0-vue';
 import UnattachedTagItem from "@/components/tag/UnattachedTagItem.vue";
 import { pagination } from "@/../config.json";
 import { tagApi } from '@/plugin/apis';
+import AttachTagButton from "@/components/tag/AttachTagButton.vue";
 
 const { user, isAuthenticated } = useAuth0();
 const route = useRoute();
@@ -50,7 +51,7 @@ onMounted(() => {
 </style>
 
 <template>
-  <article id="unattached-tag-list">
+  <article id="unattached-tag-list" v-if="TagList.length > 0">
     <section class="">未登録のタグ</section>
     <section class="unattached-tag-item">
       <UnattachedTagItem
@@ -62,5 +63,6 @@ onMounted(() => {
           :custom_user_id="tag.custom_user_id"
       />
     </section>
+    <AttachTagButton />
   </article>
 </template>

@@ -40,6 +40,12 @@ export function useStore() {
     backupList.splice(_removeIndex, 1);
   }
 
+  function removeList<T>(ids: T[]) {
+    ids.map((_id: object) => {
+      remove(_id);
+    });
+  }
+
   function search<T>(list: T[]) {
     allClear();
     list.map((_obj: object) => {
@@ -70,7 +76,7 @@ export function useStore() {
     console.log(items);
   }
 
-  return { items: readonly(items), setItem, add, concat, update, remove, search, restore, isSearched, allClear, confirmItems };
+  return { items: readonly(items), setItem, add, concat, update, remove, removeList, search, restore, isSearched, allClear, confirmItems };
 };
 
 export const editStore = reactive({

@@ -19,6 +19,7 @@ interface ErrorResponse {
 };
 
 const removeTag = (event: HTMLButtonEvent) => {
+  event.stopPropagation();
   if (!window.confirm(`タグ「${props.title}」が削除されますが宜しいですか？`)) {
     return;
   }
@@ -33,6 +34,23 @@ const removeTag = (event: HTMLButtonEvent) => {
     });
 };
 
+const selectTag = (event: HTMLButtonEvent) => {
+  event.stopPropagation();
+
+  if (event.currentTarget.classList.contains('selected')) {
+    event.currentTarget.classList.remove('selected');
+  } else {
+    event.currentTarget.classList.add('selected');
+  }
+
+  const selectedTags = document.getElementsByClassName('selected');
+  if (selectedTags.length > 0) {
+    document.getElementById('attachButton').removeAttribute('disabled');
+  } else {
+    document.getElementById('attachButton').setAttribute('disabled', '');
+  }
+};
+
 const titleView = props.title.length > item.tag.titleMaxLength ? props.title.substring(0, item.tag.titleMaxLength) + '...' : props.title;
 </script>
 
@@ -42,10 +60,16 @@ const titleView = props.title.length > item.tag.titleMaxLength ? props.title.sub
   padding: 1em;
   background: rgba(221, 26, 26, 0.9);
 }
+
+.tag-item-wrap.selected {
+  margin: 0.2em;
+  padding: 1em;
+  background: rgba(47, 7, 225, 0.9);
+}
 </style>
 
 <template>
-  <section class="tag-item-wrap">
+  <section class="tag-item-wrap" @click="selectTag" :data-id="id">
     <section>
       <span @click="removeTag" class="delete-item" :data-id="id">☓</span>
     </section>

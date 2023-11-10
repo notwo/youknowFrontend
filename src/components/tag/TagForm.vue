@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { ref, reactive, inject, onMounted } from 'vue';
 import axios, { AxiosResponse, AxiosError } from "axios";
+import { useAuth0 } from '@auth0/auth0-vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useVuelidate } from "@vuelidate/core";
 import { registerTagRules } from '@/plugin/validatorMessage';
 import { keywordApi, tagApi } from '@/plugin/apis';
-import { useAuth0 } from '@auth0/auth0-vue';
 
 const { user, isAuthenticated } = useAuth0();
 const route = useRoute();
