@@ -59,12 +59,12 @@ export default defineComponent({
     const onSubmit = (event: HTMLButtonEvent) => {
       const requestParam: KeywordRequest = {
         custom_user: user.value.sub,
-        library: route.params.library_id,
+        //library: route.params.library_id,
         title: document.getElementById('edit_keyword_title').value,
         content: document.getElementById('edit_keyword_content').value
       };
 
-      axios.put(api.detailtUrl(user.value.sub, route.params.library_id, route.params.category_id, editStore.id), requestParam)
+      axios.patch(api.detailUrl(user.value.sub, route.params.library_id, route.params.category_id, editStore.id), requestParam)
       .then((response: AxiosResponse) => {
         store.update(response.data);
         context.emit('closeEvent', event);

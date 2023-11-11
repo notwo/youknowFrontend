@@ -5,14 +5,14 @@
       <LibraryItem
         :edit_state="edit_state"
         v-for="library in LibraryList"
-        :key="library.id"
-        :id="library.id"
-        :title="library.title"
-        :content="library.content"
-        :custom_user="library.custom_user"
-        :custom_user_id="library.custom_user_id"
-        :created_at="library.created_at"
-        :updated_at="library.updated_at"
+          :key="library.id"
+          :id="library.id"
+          :title="library.title"
+          :content="library.content"
+          :custom_user="library.custom_user"
+          :custom_user_id="library.custom_user_id"
+          :created_at="library.created_at"
+          :updated_at="library.updated_at"
       />
     </section>
   </article>
@@ -85,7 +85,7 @@ export default defineComponent({
         .then((response: AxiosResponse) => {
           canLoadNext = (response.data.next !== null);
           LibraryList.value = response.data.results;
-          store.setItem(response.data.results);
+          store.setItem(LibraryList.value);
         })
         .catch((e: AxiosError<ErrorResponse>) => {
         });

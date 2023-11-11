@@ -12,6 +12,11 @@
       } }">
       <section class="title">{{ title }}</section>
       <section class="contents">{{ content }}</section>
+      <section class="tags">
+        <section v-for="tag of tags" :key="tag.id">
+          {{ tag.title }}
+        </section>
+      </section>
     </router-link>
   </section>
 </template>
@@ -38,6 +43,7 @@ export default defineComponent({
     custom_user_id: String,
     created_at: String,
     updated_at: String,
+    tags: Array
   },
   setup(props) {
     const { user } = useAuth0();
@@ -57,7 +63,7 @@ export default defineComponent({
 
       store.remove(props.id); // api実行前に呼ばないとstoreの中身が検索できない
       const id = event.currentTarget.getAttribute('data-id');
-      axios.delete(api.detailtUrl(user.value.sub, route.params.library_id, route.params.category_id, id))
+      axios.delete(api.detailUrl(user.value.sub, route.params.library_id, route.params.category_id, id))
       .then((response: AxiosResponse) => {
       })
       .catch((e: AxiosError<ErrorResponse>) => {
