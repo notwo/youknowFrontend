@@ -33,8 +33,8 @@ const AttachTag = () => {
 
   const requestParam: KeywordRequest = {
     custom_user: user.value.sub,
-    tags: tagIds.concat(unattachedTagIds.map((tag_id) => {
-      return { id: tag_id }
+    tags: tagIds.concat(unattachedTagIds.map((_tagId) => {
+      return { id: _tagId }
     }))
   };
 

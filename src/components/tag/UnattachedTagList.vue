@@ -51,7 +51,7 @@ onMounted(() => {
 </style>
 
 <template>
-  <article id="unattached-tag-list" v-if="TagList.length > 0">
+  <article id="unattached-tag-list">
     <section class="">未登録のタグ</section>
     <section class="unattached-tag-item">
       <UnattachedTagItem

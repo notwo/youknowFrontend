@@ -2,11 +2,20 @@
 import { inject } from 'vue';
 import axios, { AxiosResponse, AxiosError } from "axios";
 import { useAuth0 } from '@auth0/auth0-vue';
+import { useRoute, useRouter } from 'vue-router';
 import { item } from "@/../config.json";
-import { tagApi } from '@/plugin/apis';
+import { keywordApi } from '@/plugin/apis';
 
+const route = useRoute();
 const { user } = useAuth0();
+const api = keywordApi();
+const tagStore = inject('tag');
+const unattachedTagStore = inject('unattachedTag');
 
+interface KeywordRequest {
+  custom_user: String,
+  content: String
+};
 interface ErrorResponse {
   message: String,
   name: String,
@@ -18,17 +27,25 @@ const props = defineProps({
   title: String
 });
 
-const api = tagApi();
-const store = inject('tag');
-const removeTag = (event: HTMLButtonEvent) => {
-  if (!window.confirm(`タグ「${props.title}」が削除されますが宜しいですか？`)) {
-    return;
-  }
+const unattachTag = (event: HTMLButtonEvent) => {
+  const tagId = event.currentTarget.getAttribute('data-id');
+  const tagIds = tagStore.items.list.map((tag) =>
+    {
+      return { id: tag.id };
+    }
+  );
 
-  store.remove(props.id); // api実行前に呼ばないとstoreの中身が検索できない
-  const id = event.currentTarget.getAttribute('data-id');
-  axios.delete(api.detailUrl(user.value.sub, id))
+  const unattachTargetTag = tagStore.items.list.filter(tag => tag.id === Number(tagId));
+ 
+  const requestParam: KeywordRequest = {
+    custom_user: user.value.sub,
+    tags: tagIds.filter(_tagId => _tagId.id !== Number(tagId))
+  };
+
+  axios.patch(api.detailUrl(user.value.sub, route.params.library_id, route.params.category_id, route.params.keyword_id), requestParam)
     .then((response: AxiosResponse) => {
+      tagStore.setItem(response.data.tags);
+      unattachedTagStore.concat(unattachTargetTag);
     })
     .catch((e: AxiosError<ErrorResponse>) => {
       console.log(`${e.message} ( ${e.name} ) code: ${e.code}`);
@@ -49,7 +66,7 @@ const titleView = props.title.length > item.tag.titleMaxLength ? props.title.sub
 <template>
   <section class="tag-item-wrap">
     <section>
-      <span @click="removeTag" class="delete-item" :data-id="id">☓</span>
+      <span @click="unattachTag" class="delete-item" :data-id="id">☓</span>
     </section>
     <section class="title">{{ titleView }}</section>
   </section>
