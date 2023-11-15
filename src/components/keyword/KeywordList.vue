@@ -88,14 +88,13 @@ export default defineComponent({
 
       const showKeywordList = async () => {
         await axios.get<KeywordResponse>(
-          //api.listUrl(user.value.sub, route.params.library_id, route.params.category_id, pagination.keyword.content_num)
           cApi.detailUrl(user.value.sub, route.params.library_id, route.params.category_id)
         )
         .then((response: AxiosResponse) => {
-          canLoadNext = (response.data.keywords.length >= pagination.keyword.content_num);
+          canLoadNext = (response.data.paginated_keywords.next);
           titlesStore.setLibrary(response.data.library_title);
           titlesStore.setCategory(response.data.title);
-          KeywordList.value = response.data.paginated_keywords;
+          KeywordList.value = response.data.paginated_keywords.data;
           store.setItem(KeywordList.value);
         })
         .catch((e: AxiosError<ErrorResponse>) => {

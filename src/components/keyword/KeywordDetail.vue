@@ -30,7 +30,9 @@ onMounted(() => {
     location.href = window.location.origin;
   }
 
-  axios.get<KeywordResponse>(api.detailUrl(user.value.sub, route.params.library_id, route.params.category_id, route.params.keyword_id))
+  axios.get<KeywordResponse>(
+      api.detailUrl(user.value.sub, route.params.library_id, route.params.category_id, route.params.keyword_id)
+    )
     .then((response: AxiosResponse) => {
       titlesStore.setKeyword(response.data.title);
       Keyword.value = response.data;

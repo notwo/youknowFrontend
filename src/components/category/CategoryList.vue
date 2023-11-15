@@ -26,7 +26,7 @@ import { useAuth0 } from '@auth0/auth0-vue';
 import CategoryModal from '@/components/modal/CategoryModal.vue';
 import CategoryItem from "@/components/category/CategoryItem.vue";
 import { pagination } from "@/../config.json";
-import { categoryApi } from '@/plugin/apis';
+import { libraryApi, categoryApi } from '@/plugin/apis';
 
 export default defineComponent({
   name: 'CategoryList',
@@ -38,6 +38,7 @@ export default defineComponent({
     const { user, isAuthenticated } = useAuth0();
     const CategoryList = ref([]);
     const store = inject('category');
+    const titlesStore = inject('titles');
 
     let edit_state = reactive({
       title: '',
@@ -55,6 +56,7 @@ export default defineComponent({
     let currentPage = 1;
 
     const api = categoryApi();
+    const lApi = libraryApi();
     const route = useRoute();
     const showMoreCategoryList = (event) => {
       // 仮に下限まで残り100px程度になったら自動読み込み
@@ -83,10 +85,13 @@ export default defineComponent({
       document.documentElement.scrollTop = 0;
 
       const showCategoryList = async () => {
-        await axios.get<CategoryResponse>(api.listUrl(user.value.sub, route.params.library_id, pagination.category.content_num))
+        await axios.get<CategoryResponse>(
+          lApi.detailUrl(user.value.sub, route.params.library_id)
+        )
         .then((response: AxiosResponse) => {
-          canLoadNext = (response.data.next !== null);
-          CategoryList.value = response.data.results;
+          canLoadNext = (response.data.paginated_categories.next);
+          titlesStore.setLibrary(response.data.title);
+          CategoryList.value = response.data.paginated_categories.data;
           store.setItem(CategoryList.value);
         })
         .catch((e: AxiosError<ErrorResponse>) => {
