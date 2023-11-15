@@ -63,10 +63,12 @@ export default defineComponent({
         library: route.params.library_id,
         category: route.params.category_id,
         title: document.getElementById('keyword_title').value,
-        content: document.getElementById('keyword_content').value
+        content: document.getElementById('keyword_content').value,
+        tags: []
       };
+      console.log(requestParam)
 
-      axios.post(api.createUrl(user.value.sub, route.params.library_id, user.value.sub, route.params.category_id), requestParam)
+      axios.post(api.createUrl(user.value.sub, route.params.library_id, route.params.category_id), requestParam)
       .then((response: AxiosResponse) => {
         store.add(response.data);
         context.emit('closeEvent', event);

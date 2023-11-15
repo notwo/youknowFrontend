@@ -84,3 +84,23 @@ export const editStore = reactive({
   title: String,
   content: String
 });
+
+export function titles() {
+  let library = ref('');
+  let category = ref('');
+  let keyword = ref('');
+
+  function setLibrary(val) {
+    library.value = val;
+  }
+
+  function setCategory(val) {
+    category.value = val;
+  }
+
+  function setKeyword(val) {
+    keyword.value = val;
+  }
+
+  return { library: readonly(library), category: readonly(category), keyword: readonly(keyword), setLibrary, setCategory, setKeyword };
+};

@@ -12,6 +12,7 @@ const { user, isAuthenticated } = useAuth0();
 const api = keywordApi();
 const route = useRoute();
 const store = inject('tag');
+const titlesStore = inject('titles');
 const Keyword = ref({
   title: '',
   content: ''
@@ -31,6 +32,7 @@ onMounted(() => {
 
   axios.get<KeywordResponse>(api.detailUrl(user.value.sub, route.params.library_id, route.params.category_id, route.params.keyword_id))
     .then((response: AxiosResponse) => {
+      titlesStore.setKeyword(response.data.title);
       Keyword.value = response.data;
       store.setItem(Keyword.value.tags);
     })
