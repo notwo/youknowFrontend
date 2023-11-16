@@ -1,5 +1,5 @@
 <template>
-  <section class="library-item-wrap">
+  <section class="library-item-wrap tooltip-content">
     <section>
       <LibraryEditButton :edit_state="edit_state" :id="id" :title="title" :content="content" />
       <span @click="removeLibrary" class="delete-item" :data-id="id"></span>
@@ -9,6 +9,7 @@
       <section class="contents">{{ content }}</section>
     </router-link>
   </section>
+  <Tooltip :title="title" />
 </template>
 
 <script lang="ts">
@@ -17,11 +18,13 @@ import axios, { AxiosResponse, AxiosError } from "axios";
 import { useAuth0 } from '@auth0/auth0-vue';
 import LibraryEditButton from "@/components/library/LibraryEditButton.vue";
 import { libraryApi } from '@/plugin/apis';
+import Tooltip from '@/components/Tooltip.vue';
 
 export default defineComponent({
   name: 'LibraryItem',
   components: {
-    LibraryEditButton
+    LibraryEditButton,
+    Tooltip
   },
   props: {
     edit_state: Object,

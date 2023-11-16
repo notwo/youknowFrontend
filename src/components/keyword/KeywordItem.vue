@@ -1,5 +1,5 @@
 <template>
-  <section class="keyword-item-wrap">
+  <section class="keyword-item-wrap tooltip-content">
     <section>
       <KeywordEditButton :edit_state="edit_state" :id="id" :title="title" :content="content" />
       <span @click="removeKeyword" class="delete-item" :data-id="id"></span>
@@ -19,6 +19,7 @@
       </section>
     </router-link>
   </section>
+  <Tooltip :title="title" />
 </template>
 
 <script lang="ts">
@@ -28,11 +29,13 @@ import { useRoute, useRouter } from 'vue-router';
 import { useAuth0 } from '@auth0/auth0-vue';
 import KeywordEditButton from "@/components/keyword/KeywordEditButton.vue";
 import { keywordApi } from '@/plugin/apis';
+import Tooltip from '@/components/Tooltip.vue';
 
 export default defineComponent({
   name: 'KeywordItem',
   components: {
-    KeywordEditButton
+    KeywordEditButton,
+    Tooltip
   },
   props: {
     edit_state: Object,
