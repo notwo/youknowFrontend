@@ -92,8 +92,8 @@ export default defineComponent({
         )
         .then((response: AxiosResponse) => {
           canLoadNext = (response.data.paginated_keywords.next);
-          titlesStore.setLibrary(response.data.library_title);
-          titlesStore.setCategory(response.data.title);
+          titlesStore.setLibrary(`「${response.data.library_title}」のカテゴリ`);
+          titlesStore.setCategory(`「${response.data.title}」のキーワード`);
           KeywordList.value = response.data.paginated_keywords.data;
           store.setItem(KeywordList.value);
         })

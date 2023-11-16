@@ -3,7 +3,7 @@ import { ref, reactive, readonly } from "vue";
 export function useStore() {
   const items = reactive({ list: [] });
   let backupList: Array<Object> = [];
-  let searched = ref(false);
+  const searched = ref(false);
 
   function setItem<T>(list: T[]) {
     items.list = ref(list);
@@ -25,8 +25,8 @@ export function useStore() {
   }
 
   function update<T>(item: T) {
-    let _target = items.list.filter(_obj => _obj.id === item.id);
-    let _updateIndex = items.list.indexOf(_target[0]);
+    const _target = items.list.filter(_obj => _obj.id === item.id);
+    const _updateIndex = items.list.indexOf(_target[0]);
     items.list.splice(_updateIndex, 1, item);
   }
 
@@ -86,9 +86,9 @@ export const editStore = reactive({
 });
 
 export function titles() {
-  let library = ref('');
-  let category = ref('');
-  let keyword = ref('');
+  const library = ref('');
+  const category = ref('');
+  const keyword = ref('');
 
   function setLibrary(val) {
     library.value = val;

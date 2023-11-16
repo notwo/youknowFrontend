@@ -90,7 +90,7 @@ export default defineComponent({
         )
         .then((response: AxiosResponse) => {
           canLoadNext = (response.data.paginated_categories.next);
-          titlesStore.setLibrary(response.data.title);
+          titlesStore.setLibrary(`「${response.data.title}」のカテゴリ`);
           CategoryList.value = response.data.paginated_categories.data;
           store.setItem(CategoryList.value);
         })
