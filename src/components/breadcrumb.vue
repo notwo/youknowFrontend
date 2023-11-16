@@ -1,40 +1,42 @@
 <script setup lang="ts">
+import { inject, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 const route = useRoute();
+const titlesStore = inject('titles');
 
-const breadcrumbString = [
+const breadcrumbString = ref([
   {
     name: 'top',
     pattern: `^\/`,
     params: {},
-    text: 'TOP',
+    text: 'TOP'
   },
   {
     name: 'libraries',
     pattern: '^\/.+\/libraries',
     params: { username: String(route.params.username) },
-    text: 'ライブラリ',
+    text: 'ライブラリ'
   },
   {
     name: 'categories',
     pattern: '^\/.+\/libraries\/[0-9]+\/categories',
     params: { username: String(route.params.username), library_id: route.params.library_id },
-    text: 'カテゴリ',
+    text: titlesStore.library
   },
   {
     name: 'keywords',
     pattern: '^\/.+\/libraries\/[0-9]+\/categories\/[0-9]+\/keywords',
     params: { username: String(route.params.username), library_id: route.params.library_id, category_id: route.params.category_id },
-    text: 'キーワード',
+    text: titlesStore.category
   },
   {
     name: 'keyword',
     pattern: '^\/.+\/libraries\/[0-9]+\/categories\/[0-9]+\/keywords\/[0-9]+',
     params: { username: String(route.params.username), library_id: route.params.library_id, category_id: route.params.category_id, keyword_id: route.params.keyword_id },
-    text: 'キーワード詳細',
+    text: titlesStore.keyword
   },
-];
+]);
 
 const fullPath = route.fullPath;
 </script>

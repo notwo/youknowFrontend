@@ -27,7 +27,7 @@ import { useAuth0 } from '@auth0/auth0-vue';
 import KeywordModal from '@/components/modal/KeywordModal.vue';
 import KeywordItem from "@/components/keyword/KeywordItem.vue";
 import { pagination } from "@/../config.json";
-import { keywordApi } from '@/plugin/apis';
+import { categoryApi, keywordApi } from '@/plugin/apis';
 
 export default defineComponent({
   name: 'KeywordList',
@@ -39,6 +39,7 @@ export default defineComponent({
     const { user, isAuthenticated } = useAuth0();
     const KeywordList = ref([]);
     const store = inject('keyword');
+    const titlesStore = inject('titles');
 
     let edit_state = reactive({
       title: '',
@@ -56,7 +57,9 @@ export default defineComponent({
     let currentPage = 1;
 
     const api = keywordApi();
+    const cApi = categoryApi();
     const route = useRoute();
+
     const showMoreKeywordList = (event) => {
       // 仮に下限まで残り100px程度になったら自動読み込み
       if (document.body.scrollHeight - document.body.clientHeight - window.scrollY <= 100 && canLoadNext && !store.isSearched()) {
@@ -84,10 +87,14 @@ export default defineComponent({
       document.documentElement.scrollTop = 0;
 
       const showKeywordList = async () => {
-        await axios.get<KeywordResponse>(api.listUrl(user.value.sub, route.params.library_id, route.params.category_id, pagination.keyword.content_num))
+        await axios.get<KeywordResponse>(
+          cApi.detailUrl(user.value.sub, route.params.library_id, route.params.category_id)
+        )
         .then((response: AxiosResponse) => {
-          canLoadNext = (response.data.next !== null);
-          KeywordList.value = response.data.results;
+          canLoadNext = (response.data.paginated_keywords.next);
+          titlesStore.setLibrary(`「${response.data.library_title}」のカテゴリ`);
+          titlesStore.setCategory(`「${response.data.title}」のキーワード`);
+          KeywordList.value = response.data.paginated_keywords.data;
           store.setItem(KeywordList.value);
         })
         .catch((e: AxiosError<ErrorResponse>) => {

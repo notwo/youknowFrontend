@@ -16,7 +16,7 @@
 
 <script lang="ts">
 import { defineComponent, provide } from "vue";
-import { useStore, editStore } from '@/store/index';
+import { useStore, editStore, titleStore, titles } from '@/store/index';
 import NavigationHeader from "@/components/NavigationHeader.vue";
 import FooterInformation from "@/components/FooterInformation.vue";
 
@@ -32,6 +32,7 @@ export default defineComponent({
     const keywordEditStore = editStore;
     const tagStore = useStore();
     const unattachedTagStore = useStore();
+    const titlesStore = titles();
     provide('library', libraryStore);
     provide('category', categoryStore);
     provide('keyword', keywordStore);
@@ -40,6 +41,7 @@ export default defineComponent({
     provide('libraryEdit', libraryEditStore);
     provide('categoryEdit', categoryEditStore);
     provide('keywordEdit', keywordEditStore);
+    provide('titles', titlesStore);
   }
 });
 
