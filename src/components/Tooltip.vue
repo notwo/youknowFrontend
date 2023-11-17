@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const props = defineProps({
-  title: String
+  message: String
 });
 
 const tooltipContents = document.querySelectorAll('.tooltip-content');
@@ -43,7 +43,7 @@ tooltipContents.forEach((content) => {
 
 <template>
   <section class="tooltip">
-    <section class="message">{{ props.title }}</section>
+    <section class="message">{{ props.message }}</section>
     <section class="tooltip-box"></section>
   </section>
 </template>

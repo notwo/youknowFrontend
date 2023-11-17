@@ -15,13 +15,16 @@
   },
   "item": {
     "library": {
-      "titleMaxLength": 20
+      "titleMaxLength": 20,
+      "contentMaxLength": 20
     },
     "category": {
-      "titleMaxLength": 20
+      "titleMaxLength": 20,
+      "contentMaxLength": 20
     },
     "keyword": {
-      "titleMaxLength": 20
+      "titleMaxLength": 20,
+      "contentMaxLength": 20
     },
     "tag": {
       "titleMaxLength": 15

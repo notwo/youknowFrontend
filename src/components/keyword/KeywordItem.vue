@@ -11,7 +11,7 @@
         keyword_id: id
       } }">
       <section class="title">{{ titleView }}</section>
-      <section class="contents">{{ content }}</section>
+      <section class="contents">{{ contentView }}</section>
       <section class="tags">
         <section v-for="tag of tags" :key="tag.id">
           {{ tag.title }}
@@ -19,7 +19,7 @@
       </section>
     </router-link>
   </section>
-  <Tooltip :title="title" />
+  <Tooltip :message="title" />
 </template>
 
 <script lang="ts">
@@ -76,10 +76,12 @@ export default defineComponent({
     };
 
     const titleView = props.title.length > item.keyword.titleMaxLength ? props.title.substring(0, item.keyword.titleMaxLength) + '...' : props.title;
+    const contentView = props.content.length > item.library.contentMaxLength ? props.content.substring(0, item.library.contentMaxLength) + '...' : props.content;
 
     return {
       user,
       titleView,
+      contentView,
       removeKeyword
     };
   }

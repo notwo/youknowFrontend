@@ -6,10 +6,10 @@
     </section>
     <router-link :to="{ name: 'keywords', params: { username: String($route.params.username), library_id: $route.params.library_id, category_id: id } }">
       <section class="title">{{ titleView }}</section>
-      <section class="contents">{{ content }}</section>
+      <section class="contents">{{ contentView }}</section>
     </router-link>
   </section>
-  <Tooltip :title="title" />
+  <Tooltip :message="title" />
 </template>
 
 <script lang="ts">
@@ -66,9 +66,11 @@ export default defineComponent({
     };
 
     const titleView = props.title.length > item.library.titleMaxLength ? props.title.substring(0, item.library.titleMaxLength) + '...' : props.title;
+    const contentView = props.content.length > item.library.contentMaxLength ? props.content.substring(0, item.library.contentMaxLength) + '...' : props.content;
 
     return {
       titleView,
+      contentView,
       removeCategory
     };
   }
