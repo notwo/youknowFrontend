@@ -5,7 +5,7 @@
       <span @click="removeLibrary" class="delete-item" :data-id="id"></span>
     </section>
     <router-link :to="{ name: 'categories', params: { username: String($route.params.username), library_id: id } }">
-      <section class="title">{{ title }}</section>
+      <section class="title">{{ titleView }}</section>
       <section class="contents">{{ content }}</section>
     </router-link>
   </section>
@@ -18,6 +18,7 @@ import axios, { AxiosResponse, AxiosError } from "axios";
 import { useAuth0 } from '@auth0/auth0-vue';
 import LibraryEditButton from "@/components/library/LibraryEditButton.vue";
 import { libraryApi } from '@/plugin/apis';
+import { item } from "@/../config.json";
 import Tooltip from '@/components/Tooltip.vue';
 
 export default defineComponent({
@@ -62,8 +63,11 @@ export default defineComponent({
       });
     };
 
+    const titleView = props.title.length > item.library.titleMaxLength ? props.title.substring(0, item.library.titleMaxLength) + '...' : props.title;
+
     return {
       user,
+      titleView,
       removeLibrary
     };
   },

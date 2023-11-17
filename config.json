@@ -15,10 +15,10 @@
   },
   "item": {
     "library": {
-      "titleMaxLength": 30
+      "titleMaxLength": 20
     },
     "category": {
-      "titleMaxLength": 30
+      "titleMaxLength": 20
     },
     "keyword": {
       "titleMaxLength": 20
