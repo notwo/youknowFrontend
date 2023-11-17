@@ -1,5 +1,5 @@
 <template>
-  <section class="keyword-item-wrap">
+  <section class="keyword-item-wrap tooltip-content">
     <section>
       <KeywordEditButton :edit_state="edit_state" :id="id" :title="title" :content="content" />
       <span @click="removeKeyword" class="delete-item" :data-id="id"></span>
@@ -10,8 +10,8 @@
         category_id: $route.params.category_id,
         keyword_id: id
       } }">
-      <section class="title">{{ title }}</section>
-      <section class="contents">{{ content }}</section>
+      <section class="title">{{ titleView }}</section>
+      <section class="contents">{{ contentView }}</section>
       <section class="tags">
         <section v-for="tag of tags" :key="tag.id">
           {{ tag.title }}
@@ -19,6 +19,7 @@
       </section>
     </router-link>
   </section>
+  <Tooltip :message="title" />
 </template>
 
 <script lang="ts">
@@ -28,11 +29,14 @@ import { useRoute, useRouter } from 'vue-router';
 import { useAuth0 } from '@auth0/auth0-vue';
 import KeywordEditButton from "@/components/keyword/KeywordEditButton.vue";
 import { keywordApi } from '@/plugin/apis';
+import { item } from "@/../config.json";
+import Tooltip from '@/components/Tooltip.vue';
 
 export default defineComponent({
   name: 'KeywordItem',
   components: {
-    KeywordEditButton
+    KeywordEditButton,
+    Tooltip
   },
   props: {
     edit_state: Object,
@@ -71,8 +75,13 @@ export default defineComponent({
       });
     };
 
+    const titleView = props.title.length > item.keyword.titleMaxLength ? props.title.substring(0, item.keyword.titleMaxLength) + '...' : props.title;
+    const contentView = props.content.length > item.library.contentMaxLength ? props.content.substring(0, item.library.contentMaxLength) + '...' : props.content;
+
     return {
       user,
+      titleView,
+      contentView,
       removeKeyword
     };
   }

@@ -1,14 +1,15 @@
 <template>
-  <section class="library-item-wrap">
+  <section class="library-item-wrap tooltip-content">
     <section>
       <LibraryEditButton :edit_state="edit_state" :id="id" :title="title" :content="content" />
       <span @click="removeLibrary" class="delete-item" :data-id="id"></span>
     </section>
     <router-link :to="{ name: 'categories', params: { username: String($route.params.username), library_id: id } }">
-      <section class="title">{{ title }}</section>
-      <section class="contents">{{ content }}</section>
+      <section class="title">{{ titleView }}</section>
+      <section class="contents">{{ contentView }}</section>
     </router-link>
   </section>
+  <Tooltip :message="title" />
 </template>
 
 <script lang="ts">
@@ -17,11 +18,14 @@ import axios, { AxiosResponse, AxiosError } from "axios";
 import { useAuth0 } from '@auth0/auth0-vue';
 import LibraryEditButton from "@/components/library/LibraryEditButton.vue";
 import { libraryApi } from '@/plugin/apis';
+import { item } from "@/../config.json";
+import Tooltip from '@/components/Tooltip.vue';
 
 export default defineComponent({
   name: 'LibraryItem',
   components: {
-    LibraryEditButton
+    LibraryEditButton,
+    Tooltip
   },
   props: {
     edit_state: Object,
@@ -59,8 +63,13 @@ export default defineComponent({
       });
     };
 
+    const titleView = props.title.length > item.library.titleMaxLength ? props.title.substring(0, item.library.titleMaxLength) + '...' : props.title;
+    const contentView = props.content.length > item.library.contentMaxLength ? props.content.substring(0, item.library.contentMaxLength) + '...' : props.content;
+
     return {
       user,
+      titleView,
+      contentView,
       removeLibrary
     };
   },
