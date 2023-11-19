@@ -1,5 +1,5 @@
 <template>
-  <header>
+  <header class="header">
     <nav class="menu-wrap">
       <section class="flex-contents">
         <section class="service-icon">サービスアイコン</section>
@@ -10,20 +10,38 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, onMounted, onUnmounted } from 'vue'
 import MenuItem from "@/components/MenuItem.vue";
 
 export default defineComponent({
-  name: 'Login',
+  name: 'NavigationHeader',
   components: {
     MenuItem,
   },
-  setup() {}
+  setup() {
+    const nav = document.getElementsByTagName('nav');
+    const navigationTracking = () => {
+      const height = nav[0].clientHeight;
+      const navOffsetTop = window.scrollY;
+      if (navOffsetTop >= height / 2) {
+        nav[0].classList.add('fixed');
+      } else {
+        nav[0].classList.remove('fixed');
+      }
+    };
+    onMounted(() => {
+      window.addEventListener("scroll", navigationTracking, false);
+    });
+
+    onUnmounted(() => {
+      window.removeEventListener('scroll', navigationTracking, false);
+    });
+  }
 });
 </script>
 
 <style scoped>
-header.fixed {
+nav.fixed {
   position: fixed;
 }
 
