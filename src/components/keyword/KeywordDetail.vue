@@ -7,6 +7,7 @@ import Breadcrumb from '@/components/Breadcrumb.vue';
 import { keywordApi } from '@/plugin/apis';
 import TagList from "@/components/tag/TagList.vue";
 import UnattachedTagList from "@/components/tag/UnattachedTagList.vue";
+import ScrollToTopButton from '@/components/ScrollToTopButton.vue';
 
 const { user, isAuthenticated } = useAuth0();
 const api = keywordApi();
@@ -58,4 +59,5 @@ onUnmounted(() => {
   <section class="contents">{{ Keyword.content }}</section>
   <TagList />
   <UnattachedTagList />
+  <ScrollToTopButton />
 </template>
