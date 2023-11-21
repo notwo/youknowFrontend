@@ -19,6 +19,7 @@ export default defineComponent({
     MenuItem,
   },
   setup() {
+    /*
     const nav = document.getElementsByTagName('nav');
     const navigationTracking = () => {
       const height = nav[0].clientHeight;
@@ -36,6 +37,7 @@ export default defineComponent({
     onUnmounted(() => {
       window.removeEventListener('scroll', navigationTracking, false);
     });
+    */
   }
 });
 </script>

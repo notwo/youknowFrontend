@@ -3,6 +3,7 @@ import DataRegisterModalButton from '@/components/DataRegisterModalButton.vue';
 import KeywordSearchForm from '@/components/keyword/KeywordSearchForm.vue';
 import Breadcrumb from '@/components/Breadcrumb.vue';
 import KeywordList from '@/components/keyword/KeywordList.vue';
+import ScrollToTopButton from '@/components/ScrollToTopButton.vue';
 </script>
 
 <template>
@@ -10,4 +11,5 @@ import KeywordList from '@/components/keyword/KeywordList.vue';
   <Breadcrumb />
   <KeywordSearchForm />
   <KeywordList />
+  <ScrollToTopButton />
 </template>
