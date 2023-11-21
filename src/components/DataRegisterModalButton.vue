@@ -1,27 +1,29 @@
-<template>
-  <section id="" class="btn-register floating">
-    <a @click="openModal"></a>
-  </section>
-</template>
+<script setup lang="ts">
+import { onMounted, onUnmounted } from "vue";
 
-<script lang="ts">
-import { defineComponent } from "vue";
+const openModal = (event) => {
+  const modal = document.getElementsByClassName('overlay') as HTMLCollectionOf<HTMLElement>;
+  modal[0].classList.add('visible');
+  document.getElementById('register-form').classList.add('visible');
+  document.getElementById('edit-form').classList.remove('visible');
+};
 
-export default defineComponent({
-  name: "DataRegisterModalButton",
-  setup() {
-    const openModal = () => {
-      const modal = document.getElementsByClassName('overlay') as HTMLCollectionOf<HTMLElement>;
-      modal[0].classList.add('visible');
-      document.getElementById('register-form').classList.add('visible');
-      document.getElementById('edit-form').classList.remove('visible');
-    };
-
-    return {
-      openModal,
-    };
+const setFixedToButton = (event) => {
+  const registerBtn = document.getElementById('registerBtn');
+  if (window.scrollY <= 50) {
+    registerBtn.style.top = '8rem';
+  } else {
+    registerBtn.style.top = '3rem';
   }
-})
+};
+
+onMounted(() => {
+  window.addEventListener("scroll", setFixedToButton, false);
+});
+
+onUnmounted(() => {
+  window.removeEventListener('scroll', setFixedToButton, false);
+});
 </script>
 
 <style scoped>
@@ -54,6 +56,12 @@ export default defineComponent({
 }
 
 .floating {
-  transition: .6s;
+  transition: .2s;
 }
 </style>
+
+<template>
+  <section id="registerBtn" class="btn-register floating">
+    <a @click="openModal"></a>
+  </section>
+</template>

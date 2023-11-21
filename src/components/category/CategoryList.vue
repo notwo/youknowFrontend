@@ -59,8 +59,8 @@ export default defineComponent({
     const lApi = libraryApi();
     const route = useRoute();
     const showMoreCategoryList = (event) => {
-      // 仮に下限まで残り100px程度になったら自動読み込み
-      if (document.body.scrollHeight - document.body.clientHeight - window.scrollY <= 100 && canLoadNext && !store.isSearched()) {
+      // 下限まで一定距離になったら自動読み込み
+      if (document.body.scrollHeight - document.body.clientHeight - window.scrollY <= 500 && canLoadNext && !store.isSearched()) {
         currentPage++;
         loadNext();
       }

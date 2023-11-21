@@ -39,13 +39,13 @@ window.addEventListener("scroll", f, false);
   cursor: pointer;
   background-color: rgba(180,180,180,.6);
   overflow: hidden;
-  animation: fadeIn .5s ease;
+  animation: fadeIn .3s ease;
 }
 .scroll-to-top-button a.hidden-no-animation {
   display: none;
 }
 .scroll-to-top-button a.hidden {
-  animation: fadeOut .5s ease 0s;
+  animation: fadeOut .3s ease 0s;
   animation-fill-mode: forwards;
 }
 .scroll-to-top-button a:before {

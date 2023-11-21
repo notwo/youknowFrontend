@@ -1,13 +1,13 @@
 {
   "pagination": {
     "library": {
-      "content_num": 15
+      "content_num": 30
     },
     "category": {
-      "content_num": 15
+      "content_num": 30
     },
     "keyword": {
-      "content_num": 9
+      "content_num": 50
     },
     "tag": {
       "content_num": 50
