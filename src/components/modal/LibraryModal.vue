@@ -46,6 +46,7 @@ export default defineComponent({
   transform: translate(-50%, -50%);
   width: 60%;
   height: auto;
+  border-radius: .4rem;
   background-color: white;
 }
 </style>

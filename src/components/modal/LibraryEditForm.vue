@@ -80,11 +80,11 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.modal label {
+label {
   font-size: 1.5em;
   font-weight: bold;
 }
-.modal label.required::after {
+label.required::after {
   position: relative;
   content: '必須';
   padding: 0.2em;

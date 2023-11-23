@@ -1,12 +1,12 @@
 <template>
   <section class="form-wrap">
-    <label for="library_title" class="required">タイトル</label>
+    <label for="library_title" class="required">ライブラリ名</label>
     <section class="form-field">
       <input type="text"
         :class="[v.title.$errors.length >= 1 ? 'error' : '']"
         v-model="state.title"
         id="library_title"
-        placeholder="ライブラリのタイトル"
+        placeholder="ライブラリ名"
         :error-messages="v.title.$errors.map((e) => e.$message)"
         @blur="v.title.$touch"
         @input="v.title.$touch">
@@ -80,62 +80,11 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.overlay {
-  visibility: hidden;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  transition: .17s;
-  opacity: 0;
-  z-index: 9999;
-  background-color: rgba(0,0,0,0.4);
-}
-.overlay.visible {
-  visibility: visible;
-  opacity: 1;
-}
-
-.modal {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 60%;
-  height: auto;
-  background-color: white;
-}
-
-.modal .close {
-  display: block;
-  position: relative;
-  width: 2em;
-  height: 2em;
-  margin-left: auto;
-}
-.modal .close::before, .modal .close::after {
-  display: block;
-  position: absolute;
-  content: '';
-  width: 100%;
-  height: 4px;
-  top: 50%;
-  left: 50%;
-  background-color: black;
-}
-.modal .close::before {
-  transform: translate(-50%,-50%) rotate(45deg);
-}
-.modal .close::after {
-  transform: translate(-50%,-50%) rotate(-45deg);
-}
-
-.modal label {
+label {
   font-size: 1.5em;
   font-weight: bold;
 }
-.modal label.required::after {
+label.required::after {
   position: relative;
   content: '必須';
   padding: 0.2em;
