@@ -2,7 +2,7 @@
   <header class="header">
     <nav class="menu-wrap">
       <section class="flex-contents">
-        <section class="service-icon">サービスアイコン</section>
+        <section class="service-icon">サービスロゴ</section>
         <MenuItem />
       </section>
     </nav>
@@ -48,7 +48,6 @@ nav.fixed {
 }
 
 nav {
-  width: 100%;
   z-index: 10000;
   justify-content: space-between;
   background-color: black;
@@ -57,5 +56,9 @@ nav {
 
 .menu-wrap {
   padding: 0.2em;
+}
+
+.service-icon {
+  margin: 2rem;
 }
 </style>

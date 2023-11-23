@@ -1,4 +1,6 @@
 html {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
   height: 100%;
 }
 body {
@@ -15,12 +17,33 @@ body {
   flex-wrap: wrap;
 }
 
+.hidden {
+  display: none;
+}
+
+.btn {
+  display: inline-block;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  padding: 0.4rem 0.8rem;
+  text-align: center;
+  vertical-align: middle;
+  font-weight: 700;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: #eeeeee;
+  text-decoration: none;
+  letter-spacing: 0.1em;
+}
+.btn.register:hover {
+  background-color: rgba(0,255,0,0.75);
+}
+.btn.logout:hover {
+  background-color: rgba(50,50,50,0.75);
+}
+
 /* basical tags */
 ol,ul {
   list-style: none;
   padding-inline-start: 0;
-}
-
-.hidden {
-  display: none;
 }
