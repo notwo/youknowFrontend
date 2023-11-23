@@ -31,6 +31,9 @@ onMounted(() => {
     location.href = window.location.origin;
   }
 
+  // キーワード詳細に遷移した際にスクロール位置が戻っていないので、強制的にスクロールさせる
+  document.documentElement.scrollTop = 0;
+
   axios.get<KeywordResponse>(
       api.detailUrl(user.value.sub, route.params.library_id, route.params.category_id, route.params.keyword_id)
     )
