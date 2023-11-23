@@ -40,6 +40,7 @@ const closeModal = (event: HTMLButtonEvent) => {
   display: block;
   width: 8rem;
   margin: 1.5rem 1.5rem 0 auto;
+  cursor: pointer;
 }
 
 #register-form {

@@ -37,10 +37,6 @@ const startLogout = (event) => {
   justify-content: center;
 }
 
-.register {
-  background-color: rgba(0,255,0,0.7);
-}
-
 .logout {
   font-weight: 600;
   background-color: rgba(0,0,0,0.7);

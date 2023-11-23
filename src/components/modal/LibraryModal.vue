@@ -1,23 +1,8 @@
-<template>
-  <section class="overlay">
-    <section class="modal">
-      <LibraryForm :edit_state="edit_state" />
-    </section>
-  </section>
-</template>
-
-<script lang="ts">
-import { defineComponent } from 'vue';
+<script setup lang="ts">
 import LibraryForm from '@/components/modal/LibraryForm.vue';
 
-export default defineComponent({
-  name: 'LibraryModal',
-  components: {
-    LibraryForm
-  },
-  props: {
-    edit_state: Object
-  },
+const props = defineProps({
+  edit_state: Object
 });
 </script>
 
@@ -44,9 +29,19 @@ export default defineComponent({
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 60%;
+  width: 30%;
   height: auto;
   border-radius: .4rem;
   background-color: white;
+  overflow : auto;
+  max-height: 90%;
 }
 </style>
+
+<template>
+  <section class="overlay">
+    <section class="modal">
+      <LibraryForm :edit_state="edit_state" />
+    </section>
+  </section>
+</template>

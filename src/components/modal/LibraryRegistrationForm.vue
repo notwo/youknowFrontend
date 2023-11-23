@@ -80,17 +80,22 @@ export default defineComponent({
 </script>
 
 <style scoped>
+.form-wrap {
+  margin: 0 auto;
+  max-width: 20rem;
+}
+
 label {
+  margin: 2rem 0;
   font-size: 1.5em;
-  font-weight: bold;
 }
 label.required::after {
   position: relative;
   content: '必須';
-  padding: 0.2em;
+  padding: .3rem;
   top: -2px;
   left: 5px;
-  font-size: 0.5em;
+  font-size: .6rem;
   font-weight: bold;
   border-radius: 3px;
   color: white;
@@ -99,7 +104,7 @@ label.required::after {
 
 #library_content {
   resize: none;
-  width: 40em;
+  width: 20em;
   height: 10em;
 }
 
