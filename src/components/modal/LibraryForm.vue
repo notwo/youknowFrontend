@@ -20,6 +20,7 @@ const edit_v$ = useVuelidate(editLibraryRules(store), props.edit_state);
 
 const closeModal = (event: HTMLButtonEvent) => {
   event.preventDefault();
+  document.body.style.removeProperty("overflow");
   const modal = document.getElementsByClassName('overlay') as HTMLCollectionOf<HTMLElement>;
   modal[0].classList.remove('visible');
   // フォーム初期化
@@ -41,6 +42,9 @@ const closeModal = (event: HTMLButtonEvent) => {
   width: 8rem;
   margin: 1.5rem 1.5rem 0 auto;
   cursor: pointer;
+}
+.close:hover {
+  color: #888;
 }
 
 #register-form {

@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { onMounted, onUnmounted } from "vue";
 
-const openModal = (event) => {
+const openModal = (event: HTMLButtonEvent) => {
+  document.body.style.overflow = 'hidden';
   const modal = document.getElementsByClassName('overlay') as HTMLCollectionOf<HTMLElement>;
   modal[0].classList.add('visible');
   document.getElementById('register-form').classList.add('visible');
