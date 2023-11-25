@@ -31,7 +31,9 @@
     </section>
     <section class="form-group">
       <section class="form-field">
-        <span @click="onSubmit" :class="!(v.title.$errors.length === 0 && state.title !== '') ? 'disabled' : ''" class="btn register">ライブラリを更新する</span>
+        <button @click="onSubmit"
+          :disabled="v.title.$errors.length !== 0 || state.title === ''"
+          class="btn register">ライブラリを更新する</button>
       </section>
     </section>
   </section>
@@ -70,6 +72,7 @@ export default defineComponent({
 
     const api = libraryApi();
     const onSubmit = (event: HTMLButtonEvent) => {
+      event.preventDefault();
       const requestParam: LibraryRequest = {
         custom_user: user.value.sub,
         title: document.getElementById('edit_library_title').value,
@@ -178,6 +181,7 @@ input.error {
   color: gray;
 }
 .form-field .btn.register {
+  border: none;
   background-color: rgba(17, 235, 17, 0.7);
 }
 .form-field .btn.register:hover {
