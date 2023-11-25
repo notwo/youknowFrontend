@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { reactive, inject } from 'vue';
 import { useVuelidate } from "@vuelidate/core";
-import { registerLibraryRules, editLibraryRules } from '@/plugin/validatorMessage';
+import { registerRules, editRules } from '@/plugin/validatorMessage';
 import LibraryRegistrationForm from '@/components/modal/LibraryRegistrationForm.vue';
 import LibraryEditForm from '@/components/modal/LibraryEditForm.vue';
 
@@ -15,8 +15,8 @@ const register_state = reactive({
 
 const store = inject('libraryEdit');
 
-const register_v$ = useVuelidate(registerLibraryRules(), register_state);
-const edit_v$ = useVuelidate(editLibraryRules(store), props.edit_state);
+const register_v$ = useVuelidate(registerRules('ライブラリ名'), register_state);
+const edit_v$ = useVuelidate(editRules('ライブラリ名', store), props.edit_state);
 
 const closeModal = (event: HTMLButtonEvent) => {
   event.preventDefault();

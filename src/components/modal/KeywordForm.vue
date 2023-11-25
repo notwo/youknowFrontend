@@ -11,7 +11,7 @@
 <script lang="ts">
 import { defineComponent, reactive, inject } from 'vue';
 import { useVuelidate } from "@vuelidate/core";
-import { registerKeywordRules, editKeywordRules } from '@/plugin/validatorMessage';
+import { registerRules, editRules } from '@/plugin/validatorMessage';
 import KeywordRegistrationForm from '@/components/modal/KeywordRegistrationForm.vue';
 import KeywordEditForm from '@/components/modal/KeywordEditForm.vue';
 
@@ -32,8 +32,8 @@ export default defineComponent({
 
     const store = inject('keywordEdit');
 
-    const register_v$ = useVuelidate(registerKeywordRules(), register_state);
-    const edit_v$ = useVuelidate(editKeywordRules(store), props.edit_state);
+    const register_v$ = useVuelidate(registerRules('キーワード名'), register_state);
+    const edit_v$ = useVuelidate(editRules('キーワード名', store), props.edit_state);
 
     const closeModal = (event: HTMLButtonEvent) => {
       event.preventDefault();

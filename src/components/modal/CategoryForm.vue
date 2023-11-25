@@ -11,7 +11,7 @@
 <script lang="ts">
 import { defineComponent, reactive, inject } from 'vue';
 import { useVuelidate } from "@vuelidate/core";
-import { registerCategoryRules, editCategoryRules } from '@/plugin/validatorMessage';
+import { registerRules, editRules } from '@/plugin/validatorMessage';
 import CategoryRegistrationForm from '@/components/modal/CategoryRegistrationForm.vue';
 import CategoryEditForm from '@/components/modal/CategoryEditForm.vue';
 
@@ -32,8 +32,8 @@ export default defineComponent({
 
     const store = inject('categoryEdit');
 
-    const register_v$ = useVuelidate(registerCategoryRules(), register_state);
-    const edit_v$ = useVuelidate(editCategoryRules(store), props.edit_state);
+    const register_v$ = useVuelidate(registerRules('カテゴリ名'), register_state);
+    const edit_v$ = useVuelidate(editRules('カテゴリ名', store), props.edit_state);
 
     const closeModal = (event: HTMLButtonEvent) => {
       event.preventDefault();
