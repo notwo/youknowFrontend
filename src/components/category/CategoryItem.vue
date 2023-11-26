@@ -83,8 +83,8 @@ export default defineComponent({
 
 <style scoped>
 .category-item-wrap {
-  width: calc(30% - 15px);
-  margin: 0.6em;
+  width: 30%;
+  margin: 0.6rem;
   height: 7em;
   background-color: red;
   flex-wrap: wrap;

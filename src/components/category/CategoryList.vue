@@ -117,7 +117,13 @@ export default defineComponent({
 <style scoped>
 .category-item {
   display: flex;
-  justify-content: start;
+  justify-content: space-between;
   flex-wrap: wrap;
+}
+.category-item::after {
+  content: "";
+  display: block;
+  width: 30%;
+  margin: 0.6rem;
 }
 </style>

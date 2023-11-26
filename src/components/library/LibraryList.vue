@@ -109,8 +109,13 @@ export default defineComponent({
 <style scoped>
 .library-item {
   display: flex;
-  justify-content: start;
+  justify-content: space-between;
   flex-wrap: wrap;
 }
-
+.library-item::after {
+  content: "";
+  display: block;
+  width: 30%;
+  margin: 1rem;
+}
 </style>

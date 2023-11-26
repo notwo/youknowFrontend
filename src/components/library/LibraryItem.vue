@@ -82,8 +82,8 @@ export default defineComponent({
 
 <style scoped>
 .library-item-wrap {
-  width: calc(30% - 15px);
-  margin: 0.6em;
+  width: 30%;
+  margin: 1rem;
   height: 7em;
   background-color: red;
   flex-wrap: wrap;
