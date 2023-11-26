@@ -28,6 +28,7 @@ export function useStore() {
     const _target = items.list.filter(_obj => _obj.id === item.id);
     const _updateIndex = items.list.indexOf(_target[0]);
     items.list.splice(_updateIndex, 1, item);
+    backupList.splice(_updateIndex, 1, item);
   }
 
   function remove(id: Number) {
@@ -69,7 +70,7 @@ export function useStore() {
   }
 
   function allClear() {
-    items.list.length = 0;
+    items.list.splice(0);
   }
 
   function confirmItems() {

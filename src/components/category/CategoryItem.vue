@@ -5,8 +5,8 @@
       <span @click="removeCategory" class="delete-item" :data-id="id"></span>
     </section>
     <router-link :to="{ name: 'keywords', params: { username: String($route.params.username), library_id: $route.params.library_id, category_id: id } }">
-      <section class="title">{{ titleView }}</section>
-      <section class="contents">{{ contentView }}</section>
+      <section class="title">{{ titleView(title) }}</section>
+      <section class="contents">{{ contentView(content) }}</section>
     </router-link>
   </section>
   <Tooltip :message="title" />
@@ -65,8 +65,12 @@ export default defineComponent({
       });
     };
 
-    const titleView = props.title.length > item.library.titleMaxLength ? props.title.substring(0, item.library.titleMaxLength) + '...' : props.title;
-    const contentView = props.content.length > item.library.contentMaxLength ? props.content.substring(0, item.library.contentMaxLength) + '...' : props.content;
+    const titleView = (title) => {
+      return title.length > item.category.titleMaxLength ? title.substring(0, item.category.titleMaxLength) + '...' : title;
+    };
+    const contentView = (content) => {
+      return content.length > item.category.contentMaxLength ? content.substring(0, item.category.contentMaxLength) + '...' : content;
+    };
 
     return {
       titleView,
