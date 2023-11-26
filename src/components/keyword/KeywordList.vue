@@ -4,7 +4,7 @@
     <section class="keyword-item">
       <KeywordItem
         :edit_state="edit_state"
-        v-for="keyword in KeywordList"
+        v-for="keyword in store.items.list"
           :key="keyword.id"
           :id="keyword.id"
           :title="keyword.title"
@@ -20,7 +20,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, reactive, onMounted, onUnmounted, inject } from 'vue';
+import { defineComponent, reactive, onMounted, onUnmounted, inject } from 'vue';
 import axios, { AxiosResponse, AxiosError } from "axios";
 import { useRoute, useRouter } from 'vue-router';
 import { useAuth0 } from '@auth0/auth0-vue';
@@ -37,7 +37,6 @@ export default defineComponent({
   },
   setup() {
     const { user, isAuthenticated } = useAuth0();
-    const KeywordList = ref([]);
     const store = inject('keyword');
     const titlesStore = inject('titles');
 
@@ -94,8 +93,7 @@ export default defineComponent({
           canLoadNext = (response.data.paginated_keywords.next);
           titlesStore.setLibrary(`「${response.data.library_title}」のカテゴリ`);
           titlesStore.setCategory(`「${response.data.title}」のキーワード`);
-          KeywordList.value = response.data.paginated_keywords.data;
-          store.setItem(KeywordList.value);
+          store.setItem(response.data.paginated_keywords.data);
         })
         .catch((e: AxiosError<ErrorResponse>) => {
           console.log(`${e.message} ( ${e.name} ) code: ${e.code}`);
@@ -113,7 +111,7 @@ export default defineComponent({
 
     return {
       edit_state,
-      KeywordList
+      store
     };
   }
 });

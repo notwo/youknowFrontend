@@ -4,7 +4,7 @@
     <section class="category-item">
       <CategoryItem
         :edit_state="edit_state"
-        v-for="category in CategoryList"
+        v-for="category in store.items.list"
           :key="category.id"
           :id="category.id"
           :title="category.title"
@@ -19,7 +19,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, ref, onMounted, onUnmounted, inject } from 'vue';
+import { defineComponent, reactive, onMounted, onUnmounted, inject } from 'vue';
 import axios, { AxiosResponse, AxiosError } from "axios";
 import { useRoute, useRouter } from 'vue-router';
 import { useAuth0 } from '@auth0/auth0-vue';
@@ -36,7 +36,6 @@ export default defineComponent({
   },
   setup() {
     const { user, isAuthenticated } = useAuth0();
-    const CategoryList = ref([]);
     const store = inject('category');
     const titlesStore = inject('titles');
 
@@ -91,8 +90,7 @@ export default defineComponent({
         .then((response: AxiosResponse) => {
           canLoadNext = (response.data.paginated_categories.next);
           titlesStore.setLibrary(`「${response.data.title}」のカテゴリ`);
-          CategoryList.value = response.data.paginated_categories.data;
-          store.setItem(CategoryList.value);
+          store.setItem(response.data.paginated_categories.data);
         })
         .catch((e: AxiosError<ErrorResponse>) => {
           console.log(`${e.message} ( ${e.name} ) code: ${e.code}`);
@@ -110,7 +108,7 @@ export default defineComponent({
 
     return {
       edit_state,
-      CategoryList
+      store
     };
   },
 });

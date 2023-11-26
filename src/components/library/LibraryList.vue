@@ -4,7 +4,7 @@
     <section class="library-item">
       <LibraryItem
         :edit_state="edit_state"
-        v-for="library in LibraryList"
+        v-for="library in store.items.list"
           :key="library.id"
           :id="library.id"
           :title="library.title"
@@ -19,7 +19,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, reactive, onMounted, onUnmounted, inject } from 'vue';
+import { defineComponent, reactive, onMounted, onUnmounted, inject } from 'vue';
 import axios, { AxiosResponse, AxiosError } from "axios";
 import { useAuth0 } from '@auth0/auth0-vue';
 import LibraryModal from '@/components/modal/LibraryModal.vue';
@@ -35,7 +35,6 @@ export default defineComponent({
   },
   setup() {
     const { user, isAuthenticated } = useAuth0();
-    const LibraryList = ref([]);
     const store = inject('library');
 
     let edit_state = reactive({
@@ -84,8 +83,7 @@ export default defineComponent({
         await axios.get<LibraryResponse>(api.listUrl(user.value.sub, pagination.library.content_num))
         .then((response: AxiosResponse) => {
           canLoadNext = (response.data.next !== null);
-          LibraryList.value = response.data.results;
-          store.setItem(LibraryList.value);
+          store.setItem(response.data.results);
         })
         .catch((e: AxiosError<ErrorResponse>) => {
         });
@@ -102,7 +100,7 @@ export default defineComponent({
 
     return {
       edit_state,
-      LibraryList
+      store
     };
   },
 });

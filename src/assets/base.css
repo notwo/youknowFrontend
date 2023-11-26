@@ -35,6 +35,9 @@ body {
   text-decoration: none;
   letter-spacing: 0.1em;
 }
+.btn.register {
+  background-color: rgba(0,255,0,0.7);
+}
 .btn.register:hover {
   background-color: rgba(0,255,0,0.75);
 }

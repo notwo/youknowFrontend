@@ -52,7 +52,9 @@ const unattachTag = (event: HTMLButtonEvent) => {
     });
 };
 
-const titleView = props.title.length > item.tag.titleMaxLength ? props.title.substring(0, item.tag.titleMaxLength) + '...' : props.title;
+const titleView = (title) => {
+  return title.length > item.tag.titleMaxLength ? title.substring(0, item.tag.titleMaxLength) + '...' : title;
+};
 </script>
 
 <style scoped>
@@ -68,6 +70,6 @@ const titleView = props.title.length > item.tag.titleMaxLength ? props.title.sub
     <section>
       <span @click="unattachTag" class="delete-item" :data-id="id">☓</span>
     </section>
-    <section class="title">{{ titleView }}</section>
+    <section class="title">{{ titleView(title) }}</section>
   </section>
 </template>

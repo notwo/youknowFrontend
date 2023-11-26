@@ -10,8 +10,8 @@
         category_id: $route.params.category_id,
         keyword_id: id
       } }">
-      <section class="title">{{ titleView }}</section>
-      <section class="contents">{{ contentView }}</section>
+      <section class="title">{{ titleView(title) }}</section>
+      <section class="contents">{{ contentView(content) }}</section>
       <section class="tags">
         <section v-for="tag of tags" :key="tag.id">
           {{ tag.title }}
@@ -75,9 +75,12 @@ export default defineComponent({
       });
     };
 
-    const titleView = props.title.length > item.keyword.titleMaxLength ? props.title.substring(0, item.keyword.titleMaxLength) + '...' : props.title;
-    const contentView = props.content.length > item.library.contentMaxLength ? props.content.substring(0, item.library.contentMaxLength) + '...' : props.content;
-
+    const titleView = (title) => {
+      return title.length > item.keyword.titleMaxLength ? title.substring(0, item.keyword.titleMaxLength) + '...' : title;
+    };
+    const contentView = (content) => {
+      return content.length > item.keyword.contentMaxLength ? content.substring(0, item.keyword.contentMaxLength) + '...' : content;
+    };
     return {
       user,
       titleView,

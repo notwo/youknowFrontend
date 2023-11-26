@@ -1,27 +1,12 @@
 <template>
-  <section class="form-wrap">
-    <label for="keyword_title" class="required">キーワード名</label>
-    <section class="form-field">
-      <input type="text"
-        :class="[v.title.$errors.length >= 1 ? 'error' : '']"
-        v-model="state.title"
-        id="keyword_title"
-        placeholder="キーワード名"
-        :error-messages="v.title.$errors.map((e) => e.$message)"
-        @blur="v.title.$touch"
-        @input="v.title.$touch">
-      <section v-for="error of v.title.$errors" :key="error.$uid">
-        <section class="error-message">{{ error.$message }}</section>
-      </section>
-    </section>
-    <label for="keyword_content" class="">内容</label>
-    <section class="form-field">
-      <textarea v-model="state.content" id="keyword_content" placeholder="キーワードの内容"></textarea>
-    </section>
-    <section class="button">
-      <button type="button" @click="onSubmit" :disabled="!(v.title.$errors.length === 0 && state.title !== '')">キーワードを追加する</button>
-    </section>
-  </section>
+  <RegistrationForm
+    :v="v"
+    :state="state"
+    contentType="keyword"
+    contentName="キーワード"
+    :titleMaxLength="50"
+    :contentMaxLength="50"
+    @click="onSubmit" />
 </template>
 
 <script lang="ts">
@@ -30,10 +15,13 @@ import axios, { AxiosResponse, AxiosError } from "axios";
 import { useRoute, useRouter } from 'vue-router';
 import { useAuth0 } from '@auth0/auth0-vue';
 import { keywordApi } from '@/plugin/apis';
+import RegistrationForm from '@/components/modal/RegistrationForm.vue';
 
 export default defineComponent({
   name: 'KeywordRegistrationForm',
-  components: {},
+  components: {
+    RegistrationForm
+  },
   props: {
     v: Object,
     state: Object
@@ -55,9 +43,13 @@ export default defineComponent({
       content: String
     };
 
+    interface HTMLEvent<T extends EventTarget> extends Event {
+      target: T;
+    };
+
     const api = keywordApi();
     const route = useRoute();
-    const onSubmit = (event: HTMLButtonEvent) => {
+    const onSubmit = (event: HTMLEvent<HTMLButtonElement>) => {
       const requestParam: KeywordRequest = {
         custom_user: user.value.sub,
         library: route.params.library_id,
@@ -86,36 +78,4 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.modal label {
-  font-size: 1.5em;
-  font-weight: bold;
-}
-.modal label.required::after {
-  position: relative;
-  content: '必須';
-  padding: 0.2em;
-  top: -2px;
-  left: 5px;
-  font-size: 0.5em;
-  font-weight: bold;
-  border-radius: 3px;
-  color: white;
-  background-color: red;
-}
-
-#keyword_content {
-  resize: none;
-  width: 40em;
-  height: 10em;
-}
-
-input.error {
-  border-color: rgba(220,0,0,0.3);
-  background-color: rgba(220,0,0,0.3);
-}
-
-
-.error-message {
-  color: rgba(220,0,0,0.3);
-}
 </style>

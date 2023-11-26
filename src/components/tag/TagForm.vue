@@ -4,7 +4,7 @@ import axios, { AxiosResponse, AxiosError } from "axios";
 import { useAuth0 } from '@auth0/auth0-vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useVuelidate } from "@vuelidate/core";
-import { registerTagRules } from '@/plugin/validatorMessage';
+import { registerRules } from '@/plugin/validatorMessage';
 import { keywordApi, tagApi } from '@/plugin/apis';
 
 const { user, isAuthenticated } = useAuth0();
@@ -19,7 +19,7 @@ let register_state = reactive({
   title: '',
 });
 
-const register_v$ = useVuelidate(registerTagRules(), register_state);
+const register_v$ = useVuelidate(registerRules('タグ名'), register_state);
 
 interface ErrorResponse {
   message: String,

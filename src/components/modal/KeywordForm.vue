@@ -1,5 +1,5 @@
 <template>
-  <span id="close" class="close" @click="closeModal"></span>
+  <span id="close" class="close" @click="closeModal">モーダルを閉じる</span>
   <form action="" id="register-form">
     <KeywordRegistrationForm :state="register_state" :v="register_v$" @closeEvent="closeModal" />
   </form>
@@ -11,7 +11,7 @@
 <script lang="ts">
 import { defineComponent, reactive, inject } from 'vue';
 import { useVuelidate } from "@vuelidate/core";
-import { registerKeywordRules, editKeywordRules } from '@/plugin/validatorMessage';
+import { registerRules, editRules } from '@/plugin/validatorMessage';
 import KeywordRegistrationForm from '@/components/modal/KeywordRegistrationForm.vue';
 import KeywordEditForm from '@/components/modal/KeywordEditForm.vue';
 
@@ -32,11 +32,12 @@ export default defineComponent({
 
     const store = inject('keywordEdit');
 
-    const register_v$ = useVuelidate(registerKeywordRules(), register_state);
-    const edit_v$ = useVuelidate(editKeywordRules(store), props.edit_state);
+    const register_v$ = useVuelidate(registerRules('キーワード名'), register_state);
+    const edit_v$ = useVuelidate(editRules('キーワード名', store), props.edit_state);
 
     const closeModal = (event: HTMLButtonEvent) => {
       event.preventDefault();
+      document.body.style.removeProperty("overflow");
       const modal = document.getElementsByClassName('overlay') as HTMLCollectionOf<HTMLElement>;
       modal[0].classList.remove('visible');
       // フォーム初期化
@@ -61,41 +62,26 @@ export default defineComponent({
 </script>
 
 <style scoped>
-
-.modal .close {
+.close {
   display: block;
-  position: relative;
-  width: 2em;
-  height: 2em;
-  margin-left: auto;
+  width: 8rem;
+  margin: 1.5rem 1.5rem 0 auto;
+  cursor: pointer;
 }
-.modal .close::before, .modal .close::after {
-  display: block;
-  position: absolute;
-  content: '';
-  width: 100%;
-  height: 4px;
-  top: 50%;
-  left: 50%;
-  background-color: black;
-}
-.modal .close::before {
-  transform: translate(-50%,-50%) rotate(45deg);
-}
-.modal .close::after {
-  transform: translate(-50%,-50%) rotate(-45deg);
-}
-.modal #register-form {
-  display: none;
-}
-.modal #edit-form {
-  display: none;
-}
-.modal #register-form.visible {
-  display: block;
-}
-.modal #edit-form.visible {
-  display: block;
+.close:hover {
+  color: #888;
 }
 
+#register-form {
+  display: none;
+}
+#edit-form {
+  display: none;
+}
+#register-form.visible {
+  display: block;
+}
+#edit-form.visible {
+  display: block;
+}
 </style>
