@@ -36,7 +36,6 @@ const closeModal = (event: HTMLButtonEvent) => {
 </script>
 
 <style scoped>
-
 .close {
   display: block;
   width: 8rem;
@@ -59,7 +58,6 @@ const closeModal = (event: HTMLButtonEvent) => {
 #edit-form.visible {
   display: block;
 }
-
 </style>
 
 <template>

@@ -1,25 +1,12 @@
 <template>
-  <label for="edit_keyword_title" class="required">キーワード名</label>
-  <section class="form-field">
-    <input type="text"
-      :class="[v.title.$errors.length >= 1 ? 'error' : '']"
-      v-model="state.title"
-      id="edit_keyword_title"
-      placeholder="キーワード名"
-      :error-messages="v.title.$errors.map((e) => e.$message)"
-      @blur="v.title.$touch"
-      @input="v.title.$touch">
-    <section v-for="error of v.title.$errors" :key="error.$uid">
-      <section class="error-message">{{ error.$message }}</section>
-    </section>
-  </section>
-  <label for="edit_keyword_content" class="">内容</label>
-  <section class="form-field">
-    <textarea v-model="state.content" id="edit_keyword_content" placeholder="キーワードの内容"></textarea>
-  </section>
-  <section class="button">
-    <button type="button" @click="onSubmit" :disabled="!(v.title.$errors.length === 0 && state.title !== '')">キーワードを更新する</button>
-  </section>
+  <EditForm
+    :v="v"
+    :state="state"
+    contentType="keyword"
+    contentName="キーワード"
+    :titleMaxLength="50"
+    :contentMaxLength="50"
+    @click="onSubmit" />
 </template>
 
 <script lang="ts">
@@ -28,10 +15,13 @@ import { useRoute, useRouter } from 'vue-router';
 import { useAuth0 } from '@auth0/auth0-vue';
 import axios, { AxiosResponse, AxiosError } from "axios";
 import { keywordApi } from '@/plugin/apis';
+import EditForm from '@/components/modal/EditForm.vue';
 
 export default defineComponent({
   name: 'KeywordEditForm',
-  components: {},
+  components: {
+    EditForm
+  },
   props: {
     state: Object,
     v: Object
@@ -54,12 +44,16 @@ export default defineComponent({
       content: String
     };
 
+    interface HTMLEvent<T extends EventTarget> extends Event {
+      target: T;
+    };
+
     const api = keywordApi();
     const route = useRoute();
-    const onSubmit = (event: HTMLButtonEvent) => {
+    const onSubmit = (event: HTMLEvent<HTMLButtonElement>) => {
+      event.preventDefault();
       const requestParam: KeywordRequest = {
         custom_user: user.value.sub,
-        //library: route.params.library_id,
         title: document.getElementById('edit_keyword_title').value,
         content: document.getElementById('edit_keyword_content').value
       };
@@ -82,36 +76,4 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.modal label {
-  font-size: 1.5em;
-  font-weight: bold;
-}
-.modal label.required::after {
-  position: relative;
-  content: '必須';
-  padding: 0.2em;
-  top: -2px;
-  left: 5px;
-  font-size: 0.5em;
-  font-weight: bold;
-  border-radius: 3px;
-  color: white;
-  background-color: red;
-}
-
-#edit_keyword_content {
-  resize: none;
-  width: 40em;
-  height: 10em;
-}
-
-input.error {
-  border-color: rgba(220,0,0,0.3);
-  background-color: rgba(220,0,0,0.3);
-}
-
-
-.error-message {
-  color: rgba(220,0,0,0.3);
-}
 </style>
