@@ -54,7 +54,12 @@ export default defineComponent({
     const store = inject('keyword');
     const api = keywordApi();
     const route = useRoute();
-    const removeKeyword = (event: HTMLButtonEvent) => {
+
+    interface HTMLEvent<T extends EventTarget> extends Event {
+      target: T;
+    };
+
+    const removeKeyword = (event: HTMLEvent<HTMLButtonElement>) => {
       if (!window.confirm(`キーワード「${props.title}」が削除されますが宜しいですか？`)) {
         return;
       }
@@ -98,7 +103,6 @@ export default defineComponent({
   height: 7em;
   background-color: red;
   flex-wrap: wrap;
-  /*box-shadow: 10px 10px 0 #222222;*/
 }
 
 .delete-item {
