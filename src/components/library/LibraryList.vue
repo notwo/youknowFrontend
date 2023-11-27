@@ -1,7 +1,7 @@
 <template>
   <article id="library-list">
     <LibraryModal :edit_state="edit_state" />
-    <section class="library-item">
+    <section class="library-item-wrap">
       <LibraryItem
         :edit_state="edit_state"
         v-for="library in store.items.list"
@@ -107,10 +107,15 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.library-item {
+.library-item-wrap {
   display: flex;
-  justify-content: start;
+  justify-content: space-between;
   flex-wrap: wrap;
 }
-
+.library-item-wrap::after {
+  content: "";
+  display: block;
+  width: 30%;
+  margin: 1rem;
+}
 </style>

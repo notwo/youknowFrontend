@@ -47,10 +47,14 @@ export default defineComponent({
       code: String
     };
 
+    interface HTMLEvent<T extends EventTarget> extends Event {
+      target: T;
+    };
+
     const api = categoryApi();
     const route = useRoute();
     const store = inject('category');
-    const removeCategory = (event: HTMLButtonEvent) => {
+    const removeCategory = (event: HTMLEvent<HTMLButtonElement>) => {
       if (!window.confirm(`カテゴリ「${props.title}」が削除されますが宜しいですか？`)) {
         return;
       }
@@ -83,12 +87,11 @@ export default defineComponent({
 
 <style scoped>
 .category-item-wrap {
-  width: calc(30% - 15px);
-  margin: 0.6em;
+  width: 30%;
+  margin: 0.6rem;
   height: 7em;
   background-color: red;
   flex-wrap: wrap;
-  /*box-shadow: 10px 10px 0 #222222;*/
 }
 
 .delete-item {

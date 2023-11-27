@@ -1,13 +1,19 @@
 <template>
-  <section class="library-item-wrap tooltip-content">
-    <section>
-      <LibraryEditButton :edit_state="edit_state" :id="id" :title="title" :content="content" />
-      <span @click="removeLibrary" class="delete-item" :data-id="id"></span>
+  <section class="library-item tooltip-content">
+    <router-link :to="{ name: 'categories', params: { username: String($route.params.username), library_id: id } }"></router-link>
+    <section class="library-menu">
+      <section class="library-menu-item">
+        <LibraryEditButton :edit_state="edit_state" :id="id" :title="title" :content="content" />
+      </section>
+      <section class="library-menu-item">
+        <span @click="removeLibrary" class="delete-item" :data-id="id">削除</span>
+      </section>
     </section>
-    <router-link :to="{ name: 'categories', params: { username: String($route.params.username), library_id: id } }">
+    <section class="library-item-body">
       <section class="title">{{ titleView(title) }}</section>
       <section class="contents">{{ contentView(content) }}</section>
-    </router-link>
+    </section>
+    <section class="updated_at">{{ timeFormat(updated_at) }} 更新</section>
   </section>
   <Tooltip :message="title" />
 </template>
@@ -18,6 +24,7 @@ import axios, { AxiosResponse, AxiosError } from "axios";
 import { useAuth0 } from '@auth0/auth0-vue';
 import LibraryEditButton from "@/components/library/LibraryEditButton.vue";
 import { libraryApi } from '@/plugin/apis';
+import { timeFormat } from '@/plugin/util';
 import { item } from "@/../config.json";
 import Tooltip from '@/components/Tooltip.vue';
 
@@ -25,6 +32,7 @@ export default defineComponent({
   name: 'LibraryItem',
   components: {
     LibraryEditButton,
+    timeFormat,
     Tooltip
   },
   props: {
@@ -40,7 +48,12 @@ export default defineComponent({
   setup(props) {
     const { user } = useAuth0();
     const store = inject('library');
-    const removeLibrary = (event: HTMLButtonEvent) => {
+
+    interface HTMLEvent<T extends EventTarget> extends Event {
+      target: T;
+    };
+
+    const removeLibrary = (event: HTMLEvent<HTMLButtonElement>) => {
       if (!window.confirm(`ライブラリ「${props.title}」が削除されますが宜しいですか？`)) {
         return;
       }
@@ -74,6 +87,7 @@ export default defineComponent({
       user,
       titleView,
       contentView,
+      timeFormat,
       removeLibrary
     };
   },
@@ -81,36 +95,74 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.library-item-wrap {
-  width: calc(30% - 15px);
-  margin: 0.6em;
-  height: 7em;
-  background-color: red;
+.library-item {
+  position: relative;
   flex-wrap: wrap;
-  /*box-shadow: 10px 10px 0 #222222;*/
+  width: 30%;
+  height: 20rem;
+  margin: 1rem;
+  border: 1px #85ccff solid;
+  border-radius: .3rem;
+  z-index: 0;
+  animation: fadeIn .7s ease;
+}
+.library-item:hover {
+  border: 1px rgb(74, 92, 255) solid;
 }
 
-.delete-item {
-  display: block;
-  position: relative;
-  width: 2em;
-  height: 2em;
-  margin-left: auto;
+@keyframes fadeIn {
+  0%{
+    display: none;
+    opacity: 0;
+  }
+  100%{
+    opacity: 1;
+  }
 }
-.delete-item::before, .delete-item::after {
-  display: block;
+
+.library-item a {
   position: absolute;
-  content: '';
   width: 100%;
-  height: 4px;
-  top: 50%;
-  left: 50%;
-  background-color: black;
+  height: 100%;
+  top: 0;
+  left: 0;
 }
-.delete-item::before {
-  transform: translate(-50%,-50%) rotate(45deg);
+
+.library-menu {
+  display: flex;
+  justify-content: flex-end;
+  margin: .6rem;
+  z-index: 1;
 }
-.delete-item::after {
-  transform: translate(-50%,-50%) rotate(-45deg);
+
+.library-menu-item {
+  margin: .3rem;
+  z-index: 1;
+}
+.library-menu-item:hover {
+  color: #888;
+  cursor: pointer;
+}
+
+.library-item-body {
+  margin: 1rem .5rem;
+}
+
+.title {
+  padding: 1rem 0;
+  font-size: 1.4rem;
+  font-weight: 800;
+}
+
+.contents {
+  padding: 1rem 0;
+  line-height: 1.5rem;
+}
+
+.updated_at {
+  position: absolute;
+  bottom: .5rem;
+  left: .5rem;
+  font-size: .8rem;
 }
 </style>

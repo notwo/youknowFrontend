@@ -4,9 +4,9 @@
       <NavigationHeader />
 
       <main class="container">
-        <section class="main-right-pane"></section>
+        <section class="main-top-pane"></section>
         <router-view></router-view>
-        <section class="main-left-pane"></section>
+        <section class="main-bottom-pane"></section>
       </main>
     </section>
 
@@ -61,11 +61,15 @@ export default defineComponent({
 .container {
   margin: 0 auto;
   max-width: 1100px;
-  background: rgb(240, 242, 242); /** 一通りデザインを当ててコンテンツを配置し終わったら消す */
+  background: rgb(250, 250, 252); /** 一通りデザインを当ててコンテンツを配置し終わったら消す */
 }
 
-.main-right-pane  {
+.main-top-pane  {
+  margin: 2rem 0;
+  height: .2rem;
 }
-.main-left-pane  {
+.main-bottom-pane  {
+  margin: 2rem 0;
+  height: .2rem;
 }
 </style>

@@ -120,7 +120,13 @@ export default defineComponent({
 <style scoped>
 .keyword-item {
   display: flex;
-  justify-content: start;
+  justify-content: space-between;
   flex-wrap: wrap;
+}
+.keyword-item::after {
+  content: "";
+  display: block;
+  width: 30%;
+  margin: 0.6rem;
 }
 </style>
