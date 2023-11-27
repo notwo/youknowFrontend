@@ -12,8 +12,8 @@
     <section class="library-item-body">
       <section class="title">{{ titleView(title) }}</section>
       <section class="contents">{{ contentView(content) }}</section>
-      <section class="updated_at">{{ timeFormat(updated_at) }} 更新</section>
     </section>
+    <section class="updated_at">{{ timeFormat(updated_at) }} 更新</section>
   </section>
   <Tooltip :message="title" />
 </template>
@@ -99,21 +99,22 @@ export default defineComponent({
   position: relative;
   flex-wrap: wrap;
   width: 30%;
+  height: 20rem;
   margin: 1rem;
   border: 1px solid;
   border-radius: .3rem;
   z-index: 0;
 }
+.library-item:hover {
+  border: 1px rgb(255, 192, 247) solid;
+}
+
 .library-item a {
   position: absolute;
   width: 100%;
   height: 100%;
   top: 0;
   left: 0;
-  text-decoration: none;
-}
-.library-item:hover {
-  border: 1px rgb(255, 192, 247) solid;
 }
 
 .library-menu {
@@ -129,10 +130,24 @@ export default defineComponent({
 }
 
 .library-item-body {
-  margin: 1rem .4rem;
+  margin: 1rem .5rem;
+}
+
+.title {
+  padding: 1rem 0;
+  font-size: 1.4rem;
+  font-weight: 800;
+}
+
+.contents {
+  padding: 1rem 0;
+  line-height: 1.5rem;
 }
 
 .updated_at {
+  position: absolute;
+  bottom: .5rem;
+  left: .5rem;
   font-size: .8rem;
 }
 
