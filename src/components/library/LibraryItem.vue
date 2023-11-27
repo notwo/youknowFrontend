@@ -101,12 +101,23 @@ export default defineComponent({
   width: 30%;
   height: 20rem;
   margin: 1rem;
-  border: 1px solid;
+  border: 1px #85ccff solid;
   border-radius: .3rem;
   z-index: 0;
+  animation: fadeIn .7s ease;
 }
 .library-item:hover {
-  border: 1px rgb(255, 192, 247) solid;
+  border: 1px rgb(74, 92, 255) solid;
+}
+
+@keyframes fadeIn {
+  0%{
+    display: none;
+    opacity: 0;
+  }
+  100%{
+    opacity: 1;
+  }
 }
 
 .library-item a {
@@ -127,6 +138,10 @@ export default defineComponent({
 .library-menu-item {
   margin: .3rem;
   z-index: 1;
+}
+.library-menu-item:hover {
+  color: #888;
+  cursor: pointer;
 }
 
 .library-item-body {
@@ -150,5 +165,4 @@ export default defineComponent({
   left: .5rem;
   font-size: .8rem;
 }
-
 </style>
