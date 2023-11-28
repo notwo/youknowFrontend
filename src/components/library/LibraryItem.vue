@@ -139,6 +139,7 @@ export default defineComponent({
   margin: .3rem;
   z-index: 1;
 }
+
 .library-menu-item:hover {
   color: #888;
   cursor: pointer;
