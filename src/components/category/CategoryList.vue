@@ -1,7 +1,7 @@
 <template>
   <article id="category-list">
     <CategoryModal :edit_state="edit_state" />
-    <section class="category-item">
+    <section class="category-item-wrap">
       <CategoryItem
         :edit_state="edit_state"
         v-for="category in store.items.list"
@@ -115,15 +115,9 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.category-item {
+.category-item-wrap {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   flex-wrap: wrap;
-}
-.category-item::after {
-  content: "";
-  display: block;
-  width: 30%;
-  margin: 0.6rem;
 }
 </style>
