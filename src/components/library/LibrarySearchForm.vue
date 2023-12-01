@@ -1,11 +1,31 @@
 <template>
-  <section class="search-form">
-    <form action="">
-      <input type="text" name="search" id="search">
-      <button type="button" @click="onSearch">ライブラリを検索</button>
-    </form>
-  </section>
+  <form action="">
+    <section class="search-form">
+      <input type="text" name="search" id="search" class="search" placeholder="ライブラリを検索">
+      <button type="button" class="search-button" @click="onSearch">
+        <img src="@/assets/images/search.png" width="20" alt="search">
+      </button>
+    </section>
+  </form>
 </template>
+
+<style scoped>
+.search-form {
+  display: flex;
+  justify-content: center;
+  padding: 1rem 0;
+}
+
+.search {
+  padding: .6rem;
+  width: 70%;
+  border: none;
+}
+
+.search-button {
+  border: none;
+}
+</style>
 
 <script lang="ts">
 import { defineComponent, inject } from 'vue';
@@ -26,8 +46,12 @@ export default defineComponent({
       code: String
     };
 
+    interface HTMLEvent<T extends EventTarget> extends Event {
+      target: T;
+    };
+
     const api = libraryApi();
-    const onSearch = (event: HTMLButtonEvent) => {
+    const onSearch = (event: HTMLEvent<HTMLButtonElement>) => {
       const word = document.getElementById('search');
       if (word.value === '') {
         store.restore();

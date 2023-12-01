@@ -65,11 +65,11 @@ export default defineComponent({
 }
 
 .main-top-pane  {
-  margin: 2rem 0;
+  margin: 1rem 0;
   height: .2rem;
 }
 .main-bottom-pane  {
-  margin: 2rem 0;
+  margin: 1rem 0;
   height: .2rem;
 }
 </style>
