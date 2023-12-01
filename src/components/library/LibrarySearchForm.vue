@@ -1,10 +1,7 @@
 <template>
-  <section class="search-form">
-    <form action="">
-      <input type="text" name="search" id="search">
-      <button type="button" @click="onSearch">ライブラリを検索</button>
-    </form>
-  </section>
+  <SearchForm
+    contentName="ライブラリ"
+    @click="onSearch" />
 </template>
 
 <script lang="ts">
@@ -12,10 +9,13 @@ import { defineComponent, inject } from 'vue';
 import { useAuth0 } from '@auth0/auth0-vue';
 import axios, { AxiosResponse, AxiosError } from "axios";
 import { libraryApi } from '@/plugin/apis';
+import SearchForm from "@/components/common/SearchForm.vue";
 
 export default defineComponent({
   name: 'LibrarySearchForm',
-  components: {},
+  components: {
+    SearchForm
+  },
   setup() {
     const { user } = useAuth0();
     const store = inject('library');
@@ -26,8 +26,12 @@ export default defineComponent({
       code: String
     };
 
+    interface HTMLEvent<T extends EventTarget> extends Event {
+      target: T;
+    };
+
     const api = libraryApi();
-    const onSearch = (event: HTMLButtonEvent) => {
+    const onSearch = (event: HTMLEvent<HTMLButtonElement>) => {
       const word = document.getElementById('search');
       if (word.value === '') {
         store.restore();

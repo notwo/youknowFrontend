@@ -50,7 +50,7 @@ const visibleBreadcrumb = breadcrumbString.value.filter((element) => {
 .breadcrumb-contents {
   display: flex;
   gap: 0 1rem;
-  margin: 2rem;
+  margin: 1rem;
   padding: .5rem 0 .5rem 1.1rem;
   border-radius: .2rem;
   font-weight: 800;
