@@ -1,41 +1,21 @@
 <template>
-  <form action="">
-    <section class="search-form">
-      <input type="text" name="search" id="search" class="search" placeholder="ライブラリを検索">
-      <button type="button" class="search-button" @click="onSearch">
-        <img src="@/assets/images/search.png" width="20" alt="search">
-      </button>
-    </section>
-  </form>
+  <SearchForm
+    contentName="ライブラリ"
+    @click="onSearch" />
 </template>
-
-<style scoped>
-.search-form {
-  display: flex;
-  justify-content: center;
-  padding: 1rem 0;
-}
-
-.search {
-  padding: .6rem;
-  width: 70%;
-  border: none;
-}
-
-.search-button {
-  border: none;
-}
-</style>
 
 <script lang="ts">
 import { defineComponent, inject } from 'vue';
 import { useAuth0 } from '@auth0/auth0-vue';
 import axios, { AxiosResponse, AxiosError } from "axios";
 import { libraryApi } from '@/plugin/apis';
+import SearchForm from "@/components/common/SearchForm.vue";
 
 export default defineComponent({
   name: 'LibrarySearchForm',
-  components: {},
+  components: {
+    SearchForm
+  },
   setup() {
     const { user } = useAuth0();
     const store = inject('library');

@@ -1,10 +1,7 @@
 <template>
-  <section class="search-form">
-    <form action="">
-      <input type="text" name="search" id="search">
-      <button type="button" @click="onSearch">キーワードを検索</button>
-    </form>
-  </section>
+  <SearchForm
+    contentName="キーワード"
+    @click="onSearch" />
 </template>
 
 <script lang="ts">
@@ -13,10 +10,13 @@ import { useRoute, useRouter } from 'vue-router';
 import { useAuth0 } from '@auth0/auth0-vue';
 import axios, { AxiosResponse, AxiosError } from "axios";
 import { keywordApi } from '@/plugin/apis';
+import SearchForm from "@/components/common/SearchForm.vue";
 
 export default defineComponent({
   name: 'KeywordSearchForm',
-  components: {},
+  components: {
+    SearchForm
+  },
   setup() {
     const api = keywordApi();
     const route = useRoute();
@@ -29,7 +29,11 @@ export default defineComponent({
       code: String
     };
 
-    const onSearch = (event: HTMLButtonEvent) => {
+    interface HTMLEvent<T extends EventTarget> extends Event {
+      target: T;
+    };
+
+    const onSearch = (event: HTMLEvent<HTMLButtonElement>) => {
       const word = document.getElementById('search');
       if (word.value === '') {
         store.restore();
