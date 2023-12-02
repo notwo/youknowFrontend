@@ -1,7 +1,7 @@
 <template>
   <article id="category-list">
     <CategoryModal :edit_state="edit_state" />
-    <section class="category-item-wrap">
+    <section class="category-item-wrap" v-if="store.items.list.length > 0">
       <CategoryItem
         :edit_state="edit_state"
         v-for="category in store.items.list"
@@ -14,6 +14,12 @@
           :created_at="category.created_at"
           :updated_at="category.updated_at"
       />
+    </section>
+    <section v-else-if="store.firstLoaded.value">
+      <p class="empty-message">カテゴリを追加してみましょう</p>
+    </section>
+    <section v-else>
+      <!-- ここにローディング -->
     </section>
   </article>
 </template>
@@ -103,6 +109,8 @@ export default defineComponent({
     });
 
     onUnmounted(() => {
+      store.allClear();
+      store.restoreFirstLoaded();
       window.removeEventListener('scroll', showMoreCategoryList, false);
     });
 
@@ -119,5 +127,22 @@ export default defineComponent({
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
+}
+
+.empty-message {
+  display: flex;
+  justify-content: center;
+  font-size: 3.5rem;
+  animation: fadeIn .7s ease;
+}
+
+@keyframes fadeIn {
+  0%{
+    display: none;
+    opacity: 0;
+  }
+  100%{
+    opacity: 1;
+  }
 }
 </style>

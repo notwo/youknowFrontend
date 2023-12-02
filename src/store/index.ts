@@ -3,11 +3,13 @@ import { ref, reactive, readonly } from "vue";
 export function useStore() {
   const items = reactive({ list: [] });
   let backupList: Array<Object> = [];
+  const firstLoaded = ref(false);
   const searched = ref(false);
 
   function setItem<T>(list: T[]) {
     items.list = ref(list);
     backupList = list.concat();
+    firstLoaded.value = true;
   }
 
   function add<T>(item: T) {
@@ -73,11 +75,15 @@ export function useStore() {
     items.list.splice(0);
   }
 
+  function restoreFirstLoaded() {
+    firstLoaded.value = false;
+  }
+
   function confirmItems() {
     console.log(items);
   }
 
-  return { items: readonly(items), setItem, add, concat, update, remove, removeList, search, restore, isSearched, allClear, confirmItems };
+  return { items: readonly(items), firstLoaded: readonly(firstLoaded), setItem, add, concat, update, remove, removeList, search, restore, isSearched, allClear, restoreFirstLoaded, confirmItems };
 };
 
 export const editStore = reactive({
