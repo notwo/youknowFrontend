@@ -16,7 +16,7 @@
 
 <script lang="ts">
 import { defineComponent, provide } from "vue";
-import { useStore, editStore, titleStore, titles } from '@/store/index';
+import { useStore, editStore, titles } from '@/store/index';
 import NavigationHeader from "@/components/NavigationHeader.vue";
 import FooterInformation from "@/components/FooterInformation.vue";
 
