@@ -1,7 +1,7 @@
 <template>
   <article id="library-list">
     <LibraryModal :edit_state="edit_state" />
-    <section class="library-item-wrap">
+    <section class="library-item-wrap" v-if="store.items.list.length > 0">
       <LibraryItem
         :edit_state="edit_state"
         v-for="library in store.items.list"
@@ -14,6 +14,12 @@
           :created_at="library.created_at"
           :updated_at="library.updated_at"
       />
+    </section>
+    <section v-else-if="store.firstLoaded.value">
+      <p class="empty-message">カテゴリを追加してみましょう</p>
+    </section>
+    <section v-else>
+      <!-- ここにローディング -->
     </section>
   </article>
 </template>
@@ -95,6 +101,8 @@ export default defineComponent({
     });
 
     onUnmounted(() => {
+      store.allClear();
+      store.restoreFirstLoaded();
       window.removeEventListener('scroll', showMoreLibraryList, false);
     });
 
@@ -117,5 +125,22 @@ export default defineComponent({
   display: block;
   width: 30%;
   margin: 1rem;
+}
+
+.empty-message {
+  display: flex;
+  justify-content: center;
+  font-size: 3.5rem;
+  animation: fadeIn .3s ease;
+}
+
+@keyframes fadeIn {
+  0%{
+    display: none;
+    opacity: 0;
+  }
+  100%{
+    opacity: 1;
+  }
 }
 </style>

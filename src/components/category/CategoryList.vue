@@ -133,7 +133,7 @@ export default defineComponent({
   display: flex;
   justify-content: center;
   font-size: 3.5rem;
-  animation: fadeIn .7s ease;
+  animation: fadeIn .3s ease;
 }
 
 @keyframes fadeIn {
