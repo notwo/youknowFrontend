@@ -1,3 +1,4 @@
+import { useAuth0 } from '@auth0/auth0-vue';
 import { createRouter, createWebHistory, RouteRecordRaw  } from 'vue-router';
 
 const routes: Array<RouteRecordRaw> = [
@@ -5,6 +6,14 @@ const routes: Array<RouteRecordRaw> = [
   { path: '/callback', name: 'callback', component: () => import('../components/views/Callback.vue') },
   //{ path: '/login', name: 'login', component: () => import('../components/views/Login.vue') },
   { path: '/:username/libraries', name: 'libraries', component: () => import('../components/views/Libraries.vue'),
+    beforeEnter: (to, from, next) => {
+      const auth0 = useAuth0();
+      if (auth0.isAuthenticated.value) {
+        next();
+      } else {
+        next('/')
+      }
+    },
     children: [
       {
         path: 'libraries',
@@ -13,6 +22,14 @@ const routes: Array<RouteRecordRaw> = [
     ]
   },
   { path: '/:username/libraries/:library_id/categories', name: 'categories', component: () => import('../components/views/Categories.vue'),
+    beforeEnter: (to, from, next) => {
+      const auth0 = useAuth0();
+      if (auth0.isAuthenticated.value) {
+        next();
+      } else {
+        next('/')
+      }
+    },
     children: [
       {
         path: 'categories',
@@ -21,6 +38,14 @@ const routes: Array<RouteRecordRaw> = [
     ]
   },
   { path: '/:username/libraries/:library_id/categories/:category_id/keywords', name: 'keywords', component: () => import('../components/views/Keywords.vue'),
+    beforeEnter: (to, from, next) => {
+      const auth0 = useAuth0();
+      if (auth0.isAuthenticated.value) {
+        next();
+      } else {
+        next('/')
+      }
+    },
     children: [
       {
         path: 'keywords',
@@ -28,7 +53,16 @@ const routes: Array<RouteRecordRaw> = [
       },
     ]
   },
-  { path: '/:username/libraries/:library_id/categories/:category_id/keywords/:keyword_id', name: 'keyword', component: () => import('../components/keyword/KeywordDetail.vue') },
+  { path: '/:username/libraries/:library_id/categories/:category_id/keywords/:keyword_id', name: 'keyword', component: () => import('../components/keyword/KeywordDetail.vue'),
+    beforeEnter: (to, from, next) => {
+      const auth0 = useAuth0();
+      if (auth0.isAuthenticated.value) {
+        next();
+      } else {
+        next('/')
+      }
+    },
+  },
   { path: '/:matchAll(.*)', name: 'error', component: () => import('../components/views/404.vue') },
 ];
 
