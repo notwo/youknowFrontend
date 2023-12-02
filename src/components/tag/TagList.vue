@@ -28,12 +28,29 @@ onMounted(() => {
   justify-content: start;
   flex-wrap: wrap;
 }
+
+.empty-message {
+  display: flex;
+  justify-content: center;
+  font-size: 2rem;
+  animation: fadeIn .3s ease;
+}
+
+@keyframes fadeIn {
+  0%{
+    display: none;
+    opacity: 0;
+  }
+  100%{
+    opacity: 1;
+  }
+}
 </style>
 
 <template>
   <article id="tag-list">
     <TagForm />
-    <section class="tag-item">
+    <section class="tag-item" v-if="store.items.list.length > 0">
       <TagItem
         v-for="tag in store.items.list"
           :key="tag.id"
@@ -42,6 +59,12 @@ onMounted(() => {
           :custom_user="tag.custom_user"
           :custom_user_id="tag.custom_user_id"
       />
+    </section>
+    <section v-else-if="store.firstLoaded.value">
+      <p class="empty-message">タグを追加してみましょう</p>
+    </section>
+    <section v-else>
+      <!-- ここにローディング -->
     </section>
   </article>
 </template>

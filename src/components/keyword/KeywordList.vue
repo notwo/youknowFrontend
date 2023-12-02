@@ -1,7 +1,7 @@
 <template>
   <article id="keyword-list">
     <KeywordModal :edit_state="edit_state" />
-    <section class="keyword-item">
+    <section class="keyword-item" v-if="store.items.list.length > 0">
       <KeywordItem
         :edit_state="edit_state"
         v-for="keyword in store.items.list"
@@ -15,6 +15,12 @@
           :updated_at="keyword.updated_at"
           :tags="keyword.tags"
       />
+    </section>
+    <section v-else-if="store.firstLoaded.value">
+      <p class="empty-message">キーワードを追加してみましょう</p>
+    </section>
+    <section v-else>
+      <!-- ここにローディング -->
     </section>
   </article>
 </template>
@@ -106,6 +112,8 @@ export default defineComponent({
     });
 
     onUnmounted(() => {
+      store.allClear();
+      store.restoreFirstLoaded();
       window.removeEventListener('scroll', showMoreKeywordList, false);
     });
 
@@ -128,5 +136,22 @@ export default defineComponent({
   display: block;
   width: 30%;
   margin: 0.6rem;
+}
+
+.empty-message {
+  display: flex;
+  justify-content: center;
+  font-size: 3.5rem;
+  animation: fadeIn .3s ease;
+}
+
+@keyframes fadeIn {
+  0%{
+    display: none;
+    opacity: 0;
+  }
+  100%{
+    opacity: 1;
+  }
 }
 </style>
