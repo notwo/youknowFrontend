@@ -54,6 +54,7 @@ export function useStore() {
     list.map((_obj: object) => {
       items.list.unshift(_obj);
     });
+    console.log('hage')
     searched.value = true;
   }
 
