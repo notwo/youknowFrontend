@@ -113,6 +113,7 @@ export default defineComponent({
 
     onUnmounted(() => {
       store.allClear();
+      store.restoreSearched();
       store.restoreFirstLoaded();
       window.removeEventListener('scroll', showMoreKeywordList, false);
     });

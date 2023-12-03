@@ -54,7 +54,6 @@ export function useStore() {
     list.map((_obj: object) => {
       items.list.unshift(_obj);
     });
-    console.log('hage')
     searched.value = true;
   }
 
@@ -76,6 +75,10 @@ export function useStore() {
     items.list.splice(0);
   }
 
+  function restoreSearched() {
+    searched.value = false;
+  }
+
   function restoreFirstLoaded() {
     firstLoaded.value = false;
   }
@@ -84,7 +87,8 @@ export function useStore() {
     console.log(items);
   }
 
-  return { items: readonly(items), firstLoaded: readonly(firstLoaded), setItem, add, concat, update, remove, removeList, search, restore, isSearched, allClear, restoreFirstLoaded, confirmItems };
+  return { items: readonly(items), firstLoaded: readonly(firstLoaded),
+    setItem, add, concat, update, remove, removeList, search, restore, isSearched, allClear, restoreSearched, restoreFirstLoaded, confirmItems };
 };
 
 export const editStore = reactive({

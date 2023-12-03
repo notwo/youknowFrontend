@@ -15,7 +15,7 @@
           :updated_at="library.updated_at"
       />
     </section>
-    <section v-else-if="store.firstLoaded.value">
+    <section v-else-if="store.firstLoaded.value && !store.isSearched()">
       <p class="empty-message">カテゴリを追加してみましょう</p>
     </section>
     <section v-else>
@@ -102,6 +102,7 @@ export default defineComponent({
 
     onUnmounted(() => {
       store.allClear();
+      store.restoreSearched();
       store.restoreFirstLoaded();
       window.removeEventListener('scroll', showMoreLibraryList, false);
     });
