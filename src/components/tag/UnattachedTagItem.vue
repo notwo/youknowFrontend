@@ -2,7 +2,7 @@
 import { inject } from 'vue';
 import axios, { AxiosResponse, AxiosError } from "axios";
 import { useAuth0 } from '@auth0/auth0-vue';
-import { item } from "@/../config.json";
+import { titleForView } from '@/plugin/util';
 import { tagApi } from '@/plugin/apis';
 
 const { user } = useAuth0();
@@ -18,7 +18,11 @@ interface ErrorResponse {
   error: String
 };
 
-const removeTag = (event: HTMLButtonEvent) => {
+interface HTMLEvent<T extends EventTarget> extends Event {
+  target: T;
+};
+
+const removeTag = (event: HTMLEvent<HTMLButtonElement>) => {
   event.stopPropagation();
   if (!window.confirm(`タグ「${props.title}」が削除されますが宜しいですか？`)) {
     return;
@@ -34,7 +38,7 @@ const removeTag = (event: HTMLButtonEvent) => {
     });
 };
 
-const selectTag = (event: HTMLButtonEvent) => {
+const selectTag = (event: HTMLEvent<HTMLButtonElement>) => {
   event.stopPropagation();
 
   if (event.currentTarget.classList.contains('selected')) {
@@ -50,8 +54,6 @@ const selectTag = (event: HTMLButtonEvent) => {
     document.getElementById('attachButton').setAttribute('disabled', '');
   }
 };
-
-const titleView = props.title.length > item.tag.titleMaxLength ? props.title.substring(0, item.tag.titleMaxLength) + '...' : props.title;
 </script>
 
 <style scoped>
@@ -73,6 +75,6 @@ const titleView = props.title.length > item.tag.titleMaxLength ? props.title.sub
     <section>
       <span @click="removeTag" class="delete-item" :data-id="id">☓</span>
     </section>
-    <section class="title">{{ titleView }}</section>
+    <section class="title">{{ titleForView(title, 'tag') }}</section>
   </section>
 </template>

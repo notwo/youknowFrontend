@@ -10,8 +10,8 @@
       </section>
     </section>
     <section class="category-item-body">
-      <section class="title">{{ titleView(title) }}</section>
-      <section class="contents">{{ contentView(content) }}</section>
+      <section class="title">{{ titleForView(title, 'category') }}</section>
+      <section class="contents">{{ contentForView(content, 'category') }}</section>
     </section>
     <section class="updated_at">{{ timeFormat(updated_at) }} 更新</section>
   </section>
@@ -24,9 +24,8 @@ import { useRoute, useRouter } from 'vue-router';
 import axios, { AxiosResponse, AxiosError } from "axios";
 import { useAuth0 } from '@auth0/auth0-vue';
 import CategoryEditButton from "@/components/category/CategoryEditButton.vue";
-import { timeFormat } from '@/plugin/util';
+import { timeFormat, titleForView, contentForView } from '@/plugin/util';
 import { categoryApi } from '@/plugin/apis';
-import { item } from "@/../config.json";
 import Tooltip from '@/components/Tooltip.vue';
 
 export default defineComponent({
@@ -77,17 +76,10 @@ export default defineComponent({
       });
     };
 
-    const titleView = (title) => {
-      return title.length > item.category.titleMaxLength ? title.substring(0, item.category.titleMaxLength) + '...' : title;
-    };
-    const contentView = (content) => {
-      return content.length > item.category.contentMaxLength ? content.substring(0, item.category.contentMaxLength) + '...' : content;
-    };
-
     return {
-      titleView,
-      contentView,
       timeFormat,
+      titleForView,
+      contentForView,
       removeCategory
     };
   }

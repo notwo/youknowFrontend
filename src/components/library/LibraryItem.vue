@@ -10,8 +10,8 @@
       </section>
     </section>
     <section class="library-item-body">
-      <section class="title">{{ titleView(title) }}</section>
-      <section class="contents">{{ contentView(content) }}</section>
+      <section class="title">{{ titleForView(title, 'library') }}</section>
+      <section class="contents">{{ contentForView(content, 'library') }}</section>
     </section>
     <section class="updated_at">{{ timeFormat(updated_at) }} 更新</section>
   </section>
@@ -24,8 +24,7 @@ import axios, { AxiosResponse, AxiosError } from "axios";
 import { useAuth0 } from '@auth0/auth0-vue';
 import LibraryEditButton from "@/components/library/LibraryEditButton.vue";
 import { libraryApi } from '@/plugin/apis';
-import { timeFormat } from '@/plugin/util';
-import { item } from "@/../config.json";
+import { timeFormat, titleForView, contentForView } from '@/plugin/util';
 import Tooltip from '@/components/Tooltip.vue';
 
 export default defineComponent({
@@ -76,17 +75,10 @@ export default defineComponent({
       });
     };
 
-    const titleView = (title) => {
-      return title.length > item.library.titleMaxLength ? title.substring(0, item.library.titleMaxLength) + '...' : title;
-    };
-    const contentView = (content) => {
-      return content.length > item.library.contentMaxLength ? content.substring(0, item.library.contentMaxLength) + '...' : content;
-    };
-
     return {
       user,
-      titleView,
-      contentView,
+      titleForView,
+      contentForView,
       timeFormat,
       removeLibrary
     };

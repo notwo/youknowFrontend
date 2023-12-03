@@ -3,7 +3,7 @@ import { inject } from 'vue';
 import axios, { AxiosResponse, AxiosError } from "axios";
 import { useAuth0 } from '@auth0/auth0-vue';
 import { useRoute, useRouter } from 'vue-router';
-import { item } from "@/../config.json";
+import { titleForView } from '@/plugin/util';
 import { keywordApi } from '@/plugin/apis';
 
 const route = useRoute();
@@ -27,7 +27,11 @@ const props = defineProps({
   title: String
 });
 
-const unattachTag = (event: HTMLButtonEvent) => {
+interface HTMLEvent<T extends EventTarget> extends Event {
+  target: T;
+};
+
+const unattachTag = (event: HTMLEvent<HTMLButtonElement>) => {
   const tagId = event.currentTarget.getAttribute('data-id');
   const tagIds = tagStore.items.list.map((tag) =>
     {
@@ -51,10 +55,6 @@ const unattachTag = (event: HTMLButtonEvent) => {
       console.log(`${e.message} ( ${e.name} ) code: ${e.code}`);
     });
 };
-
-const titleView = (title) => {
-  return title.length > item.tag.titleMaxLength ? title.substring(0, item.tag.titleMaxLength) + '...' : title;
-};
 </script>
 
 <style scoped>
@@ -70,6 +70,6 @@ const titleView = (title) => {
     <section>
       <span @click="unattachTag" class="delete-item" :data-id="id">☓</span>
     </section>
-    <section class="title">{{ titleView(title) }}</section>
+    <section class="title">{{ titleForView(title, 'tag') }}</section>
   </section>
 </template>
