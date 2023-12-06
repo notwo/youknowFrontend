@@ -15,7 +15,7 @@ const api = {
   tag: tagApi()
 };
 
-let register_state = reactive({
+const register_state = reactive({
   title: '',
 });
 
@@ -33,10 +33,13 @@ interface TagRequest {
   keyword_id: Number
 };
 
-
 interface KeywordRequest {
   custom_user: String,
   tags: Array<Object>
+};
+
+interface HTMLEvent<T extends EventTarget> extends Event {
+  target: T;
 };
 
 const AttachTag = (tagId: Number) => {
@@ -57,7 +60,7 @@ const AttachTag = (tagId: Number) => {
     });
 }
 
-const addTag = (event: HTMLButtonEvent) => {
+const addTag = (event: HTMLEvent<HTMLButtonElement>) => {
   const requestParam: TagRequest = {
     custom_user: user.value.sub,
     title: document.getElementById('tag_title').value,
@@ -79,21 +82,57 @@ const addTag = (event: HTMLButtonEvent) => {
 </script>
 
 <style scoped>
+.form-wrap {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.form-group {
+  margin: 0 .3rem;
+}
+
+.tag-title {
+  padding: .47rem;
+}
+
+.error-message-wrap {
+  display: flex;
+  justify-content: center;
+}
+.error-message {
+  margin: .8rem 0;
+  font-weight: 700;
+  color: rgba(220,0,0,1);
+}
 
 </style>
 
 <template>
-  <section>
-    <form action="" id="register-form">
-      <input type="text" name="tag_title" id="tag_title"
-        v-model="register_state.title"
-        :error-messages="register_v$.title.$errors.map((e) => e.$message)"
-        @blur="register_v$.title.$touch"
-        @input="register_v$.title.$touch">
-      <section v-for="error of register_v$.title.$errors" :key="error.$uid">
-        <section class="error-message">{{ error.$message }}</section>
+  <form action="" id="register-form">
+    <section class="form-wrap">
+      <section class="form-group">
+        <section class="form-field">
+          <input type="text" class="tag-title" name="tag_title" id="tag_title"
+            :class="[register_v$.title.$errors.length >= 1 ? 'error' : '']"
+            v-model="register_state.title"
+            :error-messages="register_v$.title.$errors.map((e) => e.$message)"
+            :maxlength="50"
+            @blur="register_v$.title.$touch"
+            @input="register_v$.title.$touch">
+        </section>
       </section>
-      <button type="button" @click="addTag" :disabled="!(register_v$.title.$errors.length === 0 && register_state.title !== '')">タグ追加(後で修正)</button>
-    </form>
-  </section>
+      <section class="form-group">
+        <section class="form-field">
+          <button type="button"
+          class="btn register"
+          @click="addTag"
+          :disabled="!(register_v$.title.$errors.length === 0 && register_state.title !== '')">このキーワードにタグを追加</button>
+        </section>
+      </section>
+    </section>
+    <section class="error-message-wrap" v-for="error of register_v$.title.$errors" :key="error.$uid">
+      <section class="error-message">{{ error.$message }}</section>
+    </section>
+  </form>
 </template>
