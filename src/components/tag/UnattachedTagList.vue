@@ -41,7 +41,7 @@ onMounted(() => {
 #unattached-tag-list {
   position: relative;
   margin: 5rem .8rem;
-  border: 3px solid #888;
+  border: 1px solid #888;
   border-radius: .4rem;
 }
 

@@ -60,7 +60,7 @@ const unattachTag = (event: HTMLEvent<HTMLButtonElement>) => {
 <style scoped>
 .tag-item {
   position: relative;
-  margin: .4rem;
+  margin: .9rem .4rem;
   padding: .3rem;
   border: 1px rgba(255,255,255,.9) solid;
   border-radius: .3rem;

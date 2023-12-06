@@ -96,10 +96,6 @@ const addTag = (event: HTMLEvent<HTMLButtonElement>) => {
   padding: .47rem;
 }
 
-input.error {
-  border-color: rgba(220,0,0,0.3);
-  background-color: rgba(220,0,0,0.3);
-}
 .error-message-wrap {
   display: flex;
   justify-content: center;
@@ -128,7 +124,10 @@ input.error {
       </section>
       <section class="form-group">
         <section class="form-field">
-          <button type="button" class="btn register" @click="addTag" :disabled="!(register_v$.title.$errors.length === 0 && register_state.title !== '')">このキーワードにタグを追加</button>
+          <button type="button"
+          class="btn register"
+          @click="addTag"
+          :disabled="!(register_v$.title.$errors.length === 0 && register_state.title !== '')">このキーワードにタグを追加</button>
         </section>
       </section>
     </section>
