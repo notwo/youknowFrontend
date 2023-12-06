@@ -57,24 +57,68 @@ const selectTag = (event: HTMLEvent<HTMLButtonElement>) => {
 </script>
 
 <style scoped>
-.tag-item-wrap {
+.unattached-tag-item {
   margin: 0.2em;
   padding: 1em;
-  background: rgba(221, 26, 26, 0.9);
+  border: 1px rgba(47, 7, 225, 0.9) solid;
+  border-radius: .3rem;
+  z-index: 0;
+  animation: fadeIn .7s ease;
 }
 
-.tag-item-wrap.selected {
+@keyframes fadeIn {
+  0%{
+    display: none;
+    opacity: 0;
+  }
+  100%{
+    opacity: 1;
+  }
+}
+
+.unattached-tag-item.selected {
   margin: 0.2em;
   padding: 1em;
+  color: #eee;
   background: rgba(47, 7, 225, 0.9);
+}
+
+.unattached-tag-menu {
+  display: flex;
+  justify-content: flex-end;
+  margin: .2rem;
+  z-index: 1;
+}
+
+.unattached-tag-menu-item {
+  margin: .3rem;
+  z-index: 1;
+}
+.unattached-tag-menu-item:hover {
+  color: #888;
+  cursor: pointer;
+}
+
+.unattached-tag-item-body {
+  margin: .5rem .5rem;
+}
+
+.title {
+  padding: .3rem 0;
+  font-size: 1.4rem;
+  font-weight: 800;
 }
 </style>
 
 <template>
-  <section class="tag-item-wrap" @click="selectTag" :data-id="id">
-    <section>
-      <span @click="removeTag" class="delete-item" :data-id="id">☓</span>
+  <section class="unattached-tag-item" @click="selectTag" :data-id="id">
+    <section class="unattached-tag-menu">
+      <section class="unattached-tag-menu-item">
+        <span @click="removeTag" class="delete-item" :data-id="id">削除</span>
+      </section>
     </section>
-    <section class="title">{{ titleForView(title, 'tag') }}</section>
+    <section class="unattached-tag-item-body">
+      <section class="title">{{ titleForView(title, 'tag') }}</section>
+    </section>
   </section>
 </template>

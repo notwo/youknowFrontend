@@ -39,30 +39,52 @@ onMounted(() => {
 
 <style scoped>
 #unattached-tag-list {
-  background: rgba(255,255,0,0.8);
-  margin-top: 2em;
+  position: relative;
+  margin: 5rem .8rem;
+  border: 3px solid #888;
+  border-radius: .4rem;
 }
 
-.unattached-tag-item {
+#unattached-tag-list .subject {
+  display: inline-block;
+  position: absolute;
+  padding: 0 .5rem;
+  transform: translateX(42%);
+  top: -.7rem;
+  left: 0;
+  line-height: 1;
+  font-size: 1.6em;
+  font-weight: 800;
+  background-color: rgb(250, 250, 252);
+}
+
+.unattached-tag-body {
+  margin: .8rem;
+}
+
+.unattached-tag-item-wrap {
   display: flex;
   justify-content: start;
   flex-wrap: wrap;
+  margin: 1.4rem 0;
 }
 </style>
 
 <template>
   <article id="unattached-tag-list">
-    <section class="">未登録のタグ</section>
-    <section class="unattached-tag-item">
-      <UnattachedTagItem
-        v-for="tag in TagList"
-          :key="tag.id"
-          :id="tag.id"
-          :title="tag.title"
-          :custom_user="tag.custom_user"
-          :custom_user_id="tag.custom_user_id"
-      />
+    <section class="subject">未登録のタグ</section>
+    <section class="unattached-tag-body">
+      <section class="unattached-tag-item-wrap">
+        <UnattachedTagItem
+          v-for="tag in TagList"
+            :key="tag.id"
+            :id="tag.id"
+            :title="tag.title"
+            :custom_user="tag.custom_user"
+            :custom_user_id="tag.custom_user_id"
+        />
+      </section>
+      <AttachTagButton />
     </section>
-    <AttachTagButton />
   </article>
 </template>

@@ -13,12 +13,16 @@ const register_state = reactive({
   content: ''
 });
 
+interface HTMLEvent<T extends EventTarget> extends Event {
+  target: T;
+};
+
 const store = inject('libraryEdit');
 
 const register_v$ = useVuelidate(registerRules('ライブラリ名'), register_state);
 const edit_v$ = useVuelidate(editRules('ライブラリ名', store), props.edit_state);
 
-const closeModal = (event: HTMLButtonEvent) => {
+const closeModal = (event: HTMLEvent<HTMLButtonElement>) => {
   event.preventDefault();
   document.body.style.removeProperty("overflow");
   const modal = document.getElementsByClassName('overlay') as HTMLCollectionOf<HTMLElement>;

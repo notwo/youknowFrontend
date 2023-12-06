@@ -58,18 +58,65 @@ const unattachTag = (event: HTMLEvent<HTMLButtonElement>) => {
 </script>
 
 <style scoped>
-.tag-item-wrap {
-  margin: 0.2em;
-  padding: 1em;
-  background: rgba(221, 26, 26, 0.9);
+.tag-item {
+  position: relative;
+  margin: .4rem;
+  padding: .3rem;
+  border: 1px rgba(255,255,255,.9) solid;
+  border-radius: .3rem;
+  z-index: 0;
+  background: rgba(255,255,255,.9);
+  animation: fadeIn .7s ease;
 }
+
+@keyframes fadeIn {
+  0%{
+    display: none;
+    opacity: 0;
+  }
+  100%{
+    opacity: 1;
+  }
+}
+
+.tag-menu {
+  display: flex;
+  justify-content: flex-end;
+  margin: .2rem;
+  z-index: 1;
+}
+
+.tag-menu-item {
+  margin: .3rem;
+  z-index: 1;
+}
+
+.tag-menu-item:hover {
+  color: #888;
+  cursor: pointer;
+}
+
+.tag-item-body {
+  margin: .5rem .5rem;
+}
+
+.title {
+  padding: .3rem 0;
+  font-size: 1.4rem;
+  font-weight: 800;
+}
+
 </style>
 
 <template>
-  <section class="tag-item-wrap">
-    <section>
-      <span @click="unattachTag" class="delete-item" :data-id="id">☓</span>
+  <section class="tag-item">
+    <section class="tag-menu">
+      <section class="tag-menu-item">
+        <span @click="unattachTag" class="delete-item" :data-id="id">削除</span>
+      </section>
     </section>
-    <section class="title">{{ titleForView(title, 'tag') }}</section>
+    <section class="tag-item-body">
+      <section class="title">{{ titleForView(title, 'tag') }}</section>
+    </section>
   </section>
 </template>

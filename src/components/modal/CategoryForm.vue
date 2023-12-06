@@ -25,17 +25,21 @@ export default defineComponent({
     edit_state: Object
   },
   setup(props) {
-    let register_state = reactive({
+    const register_state = reactive({
       title: '',
       content: ''
     });
+
+    interface HTMLEvent<T extends EventTarget> extends Event {
+      target: T;
+    };
 
     const store = inject('categoryEdit');
 
     const register_v$ = useVuelidate(registerRules('カテゴリ名'), register_state);
     const edit_v$ = useVuelidate(editRules('カテゴリ名', store), props.edit_state);
 
-    const closeModal = (event: HTMLButtonEvent) => {
+    const closeModal = (event: HTMLEvent<HTMLButtonElement>) => {
       event.preventDefault();
       document.body.style.removeProperty("overflow");
       const modal = document.getElementsByClassName('overlay') as HTMLCollectionOf<HTMLElement>;

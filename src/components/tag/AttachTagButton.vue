@@ -1,4 +1,3 @@
-
 <script setup lang="ts">
 import { ref, inject, onMounted } from 'vue';
 import axios, { AxiosResponse, AxiosError } from "axios";
@@ -50,8 +49,28 @@ const AttachTag = () => {
 
 </script>
 
+<style scoped>
+.form-wrap {
+  margin: 0 auto;
+  max-width: 20rem;
+}
+
+.form-field .btn {
+  display: block;
+  margin: 0 auto;
+  font-size: 1rem;
+  font-weight: 800;
+}
+</style>
+
 <template>
-  <section>
-    <button type="button" @click="AttachTag" id="attachButton" :disabled="true">選択したタグをキーワードにつける</button>
-  </section>
+  <form action="" class="">
+    <section class="form-wrap">
+      <section class="form-group">
+        <section class="form-field">
+          <button type="button" @click="AttachTag" id="attachButton" class="btn register" :disabled="true">選択したタグをキーワードにつける</button>
+        </section>
+      </section>
+    </section>
+  </form>
 </template>

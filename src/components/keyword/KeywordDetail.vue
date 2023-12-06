@@ -58,8 +58,10 @@ onUnmounted(() => {
 
 <template>
   <Breadcrumb />
-  <section class="title">{{ Keyword.title }}</section>
-  <section class="contents">{{ Keyword.content }}</section>
+  <section class="detail-body">
+    <section class="keyword-title">{{ Keyword.title }}</section>
+    <section class="keyword-contents">{{ Keyword.content }}</section>
+  </section>
   <TagList />
   <UnattachedTagList />
   <ScrollToTopButton />

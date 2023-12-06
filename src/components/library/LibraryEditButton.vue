@@ -17,7 +17,11 @@ export default defineComponent({
   setup(props) {
     const editStore = inject('libraryEdit');
 
-    const openEditLibraryForm = (event: HTMLButtonEvent) => {
+    interface HTMLEvent<T extends EventTarget> extends Event {
+      target: T;
+    };
+
+    const openEditLibraryForm = (event: HTMLEvent<HTMLButtonElement>) => {
       document.body.style.overflow = 'hidden';
       const modal = document.getElementsByClassName('overlay') as HTMLCollectionOf<HTMLElement>;
       modal[0].classList.add('visible');
