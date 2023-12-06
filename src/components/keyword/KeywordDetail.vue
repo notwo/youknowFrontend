@@ -53,7 +53,20 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
+.detail-body {
+  margin: 3rem 2rem;
+}
 
+.keyword-title {
+  margin: 2rem 1rem;
+  font-size: 2.5rem;
+  font-weight: 800;
+}
+
+.keyword-contents {
+  margin: 2rem 1rem;
+  font-size: 1.5rem;
+}
 </style>
 
 <template>
