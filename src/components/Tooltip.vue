@@ -12,7 +12,7 @@ const showTooltip = (e) => {
   const tooltip = currentContent.nextElementSibling;
   const _showTooltip = () => {
     tooltip.style.left = `${title[0].getBoundingClientRect().left + window.scrollX}px`;
-    tooltip.style.top = `${title[0].getBoundingClientRect().top + window.scrollY + 24}px`;
+    tooltip.style.top = `${title[0].getBoundingClientRect().bottom + window.scrollY - 23}px`;
     tooltip.classList.add('tooltip-open');
   };
   timeoutId = setTimeout(_showTooltip, 300);
@@ -46,8 +46,11 @@ onUnmounted(() => {
 .tooltip {
   position: absolute;
   display: none;
-  white-space: nowrap;
-  transform: translateY(50%);
+  padding: .3rem;
+  line-height: 1.3;
+  transform: translateY(80%);
+  font-size: 0.8rem;
+  border-radius: .3rem;
   color: white;
   background-color: rgb(74, 92, 255);
   animation: fadeIn .1s ease;
@@ -65,8 +68,16 @@ onUnmounted(() => {
 
 .tooltip-box {
   content: '';
-  top: 0.2em;
-  left: 0.2em;
+  top: 0.2rem;
+  left: 0.2rem;
+  overflow-wrap: break-word;
+}
+.tooltip-box::before {
+  content: '';
+  position: absolute;
+  top: -.8rem;
+  border: .5rem solid transparent;
+  border-bottom: .5rem solid rgb(74, 92, 255);
 }
 
 .tooltip-open {
