@@ -1,41 +1,74 @@
 <script setup lang="ts">
+import { onMounted, onUnmounted } from 'vue';
+
 const props = defineProps({
   message: String
 });
 
-const tooltipContents = document.querySelectorAll('.tooltip-content');
-tooltipContents.forEach((content) => {
-  let timeoutId: Number = 0;
-  content.addEventListener('mouseover', (e) => {
-    const currentContent = e.currentTarget;
-    const title = content.getElementsByClassName('title');
-    const tooltip = currentContent.nextElementSibling;
-    const showTooltip = () => {
-      tooltip.style.left = `${title[0].getBoundingClientRect().left + window.scrollX}px`;
-      tooltip.style.top = `${title[0].getBoundingClientRect().top + window.scrollY + 24}px`;
-      tooltip.classList.add('tooltip-open');
-    };
-    timeoutId = setTimeout(showTooltip, 700);
+let timeoutId: Number = 0;
+const showTooltip = (e) => {
+  const currentContent = e.currentTarget;
+  const title = currentContent.getElementsByClassName('title');
+  const tooltip = currentContent.nextElementSibling;
+  const _showTooltip = () => {
+    tooltip.style.left = `${title[0].getBoundingClientRect().left + window.scrollX}px`;
+    tooltip.style.top = `${title[0].getBoundingClientRect().top + window.scrollY + 24}px`;
+    tooltip.classList.add('tooltip-open');
+  };
+  timeoutId = setTimeout(_showTooltip, 300);
+};
+const hideTooltip = (e) => {
+  clearTimeout(timeoutId);
+  const currentContent = e.currentTarget;
+  const tooltip = currentContent.nextElementSibling;
+  tooltip.classList.remove('tooltip-open');
+};
+
+onMounted(() => {
+  const tooltipContents = document.querySelectorAll('.tooltip-content');
+  tooltipContents.forEach((content) => {
+    timeoutId = 0;
+    content.addEventListener('mouseover', showTooltip);
+    content.addEventListener('mouseout', hideTooltip);
   });
-  content.addEventListener('mouseout', (e) => {
-    clearTimeout(timeoutId);
-    const currentContent = e.currentTarget;
-    const tooltip = currentContent.nextElementSibling;
-    tooltip.classList.remove('tooltip-open');
+});
+
+onUnmounted(() => {
+  const tooltipContents = document.querySelectorAll('.tooltip-content');
+  tooltipContents.forEach((content) => {
+    content.removeEventListener('mouseover', showTooltip);
+    content.removeEventListener('mouseover', hideTooltip);
   });
 });
 </script>
 
 <style scoped>
+.tooltip {
+  position: absolute;
+  display: none;
+  white-space: nowrap;
+  transform: translateY(50%);
+  color: white;
+  background-color: rgb(74, 92, 255);
+  animation: fadeIn .1s ease;
+}
+
+@keyframes fadeIn {
+  0%{
+    display: none;
+    opacity: 0;
+  }
+  100%{
+    opacity: 1;
+  }
+}
+
 .tooltip-box {
   content: '';
   top: 0.2em;
   left: 0.2em;
 }
-.tooltip {
-  position: absolute;
-  display: none;
-}
+
 .tooltip-open {
   display: block;
 }
