@@ -61,8 +61,8 @@ onUnmounted(() => {
 <template>
   <article id="tag-list">
     <TagForm />
-    <section class="tag-body">
-      <section class="tag-item-wrap" v-if="store.items.list.length > 0">
+    <section class="tag-body" v-if="store.items.list.length > 0">
+      <section class="tag-item-wrap">
         <TagItem
           v-for="tag in store.items.list"
             :key="tag.id"
@@ -72,12 +72,12 @@ onUnmounted(() => {
             :custom_user_id="tag.custom_user_id"
         />
       </section>
-      <section v-else-if="store.firstLoaded.value">
-        <p class="empty-message">タグを追加してみましょう</p>
-      </section>
-      <section v-else>
-        <!-- ここにローディング -->
-      </section>
+    </section>
+    <section v-else-if="store.firstLoaded.value">
+      <p class="empty-message">タグを追加してみましょう</p>
+    </section>
+    <section v-else>
+      <!-- ここにローディング -->
     </section>
   </article>
 </template>

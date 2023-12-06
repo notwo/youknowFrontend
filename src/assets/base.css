@@ -22,12 +22,12 @@ body {
 }
 
 .btn {
-  display: inline-block;
+  display: block;
+  margin: 0 auto;
   border-radius: 0.5rem;
   cursor: pointer;
   padding: 0.4rem 0.8rem;
   text-align: center;
-  vertical-align: middle;
   font-weight: 700;
   font-size: 0.9rem;
   line-height: 1.5;
@@ -36,7 +36,7 @@ body {
   letter-spacing: 0.1em;
 }
 .btn.register {
-  border: 1px solid rgba(27, 176, 27, 0.75);
+  border: none;
   background-color: rgba(27, 176, 27, 0.75);
 }
 .btn.register:hover {
@@ -46,8 +46,7 @@ body {
   background-color: rgba(50,50,50,0.75);
 }
 .btn:disabled {
-  border: 1px solid gray;
-  background-color: gray;
+  background-color: rgba(150,150,150,0.8);
   pointer-events: none;
 }
 .btn:disabled:hover {

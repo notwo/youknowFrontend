@@ -89,17 +89,6 @@ input.error {
   font-size: .9rem;
   color: #888;
 }
-
-.form-field .btn {
-  display: block;
-  margin: 0 auto;
-  font-size: 1rem;
-  font-weight: 800;
-}
-.form-field .btn:disabled {
-  background-color: rgba(150,150,150,0.8);
-  pointer-events: none;
-}
 </style>
 
 <template>
@@ -139,7 +128,7 @@ input.error {
       <section class="form-field">
         <button type="button"
           @click="onSubmit"
-          :disabled="!(v.title.$errors.length !== 0 && state.title !== '')"
+          :disabled="!(v.title.$errors.length === 0 && state.title !== '')"
           class="btn register">{{ contentName }}を追加する</button>
       </section>
     </section>
