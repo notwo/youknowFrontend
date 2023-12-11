@@ -11,6 +11,7 @@ import { userApi } from '@/plugin/apis';
 export default defineComponent({
   name: 'Top',
   setup() {
+    /*
     const { user, isAuthenticated, logout } = useAuth0();
     if (isAuthenticated.value) {
       interface UserRequest {
@@ -56,6 +57,7 @@ export default defineComponent({
 
       registerOrUpdate();
     }
+    */
   },
 });
 </script>
