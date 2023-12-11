@@ -12,7 +12,9 @@ export default defineComponent({
   name: 'Top',
   setup() {
     const { user, isAuthenticated, logout } = useAuth0();
+    alert('top');
     if (isAuthenticated.value) {
+      alert('isAuthenticated');
       interface UserRequest {
         sub: String,
         username: String,
