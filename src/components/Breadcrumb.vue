@@ -51,7 +51,7 @@ const visibleBreadcrumb = breadcrumbString.value.filter((element) => {
   display: flex;
   gap: 0 1rem;
   margin: 1rem;
-  padding: .5rem 0 .5rem 1.1rem;
+  padding: .8rem 0 .8rem 1.1rem;
   border-radius: .2rem;
   font-weight: 800;
   background-color: #9ac9ec;
@@ -82,8 +82,8 @@ const visibleBreadcrumb = breadcrumbString.value.filter((element) => {
   position: absolute;
   width: 0;
   height: 0;
-  border-top: 1.3rem solid transparent;
-  border-bottom: 1.3rem solid transparent;
+  border-top: 1.6rem solid transparent;
+  border-bottom: 1.6rem solid transparent;
   content:'';
 }
 .breadcrumb-contents li:not(:last-child)::before {

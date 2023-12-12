@@ -16,7 +16,7 @@
       />
     </section>
     <section v-else-if="store.firstLoaded.value && !store.isSearched()">
-      <p class="empty-message">カテゴリを追加してみましょう</p>
+      <p class="empty-message">まずはライブラリを追加してみましょう</p>
     </section>
     <section v-else>
       <!-- ここにローディング -->
