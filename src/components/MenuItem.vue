@@ -51,12 +51,12 @@ const startLogout = (event) => {
       </li>
     </ul>
     <ul v-else class="menu-item">
-      <li v-if="auth0.isAuthenticated.value">
+      <li>
         <router-link :to="{ name: 'libraries', params: { username: String(auth0.user.value.nickname) } }" class="btn">
           ライブラリ
         </router-link>
       </li>
-      <li v-if="auth0.isAuthenticated.value">
+      <li>
         <span @click="startLogout" class="btn logout">ログアウト</span>
       </li>
     </ul>
