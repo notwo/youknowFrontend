@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { reactive, onMounted, onUnmounted, inject } from 'vue';
 import { useAuth0 } from '@auth0/auth0-vue';
 
 const auth0 = useAuth0();

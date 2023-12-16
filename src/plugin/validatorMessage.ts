@@ -1,4 +1,5 @@
 import { required, helpers } from "@vuelidate/validators";
+import axios, { AxiosResponse, AxiosError } from "axios";
 
 // 必須
 export const requiredMsg = (val) => `${val}は入力必須です`;
@@ -34,6 +35,23 @@ export const editRules = (contentName, defaultVal) => {
         if (!_target) { return true; }
         return _target.innerText === defaultVal.title;
       })
-    }
+    },
   };
+};
+
+export const editUserRules = (defaultVal) => {
+  return {
+    username: {
+      required: helpers.withMessage(requiredMsg('ユーザ名'), required),
+      duplicated: helpers.withMessage(duplicateMsg('ユーザ名'), async function (val: String) {
+        return true;
+      })
+    },
+    email: {
+      required: helpers.withMessage(requiredMsg('メールアドレス'), required),
+      duplicated: helpers.withMessage(duplicateMsg('メールアドレス'), function (val: String) {
+        return true;
+      })
+    }
+  }
 };

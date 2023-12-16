@@ -46,7 +46,7 @@ onUnmounted(() => {
 .tooltip {
   position: absolute;
   display: none;
-  padding: .3rem;
+  padding: .7rem;
   line-height: 1.3;
   transform: translateY(80%);
   font-size: 0.8rem;
@@ -76,6 +76,7 @@ onUnmounted(() => {
   content: '';
   position: absolute;
   top: -.8rem;
+  left: .3rem;
   border: .5rem solid transparent;
   border-bottom: .5rem solid rgb(74, 92, 255);
 }

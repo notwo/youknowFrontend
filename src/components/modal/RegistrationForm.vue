@@ -10,7 +10,7 @@ defineProps({
 
 const emits = defineEmits<{(e: 'click', event: Object): void}>();
 const onSubmit = (event): void => {
-  emits('click', event)
+  emits('click', event);
 }
 </script>
 

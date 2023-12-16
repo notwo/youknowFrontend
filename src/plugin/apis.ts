@@ -5,7 +5,7 @@ export function userApi() {
     return `${apiBaseUrl}/api/users/`;
   }
   function detailUrl(user_id: String) {
-    return `${apiBaseUrl}/api/users/?sub=${user_id}`;
+    return `${apiBaseUrl}/api/users/${user_id}/`;
   }
 
   return {
