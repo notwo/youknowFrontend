@@ -13,7 +13,7 @@ export const registerRules = (contentName) => {
     title: {
       required: helpers.withMessage(requiredMsg(contentName), required),
       duplicated: helpers.withMessage(duplicateMsg(contentName), function (val: String) {
-        // API経由で結果を返却させるように後で修正
+        // TODO: API経由で結果を返却させるように後で修正
         const _titles = document.getElementsByClassName('title');
         if (_titles.length <= 0) { return true; }
         const _target = Array.from(_titles).find((element) => element.innerText === val);
@@ -28,7 +28,7 @@ export const editRules = (contentName, defaultVal) => {
     title: {
       required: helpers.withMessage(requiredMsg(contentName), required),
       duplicated: helpers.withMessage(duplicateMsg(contentName), function (val: String) {
-        // API経由で結果を返却させるように後で修正
+        // TODO: API経由で結果を返却させるように後で修正
         const _titles = document.getElementsByClassName('title');
         if (_titles.length <= 0) { return true; }
         const _target = Array.from(_titles).find((element) => element.innerText === val);
@@ -44,12 +44,14 @@ export const editUserRules = (defaultVal) => {
     username: {
       required: helpers.withMessage(requiredMsg('ユーザ名'), required),
       duplicated: helpers.withMessage(duplicateMsg('ユーザ名'), async function (val: String) {
+        // TODO: ユーザ名チェックバリデーションを後で追加する
         return true;
       })
     },
     email: {
       required: helpers.withMessage(requiredMsg('メールアドレス'), required),
       duplicated: helpers.withMessage(duplicateMsg('メールアドレス'), function (val: String) {
+        // TODO: メールアドレスチェックバリデーションを後で追加する
         return true;
       })
     }

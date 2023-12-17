@@ -4,12 +4,16 @@ export function userApi() {
   function createUrl() {
     return `${apiBaseUrl}/api/users/`;
   }
+  function detailBySubUrl(sub) {
+    return `${apiBaseUrl}/api/users/?sub=${sub}`;
+  }
   function detailUrl(user_id: String) {
     return `${apiBaseUrl}/api/users/${user_id}/`;
   }
 
   return {
     createUrl,
+    detailBySubUrl,
     detailUrl
   }
 };

@@ -20,6 +20,8 @@ const editStore = reactive({
 });
 const edit_v$ = useVuelidate(editUserRules(editStore), edit_state);
 
+const store = inject('user');
+
 interface HTMLEvent<T extends EventTarget> extends Event {
   target: T;
 };
@@ -37,19 +39,29 @@ interface ErrorResponse {
 const api = userApi();
 const onSubmit = (event: HTMLEvent<HTMLButtonElement>): void => {
   const requestParam: UserRequest = {
-    custom_user: auth0?.user?.value?.sub,
     username: document.getElementById('username').value,
     email: document.getElementById('email').value
   };
 
-  axios.patch(api.detailUrl(auth0?.user?.value?.sub), requestParam)
+  axios.patch(api.detailUrl(store.uuid.value), requestParam)
     .then((response: AxiosResponse) => {
-      editStore.add(response.data);
+      editStore.username = response.data.username;
+      editStore.email = response.data.email;
     })
     .catch((e: AxiosError<ErrorResponse>) => {
       console.log(`${e.message} ( ${e.name} ) code: ${e.code}`);
     });
 };
+
+if (store.uuid.value === '') {
+  axios.get(`${api.detailBySubUrl(auth0?.user?.value?.sub)}`)
+    .then((response: AxiosResponse) => {
+      store.setUserId(response.data[0].id);
+    })
+    .catch((e: AxiosError<ErrorResponse>) => {
+      console.log(`${e.message} ( ${e.name} ) code: ${e.code}`);
+    });
+}
 </script>
 
 <style scoped>
@@ -131,6 +143,7 @@ button[type="button"] {
 
 <template>
   <BackButton />
+  <!-- TODO: ここにユーザプロフィール画像を載せられるようにする -->
   <section class="page-title">ユーザ情報の更新</section>
   <section class="profile">
     <section class="prof-content">

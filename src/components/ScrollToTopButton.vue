@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { onMounted, onUnmounted } from 'vue';
+
 let scrollId:number = 0;
 const f = () => {
   const button = document.getElementById('scrollToTopButton');
@@ -20,7 +22,13 @@ const scrollToTop = (event) => {
 
   return false;
 };
-window.addEventListener("scroll", f, false);
+
+onMounted(() => {
+  window.addEventListener("scroll", f, false);
+});
+onUnmounted(() => {
+  window.removeEventListener("scroll", f, false);
+});
 </script>
 
 <style scoped>
