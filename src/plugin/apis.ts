@@ -7,29 +7,33 @@ export function userApi() {
   function detailBySubUrl(sub) {
     return `${apiBaseUrl}/api/users/?sub=${sub}`;
   }
-  function detailUrl(user_id: String) {
-    return `${apiBaseUrl}/api/users/${user_id}/`;
+  function detailUrl(uuid: String) {
+    return `${apiBaseUrl}/api/users/${uuid}/`;
+  }
+  function checkDuplicateUserNameUrl(username: String) {
+    return `${apiBaseUrl}/api/users/username_duplicated/?username=${username}`;
   }
 
   return {
     createUrl,
     detailBySubUrl,
-    detailUrl
+    detailUrl,
+    checkDuplicateUserNameUrl
   }
 };
 
 export function libraryApi() {
-  function listUrl(user_id: String, content_num: Number, page: Number = 0) {
-    return `${apiBaseUrl}/api/users/${user_id}/libraries/?limit=${content_num}&offset=${page}`;
+  function listUrl(sub: String, content_num: Number, page: Number = 0) {
+    return `${apiBaseUrl}/api/users/${sub}/libraries/?limit=${content_num}&offset=${page}`;
   }
-  function detailUrl(user_id: String, id: Number) {
-    return `${apiBaseUrl}/api/users/${user_id}/libraries/${id}/`;
+  function detailUrl(sub: String, id: Number) {
+    return `${apiBaseUrl}/api/users/${sub}/libraries/${id}/`;
   }
-  function createUrl(user_id: String) {
-    return `${apiBaseUrl}/api/users/${user_id}/libraries/`;
+  function createUrl(sub: String) {
+    return `${apiBaseUrl}/api/users/${sub}/libraries/`;
   }
-  function searchUrl(user_id: String, word: String) {
-    return `${apiBaseUrl}/api/users/${user_id}/libraries/?title=${word}`;
+  function searchUrl(sub: String, word: String) {
+    return `${apiBaseUrl}/api/users/${sub}/libraries/?title=${word}`;
   }
 
   return {
@@ -41,17 +45,17 @@ export function libraryApi() {
 };
 
 export function categoryApi() {
-  function listUrl(user_id: String, library_id: Number, content_num: Number, page: Number = 0) {
-    return `${apiBaseUrl}/api/users/${user_id}/libraries/${library_id}/categories/?limit=${content_num}&offset=${page}`;
+  function listUrl(sub: String, library_id: Number, content_num: Number, page: Number = 0) {
+    return `${apiBaseUrl}/api/users/${sub}/libraries/${library_id}/categories/?limit=${content_num}&offset=${page}`;
   }
-  function detailUrl(user_id: String, library_id: Number, id: Number) {
-    return `${apiBaseUrl}/api/users/${user_id}/libraries/${library_id}/categories/${id}/`;
+  function detailUrl(sub: String, library_id: Number, id: Number) {
+    return `${apiBaseUrl}/api/users/${sub}/libraries/${library_id}/categories/${id}/`;
   }
-  function createUrl(user_id: String, library_id: Number) {
-    return `${apiBaseUrl}/api/users/${user_id}/libraries/${library_id}/categories/`;
+  function createUrl(sub: String, library_id: Number) {
+    return `${apiBaseUrl}/api/users/${sub}/libraries/${library_id}/categories/`;
   }
-  function searchUrl(user_id: String, library_id: Number, word: String) {
-    return `${apiBaseUrl}/api/users/${user_id}/libraries/${library_id}/categories/?title=${word}`;
+  function searchUrl(sub: String, library_id: Number, word: String) {
+    return `${apiBaseUrl}/api/users/${sub}/libraries/${library_id}/categories/?title=${word}`;
   }
 
   return {
@@ -63,17 +67,17 @@ export function categoryApi() {
 };
 
 export function keywordApi() {
-  function listUrl(user_id: String, library_id: Number, category_id: Number, content_num: Number, page: Number = 0) {
-    return `${apiBaseUrl}/api/users/${user_id}/libraries/${library_id}/categories/${category_id}/keywords/?limit=${content_num}&offset=${page}`;
+  function listUrl(sub: String, library_id: Number, category_id: Number, content_num: Number, page: Number = 0) {
+    return `${apiBaseUrl}/api/users/${sub}/libraries/${library_id}/categories/${category_id}/keywords/?limit=${content_num}&offset=${page}`;
   }
-  function detailUrl(user_id: String, library_id: Number, category_id: Number, id: Number) {
-    return `${apiBaseUrl}/api/users/${user_id}/libraries/${library_id}/categories/${category_id}/keywords/${id}/`;
+  function detailUrl(sub: String, library_id: Number, category_id: Number, id: Number) {
+    return `${apiBaseUrl}/api/users/${sub}/libraries/${library_id}/categories/${category_id}/keywords/${id}/`;
   }
-  function createUrl(user_id: String, library_id: Number, category_id: Number) {
-    return `${apiBaseUrl}/api/users/${user_id}/libraries/${library_id}/categories/${category_id}/keywords/`;
+  function createUrl(sub: String, library_id: Number, category_id: Number) {
+    return `${apiBaseUrl}/api/users/${sub}/libraries/${library_id}/categories/${category_id}/keywords/`;
   }
-  function searchUrl(user_id: String, library_id: Number, category_id: Number, word: String) {
-    return `${apiBaseUrl}/api/users/${user_id}/libraries/${library_id}/categories/${category_id}/keywords?title=${word}`;
+  function searchUrl(sub: String, library_id: Number, category_id: Number, word: String) {
+    return `${apiBaseUrl}/api/users/${sub}/libraries/${library_id}/categories/${category_id}/keywords?title=${word}`;
   }
 
   return {
@@ -85,20 +89,20 @@ export function keywordApi() {
 };
 
 export function tagApi() {
-  function listUrl(user_id: String, keyword_id: Number, content_num: Number, page: Number = 0) {
+  function listUrl(sub: String, keyword_id: Number, content_num: Number, page: Number = 0) {
     if (keyword_id > 1) {
-      return `${apiBaseUrl}/api/users/${user_id}/tags?limit=${content_num}&offset=${page}&keyword_id=${keyword_id}`;
+      return `${apiBaseUrl}/api/users/${sub}/tags?limit=${content_num}&offset=${page}&keyword_id=${keyword_id}`;
     }
-    return `${apiBaseUrl}/api/users/${user_id}/tags?limit=${content_num}&offset=${page}`;
+    return `${apiBaseUrl}/api/users/${sub}/tags?limit=${content_num}&offset=${page}`;
   }
-  function createUrl(user_id: String) {
-    return `${apiBaseUrl}/api/users/${user_id}/tags/`;
+  function createUrl(sub: String) {
+    return `${apiBaseUrl}/api/users/${sub}/tags/`;
   }
-  function detailUrl(user_id: String, id: Number) {
-    return `${apiBaseUrl}/api/users/${user_id}/tags/${id}/`;
+  function detailUrl(sub: String, id: Number) {
+    return `${apiBaseUrl}/api/users/${sub}/tags/${id}/`;
   }
-  function searchUrl(user_id: String, word: String) {
-    return `${apiBaseUrl}/api/users/${user_id}/tags?title=${word}`;
+  function searchUrl(sub: String, word: String) {
+    return `${apiBaseUrl}/api/users/${sub}/tags?title=${word}`;
   }
 
   return {

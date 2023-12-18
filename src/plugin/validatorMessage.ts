@@ -1,5 +1,6 @@
 import { required, helpers } from "@vuelidate/validators";
 import axios, { AxiosResponse, AxiosError } from "axios";
+import { userApi } from '@/plugin/apis';
 
 // 必須
 export const requiredMsg = (val) => `${val}は入力必須です`;
@@ -39,20 +40,27 @@ export const editRules = (contentName, defaultVal) => {
   };
 };
 
-export const editUserRules = (defaultVal) => {
+export const editUserRules = (defaultVal, userAttr) => {
+  const api = userApi();
+  interface UserResponse {
+    data: []
+  };
+
   return {
     username: {
       required: helpers.withMessage(requiredMsg('ユーザ名'), required),
-      duplicated: helpers.withMessage(duplicateMsg('ユーザ名'), async function (val: String) {
-        // TODO: ユーザ名チェックバリデーションを後で追加する
-        return true;
+      duplicated: helpers.withMessage(duplicateMsg('ユーザ名'), function (val: String) {
+        if (val.length === 0) { return true; }
+        if (val === defaultVal.username) { return true; }
+        return userAttr.username;
       })
     },
     email: {
       required: helpers.withMessage(requiredMsg('メールアドレス'), required),
       duplicated: helpers.withMessage(duplicateMsg('メールアドレス'), function (val: String) {
-        // TODO: メールアドレスチェックバリデーションを後で追加する
-        return true;
+        if (val.length === 0) { return true; }
+        if (val === defaultVal.email) { return true; }
+        return false;
       })
     }
   }

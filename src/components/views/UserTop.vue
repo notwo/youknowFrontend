@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { reactive, onMounted, onUnmounted, inject } from 'vue';
+import { ref, reactive, onMounted, onUnmounted, inject } from 'vue';
 import axios, { AxiosResponse, AxiosError } from "axios";
 import { useAuth0 } from '@auth0/auth0-vue';
 import { useVuelidate } from "@vuelidate/core";
@@ -18,7 +18,25 @@ const editStore = reactive({
   username: String,
   email: String
 });
-const edit_v$ = useVuelidate(editUserRules(editStore), edit_state);
+
+interface UserResponse {
+  data: []
+};
+
+const userAttr = reactive({
+  username: false,
+  email: false
+});
+
+const api = userApi();
+const checkUsernameDuplicated = async (e) => {
+  const username = document.getElementById('username').value;
+  await axios.get<UserResponse>(api.checkDuplicateUserNameUrl(username))
+    .then((response: AxiosResponse) => {
+      userAttr.username = !response.data.duplicated;
+    })
+};
+const edit_v$ = useVuelidate(editUserRules(editStore, userAttr), edit_state);
 
 const store = inject('user');
 
@@ -27,16 +45,14 @@ interface HTMLEvent<T extends EventTarget> extends Event {
 };
 
 interface UserRequest {
-  custom_user: String
   username: String
   email: String
 };
 interface ErrorResponse {
-  username: String,
+  username: String
   email: String
 };
 
-const api = userApi();
 const onSubmit = (event: HTMLEvent<HTMLButtonElement>): void => {
   const requestParam: UserRequest = {
     username: document.getElementById('username').value,
@@ -62,6 +78,18 @@ if (store.uuid.value === '') {
       console.log(`${e.message} ( ${e.name} ) code: ${e.code}`);
     });
 }
+
+onMounted(() => {
+  const usernameInput = document.getElementById('username');
+  usernameInput.addEventListener('change', checkUsernameDuplicated)
+  editStore.username = auth0?.user?.value?.nickname;
+  editStore.email = auth0?.user?.value?.email;
+});
+
+onUnmounted(() => {
+  const usernameInput = document.getElementById('username');
+  usernameInput.removeEventListener('change', checkUsernameDuplicated)
+});
 </script>
 
 <style scoped>
@@ -159,7 +187,7 @@ button[type="button"] {
                 id="username"
                 name="username"
                 placeholder="ユーザ名"
-                maxlength="150"
+                maxlength="50"
                 :error-messages="edit_v$.username.$errors.map((e) => e.$message)"
                 @blur="edit_v$.username.$touch"
                 @input="edit_v$.username.$touch">
@@ -167,7 +195,7 @@ button[type="button"] {
                 <section v-for="error of edit_v$.username.$errors" :key="error.$uid">
                   <section class="error-message">{{ error.$message }}</section>
                 </section>
-                <span class="count">{{ edit_state.username.length }} / 150</span>
+                <span class="count">{{ edit_state.username.length }} / 50</span>
               </section>
             </section>
           </section>
@@ -197,7 +225,7 @@ button[type="button"] {
               <button type="button"
                 @click="onSubmit"
                 :disabled="!(
-                  (edit_v$.username.$errors.length === 0 && edit_state.username!== '') &&
+                  (edit_v$.username.$errors.length === 0 && edit_state.username !== '') &&
                   (edit_v$.email.$errors.length === 0 && edit_state.email !== '')
                 )"
                 class="btn register">ユーザ情報を更新する</button>

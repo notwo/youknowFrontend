@@ -6,7 +6,7 @@ const origin = window.history.state.back;
 .back-button {
   display: flex;
   width: auto;
-  margin: 2rem 1rem;
+  margin: 2rem 2rem;
 }
 
 .back-button a {
