@@ -24,18 +24,10 @@ interface UserResponse {
 };
 
 const userAttr = reactive({
-  username: false,
-  email: false
+  username: true,
+  email: true
 });
 
-const api = userApi();
-const checkUsernameDuplicated = async (e) => {
-  const username = document.getElementById('username').value;
-  await axios.get<UserResponse>(api.checkDuplicateUserNameUrl(username))
-    .then((response: AxiosResponse) => {
-      userAttr.username = !response.data.duplicated;
-    })
-};
 const edit_v$ = useVuelidate(editUserRules(editStore, userAttr), edit_state);
 
 const store = inject('user');
@@ -53,6 +45,7 @@ interface ErrorResponse {
   email: String
 };
 
+const api = userApi();
 const onSubmit = (event: HTMLEvent<HTMLButtonElement>): void => {
   const requestParam: UserRequest = {
     username: document.getElementById('username').value,
@@ -80,15 +73,8 @@ if (store.uuid.value === '') {
 }
 
 onMounted(() => {
-  const usernameInput = document.getElementById('username');
-  usernameInput.addEventListener('change', checkUsernameDuplicated)
   editStore.username = auth0?.user?.value?.nickname;
   editStore.email = auth0?.user?.value?.email;
-});
-
-onUnmounted(() => {
-  const usernameInput = document.getElementById('username');
-  usernameInput.removeEventListener('change', checkUsernameDuplicated)
 });
 </script>
 

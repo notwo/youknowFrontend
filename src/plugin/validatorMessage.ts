@@ -46,12 +46,20 @@ export const editUserRules = (defaultVal, userAttr) => {
     data: []
   };
 
+  const checkUsernameDuplicated = (username) => {
+    axios.get<UserResponse>(api.checkDuplicateUserNameUrl(username))
+      .then((response: AxiosResponse) => {
+        userAttr.username = !response.data.duplicated;
+      })
+  };
+
   return {
     username: {
       required: helpers.withMessage(requiredMsg('ユーザ名'), required),
       duplicated: helpers.withMessage(duplicateMsg('ユーザ名'), function (val: String) {
         if (val.length === 0) { return true; }
         if (val === defaultVal.username) { return true; }
+        checkUsernameDuplicated(val);
         return userAttr.username;
       })
     },
