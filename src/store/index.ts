@@ -116,3 +116,13 @@ export function titles() {
 
   return { library: readonly(library), category: readonly(category), keyword: readonly(keyword), setLibrary, setCategory, setKeyword };
 };
+
+export function userStore() {
+  const uuid: String = ref('');
+
+  function setUserId(id: String) {
+    uuid.value = id;
+  }
+
+  return { uuid: readonly(uuid), setUserId }
+}

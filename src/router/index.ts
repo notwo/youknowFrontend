@@ -5,6 +5,16 @@ const routes: Array<RouteRecordRaw> = [
   { path: '/', name: 'top', component: () => import('../components/views/Top.vue') },
   { path: '/callback', name: 'callback', component: () => import('../components/views/Callback.vue') },
   //{ path: '/login', name: 'login', component: () => import('../components/views/Login.vue') },
+  { path: '/:username', name: 'usertop', component: () => import('../components/views/UserTop.vue'),
+    beforeEnter: (to, from, next) => {
+      const auth0 = useAuth0();
+      if (auth0.isAuthenticated.value) {
+        next();
+      } else {
+        next('/')
+      }
+    },
+  },
   { path: '/:username/libraries', name: 'libraries', component: () => import('../components/views/Libraries.vue'),
     beforeEnter: (to, from, next) => {
       const auth0 = useAuth0();

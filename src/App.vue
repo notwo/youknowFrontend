@@ -16,7 +16,7 @@
 
 <script lang="ts">
 import { defineComponent, provide } from "vue";
-import { useStore, editStore, titles } from '@/store/index';
+import { useStore, editStore, titles, userStore } from '@/store/index';
 import NavigationHeader from "@/components/NavigationHeader.vue";
 import FooterInformation from "@/components/FooterInformation.vue";
 
@@ -24,24 +24,26 @@ export default defineComponent({
   name: "App",
   components: { NavigationHeader, FooterInformation },
   setup() {
-    const libraryStore = useStore();
-    const libraryEditStore = editStore;
-    const categoryStore = useStore();
-    const categoryEditStore = editStore;
-    const keywordStore = useStore();
-    const keywordEditStore = editStore;
-    const tagStore = useStore();
-    const unattachedTagStore = useStore();
-    const titlesStore = titles();
-    provide('library', libraryStore);
-    provide('category', categoryStore);
-    provide('keyword', keywordStore);
-    provide('tag', tagStore);
-    provide('unattachedTag', unattachedTagStore);
-    provide('libraryEdit', libraryEditStore);
-    provide('categoryEdit', categoryEditStore);
-    provide('keywordEdit', keywordEditStore);
-    provide('titles', titlesStore);
+    const _libraryStore = useStore();
+    const _libraryEditStore = editStore;
+    const _categoryStore = useStore();
+    const _categoryEditStore = editStore;
+    const _keywordStore = useStore();
+    const _keywordEditStore = editStore;
+    const _tagStore = useStore();
+    const _unattachedTagStore = useStore();
+    const _titlesStore = titles();
+    const _userStore = userStore();
+    provide('library', _libraryStore);
+    provide('category', _categoryStore);
+    provide('keyword', _keywordStore);
+    provide('tag', _tagStore);
+    provide('unattachedTag', _unattachedTagStore);
+    provide('libraryEdit', _libraryEditStore);
+    provide('categoryEdit', _categoryEditStore);
+    provide('keywordEdit', _keywordEditStore);
+    provide('titles', _titlesStore);
+    provide('user', _userStore);
   }
 });
 

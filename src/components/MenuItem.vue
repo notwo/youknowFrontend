@@ -52,8 +52,8 @@ const startLogout = (event) => {
     </ul>
     <ul v-else class="menu-item">
       <li>
-        <router-link :to="{ name: 'libraries', params: { username: String(auth0.user.value.nickname) } }" class="btn">
-          ライブラリ
+        <router-link :to="{ name: 'usertop', params: { username: String(auth0?.user?.value?.nickname) } }" class="btn">
+          {{ auth0?.user?.value?.nickname }}
         </router-link>
       </li>
       <li>
