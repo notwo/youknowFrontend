@@ -52,6 +52,12 @@ export const editUserRules = (defaultVal, userAttr) => {
         userAttr.username = !response.data.duplicated;
       })
   };
+  const checkEmailDuplicated = (email) => {
+    axios.get<UserResponse>(api.checkDuplicateEmailUrl(email))
+      .then((response: AxiosResponse) => {
+        userAttr.email = !response.data.duplicated;
+      })
+  };
 
   return {
     username: {
@@ -68,7 +74,8 @@ export const editUserRules = (defaultVal, userAttr) => {
       duplicated: helpers.withMessage(duplicateMsg('メールアドレス'), function (val: String) {
         if (val.length === 0) { return true; }
         if (val === defaultVal.email) { return true; }
-        return false;
+        checkEmailDuplicated(val);
+        return userAttr.email;
       })
     }
   }

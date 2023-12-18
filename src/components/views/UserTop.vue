@@ -19,10 +19,6 @@ const editStore = reactive({
   email: String
 });
 
-interface UserResponse {
-  data: []
-};
-
 const userAttr = reactive({
   username: true,
   email: true

@@ -13,12 +13,16 @@ export function userApi() {
   function checkDuplicateUserNameUrl(username: String) {
     return `${apiBaseUrl}/api/users/username_duplicated/?username=${username}`;
   }
+  function checkDuplicateEmailUrl(email: String) {
+    return `${apiBaseUrl}/api/users/email_duplicated/?email=${email}`;
+  }
 
   return {
     createUrl,
     detailBySubUrl,
     detailUrl,
-    checkDuplicateUserNameUrl
+    checkDuplicateUserNameUrl,
+    checkDuplicateEmailUrl
   }
 };
 
