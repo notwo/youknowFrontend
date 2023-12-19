@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import { ref, reactive, onMounted, onUnmounted, inject } from 'vue';
+import { reactive, onMounted, onUnmounted, inject } from 'vue';
 import axios, { AxiosResponse, AxiosError } from "axios";
 import { useAuth0 } from '@auth0/auth0-vue';
 import { useVuelidate } from "@vuelidate/core";
 import { editUserRules } from '@/plugin/validatorMessage';
 import { userApi } from '@/plugin/apis';
 import BackButton from '@/components/common/BackButton.vue';
+import DeleteUserButton from '@/components/user/DeleteUserButton.vue';
 
 const auth0 = useAuth0();
 
@@ -76,35 +77,6 @@ const onSubmit = (event: HTMLEvent<HTMLButtonElement>): void => {
       editStore.username = response.data.username;
       editStore.email = response.data.email;
       updateToAuth0();
-    })
-    .catch((e: AxiosError<ErrorResponse>) => {
-      console.log(e.response);
-    });
-};
-
-const deleteToAuth0 = async () => {
-  const headers = {
-    "Content-Type": "application/json",
-    "Accept": "application/json",
-    "Authorization": 'Bearer ' + import.meta.env.VITE_AUTH0_API_ACCESS_TOKEN
-  };
-
-  await axios.delete(api.auth0UserUrl(auth0?.user?.value?.sub), { headers: headers })
-    .then((response: AxiosResponse) => {
-      window.location.href = '/';
-    })
-    .catch((e: AxiosError<ErrorResponse>) => {
-      console.log(e.response);
-    });
-};
-const onDelete = (event: HTMLEvent<HTMLButtonElement>): void => {
-  if (!window.confirm(`あなたのユーザアカウントが削除されますが宜しいですか？ 後から戻すことは出来ません`)) {
-    return;
-  }
-
-  axios.delete(api.detailUrl(store.uuid.value))
-    .then((response: AxiosResponse) => {
-      deleteToAuth0();
     })
     .catch((e: AxiosError<ErrorResponse>) => {
       console.log(e.response);
@@ -270,13 +242,7 @@ button[type="button"] {
                 class="btn register">ユーザ情報を更新する</button>
             </section>
           </section>
-          <section class="form-group attention">
-            <section class="form-field">
-              <button type="button"
-                @click="onDelete"
-                class="btn delete">アカウント削除する</button>
-            </section>
-          </section>
+          <DeleteUserButton />
         </section>
       </form>
     </section>
