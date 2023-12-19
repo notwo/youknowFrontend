@@ -1,14 +1,18 @@
 const apiBaseUrl = import.meta.env.VITE_API_URL;
+const auth0ApiBaseUrl = import.meta.env.VITE_AUTH0_API_URL;
 
 export function userApi() {
   function createUrl() {
     return `${apiBaseUrl}/api/users/`;
   }
-  function detailBySubUrl(sub) {
+  function detailBySubUrl(sub: String) {
     return `${apiBaseUrl}/api/users/?sub=${sub}`;
   }
   function detailUrl(uuid: String) {
     return `${apiBaseUrl}/api/users/${uuid}/`;
+  }
+  function auth0UpdateUrl(sub: String) {
+    return `${auth0ApiBaseUrl}/users/${sub}`;
   }
   function checkDuplicateUserNameUrl(username: String) {
     return `${apiBaseUrl}/api/users/username_duplicated/?username=${username}`;
@@ -21,6 +25,7 @@ export function userApi() {
     createUrl,
     detailBySubUrl,
     detailUrl,
+    auth0UpdateUrl,
     checkDuplicateUserNameUrl,
     checkDuplicateEmailUrl
   }
