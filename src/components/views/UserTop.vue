@@ -36,12 +36,35 @@ interface UserRequest {
   username: String
   email: String
 };
+interface Auth0UserRequest {
+  nickname: String
+  email: String
+};
 interface ErrorResponse {
   username: String
   email: String
 };
 
 const api = userApi();
+const updateToAuth0 = async () => {
+  const requestParam: Auth0UserRequest = {
+    "nickname": editStore.username,
+    "email": editStore.email,
+  };
+  const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+    "Authorization": 'Bearer ' + import.meta.env.VITE_AUTH0_API_ACCESS_TOKEN
+  };
+
+  await axios.patch(api.auth0UpdateUrl(auth0?.user?.value?.sub), requestParam, { headers: headers })
+    .then((response: AxiosResponse) => {
+      console.log(response)
+    })
+    .catch((e: AxiosError<ErrorResponse>) => {
+      console.log(e.response);
+    });
+};
 const onSubmit = (event: HTMLEvent<HTMLButtonElement>): void => {
   const requestParam: UserRequest = {
     username: document.getElementById('username').value,
@@ -52,9 +75,10 @@ const onSubmit = (event: HTMLEvent<HTMLButtonElement>): void => {
     .then((response: AxiosResponse) => {
       editStore.username = response.data.username;
       editStore.email = response.data.email;
+      updateToAuth0();
     })
     .catch((e: AxiosError<ErrorResponse>) => {
-      console.log(`${e.message} ( ${e.name} ) code: ${e.code}`);
+      console.log(e.response);
     });
 };
 
