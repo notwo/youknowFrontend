@@ -57,7 +57,7 @@ const updateToAuth0 = async () => {
     "Authorization": 'Bearer ' + import.meta.env.VITE_AUTH0_API_ACCESS_TOKEN
   };
 
-  await axios.patch(api.auth0UpdateUrl(auth0?.user?.value?.sub), requestParam, { headers: headers })
+  await axios.patch(api.auth0UserUrl(auth0?.user?.value?.sub), requestParam, { headers: headers })
     .then((response: AxiosResponse) => {
       console.log(response)
     })
@@ -82,6 +82,36 @@ const onSubmit = (event: HTMLEvent<HTMLButtonElement>): void => {
     });
 };
 
+const deleteToAuth0 = async () => {
+  const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+    "Authorization": 'Bearer ' + import.meta.env.VITE_AUTH0_API_ACCESS_TOKEN
+  };
+
+  await axios.delete(api.auth0UserUrl(auth0?.user?.value?.sub), { headers: headers })
+    .then((response: AxiosResponse) => {
+      window.location.href = '/';
+    })
+    .catch((e: AxiosError<ErrorResponse>) => {
+      console.log(e.response);
+    });
+};
+const onDelete = (event: HTMLEvent<HTMLButtonElement>): void => {
+  if (!window.confirm(`あなたのユーザアカウントが削除されますが宜しいですか？ 後から戻すことは出来ません`)) {
+    return;
+  }
+
+  axios.delete(api.detailUrl(store.uuid.value))
+    .then((response: AxiosResponse) => {
+      deleteToAuth0();
+    })
+    .catch((e: AxiosError<ErrorResponse>) => {
+      console.log(e.response);
+    });
+};
+
+// 手元のDBを更新するため、uuidを初回のみ取得する
 if (store.uuid.value === '') {
   axios.get(`${api.detailBySubUrl(auth0?.user?.value?.sub)}`)
     .then((response: AxiosResponse) => {
@@ -116,6 +146,9 @@ onMounted(() => {
 
 .form-group {
   margin: 1.3rem 0;
+}
+.form-group.attention {
+  margin: 2.3rem 0;
 }
 
 label {
@@ -235,6 +268,13 @@ button[type="button"] {
                   (edit_v$.email.$errors.length === 0 && edit_state.email !== '')
                 )"
                 class="btn register">ユーザ情報を更新する</button>
+            </section>
+          </section>
+          <section class="form-group attention">
+            <section class="form-field">
+              <button type="button"
+                @click="onDelete"
+                class="btn delete">アカウント削除する</button>
             </section>
           </section>
         </section>

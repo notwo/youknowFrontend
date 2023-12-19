@@ -11,7 +11,7 @@ export function userApi() {
   function detailUrl(uuid: String) {
     return `${apiBaseUrl}/api/users/${uuid}/`;
   }
-  function auth0UpdateUrl(sub: String) {
+  function auth0UserUrl(sub: String) {
     return `${auth0ApiBaseUrl}/users/${sub}`;
   }
   function checkDuplicateUserNameUrl(username: String) {
@@ -25,7 +25,7 @@ export function userApi() {
     createUrl,
     detailBySubUrl,
     detailUrl,
-    auth0UpdateUrl,
+    auth0UserUrl,
     checkDuplicateUserNameUrl,
     checkDuplicateEmailUrl
   }
