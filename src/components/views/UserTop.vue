@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import { ref, reactive, onMounted, onUnmounted, inject } from 'vue';
+import { reactive, onMounted, onUnmounted, inject } from 'vue';
 import axios, { AxiosResponse, AxiosError } from "axios";
 import { useAuth0 } from '@auth0/auth0-vue';
 import { useVuelidate } from "@vuelidate/core";
 import { editUserRules } from '@/plugin/validatorMessage';
 import { userApi } from '@/plugin/apis';
 import BackButton from '@/components/common/BackButton.vue';
+import DeleteUserButton from '@/components/user/DeleteUserButton.vue';
 
 const auth0 = useAuth0();
 
@@ -57,7 +58,7 @@ const updateToAuth0 = async () => {
     "Authorization": 'Bearer ' + import.meta.env.VITE_AUTH0_API_ACCESS_TOKEN
   };
 
-  await axios.patch(api.auth0UpdateUrl(auth0?.user?.value?.sub), requestParam, { headers: headers })
+  await axios.patch(api.auth0UserUrl(auth0?.user?.value?.sub), requestParam, { headers: headers })
     .then((response: AxiosResponse) => {
       console.log(response)
     })
@@ -82,6 +83,7 @@ const onSubmit = (event: HTMLEvent<HTMLButtonElement>): void => {
     });
 };
 
+// 手元のDBを更新するため、uuidを初回のみ取得する
 if (store.uuid.value === '') {
   axios.get(`${api.detailBySubUrl(auth0?.user?.value?.sub)}`)
     .then((response: AxiosResponse) => {
@@ -116,6 +118,9 @@ onMounted(() => {
 
 .form-group {
   margin: 1.3rem 0;
+}
+.form-group.attention {
+  margin: 2.3rem 0;
 }
 
 label {
@@ -237,6 +242,7 @@ button[type="button"] {
                 class="btn register">ユーザ情報を更新する</button>
             </section>
           </section>
+          <DeleteUserButton />
         </section>
       </form>
     </section>

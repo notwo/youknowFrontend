@@ -59,6 +59,14 @@ body {
 .btn:disabled:hover {
   background-color: gray;
 }
+.btn.delete {
+  border: none;
+  background-color: rgba(218, 24, 24, 0.75);
+}
+.btn.delete:hover {
+  background-color: rgba(217, 56, 56, 0.75);
+}
+
 /* basical tags */
 ol,ul {
   list-style: none;
