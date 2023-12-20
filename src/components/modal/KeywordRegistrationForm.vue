@@ -59,17 +59,16 @@ export default defineComponent({
         content: document.getElementById('keyword_content').value,
         tags: []
       };
-      console.log(requestParam)
 
       axios.post(api.createUrl(user.value.sub, route.params.library_id, route.params.category_id), requestParam)
-      .then((response: AxiosResponse) => {
-        store.add(response.data);
-        dialogStore.func.value('キーワード登録', `「${response.data.title}」を登録しました`);
-        context.emit('closeEvent', event);
-      })
-      .catch((e: AxiosError<ErrorResponse>) => {
-        console.log(`${e.message} ( ${e.name} ) code: ${e.code}`);
-      });
+        .then((response: AxiosResponse) => {
+          store.add(response.data);
+          dialogStore.func.value('キーワード登録', `「${response.data.title}」を登録しました`);
+          context.emit('closeEvent', event);
+        })
+        .catch((e: AxiosError<ErrorResponse>) => {
+          console.log(`${e.message} ( ${e.name} ) code: ${e.code}`);
+        });
     };
 
     return {

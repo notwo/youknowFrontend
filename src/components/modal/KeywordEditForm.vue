@@ -66,7 +66,7 @@ export default defineComponent({
           context.emit('closeEvent', event);
         })
         .catch((e: AxiosError<ErrorResponse>) => {
-          console.log(e.response);
+          dialogStore.func.value('更新エラー', 'キーワード更新中にエラーが起きました。暫くお待ちいただいてから再度お試しください', 'error');
         });
     };
 

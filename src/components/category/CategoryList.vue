@@ -72,7 +72,7 @@ export default defineComponent({
       }
     };
 
-    const loadNext = async () => {
+    const loadNext = async (): Promise<void> => {
       const response = await axios.get<CategoryResponse>(
         api.listUrl(user.value.sub, route.params.library_id, pagination.category.content_num, pagination.category.content_num * (currentPage -1))
       );
@@ -90,18 +90,18 @@ export default defineComponent({
       // カテゴリ一覧に遷移した際にスクロール位置が戻っていないので、強制的にスクロールさせる
       document.documentElement.scrollTop = 0;
 
-      const showCategoryList = async () => {
+      const showCategoryList = async (): Promise<void> => {
         await axios.get<CategoryResponse>(
           lApi.detailUrl(user.value.sub, route.params.library_id)
         )
-        .then((response: AxiosResponse) => {
-          canLoadNext = (response.data.paginated_categories.next);
-          titlesStore.setLibrary(`「${response.data.title}」のカテゴリ`);
-          store.setItem(response.data.paginated_categories.data);
-        })
-        .catch((e: AxiosError<ErrorResponse>) => {
-          console.log(e.response)
-        });
+          .then((response: AxiosResponse) => {
+            canLoadNext = (response.data.paginated_categories.next);
+            titlesStore.setLibrary(`「${response.data.title}」のカテゴリ`);
+            store.setItem(response.data.paginated_categories.data);
+          })
+          .catch((e: AxiosError<ErrorResponse>) => {
+            dialogStore.func.value('読み込みエラー', 'カテゴリ読み込み中にエラーが起きました。暫くお待ちいただいてから再度お試しください', 'error');
+          });
 
         window.addEventListener("scroll", showMoreCategoryList, false);
       };

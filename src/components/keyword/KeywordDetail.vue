@@ -15,6 +15,7 @@ const api = keywordApi();
 const route = useRoute();
 const store = inject('tag');
 const titlesStore = inject('titles');
+const dialogStore = inject('dialog');
 const Keyword = ref({
   title: '',
   content: ''
@@ -36,15 +37,15 @@ onMounted(() => {
   document.documentElement.scrollTop = 0;
 
   axios.get<KeywordResponse>(
-      api.detailUrl(user.value.sub, route.params.library_id, route.params.category_id, route.params.keyword_id)
-    )
+    api.detailUrl(user.value.sub, route.params.library_id, route.params.category_id, route.params.keyword_id)
+  )
     .then((response: AxiosResponse) => {
       titlesStore.setKeyword(response.data.title);
       Keyword.value = response.data;
       store.setItem(Keyword.value.tags);
     })
     .catch((e: AxiosError<ErrorResponse>) => {
-      console.log(`${e.message} ( ${e.name} ) code: ${e.code}`);
+      dialogStore.func.value('読み込みエラー', 'キーワード読み込み中にエラーが起きました。暫くお待ちいただいてから再度お試しください', 'error');
     });
 });
 

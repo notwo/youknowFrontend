@@ -16,9 +16,10 @@ interface HTMLEvent<T extends EventTarget> extends Event {
 };
 
 const store = inject('user');
+const dialogStore = inject('dialog');
 
 const api = userApi();
-const deleteToAuth0 = async () => {
+const deleteToAuth0 = async (): Promise<void> => {
   const headers = {
     "Content-Type": "application/json",
     "Accept": "application/json",
@@ -43,7 +44,7 @@ const onDelete = (event: HTMLEvent<HTMLButtonElement>): void => {
       deleteToAuth0();
     })
     .catch((e: AxiosError<ErrorResponse>) => {
-      console.log(e.response);
+      dialogStore.func.value('削除エラー', 'ユーザアカウント削除中にエラーが起きました。暫くお待ちいただいてから再度お試しください', 'error');
     });
 };
 

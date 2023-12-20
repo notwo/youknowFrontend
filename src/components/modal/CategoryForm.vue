@@ -39,7 +39,7 @@ export default defineComponent({
     const register_v$ = useVuelidate(registerRules('カテゴリ名'), register_state);
     const edit_v$ = useVuelidate(editRules('カテゴリ名', store), props.edit_state);
 
-    const closeModal = (event: HTMLEvent<HTMLButtonElement>) => {
+    const closeModal = (event: HTMLEvent<HTMLButtonElement>): void => {
       event.preventDefault();
       document.body.style.removeProperty("overflow");
       const modal = document.getElementsByClassName('overlay') as HTMLCollectionOf<HTMLElement>;

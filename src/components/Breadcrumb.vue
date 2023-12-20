@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { inject, ref } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
+import { useRoute } from 'vue-router';
 
 const route = useRoute();
 const titlesStore = inject('titles');

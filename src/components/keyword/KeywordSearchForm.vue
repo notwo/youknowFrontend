@@ -22,6 +22,7 @@ export default defineComponent({
     const route = useRoute();
     const { user } = useAuth0();
     const store = inject('keyword');
+    const dialogStore = inject('dialog');
 
     interface ErrorResponse {
       message: String,
@@ -53,7 +54,7 @@ export default defineComponent({
       })
       .catch((e: AxiosError<ErrorResponse>) => {
         store.allClear();
-        console.log(`${e.message} ( ${e.name} ) code: ${e.code}`);
+        dialogStore.func.value('検索エラー', 'キーワード検索中にエラーが起きました。暫くお待ちいただいてから再度お試しください', 'error');
       });
     }
 

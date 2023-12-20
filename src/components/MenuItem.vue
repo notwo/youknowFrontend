@@ -10,10 +10,10 @@ const categoryStore = inject('category');
 const keywordStore = inject('keyword');
 const tagStore = inject('tag');
 
-const login = (event) => {
+const login = (event): void => {
   auth0.loginWithRedirect();
 }
-const startLogout = (event) => {
+const startLogout = (event): void => {
   libraryStore.allClear();
   categoryStore.allClear();
   keywordStore.allClear();

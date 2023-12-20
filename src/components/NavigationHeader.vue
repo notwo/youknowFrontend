@@ -10,7 +10,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, onUnmounted } from 'vue'
+import { defineComponent } from 'vue'
 import MenuItem from "@/components/MenuItem.vue";
 
 export default defineComponent({

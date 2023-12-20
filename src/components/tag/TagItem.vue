@@ -11,6 +11,7 @@ const { user } = useAuth0();
 const api = keywordApi();
 const tagStore = inject('tag');
 const unattachedTagStore = inject('unattachedTag');
+const dialogStore = inject('dialog');
 
 interface KeywordRequest {
   custom_user: String,
@@ -31,7 +32,7 @@ interface HTMLEvent<T extends EventTarget> extends Event {
   target: T;
 };
 
-const unattachTag = (event: HTMLEvent<HTMLButtonElement>): void => {
+const detachTag = (event: HTMLEvent<HTMLButtonElement>): void => {
   const tagId = event.currentTarget.getAttribute('data-id');
   const tagIds = tagStore.items.list.map((tag) =>
     {
@@ -39,7 +40,7 @@ const unattachTag = (event: HTMLEvent<HTMLButtonElement>): void => {
     }
   );
 
-  const unattachTargetTag = tagStore.items.list.filter(tag => tag.id === Number(tagId));
+  const detachTargetTag = tagStore.items.list.filter(tag => tag.id === Number(tagId));
  
   const requestParam: KeywordRequest = {
     custom_user: user.value.sub,
@@ -49,10 +50,11 @@ const unattachTag = (event: HTMLEvent<HTMLButtonElement>): void => {
   axios.patch(api.detailUrl(user.value.sub, route.params.library_id, route.params.category_id, route.params.keyword_id), requestParam)
     .then((response: AxiosResponse) => {
       tagStore.setItem(response.data.tags);
-      unattachedTagStore.concat(unattachTargetTag);
+      unattachedTagStore.concat(detachTargetTag);
+      dialogStore.func.value('タグ解除', `タグ「${detachTargetTag[0]?.title}」を解除しました`);
     })
     .catch((e: AxiosError<ErrorResponse>) => {
-      console.log(`${e.message} ( ${e.name} ) code: ${e.code}`);
+      dialogStore.func.value('タグ解除エラー', 'タグ解除に失敗しました。暫くお待ちいただいてから再度お試しください', 'error');
     });
 };
 </script>
@@ -112,7 +114,7 @@ const unattachTag = (event: HTMLEvent<HTMLButtonElement>): void => {
   <section class="tag-item">
     <section class="tag-menu">
       <section class="tag-menu-item">
-        <span @click="unattachTag" class="delete-item" :data-id="id">削除</span>
+        <span @click="detachTag" class="delete-item" :data-id="id">削除</span>
       </section>
     </section>
     <section class="tag-item-body">

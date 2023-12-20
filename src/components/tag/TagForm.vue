@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import { ref, reactive, inject, onMounted } from 'vue';
+import { reactive, inject, onMounted } from 'vue';
 import axios, { AxiosResponse, AxiosError } from "axios";
 import { useAuth0 } from '@auth0/auth0-vue';
-import { useRoute, useRouter } from 'vue-router';
+import { useRoute } from 'vue-router';
 import { useVuelidate } from "@vuelidate/core";
 import { registerRules } from '@/plugin/validatorMessage';
 import { keywordApi, tagApi } from '@/plugin/apis';
 
-const { user, isAuthenticated } = useAuth0();
+const { user } = useAuth0();
 const route = useRoute();
 const store = inject('tag');
 const dialogStore = inject('dialog');
@@ -58,7 +58,7 @@ const AttachTag = (tagId: Number): void => {
     .then((response: AxiosResponse) => {
     })
     .catch((e: AxiosError<ErrorResponse>) => {
-      console.log(`${e.message} ( ${e.name} ) code: ${e.code}`);
+      dialogStore.func.value('タグ適用エラー', 'タグ適用に失敗しました。暫くお待ちいただいてから再度お試しください', 'error');
     });
 }
 
@@ -78,7 +78,7 @@ const addTag = (event: HTMLEvent<HTMLButtonElement>): void => {
       AttachTag(response.data.id);
     })
     .catch((e: AxiosError<ErrorResponse>) => {
-      console.log(`${e.message} ( ${e.name} ) code: ${e.code}`);
+      dialogStore.func.value('タグ登録エラー', 'タグ登録に失敗しました。暫くお待ちいただいてから再度お試しください', 'error');
     });
 }
 

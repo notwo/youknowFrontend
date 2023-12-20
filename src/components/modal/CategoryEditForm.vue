@@ -10,7 +10,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, inject } from 'vue';
+import { defineComponent, inject } from 'vue';
 import { useRoute } from 'vue-router';
 import { useAuth0 } from '@auth0/auth0-vue';
 import axios, { AxiosResponse, AxiosError } from "axios";
@@ -67,7 +67,7 @@ export default defineComponent({
           context.emit('closeEvent', event);
         })
         .catch((e: AxiosError<ErrorResponse>) => {
-          console.log(`${e.message} ( ${e.name} ) code: ${e.code}`);
+          dialogStore.func.value('更新エラー', 'カテゴリ更新中にエラーが起きました。暫くお待ちいただいてから再度お試しください', 'error');
         });
     };
 

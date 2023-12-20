@@ -4,7 +4,8 @@ import { reactive, inject } from 'vue';
 const dialogStore = inject('dialog');
 const message = reactive({
   subject: String,
-  body: String
+  body: String,
+  mode: String,
 });
 
 const closeDialog = (): void => {
@@ -13,9 +14,10 @@ const closeDialog = (): void => {
   dialog.classList.add('close');
 };
 
-const openDialog = (subject: String, body: String): void => {
+const openDialog = (subject: String, body: String, mode: String = 'normal'): void => {
   message.subject = subject;
   message.body = body;
+  message.mode = mode;
 
   const dialog = document.getElementById('dialog');
   dialog.style.top = `${window.screenY+20}px`;
@@ -103,14 +105,22 @@ dialogStore.setFunc(openDialog);
 .body {
   font-size: .8rem;
 }
+
+.error {
+  color: red;
+}
 </style>
 
 <template>
   <dialog class="dialog" id="dialog">
     <section class="dialog-wrap">
-      <section class="dialog-contents">
+      <section class="dialog-contents" v-if="message.mode === 'normal'">
         <section class="subject" v-if="message.subject.length > 0">{{ message.subject }}</section>
         <section class="body">{{ message.body }}</section>
+      </section>
+      <section class="dialog-contents error" v-if="message.mode === 'error'">
+        <section class="subject error" v-if="message.subject.length > 0">{{ message.subject }}</section>
+        <section class="body error">{{ message.body }}</section>
       </section>
     </section>
     <!--
