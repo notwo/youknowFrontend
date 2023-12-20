@@ -48,7 +48,7 @@ export default defineComponent({
   height: auto;
   border-radius: .4rem;
   background-color: white;
-  overflow : auto;
+  overflow: auto;
   max-height: 90%;
 }
 </style>

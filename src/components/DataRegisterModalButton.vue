@@ -1,15 +1,19 @@
 <script setup lang="ts">
 import { onMounted, onUnmounted } from "vue";
 
-const openModal = (event: HTMLButtonEvent) => {
-  document.body.style.overflow = 'hidden';
+interface HTMLEvent<T extends EventTarget> extends Event {
+  target: T;
+};
+
+const openModal = (event: HTMLEvent<HTMLButtonElement>): void => {
+  //document.body.style.overflow = 'hidden';
   const modal = document.getElementsByClassName('overlay') as HTMLCollectionOf<HTMLElement>;
   modal[0].classList.add('visible');
   document.getElementById('register-form').classList.add('visible');
   document.getElementById('edit-form').classList.remove('visible');
 };
 
-const setFixedToButton = (event) => {
+const setFixedToButton = (event): void => {
   const registerBtn = document.getElementById('registerBtn');
   if (window.scrollY <= 50) {
     registerBtn.style.top = '8rem';
@@ -32,7 +36,7 @@ onUnmounted(() => {
   position: fixed;
   top: 8rem;
   right: 6rem;
-  z-index: 9999;
+  z-index: 9998;
 }
 .btn-register a {
   display: block;

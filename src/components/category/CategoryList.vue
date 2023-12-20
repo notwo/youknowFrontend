@@ -44,6 +44,7 @@ export default defineComponent({
     const { user, isAuthenticated } = useAuth0();
     const store = inject('category');
     const titlesStore = inject('titles');
+    const dialogStore = inject('dialog');
 
     let edit_state = reactive({
       title: '',
@@ -99,7 +100,7 @@ export default defineComponent({
           store.setItem(response.data.paginated_categories.data);
         })
         .catch((e: AxiosError<ErrorResponse>) => {
-          console.log(`${e.message} ( ${e.name} ) code: ${e.code}`);
+          console.log(e.response)
         });
 
         window.addEventListener("scroll", showMoreCategoryList, false);

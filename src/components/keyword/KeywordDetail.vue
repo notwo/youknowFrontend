@@ -8,6 +8,7 @@ import { keywordApi } from '@/plugin/apis';
 import TagList from "@/components/tag/TagList.vue";
 import UnattachedTagList from "@/components/tag/UnattachedTagList.vue";
 import ScrollToTopButton from '@/components/ScrollToTopButton.vue';
+import Dialog from '@/components/common/Dialog.vue';
 
 const { user, isAuthenticated } = useAuth0();
 const api = keywordApi();
@@ -70,6 +71,7 @@ onUnmounted(() => {
 </style>
 
 <template>
+  <Dialog />
   <Breadcrumb />
   <section class="detail-body">
     <section class="keyword-title">{{ Keyword.title }}</section>

@@ -31,6 +31,7 @@ export default defineComponent({
     const { user } = useAuth0();
     const store = inject('category');
     const editStore = inject('categoryEdit');
+    const dialogStore = inject('dialog');
 
     interface ErrorResponse {
       message: String,
@@ -50,7 +51,7 @@ export default defineComponent({
 
     const api = categoryApi();
     const route = useRoute();
-    const onSubmit = (event: HTMLEvent<HTMLButtonElement>) => {
+    const onSubmit = (event: HTMLEvent<HTMLButtonElement>): void => {
       event.preventDefault();
       const requestParam: CategoryRequest = {
         custom_user: user.value.sub,
@@ -60,13 +61,14 @@ export default defineComponent({
       };
 
       axios.patch(api.detailUrl(user.value.sub, route.params.library_id, editStore.id), requestParam)
-      .then((response: AxiosResponse) => {
-        store.update(response.data);
-        context.emit('closeEvent', event);
-      })
-      .catch((e: AxiosError<ErrorResponse>) => {
-        console.log(`${e.message} ( ${e.name} ) code: ${e.code}`);
-      });
+        .then((response: AxiosResponse) => {
+          store.update(response.data);
+          dialogStore.func.value('', 'カテゴリ更新');
+          context.emit('closeEvent', event);
+        })
+        .catch((e: AxiosError<ErrorResponse>) => {
+          console.log(`${e.message} ( ${e.name} ) code: ${e.code}`);
+        });
     };
 
     return {
