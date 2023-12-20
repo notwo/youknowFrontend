@@ -67,7 +67,7 @@ export default defineComponent({
           context.emit('closeEvent', event);
         })
         .catch((e: AxiosError<ErrorResponse>) => {
-          console.log(`${e.message} ( ${e.name} ) code: ${e.code}`);
+          dialogStore.func.value('登録エラー', 'キーワード登録中にエラーが起きました。暫くお待ちいただいてから再度お試しください', 'error');
         });
     };
 

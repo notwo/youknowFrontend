@@ -62,7 +62,7 @@ export default defineComponent({
           context.emit('closeEvent', event);
         })
         .catch((e: AxiosError<ErrorResponse>) => {
-          console.log(e.response);
+          dialogStore.func.value('登録エラー', 'ライブラリ登録中にエラーが起きました。暫くお待ちいただいてから再度お試しください', 'error');
         });
     };
 
