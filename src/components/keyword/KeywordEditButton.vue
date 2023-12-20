@@ -22,7 +22,6 @@ export default defineComponent({
     };
 
     const openEditKeywordForm = (event: HTMLEvent<HTMLButtonElement>): void => {
-      document.body.style.overflow = 'hidden';
       const modal = document.getElementsByClassName('overlay') as HTMLCollectionOf<HTMLElement>;
       modal[0].classList.add('visible');
       document.getElementById('edit_keyword_title').value = props.title;

@@ -22,7 +22,6 @@ export default defineComponent({
     };
 
     const openEditCategoryForm = async (event: HTMLEvent<HTMLButtonElement>): Promise<void> => {
-      document.body.style.overflow = 'hidden';
       const modal = document.getElementsByClassName('overlay') as HTMLCollectionOf<HTMLElement>;
       modal[0].classList.add('visible');
       document.getElementById('edit_category_title').value = props.title;

@@ -50,5 +50,6 @@ export default defineComponent({
   background-color: white;
   overflow: auto;
   max-height: 90%;
+  overscroll-behavior-y: none;
 }
 </style>

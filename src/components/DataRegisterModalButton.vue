@@ -6,7 +6,6 @@ interface HTMLEvent<T extends EventTarget> extends Event {
 };
 
 const openModal = (event: HTMLEvent<HTMLButtonElement>): void => {
-  //document.body.style.overflow = 'hidden';
   const modal = document.getElementsByClassName('overlay') as HTMLCollectionOf<HTMLElement>;
   modal[0].classList.add('visible');
   document.getElementById('register-form').classList.add('visible');
