@@ -42,6 +42,7 @@ export default defineComponent({
   setup() {
     const { user, isAuthenticated } = useAuth0();
     const store = inject('library');
+    const dialogStore = inject('dialog');
 
     let edit_state = reactive({
       title: '',
@@ -59,7 +60,7 @@ export default defineComponent({
     let currentPage = 1;
 
     const api = libraryApi();
-    const loadNext = async () => {
+    const loadNext = async (): Promise<void> => {
       const response = await axios.get<LibraryResponse>(
         api.listUrl(user.value.sub, pagination.library.content_num, pagination.library.content_num * (currentPage -1))
       );
@@ -69,7 +70,7 @@ export default defineComponent({
       store.concat(response.data.results);
     };
 
-    const showMoreLibraryList = (event) => {
+    const showMoreLibraryList = (event): void => {
       // 下限まで一定距離になったら自動読み込み
       if (document.body.scrollHeight - document.body.clientHeight - window.scrollY <= 500 && canLoadNext && !store.isSearched()) {
         currentPage++;
@@ -85,13 +86,14 @@ export default defineComponent({
       // ライブラリ一覧に遷移した際にスクロール位置が戻っていないので、強制的にスクロールさせる
       document.documentElement.scrollTop = 0;
 
-      const showLibraryList = async () => {
+      const showLibraryList = async (): Promise<void> => {
         await axios.get<LibraryResponse>(api.listUrl(user.value.sub, pagination.library.content_num))
         .then((response: AxiosResponse) => {
           canLoadNext = (response.data.next !== null);
           store.setItem(response.data.results);
         })
         .catch((e: AxiosError<ErrorResponse>) => {
+          dialogStore.func.value('読み込みエラー', 'ライブラリ読み込み中にエラーが起きました。暫くお待ちいただいてから再度お試しください', 'error');
         });
 
         window.addEventListener("scroll", showMoreLibraryList, false);

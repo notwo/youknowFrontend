@@ -124,5 +124,15 @@ export function userStore() {
     uuid.value = id;
   }
 
-  return { uuid: readonly(uuid), setUserId }
-}
+  return { uuid: readonly(uuid), setUserId };
+};
+
+export function dialogStore() {
+  const func: Object = ref({});
+
+  function setFunc(_func: Object) {
+    func.value = _func;
+  }
+
+  return { func: readonly(func), setFunc };
+};

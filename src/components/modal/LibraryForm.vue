@@ -22,7 +22,7 @@ const store = inject('libraryEdit');
 const register_v$ = useVuelidate(registerRules('ライブラリ名'), register_state);
 const edit_v$ = useVuelidate(editRules('ライブラリ名', store), props.edit_state);
 
-const closeModal = (event: HTMLEvent<HTMLButtonElement>) => {
+const closeModal = (event: HTMLEvent<HTMLButtonElement>): void => {
   event.preventDefault();
   document.body.style.removeProperty("overflow");
   const modal = document.getElementsByClassName('overlay') as HTMLCollectionOf<HTMLElement>;

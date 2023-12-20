@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, inject, onMounted } from 'vue';
 import axios, { AxiosResponse, AxiosError } from "axios";
-import { useRoute, useRouter } from 'vue-router';
+import { useRoute } from 'vue-router';
 import { useAuth0 } from '@auth0/auth0-vue';
 import UnattachedTagItem from "@/components/tag/UnattachedTagItem.vue";
 import { pagination } from "@/../config.json";
@@ -12,6 +12,7 @@ const { user, isAuthenticated } = useAuth0();
 const route = useRoute();
 const api = tagApi();
 const store = inject('unattachedTag');
+const dialogStore = inject('dialog');
 
 interface TagResponse {
   data: []
@@ -32,7 +33,7 @@ onMounted(() => {
       store.setItem(TagList.value);
     })
     .catch((e: AxiosError<ErrorResponse>) => {
-      console.log(`${e.message} ( ${e.name} ) code: ${e.code}`);
+      dialogStore.func.value('読み込みエラー', 'タグ読み込み中にエラーが起きました。暫くお待ちいただいてから再度お試しください', 'error');
     });
 });
 </script>

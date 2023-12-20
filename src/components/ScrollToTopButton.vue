@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { onMounted, onUnmounted } from 'vue';
 
-let scrollId:number = 0;
-const f = () => {
+let scrollId: number = 0;
+const f = (): void => {
   const button = document.getElementById('scrollToTopButton');
   button.classList.remove('hidden-no-animation');
   if (window.scrollY === 0) {
@@ -13,7 +13,7 @@ const f = () => {
   }
 };
 
-const scrollToTop = (event) => {
+const scrollToTop = (event): void => {
   const scroll = () => {
     window.scrollTo(0, window.scrollY - window.scrollY / 10);
   };

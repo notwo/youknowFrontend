@@ -10,7 +10,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, onUnmounted, inject } from 'vue';
+import { defineComponent, inject } from 'vue';
 import { useAuth0 } from '@auth0/auth0-vue';
 import axios, { AxiosResponse, AxiosError } from "axios";
 import { libraryApi } from '@/plugin/apis';
@@ -30,6 +30,7 @@ export default defineComponent({
     const { user } = useAuth0();
     const store = inject('library');
     const editStore = inject('libraryEdit');
+    const dialogStore = inject('dialog');
 
     interface ErrorResponse {
       message: String
@@ -48,7 +49,7 @@ export default defineComponent({
     };
 
     const api = libraryApi();
-    const onSubmit = (event: HTMLEvent<HTMLButtonElement>) => {
+    const onSubmit = (event: HTMLEvent<HTMLButtonElement>): void => {
       event.preventDefault();
       const requestParam: LibraryRequest = {
         custom_user: user.value.sub,
@@ -57,13 +58,14 @@ export default defineComponent({
       };
 
       axios.patch(api.detailUrl(user.value.sub, editStore.id), requestParam)
-      .then((response: AxiosResponse) => {
-        store.update(response.data);
-        context.emit('closeEvent', event);
-      })
-      .catch((e: AxiosError<ErrorResponse>) => {
-        console.log(`${e.message} ( ${e.name} ) code: ${e.code}`);
-      });
+        .then((response: AxiosResponse) => {
+          store.update(response.data);
+          dialogStore.func.value('', 'ライブラリを更新しました');
+          context.emit('closeEvent', event);
+        })
+        .catch((e: AxiosError<ErrorResponse>) => {
+          dialogStore.func.value('更新エラー', 'ライブラリ更新中にエラーが起きました。暫くお待ちいただいてから再度お試しください', 'error');
+        });
     };
 
     return {

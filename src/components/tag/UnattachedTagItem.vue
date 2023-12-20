@@ -9,6 +9,7 @@ const { user } = useAuth0();
 
 const api = tagApi();
 const store = inject('unattachedTag');
+const dialogStore = inject('dialog');
 
 const props = defineProps({
   id: Number,
@@ -22,7 +23,7 @@ interface HTMLEvent<T extends EventTarget> extends Event {
   target: T;
 };
 
-const removeTag = (event: HTMLEvent<HTMLButtonElement>) => {
+const removeTag = (event: HTMLEvent<HTMLButtonElement>): void => {
   event.stopPropagation();
   if (!window.confirm(`タグ「${props.title}」が削除されますが宜しいですか？`)) {
     return;
@@ -32,13 +33,14 @@ const removeTag = (event: HTMLEvent<HTMLButtonElement>) => {
   const id = event.currentTarget.getAttribute('data-id');
   axios.delete(api.detailUrl(user.value.sub, id))
     .then((response: AxiosResponse) => {
+      dialogStore.func.value('', 'タグを削除しました');
     })
     .catch((e: AxiosError<ErrorResponse>) => {
-      console.log(`${e.message} ( ${e.name} ) code: ${e.code}`);
+      dialogStore.func.value('削除エラー', 'タグ削除中にエラーが起きました。暫くお待ちいただいてから再度お試しください', 'error');
     });
 };
 
-const selectTag = (event: HTMLEvent<HTMLButtonElement>) => {
+const selectTag = (event: HTMLEvent<HTMLButtonElement>): void => {
   event.stopPropagation();
 
   if (event.currentTarget.classList.contains('selected')) {

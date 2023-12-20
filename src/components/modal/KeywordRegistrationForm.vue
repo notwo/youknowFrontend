@@ -10,9 +10,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, inject } from 'vue';
+import { defineComponent, inject } from 'vue';
 import axios, { AxiosResponse, AxiosError } from "axios";
-import { useRoute, useRouter } from 'vue-router';
+import { useRoute } from 'vue-router';
 import { useAuth0 } from '@auth0/auth0-vue';
 import { keywordApi } from '@/plugin/apis';
 import RegistrationForm from '@/components/modal/RegistrationForm.vue';
@@ -30,6 +30,7 @@ export default defineComponent({
   setup(props, context) {
     const { user } = useAuth0();
     const store = inject('keyword');
+    const dialogStore = inject('dialog');
 
     interface ErrorResponse {
       message: String,
@@ -49,7 +50,7 @@ export default defineComponent({
 
     const api = keywordApi();
     const route = useRoute();
-    const onSubmit = (event: HTMLEvent<HTMLButtonElement>) => {
+    const onSubmit = (event: HTMLEvent<HTMLButtonElement>): void => {
       const requestParam: KeywordRequest = {
         custom_user: user.value.sub,
         library: route.params.library_id,
@@ -58,16 +59,16 @@ export default defineComponent({
         content: document.getElementById('keyword_content').value,
         tags: []
       };
-      console.log(requestParam)
 
       axios.post(api.createUrl(user.value.sub, route.params.library_id, route.params.category_id), requestParam)
-      .then((response: AxiosResponse) => {
-        store.add(response.data);
-        context.emit('closeEvent', event);
-      })
-      .catch((e: AxiosError<ErrorResponse>) => {
-        console.log(`${e.message} ( ${e.name} ) code: ${e.code}`);
-      });
+        .then((response: AxiosResponse) => {
+          store.add(response.data);
+          dialogStore.func.value('キーワード登録', `「${response.data.title}」を登録しました`);
+          context.emit('closeEvent', event);
+        })
+        .catch((e: AxiosError<ErrorResponse>) => {
+          dialogStore.func.value('登録エラー', 'キーワード登録中にエラーが起きました。暫くお待ちいただいてから再度お試しください', 'error');
+        });
     };
 
     return {

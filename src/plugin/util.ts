@@ -7,7 +7,7 @@ export const timeFormat = (timeStr) => {
     `/${date.getDate().toString().padStart(2, '0')}`;
 };
 
-export const titleForView = (title, contentType) => {
+export const titleForView = (title, contentType): void => {
   let maxLength = 0;
   switch(contentType) {
     case 'library':
@@ -25,7 +25,7 @@ export const titleForView = (title, contentType) => {
   }
   return title.length > maxLength ? title.substring(0, maxLength) + '...' : title;
 };
-export const contentForView = (content, contentType) => {
+export const contentForView = (content, contentType): void => {
   let maxLength = 0;
   switch(contentType) {
     case 'library':

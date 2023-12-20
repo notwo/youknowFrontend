@@ -19,6 +19,7 @@ export default defineComponent({
   setup() {
     const { user } = useAuth0();
     const store = inject('library');
+    const dialogStore = inject('dialog');
 
     interface ErrorResponse {
       message: String,
@@ -31,7 +32,7 @@ export default defineComponent({
     };
 
     const api = libraryApi();
-    const onSearch = (event: HTMLEvent<HTMLButtonElement>) => {
+    const onSearch = (event: HTMLEvent<HTMLButtonElement>): void => {
       const word = document.getElementById('search');
       if (word.value === '') {
         store.restore();
@@ -39,20 +40,20 @@ export default defineComponent({
       }
 
       axios.get(api.searchUrl(user.value.sub, word.value))
-      .then((response: AxiosResponse) => {
-        // 検索後は一括で結果を返すようにしておく。今後検索後に対してもページングする場合はコメントアウトを外す(更にAPIの修正も必要)
-        //if (response.data.results.length <= 0) {
-        if (response.data.length <= 0) {
+        .then((response: AxiosResponse) => {
+          // 検索後は一括で結果を返すようにしておく。今後検索後に対してもページングする場合はコメントアウトを外す(更にAPIの修正も必要)
+          //if (response.data.results.length <= 0) {
+          if (response.data.length <= 0) {
+            store.search(response.data);
+            return;
+          }
+          //store.search(response.data.results);
           store.search(response.data);
-          return;
-        }
-        //store.search(response.data.results);
-        store.search(response.data);
-      })
-      .catch((e: AxiosError<ErrorResponse>) => {
-        store.allClear();
-        console.log(`${e.message} ( ${e.name} ) code: ${e.code}`);
-      });
+        })
+        .catch((e: AxiosError<ErrorResponse>) => {
+          store.allClear();
+          dialogStore.func.value('検索エラー', 'ライブラリ検索中にエラーが起きました。暫くお待ちいただいてから再度お試しください', 'error');
+        });
     }
 
     return {

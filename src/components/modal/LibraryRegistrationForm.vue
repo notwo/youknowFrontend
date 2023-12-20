@@ -10,7 +10,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, inject } from 'vue';
+import { defineComponent, inject } from 'vue';
 import axios, { AxiosResponse, AxiosError } from "axios";
 import { useAuth0 } from '@auth0/auth0-vue';
 import { libraryApi } from '@/plugin/apis';
@@ -29,6 +29,7 @@ export default defineComponent({
   setup(props, context) {
     const { user } = useAuth0();
     const store = inject('library');
+    const dialogStore = inject('dialog');
 
     interface ErrorResponse {
       message: String,
@@ -47,7 +48,7 @@ export default defineComponent({
     };
 
     const api = libraryApi();
-    const onSubmit = (event: HTMLEvent<HTMLButtonElement>) => {
+    const onSubmit = (event: HTMLEvent<HTMLButtonElement>): void => {
       const requestParam: LibraryRequest = {
         custom_user: user.value.sub,
         title: document.getElementById('library_title').value,
@@ -55,13 +56,14 @@ export default defineComponent({
       };
 
       axios.post(api.createUrl(user.value.sub), requestParam)
-      .then((response: AxiosResponse) => {
-        store.add(response.data);
-        context.emit('closeEvent', event);
-      })
-      .catch((e: AxiosError<ErrorResponse>) => {
-        console.log(`${e.message} ( ${e.name} ) code: ${e.code}`);
-      });
+        .then((response: AxiosResponse) => {
+          store.add(response.data);
+          dialogStore.func.value('ライブラリ登録', `「${response.data.title}」を登録しました`);
+          context.emit('closeEvent', event);
+        })
+        .catch((e: AxiosError<ErrorResponse>) => {
+          dialogStore.func.value('登録エラー', 'ライブラリ登録中にエラーが起きました。暫くお待ちいただいてから再度お試しください', 'error');
+        });
     };
 
     return {

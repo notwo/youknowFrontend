@@ -47,12 +47,13 @@ export default defineComponent({
   setup(props) {
     const { user } = useAuth0();
     const store = inject('library');
+    const dialogStore = inject('dialog');
 
     interface HTMLEvent<T extends EventTarget> extends Event {
       target: T;
     };
 
-    const removeLibrary = (event: HTMLEvent<HTMLButtonElement>) => {
+    const removeLibrary = (event: HTMLEvent<HTMLButtonElement>): void => {
       if (!window.confirm(`ライブラリ「${props.title}」が削除されますが宜しいですか？`)) {
         return;
       }
@@ -69,9 +70,10 @@ export default defineComponent({
       const id = event.currentTarget.getAttribute('data-id');
       axios.delete(api.detailUrl(user.value.sub, id))
       .then((response: AxiosResponse) => {
+        dialogStore.func.value('', 'ライブラリを削除しました');
       })
       .catch((e: AxiosError<ErrorResponse>) => {
-        console.log(`${e.message} ( ${e.name} ) code: ${e.code}`);
+        dialogStore.func.value('削除エラー', 'ライブラリ削除中にエラーが起きました。暫くお待ちいただいてから再度お試しください', 'error');
       });
     };
 

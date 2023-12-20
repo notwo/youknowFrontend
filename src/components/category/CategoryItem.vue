@@ -20,7 +20,7 @@
 
 <script lang="ts">
 import { defineComponent, inject } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
+import { useRoute } from 'vue-router';
 import axios, { AxiosResponse, AxiosError } from "axios";
 import { useAuth0 } from '@auth0/auth0-vue';
 import CategoryEditButton from "@/components/category/CategoryEditButton.vue";
@@ -61,7 +61,8 @@ export default defineComponent({
     const api = categoryApi();
     const route = useRoute();
     const store = inject('category');
-    const removeCategory = (event: HTMLEvent<HTMLButtonElement>) => {
+    const dialogStore = inject('dialog');
+    const removeCategory = (event: HTMLEvent<HTMLButtonElement>): void => {
       if (!window.confirm(`カテゴリ「${props.title}」が削除されますが宜しいですか？`)) {
         return;
       }
@@ -69,11 +70,12 @@ export default defineComponent({
       store.remove(props.id); // api実行前に呼ばないとstoreの中身が検索できない
       const id = event.currentTarget.getAttribute('data-id');
       axios.delete(api.detailUrl(user.value.sub, route.params.library_id, id))
-      .then((response: AxiosResponse) => {
-      })
-      .catch((e: AxiosError<ErrorResponse>) => {
-        console.log(`${e.message} ( ${e.name} ) code: ${e.code}`);
-      });
+        .then((response: AxiosResponse) => {
+          dialogStore.func.value('', 'カテゴリを削除しました');
+        })
+        .catch((e: AxiosError<ErrorResponse>) => {
+          dialogStore.func.value('削除エラー', 'カテゴリ削除中にエラーが起きました。暫くお待ちいただいてから再度お試しください', 'error');
+        });
     };
 
     return {

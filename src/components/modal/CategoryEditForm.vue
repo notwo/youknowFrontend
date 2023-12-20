@@ -10,8 +10,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, inject } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
+import { defineComponent, inject } from 'vue';
+import { useRoute } from 'vue-router';
 import { useAuth0 } from '@auth0/auth0-vue';
 import axios, { AxiosResponse, AxiosError } from "axios";
 import { categoryApi } from '@/plugin/apis';
@@ -31,6 +31,7 @@ export default defineComponent({
     const { user } = useAuth0();
     const store = inject('category');
     const editStore = inject('categoryEdit');
+    const dialogStore = inject('dialog');
 
     interface ErrorResponse {
       message: String,
@@ -50,7 +51,7 @@ export default defineComponent({
 
     const api = categoryApi();
     const route = useRoute();
-    const onSubmit = (event: HTMLEvent<HTMLButtonElement>) => {
+    const onSubmit = (event: HTMLEvent<HTMLButtonElement>): void => {
       event.preventDefault();
       const requestParam: CategoryRequest = {
         custom_user: user.value.sub,
@@ -60,13 +61,14 @@ export default defineComponent({
       };
 
       axios.patch(api.detailUrl(user.value.sub, route.params.library_id, editStore.id), requestParam)
-      .then((response: AxiosResponse) => {
-        store.update(response.data);
-        context.emit('closeEvent', event);
-      })
-      .catch((e: AxiosError<ErrorResponse>) => {
-        console.log(`${e.message} ( ${e.name} ) code: ${e.code}`);
-      });
+        .then((response: AxiosResponse) => {
+          store.update(response.data);
+          dialogStore.func.value('', 'カテゴリを更新しました');
+          context.emit('closeEvent', event);
+        })
+        .catch((e: AxiosError<ErrorResponse>) => {
+          dialogStore.func.value('更新エラー', 'カテゴリ更新中にエラーが起きました。暫くお待ちいただいてから再度お試しください', 'error');
+        });
     };
 
     return {

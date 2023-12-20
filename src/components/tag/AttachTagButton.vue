@@ -1,14 +1,15 @@
 <script setup lang="ts">
-import { ref, inject, onMounted } from 'vue';
+import { inject } from 'vue';
 import axios, { AxiosResponse, AxiosError } from "axios";
 import { useAuth0 } from '@auth0/auth0-vue';
-import { useRoute, useRouter } from 'vue-router';
+import { useRoute } from 'vue-router';
 import { keywordApi, tagApi } from '@/plugin/apis';
 
 const route = useRoute();
 const { user } = useAuth0();
 const tagStore = inject('tag');
 const unattachedTagStore = inject('unattachedTag');
+const dialogStore = inject('dialog');
 const api = {
   keyword: keywordApi(),
   tag: tagApi()
@@ -19,7 +20,7 @@ interface KeywordRequest {
   content: String
 };
 
-const AttachTag = () => {
+const AttachTag = (): void => {
   const selectedTags = document.getElementsByClassName('selected');
   const tagIds = tagStore.items.list.map((tag) =>
     {
@@ -41,9 +42,10 @@ const AttachTag = () => {
     .then((response: AxiosResponse) => {
       tagStore.setItem(response.data.tags);
       unattachedTagStore.removeList(unattachedTagIds);
+      dialogStore.func.value('タグ追加', 'タグを追加しました');
     })
     .catch((e: AxiosError<ErrorResponse>) => {
-      console.log(`${e.message} ( ${e.name} ) code: ${e.code}`);
+      dialogStore.func.value('タグ追加エラー', 'タグ追加に失敗しました。暫くお待ちいただいてから再度お試しください', 'error');
     });
 }
 

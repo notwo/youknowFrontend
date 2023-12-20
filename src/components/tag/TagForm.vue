@@ -1,15 +1,17 @@
 <script setup lang="ts">
-import { ref, reactive, inject, onMounted } from 'vue';
+import { reactive, inject, onMounted } from 'vue';
 import axios, { AxiosResponse, AxiosError } from "axios";
 import { useAuth0 } from '@auth0/auth0-vue';
-import { useRoute, useRouter } from 'vue-router';
+import { useRoute } from 'vue-router';
 import { useVuelidate } from "@vuelidate/core";
 import { registerRules } from '@/plugin/validatorMessage';
 import { keywordApi, tagApi } from '@/plugin/apis';
 
-const { user, isAuthenticated } = useAuth0();
+const { user } = useAuth0();
 const route = useRoute();
 const store = inject('tag');
+const dialogStore = inject('dialog');
+
 const api = {
   keyword: keywordApi(),
   tag: tagApi()
@@ -42,7 +44,7 @@ interface HTMLEvent<T extends EventTarget> extends Event {
   target: T;
 };
 
-const AttachTag = (tagId: Number) => {
+const AttachTag = (tagId: Number): void => {
   const requestParam: KeywordRequest = {
     custom_user: user.value.sub,
     tags: store.items.list.map((tag) =>
@@ -56,11 +58,11 @@ const AttachTag = (tagId: Number) => {
     .then((response: AxiosResponse) => {
     })
     .catch((e: AxiosError<ErrorResponse>) => {
-      console.log(`${e.message} ( ${e.name} ) code: ${e.code}`);
+      dialogStore.func.value('タグ適用エラー', 'タグ適用に失敗しました。暫くお待ちいただいてから再度お試しください', 'error');
     });
 }
 
-const addTag = (event: HTMLEvent<HTMLButtonElement>) => {
+const addTag = (event: HTMLEvent<HTMLButtonElement>): void => {
   const requestParam: TagRequest = {
     custom_user: user.value.sub,
     title: document.getElementById('tag_title').value,
@@ -70,12 +72,13 @@ const addTag = (event: HTMLEvent<HTMLButtonElement>) => {
   axios.post(api.tag.createUrl(user.value.sub), requestParam)
     .then((response: AxiosResponse) => {
       store.add(response.data);
+      dialogStore.func.value('タグ登録', `「${response.data.title}」を登録しました`);
       register_v$.value.$reset();
       register_state.title = '';
       AttachTag(response.data.id);
     })
     .catch((e: AxiosError<ErrorResponse>) => {
-      console.log(`${e.message} ( ${e.name} ) code: ${e.code}`);
+      dialogStore.func.value('タグ登録エラー', 'タグ登録に失敗しました。暫くお待ちいただいてから再度お試しください', 'error');
     });
 }
 

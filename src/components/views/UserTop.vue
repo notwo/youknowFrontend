@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { reactive, onMounted, onUnmounted, inject } from 'vue';
+import { reactive, onMounted, inject } from 'vue';
 import axios, { AxiosResponse, AxiosError } from "axios";
 import { useAuth0 } from '@auth0/auth0-vue';
 import { useVuelidate } from "@vuelidate/core";
@@ -7,6 +7,7 @@ import { editUserRules } from '@/plugin/validatorMessage';
 import { userApi } from '@/plugin/apis';
 import BackButton from '@/components/common/BackButton.vue';
 import DeleteUserButton from '@/components/user/DeleteUserButton.vue';
+import Dialog from '@/components/common/Dialog.vue';
 
 const auth0 = useAuth0();
 
@@ -28,6 +29,7 @@ const userAttr = reactive({
 const edit_v$ = useVuelidate(editUserRules(editStore, userAttr), edit_state);
 
 const store = inject('user');
+const dialogStore = inject('dialog');
 
 interface HTMLEvent<T extends EventTarget> extends Event {
   target: T;
@@ -47,7 +49,7 @@ interface ErrorResponse {
 };
 
 const api = userApi();
-const updateToAuth0 = async () => {
+const updateToAuth0 = async (): Promise<void> => {
   const requestParam: Auth0UserRequest = {
     "nickname": editStore.username,
     "email": editStore.email,
@@ -60,10 +62,10 @@ const updateToAuth0 = async () => {
 
   await axios.patch(api.auth0UserUrl(auth0?.user?.value?.sub), requestParam, { headers: headers })
     .then((response: AxiosResponse) => {
-      console.log(response)
+      dialogStore.func.value('', 'ユーザ情報を更新しました');
     })
     .catch((e: AxiosError<ErrorResponse>) => {
-      console.log(e.response);
+      dialogStore.func.value('更新エラー', 'ユーザ情報更新中にエラーが起きました。暫くお待ちいただいてから再度お試しください', 'error');
     });
 };
 const onSubmit = (event: HTMLEvent<HTMLButtonElement>): void => {
@@ -76,10 +78,11 @@ const onSubmit = (event: HTMLEvent<HTMLButtonElement>): void => {
     .then((response: AxiosResponse) => {
       editStore.username = response.data.username;
       editStore.email = response.data.email;
+      dialogStore.func.value('', 'ユーザ情報を更新しました');
       updateToAuth0();
     })
     .catch((e: AxiosError<ErrorResponse>) => {
-      console.log(e.response);
+      dialogStore.func.value('更新エラー', 'ユーザ情報更新中にエラーが起きました。暫くお待ちいただいてから再度お試しください', 'error');
     });
 };
 
@@ -90,7 +93,7 @@ if (store.uuid.value === '') {
       store.setUserId(response.data[0].id);
     })
     .catch((e: AxiosError<ErrorResponse>) => {
-      console.log(`${e.message} ( ${e.name} ) code: ${e.code}`);
+      dialogStore.func.value('読み込みエラー', 'ユーザ読み込み中にエラーが起きました。暫くお待ちいただいてから再度お試しください', 'error');
     });
 }
 
@@ -181,6 +184,7 @@ button[type="button"] {
 </style>
 
 <template>
+  <Dialog />
   <BackButton />
   <!-- TODO: ここにユーザプロフィール画像を載せられるようにする -->
   <section class="page-title">ユーザ情報の更新</section>
