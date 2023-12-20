@@ -22,7 +22,7 @@ interface HTMLEvent<T extends EventTarget> extends Event {
   target: T;
 };
 
-const removeTag = (event: HTMLEvent<HTMLButtonElement>) => {
+const removeTag = (event: HTMLEvent<HTMLButtonElement>): void => {
   event.stopPropagation();
   if (!window.confirm(`タグ「${props.title}」が削除されますが宜しいですか？`)) {
     return;
@@ -38,7 +38,7 @@ const removeTag = (event: HTMLEvent<HTMLButtonElement>) => {
     });
 };
 
-const selectTag = (event: HTMLEvent<HTMLButtonElement>) => {
+const selectTag = (event: HTMLEvent<HTMLButtonElement>): void => {
   event.stopPropagation();
 
   if (event.currentTarget.classList.contains('selected')) {

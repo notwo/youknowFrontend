@@ -11,7 +11,7 @@
 
 <script lang="ts">
 import { defineComponent, onMounted, inject } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
+import { useRoute } from 'vue-router';
 import { useAuth0 } from '@auth0/auth0-vue';
 import axios, { AxiosResponse, AxiosError } from "axios";
 import { categoryApi } from '@/plugin/apis';
@@ -63,7 +63,7 @@ export default defineComponent({
       axios.patch(api.detailUrl(user.value.sub, route.params.library_id, editStore.id), requestParam)
         .then((response: AxiosResponse) => {
           store.update(response.data);
-          dialogStore.func.value('', 'カテゴリ更新');
+          dialogStore.func.value('', 'カテゴリを更新しました');
           context.emit('closeEvent', event);
         })
         .catch((e: AxiosError<ErrorResponse>) => {

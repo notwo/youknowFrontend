@@ -28,7 +28,7 @@
 <script lang="ts">
 import { defineComponent, reactive, onMounted, onUnmounted, inject } from 'vue';
 import axios, { AxiosResponse, AxiosError } from "axios";
-import { useRoute, useRouter } from 'vue-router';
+import { useRoute } from 'vue-router';
 import { useAuth0 } from '@auth0/auth0-vue';
 import KeywordModal from '@/components/modal/KeywordModal.vue';
 import KeywordItem from "@/components/keyword/KeywordItem.vue";

@@ -60,7 +60,7 @@ export default defineComponent({
       axios.patch(api.detailUrl(user.value.sub, editStore.id), requestParam)
         .then((response: AxiosResponse) => {
           store.update(response.data);
-          dialogStore.func.value('', 'ライブラリ更新');
+          dialogStore.func.value('', 'ライブラリを更新しました');
           context.emit('closeEvent', event);
         })
         .catch((e: AxiosError<ErrorResponse>) => {

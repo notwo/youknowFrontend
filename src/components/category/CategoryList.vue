@@ -27,7 +27,7 @@
 <script lang="ts">
 import { defineComponent, reactive, onMounted, onUnmounted, inject } from 'vue';
 import axios, { AxiosResponse, AxiosError } from "axios";
-import { useRoute, useRouter } from 'vue-router';
+import { useRoute } from 'vue-router';
 import { useAuth0 } from '@auth0/auth0-vue';
 import CategoryModal from '@/components/modal/CategoryModal.vue';
 import CategoryItem from "@/components/category/CategoryItem.vue";
@@ -64,7 +64,7 @@ export default defineComponent({
     const api = categoryApi();
     const lApi = libraryApi();
     const route = useRoute();
-    const showMoreCategoryList = (event) => {
+    const showMoreCategoryList = (event): void => {
       // 下限まで一定距離になったら自動読み込み
       if (document.body.scrollHeight - document.body.clientHeight - window.scrollY <= 500 && canLoadNext && !store.isSearched()) {
         currentPage++;

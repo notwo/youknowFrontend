@@ -62,11 +62,11 @@ export default defineComponent({
       axios.patch(api.detailUrl(user.value.sub, route.params.library_id, route.params.category_id, editStore.id), requestParam)
         .then((response: AxiosResponse) => {
           store.update(response.data);
-          dialogStore.func.value('', 'キーワード更新');
+          dialogStore.func.value('', 'キーワードを更新しました');
           context.emit('closeEvent', event);
         })
         .catch((e: AxiosError<ErrorResponse>) => {
-          console.log(`${e.message} ( ${e.name} ) code: ${e.code}`);
+          console.log(e.response);
         });
     };
 

@@ -18,7 +18,7 @@ const openDialog = (subject: String, body: String): void => {
   message.body = body;
 
   const dialog = document.getElementById('dialog');
-  dialog.style.top = `${window.scrollY+20}px`;
+  dialog.style.top = `${window.screenY+20}px`;
   dialog.classList.remove('close');
   dialog.classList.add('open');
   setTimeout(closeDialog, 2000);
@@ -55,13 +55,11 @@ dialogStore.setFunc(openDialog);
   border: none;
   z-index: 9997;
   background-color: rgba(245,245,245,.9);
+  box-shadow: 1px 1px 1px 1px black;
   animation: fadeIn .3s ease;
 }
 .dialog.open {
   display: block;
-  /*
-  animation: fadeOut .3s ease;
-  */
 }
 .dialog.close {
   display: none;
@@ -93,6 +91,17 @@ dialogStore.setFunc(openDialog);
 
 .dialog-contents {
   padding: .3rem .5rem;
+  text-align: center;
+}
+
+.subject {
+  margin: .6rem 0;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.body {
+  font-size: .8rem;
 }
 </style>
 

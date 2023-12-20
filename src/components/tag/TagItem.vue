@@ -2,7 +2,7 @@
 import { inject } from 'vue';
 import axios, { AxiosResponse, AxiosError } from "axios";
 import { useAuth0 } from '@auth0/auth0-vue';
-import { useRoute, useRouter } from 'vue-router';
+import { useRoute } from 'vue-router';
 import { titleForView } from '@/plugin/util';
 import { keywordApi } from '@/plugin/apis';
 
@@ -31,7 +31,7 @@ interface HTMLEvent<T extends EventTarget> extends Event {
   target: T;
 };
 
-const unattachTag = (event: HTMLEvent<HTMLButtonElement>) => {
+const unattachTag = (event: HTMLEvent<HTMLButtonElement>): void => {
   const tagId = event.currentTarget.getAttribute('data-id');
   const tagIds = tagStore.items.list.map((tag) =>
     {

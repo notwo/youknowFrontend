@@ -21,7 +21,7 @@ export default defineComponent({
       target: T;
     };
 
-    const openEditKeywordForm = (event: HTMLEvent<HTMLButtonElement>) => {
+    const openEditKeywordForm = (event: HTMLEvent<HTMLButtonElement>): void => {
       document.body.style.overflow = 'hidden';
       const modal = document.getElementsByClassName('overlay') as HTMLCollectionOf<HTMLElement>;
       modal[0].classList.add('visible');

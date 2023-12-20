@@ -10,9 +10,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, inject } from 'vue';
+import { defineComponent, inject } from 'vue';
 import axios, { AxiosResponse, AxiosError } from "axios";
-import { useRoute, useRouter } from 'vue-router';
+import { useRoute } from 'vue-router';
 import { useAuth0 } from '@auth0/auth0-vue';
 import { keywordApi } from '@/plugin/apis';
 import RegistrationForm from '@/components/modal/RegistrationForm.vue';

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, inject, onMounted, onUnmounted } from 'vue';
 import axios, { AxiosResponse, AxiosError } from "axios";
-import { useRoute, useRouter } from 'vue-router';
+import { useRoute } from 'vue-router';
 import { useAuth0 } from '@auth0/auth0-vue';
 import Breadcrumb from '@/components/Breadcrumb.vue';
 import { keywordApi } from '@/plugin/apis';

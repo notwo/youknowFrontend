@@ -52,7 +52,7 @@ export default defineComponent({
       target: T;
     };
 
-    const removeLibrary = (event: HTMLEvent<HTMLButtonElement>) => {
+    const removeLibrary = (event: HTMLEvent<HTMLButtonElement>): void => {
       if (!window.confirm(`ライブラリ「${props.title}」が削除されますが宜しいですか？`)) {
         return;
       }

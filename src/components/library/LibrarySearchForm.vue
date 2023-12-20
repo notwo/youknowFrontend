@@ -31,7 +31,7 @@ export default defineComponent({
     };
 
     const api = libraryApi();
-    const onSearch = (event: HTMLEvent<HTMLButtonElement>) => {
+    const onSearch = (event: HTMLEvent<HTMLButtonElement>): void => {
       const word = document.getElementById('search');
       if (word.value === '') {
         store.restore();

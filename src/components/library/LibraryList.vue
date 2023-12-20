@@ -69,7 +69,7 @@ export default defineComponent({
       store.concat(response.data.results);
     };
 
-    const showMoreLibraryList = (event) => {
+    const showMoreLibraryList = (event): void => {
       // 下限まで一定距離になったら自動読み込み
       if (document.body.scrollHeight - document.body.clientHeight - window.scrollY <= 500 && canLoadNext && !store.isSearched()) {
         currentPage++;

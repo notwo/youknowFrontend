@@ -32,7 +32,7 @@
 <script lang="ts">
 import { defineComponent, inject } from 'vue';
 import axios, { AxiosResponse, AxiosError } from "axios";
-import { useRoute, useRouter } from 'vue-router';
+import { useRoute } from 'vue-router';
 import { useAuth0 } from '@auth0/auth0-vue';
 import KeywordEditButton from "@/components/keyword/KeywordEditButton.vue";
 import { keywordApi } from '@/plugin/apis';
@@ -66,7 +66,7 @@ export default defineComponent({
       target: T;
     };
 
-    const removeKeyword = (event: HTMLEvent<HTMLButtonElement>) => {
+    const removeKeyword = (event: HTMLEvent<HTMLButtonElement>): void => {
       if (!window.confirm(`キーワード「${props.title}」が削除されますが宜しいですか？`)) {
         return;
       }

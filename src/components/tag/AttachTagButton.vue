@@ -2,7 +2,7 @@
 import { ref, inject, onMounted } from 'vue';
 import axios, { AxiosResponse, AxiosError } from "axios";
 import { useAuth0 } from '@auth0/auth0-vue';
-import { useRoute, useRouter } from 'vue-router';
+import { useRoute } from 'vue-router';
 import { keywordApi, tagApi } from '@/plugin/apis';
 
 const route = useRoute();
@@ -19,7 +19,7 @@ interface KeywordRequest {
   content: String
 };
 
-const AttachTag = () => {
+const AttachTag = (): void => {
   const selectedTags = document.getElementsByClassName('selected');
   const tagIds = tagStore.items.list.map((tag) =>
     {
