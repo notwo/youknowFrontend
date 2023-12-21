@@ -150,6 +150,11 @@ export default defineComponent({
 
 /* sp */
 @media screen and (max-width: 414px) {
+  .category-item-wrap {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
 }
 
 /* tablet */

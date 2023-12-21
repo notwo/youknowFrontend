@@ -163,10 +163,32 @@ export default defineComponent({
 
 /* sp */
 @media screen and (max-width: 414px) {
+  .category-item {
+    width: 80%;
+    height: 15rem;
+    margin: 1rem;
+  }
+
+  .title {
+    margin: .7rem 0;
+    font-size: 1.4rem;
+    font-weight: 800;
+  }
+
+  .contents {
+    margin: .7rem 0;
+    line-height: 1.5rem;
+  }
 }
 
 /* tablet */
 @media screen and (min-width: 415px) and (max-width: 1024px) {
+  .category-item {
+    width: 90%;
+    height: 15rem;
+    margin: 1rem;
+  }
+
   .title {
     margin: .7rem 0;
     font-size: 1.4rem;
