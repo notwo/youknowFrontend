@@ -12,7 +12,6 @@ const login = (event): void => {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  flex-wrap: wrap;
   align-items: center;
   margin: 2rem 5rem;
 }
@@ -37,6 +36,28 @@ const login = (event): void => {
   font-size: 2rem;
   font-weight: 800;
   text-align: center;
+}
+
+/* sp */
+@media screen and (max-width: 414px) {
+  .main-contents {
+    margin: 2rem 1rem;
+  }
+
+  .box {
+    width: 80%;
+  }
+
+  .box p {
+    font-size: 1.2rem;
+  }
+}
+
+/* tablet */
+@media screen and (min-width: 415px) and (max-width: 1024px) {
+  .box {
+    width: 80%;
+  }
 }
 </style>
 
