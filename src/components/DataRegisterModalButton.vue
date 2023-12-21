@@ -15,9 +15,11 @@ const openModal = (event: HTMLEvent<HTMLButtonElement>): void => {
 const setFixedToButton = (event): void => {
   const registerBtn = document.getElementById('registerBtn');
   if (window.scrollY <= 50) {
-    registerBtn.style.top = '8rem';
+    //registerBtn.style.top = '8rem';
+    registerBtn.classList.remove('scroll');
   } else {
-    registerBtn.style.top = '3rem';
+    //registerBtn.style.top = '3rem';
+    registerBtn.classList.add('scroll');
   }
 };
 
@@ -36,6 +38,9 @@ onUnmounted(() => {
   top: 8rem;
   right: 6rem;
   z-index: 9998;
+}
+.btn-register.scroll {
+  top: 3rem;
 }
 .btn-register a {
   display: block;
@@ -61,6 +66,26 @@ onUnmounted(() => {
 
 .floating {
   transition: .2s;
+}
+
+/* sp */
+@media screen and (max-width: 1024px) {
+  .btn-register {
+    right: .3rem;
+  }
+  .btn-register.scroll {
+    top: .3rem;
+  }
+}
+
+/* tablet */
+@media screen and (min-width: 1025px) and (max-width: 1409px) {
+  .btn-register {
+    right: 1rem;
+  }
+  .btn-register.scroll {
+    top: 1rem;
+  }
 }
 </style>
 

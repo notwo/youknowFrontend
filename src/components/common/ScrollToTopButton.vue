@@ -87,11 +87,19 @@ onUnmounted(() => {
   }
 }
 
-/* sp, tablet */
-@media screen and (max-width: 768px) {
+/* sp */
+@media screen and (max-width: 1024px) {
   .scroll-to-top-button {
     bottom: .3rem;
     right: .3rem;
+  }
+}
+
+/* tablet */
+@media screen and (min-width: 1025px) and (max-width: 1409px) {
+  .scroll-to-top-button {
+    bottom: 1rem;
+    right: 1rem;
   }
 }
 </style>
