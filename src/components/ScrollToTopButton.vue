@@ -86,6 +86,14 @@ onUnmounted(() => {
     opacity: 0;
   }
 }
+
+/* sp, tablet */
+@media screen and (max-width: 768px) {
+  .scroll-to-top-button {
+    bottom: .3rem;
+    right: .3rem;
+  }
+}
 </style>
 
 <template>
