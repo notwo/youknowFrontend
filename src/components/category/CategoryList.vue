@@ -147,4 +147,12 @@ export default defineComponent({
     opacity: 1;
   }
 }
+
+/* sp */
+@media screen and (max-width: 414px) {
+}
+
+/* tablet */
+@media screen and (min-width: 415px) and (max-width: 1024px) {
+}
 </style>
