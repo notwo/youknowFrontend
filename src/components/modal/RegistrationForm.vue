@@ -89,6 +89,45 @@ input.error {
   font-size: .9rem;
   color: #888;
 }
+
+/* sp */
+@media screen and (max-width: 414px) {
+  .form-wrap {
+    max-width: 15.5rem;
+    margin: 0 auto;
+  }
+
+  label {
+    margin: .75rem 0;
+  }
+
+  .form-field {
+    text-align: center;
+  }
+
+  #library_title,#category_title,#keyword_title {
+    width: auto;
+  }
+
+  #library_content,#category_content,#keyword_content {
+    width: 13rem;
+  }
+
+  .error-message {
+    font-size: .9rem;
+  }
+
+  .sub-text {
+  }
+
+  .count {
+    font-size: .7rem;
+  }
+}
+
+/* tablet */
+@media screen and (min-width: 415px) and (max-width: 1024px) {
+}
 </style>
 
 <template>
