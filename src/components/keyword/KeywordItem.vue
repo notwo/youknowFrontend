@@ -190,7 +190,7 @@ export default defineComponent({
 }
 
 /* sp */
-@media screen and (max-width: 414px) {
+@media screen and (max-width: 768px) {
   .keyword-item {
     width: 80%;
     margin: 1rem;
@@ -213,7 +213,7 @@ export default defineComponent({
 }
 
 /* tablet */
-@media screen and (min-width: 415px) and (max-width: 1024px) {
+@media screen and (min-width: 769px) and (max-width: 1024px) {
   .keyword-item {
     width: 90%;
     margin: 1rem;
