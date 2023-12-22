@@ -105,7 +105,7 @@ export default defineComponent({
   position: relative;
   flex-wrap: wrap;
   width: 90%;
-  height: 16rem;
+  height: auto;
   margin: 1rem;
   border: 1px #85ccff solid;
   border-radius: .3rem;
@@ -156,20 +156,18 @@ export default defineComponent({
 }
 
 .title {
-  padding: 1rem 0;
+  margin: 1rem 0;
   font-size: 1.4rem;
   font-weight: 800;
 }
 
 .contents {
-  padding: 1rem 0;
+  margin: 1rem 0;
   line-height: 1.5rem;
 }
 
 .updated_at {
-  position: absolute;
-  bottom: .5rem;
-  left: .5rem;
+  margin: .3rem;
   font-size: .8rem;
 }
 
@@ -189,5 +187,47 @@ export default defineComponent({
   font-size: .8rem;
   background: rgba(255,255,255,.9);
   border-radius: .2rem;
+}
+
+/* sp */
+@media screen and (max-width: 414px) {
+  .keyword-item {
+    width: 80%;
+    margin: 1rem;
+  }
+
+  .title {
+    margin: .7rem 0;
+    font-size: 1.4rem;
+    font-weight: 800;
+  }
+
+  .contents {
+    margin: .7rem 0;
+    line-height: 1.5rem;
+  }
+
+  .tags {
+    max-height: none;
+  }
+}
+
+/* tablet */
+@media screen and (min-width: 415px) and (max-width: 1024px) {
+  .keyword-item {
+    width: 90%;
+    margin: 1rem;
+  }
+
+  .title {
+    margin: .7rem 0;
+    font-size: 1.4rem;
+    font-weight: 800;
+  }
+
+  .contents {
+    margin: .7rem 0;
+    line-height: 1.5rem;
+  }
 }
 </style>
