@@ -35,14 +35,23 @@ footer {
 }
 
 /* sp */
-@media screen and (max-width: 414px) {
+@media screen and (max-width: 640px) {
   .footer-list {
     margin: 0 2rem;
   }
   .footer-contents {
     font-size: .8rem;
   }
+}
 
+/* tablet */
+@media screen and (min-width: 641px) and (max-width: 1200px) {
+  .footer-list {
+    margin: 0 5rem;
+  }
+  .footer-contents {
+    font-size: .9rem;
+  }
 }
 </style>
 
