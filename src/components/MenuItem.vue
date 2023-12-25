@@ -24,6 +24,10 @@ const startLogout = (event): void => {
 </script>
 
 <style scoped>
+.service-icon {
+  margin: 2rem;
+}
+
 .menu {
   display: flex;
 }
@@ -41,10 +45,14 @@ const startLogout = (event): void => {
   font-weight: 600;
   background-color: rgba(0,0,0,0.7);
 }
+
+@media screen and (max-width:768px) {
+}
 </style>
 
 <template>
-  <section class="menu">
+  <section class="service-icon">サービスロゴ</section>
+  <nav class="menu">
     <ul v-if="!auth0.isAuthenticated.value" class="menu-item">
       <li>
         <span @click="login" class="btn register">ユーザ登録、ログイン</span>
@@ -60,5 +68,5 @@ const startLogout = (event): void => {
         <span @click="startLogout" class="btn logout">ログアウト</span>
       </li>
     </ul>
-  </section>
+  </nav>
 </template>
