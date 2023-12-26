@@ -23,28 +23,25 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
-nav {
-}
-
 .menu-wrap {
-  padding: 0.2em;
+  padding: .2rem;
   justify-content: space-between;
   background-color: black;
   color: white;
   z-index: 10000;
 }
 
-.service-icon {
-  margin: 2rem;
+.flex-contents {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
 }
 </style>
 
 <template>
   <header class="header">
-    <section class="menu-wrap">
-      <section class="flex-contents">
-        <MenuItem />
-      </section>
+    <section class="menu-wrap flex-contents">
+      <MenuItem />
     </section>
   </header>
 </template>

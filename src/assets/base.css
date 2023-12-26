@@ -11,12 +11,6 @@ body {
   height: 100%;
 }
 
-.flex-contents {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-}
-
 .hidden {
   display: none;
 }

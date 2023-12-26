@@ -15,10 +15,8 @@ const openModal = (event: HTMLEvent<HTMLButtonElement>): void => {
 const setFixedToButton = (event): void => {
   const registerBtn = document.getElementById('registerBtn');
   if (window.scrollY <= 50) {
-    //registerBtn.style.top = '8rem';
     registerBtn.classList.remove('scroll');
   } else {
-    //registerBtn.style.top = '3rem';
     registerBtn.classList.add('scroll');
   }
 };
