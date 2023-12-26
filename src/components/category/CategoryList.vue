@@ -155,6 +155,12 @@ export default defineComponent({
     justify-content: center;
     align-items: center;
   }
+
+  .empty-message {
+    margin: 2rem;
+    font-size: 2rem;
+    text-align: center;
+  }
 }
 
 /* tablet */
@@ -169,6 +175,12 @@ export default defineComponent({
     content: "";
     display: block;
     width: 80%;
+  }
+
+  .empty-message {
+    margin: 2rem;
+    font-size: 3rem;
+    text-align: center;
   }
 }
 </style>
