@@ -88,6 +88,7 @@ const startLogout = (event): void => {
   left: 0;
   width: 100%;
   height: 2px;
+  transition: all .15s;
   background-color: #464646;
 }
 
@@ -119,6 +120,7 @@ const startLogout = (event): void => {
 
 .sp-nav-button.sp-nav-open .sp-nav-item {
   height: 4px;
+  transition: all .15s;
 }
 .sp-nav-button.sp-nav-open .sp-nav-item:nth-of-type(1) {
   top: 4px;
