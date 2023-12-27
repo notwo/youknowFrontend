@@ -56,6 +56,24 @@ onUnmounted(() => {
     opacity: 1;
   }
 }
+
+/* sp */
+@media screen and (max-width: 414px) {
+  .empty-message {
+    margin: 2rem;
+    font-size: 2rem;
+    text-align: center;
+  }
+}
+
+/* tablet */
+@media screen and (min-width: 415px) and (max-width: 1024px) {
+  .empty-message {
+    margin: 2rem;
+    font-size: 3rem;
+    text-align: center;
+  }
+}
 </style>
 
 <template>

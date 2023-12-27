@@ -147,4 +147,40 @@ export default defineComponent({
     opacity: 1;
   }
 }
+
+/* sp */
+@media screen and (max-width: 414px) {
+  .category-item-wrap {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .empty-message {
+    margin: 2rem;
+    font-size: 2rem;
+    text-align: center;
+  }
+}
+
+/* tablet */
+@media screen and (min-width: 415px) and (max-width: 1024px) {
+  .category-item-wrap {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .category-item-wrap::after {
+    content: "";
+    display: block;
+    width: 80%;
+  }
+
+  .empty-message {
+    margin: 2rem;
+    font-size: 3rem;
+    text-align: center;
+  }
+}
 </style>

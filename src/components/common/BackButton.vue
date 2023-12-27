@@ -12,6 +12,13 @@ const origin = window.history.state.back;
 .back-button a {
   text-decoration: none;
 }
+
+/* sp */
+@media screen and (max-width: 414px) {
+  .back-button {
+    margin: 2rem 1rem;
+  }
+}
 </style>
 
 <template>

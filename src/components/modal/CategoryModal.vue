@@ -52,4 +52,18 @@ export default defineComponent({
   max-height: 90%;
   overscroll-behavior-y: none;
 }
+
+/* sp */
+@media screen and (max-width: 640px) {
+  .modal {
+    width: 95%;
+    max-height: 95%;
+  }
+}
+/* tablet */
+@media screen and (min-width: 641px) and (max-width: 1024px) {
+  .modal {
+    width: 60%;
+  }
+}
 </style>

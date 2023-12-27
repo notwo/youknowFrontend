@@ -7,7 +7,7 @@ import Breadcrumb from '@/components/Breadcrumb.vue';
 import { keywordApi } from '@/plugin/apis';
 import TagList from "@/components/tag/TagList.vue";
 import UnattachedTagList from "@/components/tag/UnattachedTagList.vue";
-import ScrollToTopButton from '@/components/ScrollToTopButton.vue';
+import ScrollToTopButton from '@/components/common/ScrollToTopButton.vue';
 import Dialog from '@/components/common/Dialog.vue';
 
 const { user, isAuthenticated } = useAuth0();

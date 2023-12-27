@@ -110,6 +110,17 @@ const selectTag = (event: HTMLEvent<HTMLButtonElement>): void => {
   font-size: 1.4rem;
   font-weight: 800;
 }
+
+/* sp */
+@media screen and (max-width: 767px) {
+  .unattached-tag-item {
+    padding: .5em;
+  }
+
+  .title {
+    font-size: .8rem;
+  }
+}
 </style>
 
 <template>

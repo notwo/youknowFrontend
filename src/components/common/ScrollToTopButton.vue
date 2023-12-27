@@ -36,7 +36,7 @@ onUnmounted(() => {
   position: fixed;
   bottom: 1.6rem;
   right: 2rem;
-  z-index: 9999;
+  z-index: 9000;
 }
 .scroll-to-top-button a {
   display: block;
@@ -84,6 +84,22 @@ onUnmounted(() => {
   100%{
     display: none;
     opacity: 0;
+  }
+}
+
+/* sp */
+@media screen and (max-width: 1024px) {
+  .scroll-to-top-button {
+    bottom: .3rem;
+    right: .3rem;
+  }
+}
+
+/* tablet */
+@media screen and (min-width: 1025px) and (max-width: 1409px) {
+  .scroll-to-top-button {
+    bottom: 1rem;
+    right: 1rem;
   }
 }
 </style>

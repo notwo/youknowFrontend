@@ -181,6 +181,41 @@ input.error {
 button[type="button"] {
   font-size: 1.2rem;
 }
+
+/* sp */
+@media screen and (max-width: 414px) {
+  .page-title {
+    margin: 1.2rem 1.4rem;
+    font-size: 1.7rem;
+  }
+
+  .form-wrap {
+    margin: auto;
+  }
+
+  input[type="text"] {
+    width: auto;
+  }
+
+  input[type="email"] {
+    width: auto;
+  }
+}
+
+/* tablet */
+@media screen and (min-width: 415px) and (max-width: 640px) {
+  .form-wrap {
+    margin: auto;
+  }
+
+  input[type="text"] {
+    width: auto;
+  }
+
+  input[type="email"] {
+    width: auto;
+  }
+}
 </style>
 
 <template>

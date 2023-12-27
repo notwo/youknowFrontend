@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { reactive, inject, onMounted } from 'vue';
+import { reactive, inject } from 'vue';
 import axios, { AxiosResponse, AxiosError } from "axios";
 import { useAuth0 } from '@auth0/auth0-vue';
 import { useRoute } from 'vue-router';
@@ -11,6 +11,8 @@ const { user } = useAuth0();
 const route = useRoute();
 const store = inject('tag');
 const dialogStore = inject('dialog');
+
+const screenWidth = window.screen.width;
 
 const api = {
   keyword: keywordApi(),
@@ -109,6 +111,21 @@ const addTag = (event: HTMLEvent<HTMLButtonElement>): void => {
   color: rgba(220,0,0,1);
 }
 
+/* sp */
+@media screen and (max-width: 414px) {
+  .form-wrap {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .form-group {
+    margin: .8rem .3rem;
+  }
+}
+
+/* tablet */
+@media screen and (min-width: 415px) and (max-width: 1024px) {
+}
 </style>
 
 <template>
@@ -124,6 +141,11 @@ const addTag = (event: HTMLEvent<HTMLButtonElement>): void => {
             @blur="register_v$.title.$touch"
             @input="register_v$.title.$touch">
         </section>
+        <section v-if="screenWidth < 416">
+          <section class="error-message-wrap" v-for="error of register_v$.title.$errors" :key="error.$uid">
+            <section class="error-message">{{ error.$message }}</section>
+          </section>
+        </section>
       </section>
       <section class="form-group">
         <section class="form-field">
@@ -134,8 +156,10 @@ const addTag = (event: HTMLEvent<HTMLButtonElement>): void => {
         </section>
       </section>
     </section>
-    <section class="error-message-wrap" v-for="error of register_v$.title.$errors" :key="error.$uid">
-      <section class="error-message">{{ error.$message }}</section>
+    <section v-if="screenWidth >= 416">
+      <section class="error-message-wrap" v-for="error of register_v$.title.$errors" :key="error.$uid">
+        <section class="error-message">{{ error.$message }}</section>
+      </section>
     </section>
   </form>
 </template>
