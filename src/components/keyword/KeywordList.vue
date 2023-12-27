@@ -9,9 +9,6 @@
           :id="keyword.id"
           :title="keyword.title"
           :content="keyword.content"
-          :custom_user="keyword.custom_user"
-          :custom_user_id="keyword.custom_user_id"
-          :created_at="keyword.created_at"
           :updated_at="keyword.updated_at"
           :tags="keyword.tags"
       />

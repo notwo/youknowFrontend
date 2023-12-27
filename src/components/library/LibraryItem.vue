@@ -39,9 +39,6 @@ export default defineComponent({
     id: Number,
     title: String,
     content: String,
-    custom_user: String,
-    custom_user_id: String,
-    created_at: String,
     updated_at: String,
   },
   setup(props) {

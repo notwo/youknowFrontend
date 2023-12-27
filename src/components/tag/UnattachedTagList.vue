@@ -81,8 +81,6 @@ onMounted(() => {
             :key="tag.id"
             :id="tag.id"
             :title="tag.title"
-            :custom_user="tag.custom_user"
-            :custom_user_id="tag.custom_user_id"
         />
       </section>
       <AttachTagButton />

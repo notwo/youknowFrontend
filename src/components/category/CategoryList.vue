@@ -9,9 +9,6 @@
           :id="category.id"
           :title="category.title"
           :content="category.content"
-          :custom_user="category.custom_user"
-          :custom_user_id="category.custom_user_id"
-          :created_at="category.created_at"
           :updated_at="category.updated_at"
       />
     </section>

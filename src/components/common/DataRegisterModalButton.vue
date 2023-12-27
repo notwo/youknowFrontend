@@ -51,7 +51,7 @@ onUnmounted(() => {
   display: block;
   position: absolute;
   top: 44%;
-  left: 56%;
+  left: 53%;
   margin-left: -23%;
   margin-top: -28%;
   color: #FFF;
