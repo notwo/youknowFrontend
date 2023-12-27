@@ -60,6 +60,7 @@ const startLogout = (event): void => {
   font-weight: 600;
 }
 
+/* SP */
 .sp-login {
   display: none;
   margin: 2rem 1rem;
@@ -69,7 +70,6 @@ const startLogout = (event): void => {
   display: none;
   position: absolute;
   margin: 0 auto;
-  transition: all .4s;
   top: 34px;
   bottom: 0;
   right: 34px;
@@ -140,16 +140,18 @@ const startLogout = (event): void => {
 
 .sp-nav-overlay {
   position: fixed;
-  display: none;
+  opacity: 0;
   top: 0;
-  left: 0;
-  width: 100%;
+  right: 0;
+  width: 0;
   height: 100vh;
+  transition: all .15s;
   z-index: 9999;
   background-color: rgba(0,0,0,0.8);
 }
 .sp-nav-overlay.visible {
-  display: block;
+  width: 100%;
+  opacity: 1;
 }
 
 .sp-menu {
