@@ -37,9 +37,6 @@ onUnmounted(() => {
   right: 6rem;
   z-index: 9998;
 }
-.btn-register.scroll {
-  top: 3rem;
-}
 .btn-register a {
   display: block;
   position: relative;
@@ -73,6 +70,10 @@ onUnmounted(() => {
   }
   .btn-register.scroll {
     top: .3rem;
+  }
+
+  .btn-register.scroll {
+    top: 6.5rem;
   }
 }
 

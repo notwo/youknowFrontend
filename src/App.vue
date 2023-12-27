@@ -55,7 +55,7 @@ export default defineComponent({
 .full-layout {
   display: flex;
   flex-direction: column;
-  min-height: 100%;
+  min-height: 100vh;
 }
 
 .main {
@@ -66,6 +66,7 @@ export default defineComponent({
   margin: 0 auto;
   max-width: 1100px;
   background: rgb(250, 250, 252); /** 一通りデザインを当ててコンテンツを配置し終わったら消す */
+  overflow: hidden;
 }
 
 .main-top-pane  {

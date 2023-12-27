@@ -23,6 +23,13 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
+.header {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+}
 .menu-wrap {
   padding: .2rem;
   justify-content: space-between;

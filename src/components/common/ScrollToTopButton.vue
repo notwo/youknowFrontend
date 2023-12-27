@@ -36,7 +36,7 @@ onUnmounted(() => {
   position: fixed;
   bottom: 1.6rem;
   right: 2rem;
-  z-index: 9999;
+  z-index: 9000;
 }
 .scroll-to-top-button a {
   display: block;
