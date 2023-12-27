@@ -3,7 +3,7 @@ import { onMounted, onUnmounted } from 'vue';
 
 let scrollId: number = 0;
 const f = (): void => {
-  const button = document.getElementById('scrollToTopButton');
+  const button = document.getElementById('scrollToTopButton') as HTMLElement;
   button.classList.remove('hidden-no-animation');
   if (window.scrollY === 0) {
     button.classList.add('hidden');
@@ -13,7 +13,7 @@ const f = (): void => {
   }
 };
 
-const scrollToTop = (event): void => {
+const scrollToTop = (event): Boolean => {
   const scroll = () => {
     window.scrollTo(0, window.scrollY - window.scrollY / 10);
   };
@@ -24,7 +24,7 @@ const scrollToTop = (event): void => {
 };
 
 onMounted(() => {
-  window.addEventListener("scroll", f, false);
+  window.addEventListener("scroll", f, { passive: true });
 });
 onUnmounted(() => {
   window.removeEventListener("scroll", f, false);

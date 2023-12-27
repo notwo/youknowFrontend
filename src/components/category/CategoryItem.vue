@@ -10,10 +10,10 @@
       </section>
     </section>
     <section class="category-item-body">
-      <section class="title">{{ titleForView(title, 'category') }}</section>
-      <section class="contents">{{ contentForView(content, 'category') }}</section>
+      <p class="title">{{ titleForView(title, 'category') }}</p>
+      <p class="contents">{{ contentForView(content, 'category') }}</p>
     </section>
-    <section class="updated_at">{{ timeFormat(updated_at) }} 更新</section>
+    <span class="updated_at">{{ timeFormat(updated_at) }} 更新</span>
   </section>
   <Tooltip :message="title" />
 </template>
@@ -40,9 +40,6 @@ export default defineComponent({
     id: Number,
     title: String,
     content: String,
-    custom_user: String,
-    custom_user_id: String,
-    created_at: String,
     updated_at: String,
   },
   setup(props) {

@@ -1,5 +1,5 @@
 import { required, helpers } from "@vuelidate/validators";
-import axios, { AxiosResponse, AxiosError } from "axios";
+import axios, { AxiosResponse } from "axios";
 import { userApi } from '@/plugin/apis';
 
 // 必須

@@ -13,7 +13,7 @@ const openModal = (event: HTMLEvent<HTMLButtonElement>): void => {
 };
 
 const setFixedToButton = (event): void => {
-  const registerBtn = document.getElementById('registerBtn');
+  const registerBtn = document.getElementById('registerBtn') as HTMLElement;
   if (window.scrollY <= 50) {
     registerBtn.classList.remove('scroll');
   } else {
@@ -22,7 +22,7 @@ const setFixedToButton = (event): void => {
 };
 
 onMounted(() => {
-  window.addEventListener("scroll", setFixedToButton, false);
+  window.addEventListener("scroll", setFixedToButton, { passive: true });
 });
 
 onUnmounted(() => {
@@ -50,8 +50,8 @@ onUnmounted(() => {
 .btn-register a:before {
   display: block;
   position: absolute;
-  top: 50%;
-  left: 50%;
+  top: 44%;
+  left: 53%;
   margin-left: -23%;
   margin-top: -28%;
   color: #FFF;

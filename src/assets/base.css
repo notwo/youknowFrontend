@@ -62,7 +62,11 @@ body {
   background-color: rgba(217, 56, 56, 0.75);
 }
 
-/* basical tags */
+/* google fonts */
+a,p,span,li,button,input,textarea,label {
+  font-family: 'Noto Serif JP', serif;
+}
+
 ol,ul {
   list-style: none;
   padding-inline-start: 0;

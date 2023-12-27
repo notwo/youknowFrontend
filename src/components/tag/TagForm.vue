@@ -143,7 +143,7 @@ const addTag = (event: HTMLEvent<HTMLButtonElement>): void => {
         </section>
         <section v-if="screenWidth < 416">
           <section class="error-message-wrap" v-for="error of register_v$.title.$errors" :key="error.$uid">
-            <section class="error-message">{{ error.$message }}</section>
+            <p class="error-message">{{ error.$message }}</p>
           </section>
         </section>
       </section>
@@ -158,7 +158,7 @@ const addTag = (event: HTMLEvent<HTMLButtonElement>): void => {
     </section>
     <section v-if="screenWidth >= 416">
       <section class="error-message-wrap" v-for="error of register_v$.title.$errors" :key="error.$uid">
-        <section class="error-message">{{ error.$message }}</section>
+        <p class="error-message">{{ error.$message }}</p>
       </section>
     </section>
   </form>

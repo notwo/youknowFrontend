@@ -16,15 +16,15 @@
       </section>
     </section>
     <section class="keyword-item-body">
-      <section class="title">{{ titleForView(title, 'keyword') }}</section>
-      <section class="contents">{{ contentForView(content, 'keyword') }}</section>
+      <p class="title">{{ titleForView(title, 'keyword') }}</p>
+      <p class="contents">{{ contentForView(content, 'keyword') }}</p>
       <section class="tags">
-        <section class="tag-item" v-for="tag of tags" :key="tag.id">
+        <span class="tag-item" v-for="tag of tags" :key="tag.id">
           {{ titleForView(tag.title, 'tag') }}
-        </section>
+        </span>
       </section>
     </section>
-    <section class="updated_at">{{ timeFormat(updated_at) }} 更新</section>
+    <span class="updated_at">{{ timeFormat(updated_at) }} 更新</span>
   </section>
   <Tooltip :message="title" />
 </template>
@@ -50,9 +50,6 @@ export default defineComponent({
     id: Number,
     title: String,
     content: String,
-    custom_user: String,
-    custom_user_id: String,
-    created_at: String,
     updated_at: String,
     tags: Array
   },

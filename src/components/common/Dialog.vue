@@ -20,10 +20,10 @@ const openDialog = (subject: String, body: String, mode: String = 'normal'): voi
   message.mode = mode;
 
   const dialog = document.getElementById('dialog');
-  dialog.style.top = `${window.screenY+20}px`;
+  dialog.style.top = `${window.screenY+90}px`;
   dialog.classList.remove('close');
   dialog.classList.add('open');
-  setTimeout(closeDialog, 2000);
+  setTimeout(closeDialog, 1600);
 };
 
 dialogStore.setFunc(openDialog);
@@ -115,12 +115,12 @@ dialogStore.setFunc(openDialog);
   <dialog class="dialog" id="dialog">
     <section class="dialog-wrap">
       <section class="dialog-contents" v-if="message.mode === 'normal'">
-        <section class="subject" v-if="message.subject.length > 0">{{ message.subject }}</section>
-        <section class="body">{{ message.body }}</section>
+        <p class="subject" v-if="message.subject.length > 0">{{ message.subject }}</p>
+        <p class="body">{{ message.body }}</p>
       </section>
       <section class="dialog-contents error" v-if="message.mode === 'error'">
-        <section class="subject error" v-if="message.subject.length > 0">{{ message.subject }}</section>
-        <section class="body error">{{ message.body }}</section>
+        <p class="subject error" v-if="message.subject.length > 0">{{ message.subject }}</p>
+        <p class="body error">{{ message.body }}</p>
       </section>
     </section>
     <!--
