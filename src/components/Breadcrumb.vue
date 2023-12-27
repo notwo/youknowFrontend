@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { inject, ref } from 'vue';
+import { onMounted, inject, ref } from 'vue';
 import { useRoute } from 'vue-router';
 
 const route = useRoute();
@@ -44,6 +44,12 @@ const visibleBreadcrumb = breadcrumbString.value.filter((element) => {
   const text_condition = (fullPath.match(element.pattern) && fullPath.match(element.pattern)[0] === fullPath);
   return link_condition || text_condition;
 });
+
+onMounted(() => {
+  const breadcrumb = document.querySelector('.breadcrumb-contents');
+  const scrollMaxX = (breadcrumb?.scrollWidth || 0) - (breadcrumb?.clientWidth || 0);
+  breadcrumb?.scrollTo(scrollMaxX, 0);
+});
 </script>
 
 <style scoped>
@@ -55,7 +61,9 @@ const visibleBreadcrumb = breadcrumbString.value.filter((element) => {
   border-radius: .2rem;
   font-weight: 800;
   background-color: #9ac9ec;
-  overflow: hidden;
+  white-space: nowrap;
+  overflow-x: scroll;
+  overflow-y: hidden; 
 }
 .breadcrumb-contents li {
   display: flex;
@@ -101,6 +109,17 @@ const visibleBreadcrumb = breadcrumbString.value.filter((element) => {
 }
 .breadcrumb-contents a:hover {
   color: #000;
+}
+
+/* sp */
+@media screen and (max-width: 414px) {
+  .breadcrumb-contents {
+    font-size: .9rem;
+  }
+}
+
+/* tablet */
+@media screen and (min-width: 415px) and (max-width: 1024px) {
 }
 </style>
 
