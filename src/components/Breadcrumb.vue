@@ -38,7 +38,7 @@ const breadcrumbString = ref([
   },
 ]);
 
-const fullPath = route.fullPath;
+const fullPath: String = route.fullPath;
 const visibleBreadcrumb = breadcrumbString.value.filter((element) => {
   const link_condition = (fullPath.match(element.pattern) && fullPath.match(element.pattern)[0] !== fullPath);
   const text_condition = (fullPath.match(element.pattern) && fullPath.match(element.pattern)[0] === fullPath);
@@ -62,8 +62,6 @@ onMounted(() => {
   font-weight: 800;
   background-color: #9ac9ec;
   white-space: nowrap;
-  overflow-x: scroll;
-  overflow-y: hidden; 
 }
 .breadcrumb-contents li {
   display: flex;
@@ -115,6 +113,8 @@ onMounted(() => {
 @media screen and (max-width: 414px) {
   .breadcrumb-contents {
     font-size: .9rem;
+    overflow-x: scroll;
+    overflow-y: hidden; 
   }
 }
 

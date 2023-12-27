@@ -103,7 +103,7 @@ export default defineComponent({
             dialogStore.func.value('読み込みエラー', 'カテゴリ読み込み中にエラーが起きました。暫くお待ちいただいてから再度お試しください', 'error');
           });
 
-        window.addEventListener("scroll", showMoreCategoryList, false);
+        window.addEventListener("scroll", showMoreCategoryList, { passive: true });
       };
 
       showCategoryList();

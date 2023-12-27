@@ -7,9 +7,9 @@ const props = defineProps({
 
 let timeoutId: Number = 0;
 const showTooltip = (e): void => {
-  const currentContent = e.currentTarget;
-  const title = currentContent.getElementsByClassName('title');
-  const tooltip = currentContent.nextElementSibling;
+  const currentContent = e.currentTarget as HTMLElement;
+  const title = currentContent.getElementsByClassName('title') as HTMLCollectionOf<HTMLElement>;
+  const tooltip = currentContent.nextElementSibling as HTMLElement;
   const _showTooltip = (): void => {
     tooltip.style.left = `${title[0].getBoundingClientRect().left + window.scrollX}px`;
     tooltip.style.top = `${title[0].getBoundingClientRect().bottom + window.scrollY - 23}px`;
@@ -19,8 +19,8 @@ const showTooltip = (e): void => {
 };
 const hideTooltip = (e): void => {
   clearTimeout(timeoutId);
-  const currentContent = e.currentTarget;
-  const tooltip = currentContent.nextElementSibling;
+  const currentContent = e.currentTarget as HTMLElement;
+  const tooltip = currentContent.nextElementSibling as HTMLElement;
   tooltip.classList.remove('tooltip-open');
 };
 
