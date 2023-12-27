@@ -140,7 +140,7 @@ input.error {
           @input="v.title.$touch">
         <section class="sub-text">
           <section v-for="error of v.title.$errors" :key="error.$uid">
-            <section class="error-message">{{ error.$message }}</section>
+            <p class="error-message">{{ error.$message }}</p>
           </section>
           <span class="count">{{ state.title.length }} / {{ titleMaxLength }}</span>
         </section>

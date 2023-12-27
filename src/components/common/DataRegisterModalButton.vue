@@ -50,8 +50,8 @@ onUnmounted(() => {
 .btn-register a:before {
   display: block;
   position: absolute;
-  top: 50%;
-  left: 50%;
+  top: 44%;
+  left: 56%;
   margin-left: -23%;
   margin-top: -28%;
   color: #FFF;

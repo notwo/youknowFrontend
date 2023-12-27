@@ -64,7 +64,7 @@ footer {
         </section>
         <section class="footer-contents">
           <nav>
-            <section class="footer-contents-subject">YouKnowについて</section>
+            <span class="footer-contents-subject">YouKnowについて</span>
             <ul>
               <li class="footer-contents-list">YouKnowの使い方</li>
               <li class="footer-contents-list">リリース</li>
@@ -73,7 +73,7 @@ footer {
         </section>
         <section class="footer-contents">
           <nav>
-            <section class="footer-contents-subject">諸情報</section>
+            <span class="footer-contents-subject">諸情報</span>
             <ul>
               <li class="footer-contents-list">プライバシーポリシー</li>
               <li class="footer-contents-list">利用規約</li>
@@ -81,9 +81,9 @@ footer {
           </nav>
         </section>
       </section>
-      <section class="copyright">
+      <span class="copyright">
         © 2023 YouKnow
-      </section>
+      </span>
     </section>
   </footer>
 </template>

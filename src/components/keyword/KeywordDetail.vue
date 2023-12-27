@@ -75,8 +75,8 @@ onUnmounted(() => {
   <Dialog />
   <Breadcrumb />
   <section class="detail-body">
-    <section class="keyword-title">{{ Keyword.title }}</section>
-    <section class="keyword-contents">{{ Keyword.content }}</section>
+    <p class="keyword-title">{{ Keyword.title }}</p>
+    <p class="keyword-contents">{{ Keyword.content }}</p>
   </section>
   <TagList />
   <UnattachedTagList />

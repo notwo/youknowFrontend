@@ -131,7 +131,7 @@ const selectTag = (event: HTMLEvent<HTMLButtonElement>): void => {
       </section>
     </section>
     <section class="unattached-tag-item-body">
-      <section class="title">{{ titleForView(title, 'tag') }}</section>
+      <p class="title">{{ titleForView(title, 'tag') }}</p>
     </section>
   </section>
 </template>
