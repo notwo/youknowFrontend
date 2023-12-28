@@ -107,7 +107,6 @@ const startLogout = (event): void => {
   width: 34px;
   height: 11px;
   font-size: .7rem;
-  color: white;
 }
 
 .p-sp__navButton .p-sp__navClose {
@@ -206,14 +205,14 @@ const startLogout = (event): void => {
   </nav>
   <!-- SP navigation -->
   <section v-if="!auth0.isAuthenticated.value" class="p-sp__login">
-    <span @click="login" class="">ユーザ登録/ログイン</span>
+    <span @click="login" class="p-login">ユーザ登録/ログイン</span>
   </section>
   <button v-else class="p-sp__navButton">
     <span class="p-sp__navItem"></span>
     <span class="p-sp__navItem"></span>
     <span class="p-sp__navItem"></span>
-    <span class="p-sp__navMenu" @click="openSpMenu">MENU</span>
-    <span class="p-sp__navClose" @click="closeSpMenu">CLOSE</span>
+    <span class="p-sp__navMenu c-color--white" @click="openSpMenu">MENU</span>
+    <span class="p-sp__navClose c-color--white" @click="closeSpMenu">CLOSE</span>
   </button>
   <!-- SP navigation menu item -->
   <section v-if="auth0.isAuthenticated.value" class="p-sp__navOverlay">

@@ -2,7 +2,7 @@
 import { onMounted, onUnmounted } from 'vue';
 
 let scrollId: number = 0;
-const f = (): void => {
+const showButton = (): void => {
   const button = document.getElementById('scrollToTopButton') as HTMLElement;
   button.classList.remove('c-hiddenNoAnimation');
   if (window.scrollY === 0) {
@@ -24,10 +24,10 @@ const scrollToTop = (event): Boolean => {
 };
 
 onMounted(() => {
-  window.addEventListener("scroll", f, { passive: true });
+  window.addEventListener("scroll", showButton, { passive: true });
 });
 onUnmounted(() => {
-  window.removeEventListener("scroll", f, false);
+  window.removeEventListener("scroll", showButton, false);
 });
 </script>
 
@@ -48,9 +48,6 @@ onUnmounted(() => {
   background-color: rgba(180,180,180,.6);
   overflow: hidden;
   animation: fadeIn .3s ease;
-}
-.p-scrollToTopButton a.c-hiddenNoAnimation {
-  display: none;
 }
 .p-scrollToTopButton a.c-hidden {
   animation: fadeOut .3s ease 0s;
@@ -106,6 +103,6 @@ onUnmounted(() => {
 
 <template>
   <section class="p-scrollToTopButton">
-    <a id="scrollToTopButton" @click="scrollToTop" class="c-hidden c-hiddenNoAnimation"></a>
+    <a id="scrollToTopButton" @click="scrollToTop" class="c-hidden"></a>
   </section>
 </template>

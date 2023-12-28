@@ -44,17 +44,6 @@ onUnmounted(() => {
   display: flex;
   justify-content: center;
   font-size: 2rem;
-  animation: fadeIn .3s ease;
-}
-
-@keyframes fadeIn {
-  0%{
-    display: none;
-    opacity: 0;
-  }
-  100%{
-    opacity: 1;
-  }
 }
 
 /* sp */
@@ -90,7 +79,7 @@ onUnmounted(() => {
       </section>
     </section>
     <section v-else-if="store.firstLoaded.value">
-      <p class="p-emptyMessage">タグを追加してみましょう</p>
+      <p class="p-emptyMessage c-fadeIn--fast">タグを追加してみましょう</p>
     </section>
     <section v-else>
       <!-- ここにローディング -->

@@ -51,19 +51,7 @@ onUnmounted(() => {
   transform: translateY(80%);
   font-size: 0.8rem;
   border-radius: .3rem;
-  color: white;
   background-color: rgb(74, 92, 255);
-  animation: fadeIn .1s ease;
-}
-
-@keyframes fadeIn {
-  0%{
-    display: none;
-    opacity: 0;
-  }
-  100%{
-    opacity: 1;
-  }
 }
 
 .p-tooltip__box {
@@ -87,7 +75,7 @@ onUnmounted(() => {
 </style>
 
 <template>
-  <section class="p-tooltip">
+  <section class="p-tooltip c-fadeIn--fast c-color--white">
     <p class="p-message">{{ props.message }}</p>
     <p class="p-tooltip__box"></p>
   </section>

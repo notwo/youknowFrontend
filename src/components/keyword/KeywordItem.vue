@@ -1,5 +1,5 @@
 <template>
-  <section class="p-keyword__item js-tooltip__content">
+  <section class="p-keyword__item c-fadeIn--normal js-tooltip__content">
     <router-link :to="{ name: 'keyword', params: {
       username: String($route.params.username),
       library_id: $route.params.library_id,
@@ -107,20 +107,9 @@ export default defineComponent({
   border: 1px #85ccff solid;
   border-radius: .3rem;
   z-index: 0;
-  animation: fadeIn .7s ease;
 }
 .p-keyword__item:hover {
   border: 1px rgb(74, 92, 255) solid;
-}
-
-@keyframes fadeIn {
-  0%{
-    display: none;
-    opacity: 0;
-  }
-  100%{
-    opacity: 1;
-  }
 }
 
 .p-keyword__item a {

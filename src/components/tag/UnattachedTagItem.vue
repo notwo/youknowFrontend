@@ -65,17 +65,6 @@ const selectTag = (event: HTMLEvent<HTMLButtonElement>): void => {
   border: 1px rgba(47, 7, 225, 0.9) solid;
   border-radius: .3rem;
   z-index: 0;
-  animation: fadeIn .7s ease;
-}
-
-@keyframes fadeIn {
-  0%{
-    display: none;
-    opacity: 0;
-  }
-  100%{
-    opacity: 1;
-  }
 }
 
 .p-unattachedTag__Item.selected {
@@ -124,7 +113,7 @@ const selectTag = (event: HTMLEvent<HTMLButtonElement>): void => {
 </style>
 
 <template>
-  <section class="p-unattachedTag__Item" @click="selectTag" :data-id="id">
+  <section class="p-unattachedTag__Item c-fadeIn--normal" @click="selectTag" :data-id="id">
     <section class="p-unattachedTag__menu">
       <section class="p-unattachedTag__menuLink">
         <span @click="removeTag" class="p-delete__link" :data-id="id">削除</span>

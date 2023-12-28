@@ -19,6 +19,44 @@ body {
   display: none;
 }
 
+.c-color--white {
+  color: white;
+}
+
+.c-color--red {
+  color: red;
+}
+
+.c-fadeIn--fast {
+  animation: fadeIn .3s ease;
+}
+.c-fadeIn--normal {
+  animation: fadeIn .7s ease;
+}
+@keyframes fadeIn {
+  0%{
+    display: none;
+    opacity: 0;
+  }
+  100%{
+    opacity: 1;
+  }
+}
+
+.c-fadeOut--fast {
+  animation: fadeOut .3s ease;
+}
+@keyframes fadeOut {
+  0%{
+    display: block;
+    opacity: 1;
+  }
+  100%{
+    opacity: 0;
+  }
+}
+
+/* button */
 .btn {
   display: block;
   margin: 0 auto;

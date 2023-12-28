@@ -14,7 +14,7 @@
       />
     </section>
     <section v-else-if="store.firstLoaded.value && !store.isSearched()">
-      <p class="p-emptyMessage">キーワードを追加してみましょう</p>
+      <p class="p-emptyMessage c-fadeIn--fast">キーワードを追加してみましょう</p>
     </section>
     <section v-else>
       <!-- ここにローディング -->
@@ -135,17 +135,6 @@ export default defineComponent({
   display: flex;
   justify-content: center;
   font-size: 3.5rem;
-  animation: fadeIn .3s ease;
-}
-
-@keyframes fadeIn {
-  0%{
-    display: none;
-    opacity: 0;
-  }
-  100%{
-    opacity: 1;
-  }
 }
 
 /* sp */

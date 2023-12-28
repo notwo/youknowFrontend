@@ -12,6 +12,7 @@ const closeDialog = (): void => {
   const dialog = document.getElementById('dialog');
   dialog.classList.remove('open');
   dialog.classList.add('close');
+  dialog.classList.add('c-fadeOut--fast');
 };
 
 const openDialog = (subject: String, body: String, mode: String = 'normal'): void => {
@@ -22,6 +23,7 @@ const openDialog = (subject: String, body: String, mode: String = 'normal'): voi
   const dialog = document.getElementById('dialog');
   dialog.style.top = `${window.screenY+90}px`;
   dialog.classList.remove('close');
+  dialog.classList.remove('c-fadeOut--fast');
   dialog.classList.add('open');
   setTimeout(closeDialog, 1600);
 };
@@ -58,34 +60,12 @@ dialogStore.setFunc(openDialog);
   z-index: 9997;
   background-color: rgba(245,245,245,.9);
   box-shadow: 1px 1px 1px 1px black;
-  animation: fadeIn .3s ease;
 }
 .p-dialog.open {
   display: block;
 }
 .p-dialog.close {
   display: none;
-  animation: fadeOut .3s ease;
-}
-
-@keyframes fadeIn {
-  0%{
-    display: none;
-    opacity: 0;
-  }
-  100%{
-    opacity: 1;
-  }
-}
-
-@keyframes fadeOut {
-  0%{
-    display: block;
-    opacity: 1;
-  }
-  100%{
-    opacity: 0;
-  }
 }
 
 .p-dialogWrap {
@@ -106,21 +86,18 @@ dialogStore.setFunc(openDialog);
   font-size: .8rem;
 }
 
-.c-error {
-  color: red;
-}
 </style>
 
 <template>
-  <dialog class="p-dialog" id="dialog">
+  <dialog class="p-dialog c-fadeIn--fast" id="dialog">
     <section class="p-dialogWrap">
       <section class="p-dialogContents" v-if="message.mode === 'normal'">
         <p class="p-dialog__subject" v-if="message.subject.length > 0">{{ message.subject }}</p>
         <p class="p-dialog__body">{{ message.body }}</p>
       </section>
-      <section class="p-dialogContents c-error" v-if="message.mode === 'error'">
-        <p class="p-dialog__subject c-error" v-if="message.subject.length > 0">{{ message.subject }}</p>
-        <p class="p-dialog__body c-error">{{ message.body }}</p>
+      <section class="p-dialogContents c-color--red" v-if="message.mode === 'error'">
+        <p class="p-dialog__subject c-color--red" v-if="message.subject.length > 0">{{ message.subject }}</p>
+        <p class="p-dialog__body c-color--red">{{ message.body }}</p>
       </section>
     </section>
     <!--

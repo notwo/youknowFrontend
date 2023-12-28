@@ -17,14 +17,13 @@ import MenuItem from "@/components/MenuItem.vue";
   padding: .2rem;
   justify-content: space-between;
   background-color: black;
-  color: white;
   z-index: 10000;
 }
 </style>
 
 <template>
   <header class="l-header">
-    <section class="p-menuWrap">
+    <section class="p-menuWrap c-color--white">
       <MenuItem />
     </section>
   </header>
