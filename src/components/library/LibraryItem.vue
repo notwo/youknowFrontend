@@ -1,19 +1,19 @@
 <template>
-  <section class="library-item tooltip-content">
+  <section class="p-library__item js-tooltip__content">
     <router-link :to="{ name: 'categories', params: { username: String($route.params.username), library_id: id } }"></router-link>
-    <section class="library-menu">
-      <section class="library-menu-item">
+    <section class="p-library__menu">
+      <section class="p-library__menuLink">
         <LibraryEditButton :edit_state="edit_state" :id="id" :title="title" :content="content" />
       </section>
-      <section class="library-menu-item">
-        <span @click="removeLibrary" class="delete-item" :data-id="id">削除</span>
+      <section class="p-library__menuLink">
+        <span @click="removeLibrary" class="p-delete__link" :data-id="id">削除</span>
       </section>
     </section>
-    <section class="library-item-body">
-      <p class="title">{{ titleForView(title, 'library') }}</p>
-      <p class="contents">{{ contentForView(content, 'library') }}</p>
+    <section class="p-library__body js-tooltip__title">
+      <p class="p-library__title">{{ titleForView(title, 'library') }}</p>
+      <p class="p-library__contents">{{ contentForView(content, 'library') }}</p>
     </section>
-    <span class="updated_at">{{ timeFormat(updated_at) }} 更新</span>
+    <span class="p-library__updated_at">{{ timeFormat(updated_at) }} 更新</span>
   </section>
   <Tooltip :message="title" />
 </template>
@@ -86,7 +86,7 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.library-item {
+.p-library__item {
   position: relative;
   flex-wrap: wrap;
   width: 30%;
@@ -97,7 +97,7 @@ export default defineComponent({
   z-index: 0;
   animation: fadeIn .7s ease;
 }
-.library-item:hover {
+.p-library__item:hover {
   border: 1px rgb(74, 92, 255) solid;
 }
 
@@ -111,7 +111,7 @@ export default defineComponent({
   }
 }
 
-.library-item a {
+.p-library__item a {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -119,39 +119,39 @@ export default defineComponent({
   left: 0;
 }
 
-.library-menu {
+.p-library__menu {
   display: flex;
   justify-content: flex-end;
   margin: .6rem;
   z-index: 1;
 }
 
-.library-menu-item {
+.p-library__menuLink {
   margin: .3rem;
   z-index: 1;
 }
 
-.library-menu-item:hover {
+.p-library__menuLink:hover {
   color: #888;
   cursor: pointer;
 }
 
-.library-item-body {
+.p-library__body {
   margin: 1rem .5rem;
 }
 
-.title {
+.p-library__title {
   margin: 1rem 0;
   font-size: 1.4rem;
   font-weight: 800;
 }
 
-.contents {
+.p-library__contents {
   margin: 1rem 0;
   line-height: 1.5rem;
 }
 
-.updated_at {
+.p-library__updated_at {
   position: absolute;
   bottom: .5rem;
   left: .5rem;
@@ -160,19 +160,19 @@ export default defineComponent({
 
 /* sp */
 @media screen and (max-width: 414px) {
-  .library-item {
+  .p-library__item {
     width: 80%;
     height: 15rem;
     margin: 1rem;
   }
 
-  .title {
+  .p-library__title {
     margin: .7rem 0;
     font-size: 1.4rem;
     font-weight: 800;
   }
 
-  .contents {
+  .p-library__contents {
     margin: .7rem 0;
     line-height: 1.5rem;
   }
@@ -180,19 +180,19 @@ export default defineComponent({
 
 /* tablet */
 @media screen and (min-width: 415px) and (max-width: 1024px) {
-  .library-item {
+  .p-library__item {
     width: 90%;
     height: 15rem;
     margin: 1rem;
   }
 
-  .title {
+  .p-library__title {
     margin: .7rem 0;
     font-size: 1.4rem;
     font-weight: 800;
   }
 
-  .contents {
+  .p-library__contents {
     margin: .7rem 0;
     line-height: 1.5rem;
   }

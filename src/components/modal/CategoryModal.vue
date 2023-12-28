@@ -1,6 +1,6 @@
 <template>
-  <section class="overlay">
-    <section class="modal">
+  <section class="l-overlay">
+    <section class="p-modal">
       <CategoryForm :edit_state="edit_state" />
     </section>
   </section>
@@ -22,7 +22,7 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.overlay {
+.l-overlay {
   visibility: hidden;
   position: fixed;
   top: 0;
@@ -34,12 +34,12 @@ export default defineComponent({
   z-index: 9999;
   background-color: rgba(0,0,0,0.4);
 }
-.overlay.visible {
+.l-overlay.visible {
   visibility: visible;
   opacity: 1;
 }
 
-.modal {
+.p-modal {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -55,14 +55,14 @@ export default defineComponent({
 
 /* sp */
 @media screen and (max-width: 640px) {
-  .modal {
+  .p-modal {
     width: 95%;
     max-height: 95%;
   }
 }
 /* tablet */
 @media screen and (min-width: 641px) and (max-width: 1024px) {
-  .modal {
+  .p-modal {
     width: 60%;
   }
 }

@@ -6,7 +6,7 @@ interface HTMLEvent<T extends EventTarget> extends Event {
 };
 
 const openModal = (event: HTMLEvent<HTMLButtonElement>): void => {
-  const modal = document.getElementsByClassName('overlay') as HTMLCollectionOf<HTMLElement>;
+  const modal = document.getElementsByClassName('l-overlay') as HTMLCollectionOf<HTMLElement>;
   modal[0].classList.add('visible');
   document.getElementById('register-form').classList.add('visible');
   document.getElementById('edit-form').classList.remove('visible');
@@ -31,13 +31,13 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
-.btn-register {
+.p-btn__register {
   position: fixed;
   top: 8rem;
   right: 6rem;
   z-index: 9998;
 }
-.btn-register a {
+.p-btn__register a {
   display: block;
   position: relative;
   border-radius: 50%;
@@ -47,7 +47,7 @@ onUnmounted(() => {
   background-color: rgba(0,180,180,.6);
   overflow: hidden;
 }
-.btn-register a:before {
+.p-btn__register a:before {
   display: block;
   position: absolute;
   top: 44%;
@@ -59,37 +59,37 @@ onUnmounted(() => {
   content: "+";
 }
 
-.floating {
+.c-floating {
   transition: .2s;
 }
 
 /* sp */
 @media screen and (max-width: 1024px) {
-  .btn-register {
+  .p-btn__register {
     right: .3rem;
   }
-  .btn-register.scroll {
+  .p-btn__register.scroll {
     top: .3rem;
   }
 
-  .btn-register.scroll {
+  .p-btn__register.scroll {
     top: 6.5rem;
   }
 }
 
 /* tablet */
 @media screen and (min-width: 1025px) and (max-width: 1409px) {
-  .btn-register {
+  .p-btn__register {
     right: 1rem;
   }
-  .btn-register.scroll {
+  .p-btn__register.scroll {
     top: 1rem;
   }
 }
 </style>
 
 <template>
-  <section id="registerBtn" class="btn-register floating">
+  <section id="registerBtn" class="p-btn__register c-floating">
     <a @click="openModal"></a>
   </section>
 </template>

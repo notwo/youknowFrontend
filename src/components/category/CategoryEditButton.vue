@@ -1,5 +1,5 @@
 <template>
-  <span @click="openEditCategoryForm">編集</span>
+  <span @click="openEditCategoryForm" class="p-editLink">編集</span>
 </template>
 
 <script lang="ts">
@@ -22,7 +22,7 @@ export default defineComponent({
     };
 
     const openEditCategoryForm = async (event: HTMLEvent<HTMLButtonElement>): Promise<void> => {
-      const modal = document.getElementsByClassName('overlay') as HTMLCollectionOf<HTMLElement>;
+      const modal = document.getElementsByClassName('l-overlay') as HTMLCollectionOf<HTMLElement>;
       modal[0].classList.add('visible');
       document.getElementById('edit_category_title').value = props.title;
       document.getElementById('edit_category_content').value = props.content;

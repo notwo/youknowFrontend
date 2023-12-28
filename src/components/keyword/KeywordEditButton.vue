@@ -1,5 +1,5 @@
 <template>
-  <span @click="openEditKeywordForm">編集</span>
+  <span @click="openEditKeywordForm" class="p-editLink">編集</span>
 </template>
 
 <script lang="ts">
@@ -22,7 +22,7 @@ export default defineComponent({
     };
 
     const openEditKeywordForm = (event: HTMLEvent<HTMLButtonElement>): void => {
-      const modal = document.getElementsByClassName('overlay') as HTMLCollectionOf<HTMLElement>;
+      const modal = document.getElementsByClassName('l-overlay') as HTMLCollectionOf<HTMLElement>;
       modal[0].classList.add('visible');
       document.getElementById('edit_keyword_title').value = props.title;
       document.getElementById('edit_keyword_content').value = props.content;

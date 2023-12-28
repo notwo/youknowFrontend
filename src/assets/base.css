@@ -10,6 +10,9 @@ body {
 
 #app {
   height: 100vh;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
 .hidden {
@@ -44,7 +47,10 @@ body {
 .btn.register:hover {
   background-color: rgba(27, 196, 27, 0.75);
 }
-.btn.logout:hover {
+.btn.p-logout {
+  font-weight: 600;
+}
+.btn.p-logout:hover {
   background-color: rgba(50,50,50,0.75);
 }
 .btn:disabled {

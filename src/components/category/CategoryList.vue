@@ -1,7 +1,7 @@
 <template>
   <article id="category-list">
     <CategoryModal :edit_state="edit_state" />
-    <section class="category-item-wrap" v-if="store.items.list.length > 0">
+    <section class="p-category__itemWrap" v-if="store.items.list.length > 0">
       <CategoryItem
         :edit_state="edit_state"
         v-for="category in store.items.list"
@@ -13,7 +13,7 @@
       />
     </section>
     <section v-else-if="store.firstLoaded.value && !store.isSearched()">
-      <p class="empty-message">カテゴリを追加してみましょう</p>
+      <p class="p-emptyMessage">カテゴリを追加してみましょう</p>
     </section>
     <section v-else>
       <!-- ここにローディング -->
@@ -122,13 +122,13 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.category-item-wrap {
+.p-category__itemWrap {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
 }
 
-.empty-message {
+.p-emptyMessage {
   display: flex;
   justify-content: center;
   font-size: 3.5rem;
@@ -147,13 +147,13 @@ export default defineComponent({
 
 /* sp */
 @media screen and (max-width: 414px) {
-  .category-item-wrap {
+  .p-category__itemWrap {
     flex-direction: column;
     justify-content: center;
     align-items: center;
   }
 
-  .empty-message {
+  .p-emptyMessage {
     margin: 2rem;
     font-size: 2rem;
     text-align: center;
@@ -162,19 +162,19 @@ export default defineComponent({
 
 /* tablet */
 @media screen and (min-width: 415px) and (max-width: 1024px) {
-  .category-item-wrap {
+  .p-category__itemWrap {
     flex-direction: column;
     justify-content: center;
     align-items: center;
   }
 
-  .category-item-wrap::after {
+  .p-category__itemWrap::after {
     content: "";
     display: block;
     width: 80%;
   }
 
-  .empty-message {
+  .p-emptyMessage {
     margin: 2rem;
     font-size: 3rem;
     text-align: center;

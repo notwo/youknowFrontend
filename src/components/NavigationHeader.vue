@@ -3,31 +3,28 @@ import MenuItem from "@/components/MenuItem.vue";
 </script>
 
 <style scoped>
-.header {
+.l-header {
   position: fixed;
   width: 100%;
   top: 0;
   left: 0;
   z-index: 9999;
 }
-.menu-wrap {
+.p-menuWrap {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
   padding: .2rem;
   justify-content: space-between;
   background-color: black;
   color: white;
   z-index: 10000;
 }
-
-.flex-contents {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-}
 </style>
 
 <template>
-  <header class="header">
-    <section class="menu-wrap flex-contents">
+  <header class="l-header">
+    <section class="p-menuWrap">
       <MenuItem />
     </section>
   </header>

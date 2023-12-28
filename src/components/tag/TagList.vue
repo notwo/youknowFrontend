@@ -23,24 +23,24 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
-#tag-list {
+#p-tagList {
   width: 100%;
 }
 
-.tag-body {
+.p-tag__body {
   margin: .8rem;
   border-radius: .3rem;
   background-color: rgba(101, 75, 250, 0.9);
 }
 
-.tag-item-wrap {
+.p-tag__itemWrap {
   display: flex;
   justify-content: start;
   flex-wrap: wrap;
   margin: 3rem .8rem;
 }
 
-.empty-message {
+.p-emptyMessage {
   display: flex;
   justify-content: center;
   font-size: 2rem;
@@ -59,7 +59,7 @@ onUnmounted(() => {
 
 /* sp */
 @media screen and (max-width: 414px) {
-  .empty-message {
+  .p-emptyMessage {
     margin: 2rem;
     font-size: 2rem;
     text-align: center;
@@ -68,7 +68,7 @@ onUnmounted(() => {
 
 /* tablet */
 @media screen and (min-width: 415px) and (max-width: 1024px) {
-  .empty-message {
+  .p-emptyMessage {
     margin: 2rem;
     font-size: 3rem;
     text-align: center;
@@ -77,10 +77,10 @@ onUnmounted(() => {
 </style>
 
 <template>
-  <article id="tag-list">
+  <article id="p-tagList">
     <TagForm />
-    <section class="tag-body" v-if="store.items.list.length > 0">
-      <section class="tag-item-wrap">
+    <section class="p-tag__body" v-if="store.items.list.length > 0">
+      <section class="p-tag__itemWrap">
         <TagItem
           v-for="tag in store.items.list"
             :key="tag.id"
@@ -90,7 +90,7 @@ onUnmounted(() => {
       </section>
     </section>
     <section v-else-if="store.firstLoaded.value">
-      <p class="empty-message">タグを追加してみましょう</p>
+      <p class="p-emptyMessage">タグを追加してみましょう</p>
     </section>
     <section v-else>
       <!-- ここにローディング -->

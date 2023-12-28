@@ -1,16 +1,14 @@
 <template>
-  <section class="full-layout">
-    <section class="main">
-      <NavigationHeader />
+  <NavigationHeader />
 
-      <main class="container">
-        <section class="main-top-pane"></section>
-        <router-view></router-view>
-        <section class="main-bottom-pane"></section>
-      </main>
-    </section>
-
+  <section class="l-main">
+    <main class="l-container">
+      <section class="l-main__top"></section>
+      <router-view></router-view>
+      <section class="l-main__bottom"></section>
+    </main>
   </section>
+
   <FooterInformation />
 </template>
 
@@ -52,28 +50,22 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.full-layout {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
-
-.main {
+.l-main {
   flex: 1;
 }
 
-.container {
+.l-container {
   margin: 0 auto;
   max-width: 1100px;
   background: rgb(250, 250, 252); /** 一通りデザインを当ててコンテンツを配置し終わったら消す */
   overflow: hidden;
 }
 
-.main-top-pane  {
+.l-main__top  {
   margin: 1rem 0;
   height: .2rem;
 }
-.main-bottom-pane  {
+.l-main__bottom  {
   margin: 1rem 0;
   height: .2rem;
 }

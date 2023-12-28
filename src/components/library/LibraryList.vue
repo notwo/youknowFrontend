@@ -1,7 +1,7 @@
 <template>
   <article id="library-list">
     <LibraryModal :edit_state="edit_state" />
-    <section class="library-item-wrap" v-if="store.items.list.length > 0">
+    <section class="p-library__itemWrap" v-if="store.items.list.length > 0">
       <LibraryItem
         :edit_state="edit_state"
         v-for="library in store.items.list"
@@ -13,7 +13,7 @@
       />
     </section>
     <section v-else-if="store.firstLoaded.value && !store.isSearched()">
-      <p class="empty-message">まずはライブラリを追加してみましょう</p>
+      <p class="p-emptyMessage">まずはライブラリを追加してみましょう</p>
     </section>
     <section v-else>
       <!-- ここにローディング -->
@@ -115,19 +115,19 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.library-item-wrap {
+.p-library__itemWrap {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
 }
-.library-item-wrap::after {
+.p-library__itemWrap::after {
   content: "";
   display: block;
   width: 30%;
   margin: 1rem;
 }
 
-.empty-message {
+.p-emptyMessage {
   display: flex;
   justify-content: center;
   font-size: 3.5rem;
@@ -146,19 +146,19 @@ export default defineComponent({
 
 /* sp */
 @media screen and (max-width: 414px) {
-  .library-item-wrap {
+  .p-library__itemWrap {
     flex-direction: column;
     justify-content: center;
     align-items: center;
   }
 
-  .library-item-wrap::after {
+  .p-library__itemWrap::after {
     content: "";
     display: block;
     width: 80%;
   }
 
-  .empty-message {
+  .p-emptyMessage {
     margin: 2rem;
     font-size: 2rem;
     text-align: center;
@@ -167,19 +167,19 @@ export default defineComponent({
 
 /* tablet */
 @media screen and (min-width: 415px) and (max-width: 1024px) {
-  .library-item-wrap {
+  .p-library__itemWrap {
     flex-direction: column;
     justify-content: center;
     align-items: center;
   }
 
-  .library-item-wrap::after {
+  .p-library__itemWrap::after {
     content: "";
     display: block;
     width: 80%;
   }
 
-  .empty-message {
+  .p-emptyMessage {
     margin: 2rem;
     font-size: 3rem;
     text-align: center;

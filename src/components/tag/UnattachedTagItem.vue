@@ -30,7 +30,7 @@ const removeTag = (event: HTMLEvent<HTMLButtonElement>): void => {
   }
 
   store.remove(props.id); // api実行前に呼ばないとstoreの中身が検索できない
-  const id = event.currentTarget.getAttribute('data-id');
+  const id = event.currentTarget.getAttribute('data-id') as String;
   axios.delete(api.detailUrl(user.value.sub, id))
     .then((response: AxiosResponse) => {
       dialogStore.func.value('', 'タグを削除しました');
@@ -49,7 +49,7 @@ const selectTag = (event: HTMLEvent<HTMLButtonElement>): void => {
     event.currentTarget.classList.add('selected');
   }
 
-  const selectedTags = document.getElementsByClassName('selected');
+  const selectedTags = document.getElementsByClassName('selected') as HTMLCollectionOf<HTMLElement>;
   if (selectedTags.length > 0) {
     document.getElementById('attachButton').removeAttribute('disabled');
   } else {
@@ -59,7 +59,7 @@ const selectTag = (event: HTMLEvent<HTMLButtonElement>): void => {
 </script>
 
 <style scoped>
-.unattached-tag-item {
+.p-unattachedTag__Item {
   margin: 0.2em;
   padding: 1em;
   border: 1px rgba(47, 7, 225, 0.9) solid;
@@ -78,34 +78,34 @@ const selectTag = (event: HTMLEvent<HTMLButtonElement>): void => {
   }
 }
 
-.unattached-tag-item.selected {
+.p-unattachedTag__Item.selected {
   margin: 0.2em;
   padding: 1em;
   color: #eee;
   background: rgba(47, 7, 225, 0.9);
 }
 
-.unattached-tag-menu {
+.p-unattachedTag__menu {
   display: flex;
   justify-content: flex-end;
   margin: .2rem;
   z-index: 1;
 }
 
-.unattached-tag-menu-item {
+.p-unattachedTag__menuLink {
   margin: .3rem;
   z-index: 1;
 }
-.unattached-tag-menu-item:hover {
+.p-unattachedTag__menuLink:hover {
   color: #888;
   cursor: pointer;
 }
 
-.unattached-tag-item-body {
+.p-unattachedTag__body {
   margin: .5rem .5rem;
 }
 
-.title {
+.p-unattachedTag__title {
   padding: .3rem 0;
   font-size: 1.4rem;
   font-weight: 800;
@@ -113,25 +113,25 @@ const selectTag = (event: HTMLEvent<HTMLButtonElement>): void => {
 
 /* sp */
 @media screen and (max-width: 767px) {
-  .unattached-tag-item {
+  .p-unattachedTag__Item {
     padding: .5em;
   }
 
-  .title {
+  .p-unattachedTag__title {
     font-size: .8rem;
   }
 }
 </style>
 
 <template>
-  <section class="unattached-tag-item" @click="selectTag" :data-id="id">
-    <section class="unattached-tag-menu">
-      <section class="unattached-tag-menu-item">
-        <span @click="removeTag" class="delete-item" :data-id="id">削除</span>
+  <section class="p-unattachedTag__Item" @click="selectTag" :data-id="id">
+    <section class="p-unattachedTag__menu">
+      <section class="p-unattachedTag__menuLink">
+        <span @click="removeTag" class="p-delete__link" :data-id="id">削除</span>
       </section>
     </section>
-    <section class="unattached-tag-item-body">
-      <p class="title">{{ titleForView(title, 'tag') }}</p>
+    <section class="p-unattachedTag__body">
+      <p class="p-unattachedTag__title">{{ titleForView(title, 'tag') }}</p>
     </section>
   </section>
 </template>

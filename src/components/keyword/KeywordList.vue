@@ -1,7 +1,7 @@
 <template>
   <article id="keyword-list">
     <KeywordModal :edit_state="edit_state" />
-    <section class="keyword-item-wrap" v-if="store.items.list.length > 0">
+    <section class="p-keyword__itemWrap" v-if="store.items.list.length > 0">
       <KeywordItem
         :edit_state="edit_state"
         v-for="keyword in store.items.list"
@@ -14,7 +14,7 @@
       />
     </section>
     <section v-else-if="store.firstLoaded.value && !store.isSearched()">
-      <p class="empty-message">キーワードを追加してみましょう</p>
+      <p class="p-emptyMessage">キーワードを追加してみましょう</p>
     </section>
     <section v-else>
       <!-- ここにローディング -->
@@ -125,13 +125,13 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.keyword-item-wrap {
+.p-keyword__itemWrap {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
 }
 
-.empty-message {
+.p-emptyMessage {
   display: flex;
   justify-content: center;
   font-size: 3.5rem;
@@ -150,19 +150,19 @@ export default defineComponent({
 
 /* sp */
 @media screen and (max-width: 414px) {
-  .keyword-item-wrap {
+  .p-keyword__itemWrap {
     flex-direction: column;
     justify-content: center;
     align-items: center;
   }
 
-  .keyword-item-wrap::after {
+  .p-keyword__itemWrap::after {
     content: "";
     display: block;
     width: 80%;
   }
 
-  .empty-message {
+  .p-emptyMessage {
     margin: 2rem;
     font-size: 2rem;
     text-align: center;
@@ -171,19 +171,19 @@ export default defineComponent({
 
 /* tablet */
 @media screen and (min-width: 415px) and (max-width: 1024px) {
-  .keyword-item-wrap {
+  .p-keyword__itemWrap {
     flex-direction: column;
     justify-content: center;
     align-items: center;
   }
 
-  .keyword-item-wrap::after {
+  .p-keyword__itemWrap::after {
     content: "";
     display: block;
     width: 80%;
   }
 
-  .empty-message {
+  .p-emptyMessage {
     margin: 2rem;
     font-size: 3rem;
     text-align: center;

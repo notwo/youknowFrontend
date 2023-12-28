@@ -46,14 +46,14 @@ const visibleBreadcrumb = breadcrumbString.value.filter((element) => {
 });
 
 onMounted(() => {
-  const breadcrumb = document.querySelector('.breadcrumb-contents');
+  const breadcrumb = document.querySelector('.p-breadcrumb__contents');
   const scrollMaxX = (breadcrumb?.scrollWidth || 0) - (breadcrumb?.clientWidth || 0);
   breadcrumb?.scrollTo(scrollMaxX, 0);
 });
 </script>
 
 <style scoped>
-.breadcrumb-contents {
+.p-breadcrumb__contents {
   display: flex;
   gap: 0 1rem;
   margin: 1rem;
@@ -63,14 +63,14 @@ onMounted(() => {
   background-color: #9ac9ec;
   white-space: nowrap;
 }
-.breadcrumb-contents li {
+.p-breadcrumb__contents li {
   display: flex;
   align-items: center;
   position: relative;
   padding-right: 1.2rem;
 }
 /* HOMEの部分
-.breadcrumb-contents li:first-child a::before {
+.p-breadcrumb__contents li:first-child a::before {
   display: inline-block;
   padding-right: 20px;
   width: 1em;
@@ -83,8 +83,8 @@ onMounted(() => {
   content: '';
 }
 */
-.breadcrumb-contents li:not(:last-child)::before,
-.breadcrumb-contents li:not(:last-child)::after {
+.p-breadcrumb__contents li:not(:last-child)::before,
+.p-breadcrumb__contents li:not(:last-child)::after {
   position: absolute;
   width: 0;
   height: 0;
@@ -92,26 +92,26 @@ onMounted(() => {
   border-bottom: 1.6rem solid transparent;
   content:'';
 }
-.breadcrumb-contents li:not(:last-child)::before {
+.p-breadcrumb__contents li:not(:last-child)::before {
   right: 0;
   border-left: .7rem solid #fff;
 }
-.breadcrumb-contents li:not(:last-child)::after{
+.p-breadcrumb__contents li:not(:last-child)::after{
   right: .15rem;
   border-left: .7rem solid #9ac9ec;
 }
 
-.breadcrumb-contents a {
+.p-breadcrumb__contents a {
   color: #444;
   text-decoration: none;
 }
-.breadcrumb-contents a:hover {
+.p-breadcrumb__contents a:hover {
   color: #000;
 }
 
 /* sp */
 @media screen and (max-width: 414px) {
-  .breadcrumb-contents {
+  .p-breadcrumb__contents {
     font-size: .9rem;
     overflow-x: scroll;
     overflow-y: hidden; 
@@ -124,8 +124,8 @@ onMounted(() => {
 </style>
 
 <template>
-  <ul class="breadcrumb-contents">
-    <li v-for="v in visibleBreadcrumb" :key="v.name" class="breadcrumb-content">
+  <ul class="p-breadcrumb__contents">
+    <li v-for="v in visibleBreadcrumb" :key="v.name" class="p-breadcrumb__content">
       <router-link v-if="fullPath.match(v.pattern) && (fullPath.match(v.pattern)[0] !== fullPath)" :to="{ name: v.name, params: v.params }">
         <span>{{ v.text }}</span>
       </router-link>

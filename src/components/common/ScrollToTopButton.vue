@@ -4,12 +4,12 @@ import { onMounted, onUnmounted } from 'vue';
 let scrollId: number = 0;
 const f = (): void => {
   const button = document.getElementById('scrollToTopButton') as HTMLElement;
-  button.classList.remove('hidden-no-animation');
+  button.classList.remove('c-hiddenNoAnimation');
   if (window.scrollY === 0) {
-    button.classList.add('hidden');
+    button.classList.add('c-hidden');
     clearInterval(scrollId);
   } else {
-    button.classList.remove('hidden');
+    button.classList.remove('c-hidden');
   }
 };
 
@@ -32,13 +32,13 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
-.scroll-to-top-button {
+.p-scrollToTopButton {
   position: fixed;
   bottom: 1.6rem;
   right: 2rem;
   z-index: 9000;
 }
-.scroll-to-top-button a {
+.p-scrollToTopButton a {
   display: block;
   position: relative;
   border-radius: 50%;
@@ -49,14 +49,14 @@ onUnmounted(() => {
   overflow: hidden;
   animation: fadeIn .3s ease;
 }
-.scroll-to-top-button a.hidden-no-animation {
+.p-scrollToTopButton a.c-hiddenNoAnimation {
   display: none;
 }
-.scroll-to-top-button a.hidden {
+.p-scrollToTopButton a.c-hidden {
   animation: fadeOut .3s ease 0s;
   animation-fill-mode: forwards;
 }
-.scroll-to-top-button a:before {
+.p-scrollToTopButton a:before {
   display: inline-block;
   content: "";
   position: absolute;
@@ -89,7 +89,7 @@ onUnmounted(() => {
 
 /* sp */
 @media screen and (max-width: 1024px) {
-  .scroll-to-top-button {
+  .p-scrollToTopButton {
     bottom: .3rem;
     right: .3rem;
   }
@@ -97,7 +97,7 @@ onUnmounted(() => {
 
 /* tablet */
 @media screen and (min-width: 1025px) and (max-width: 1409px) {
-  .scroll-to-top-button {
+  .p-scrollToTopButton {
     bottom: 1rem;
     right: 1rem;
   }
@@ -105,7 +105,7 @@ onUnmounted(() => {
 </style>
 
 <template>
-  <section class="scroll-to-top-button">
-    <a id="scrollToTopButton" @click="scrollToTop" class="hidden hidden-no-animation"></a>
+  <section class="p-scrollToTopButton">
+    <a id="scrollToTopButton" @click="scrollToTop" class="c-hidden c-hiddenNoAnimation"></a>
   </section>
 </template>

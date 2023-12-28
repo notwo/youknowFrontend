@@ -25,7 +25,7 @@ const edit_v$ = useVuelidate(editRules('ライブラリ名', store), props.edit_
 const closeModal = (event: HTMLEvent<HTMLButtonElement>): void => {
   event.preventDefault();
   document.body.style.removeProperty("overflow");
-  const modal = document.getElementsByClassName('overlay') as HTMLCollectionOf<HTMLElement>;
+  const modal = document.getElementsByClassName('l-overlay') as HTMLCollectionOf<HTMLElement>;
   modal[0].classList.remove('visible');
   // フォーム初期化
   register_state.title = '';
@@ -40,13 +40,13 @@ const closeModal = (event: HTMLEvent<HTMLButtonElement>): void => {
 </script>
 
 <style scoped>
-.close {
+.p-close {
   display: block;
   width: 8rem;
   margin: 1.5rem 1.5rem 0 auto;
   cursor: pointer;
 }
-.close:hover {
+.p-close:hover {
   color: #888;
 }
 
@@ -65,11 +65,11 @@ const closeModal = (event: HTMLEvent<HTMLButtonElement>): void => {
 </style>
 
 <template>
-  <span id="close" class="close" @click="closeModal">モーダルを閉じる</span>
-  <form action="" id="register-form">
+  <span id="close" class="p-close" @click="closeModal">モーダルを閉じる</span>
+  <form action="" id="register-form" class="p-registerForm">
     <LibraryRegistrationForm :state="register_state" :v="register_v$" @closeEvent="closeModal" />
   </form>
-  <form action="" id="edit-form">
+  <form action="" id="edit-form" class="p-editForm">
     <LibraryEditForm :state="edit_state" :v="edit_v$" @closeEvent="closeModal" />
   </form>
 </template>

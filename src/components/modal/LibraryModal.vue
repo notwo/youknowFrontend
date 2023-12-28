@@ -7,7 +7,7 @@ const props = defineProps({
 </script>
 
 <style scoped>
-.overlay {
+.l-overlay {
   visibility: hidden;
   position: fixed;
   top: 0;
@@ -19,12 +19,12 @@ const props = defineProps({
   z-index: 9999;
   background-color: rgba(0,0,0,0.4);
 }
-.overlay.visible {
+.l-overlay.visible {
   visibility: visible;
   opacity: 1;
 }
 
-.modal {
+.p-modal {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -40,22 +40,22 @@ const props = defineProps({
 
 /* sp */
 @media screen and (max-width: 640px) {
-  .modal {
+  .p-modal {
     width: 95%;
     max-height: 95%;
   }
 }
 /* tablet */
 @media screen and (min-width: 641px) and (max-width: 1024px) {
-  .modal {
+  .p-modal {
     width: 60%;
   }
 }
 </style>
 
 <template>
-  <section class="overlay">
-    <section class="modal">
+  <section class="l-overlay">
+    <section class="p-modal">
       <LibraryForm :edit_state="edit_state" />
     </section>
   </section>

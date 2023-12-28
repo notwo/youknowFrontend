@@ -51,10 +51,10 @@ const onDelete = (event: HTMLEvent<HTMLButtonElement>): void => {
 </script>
 
 <style scoped>
-.form-group {
+.p-form__group {
   margin: 1.3rem 0;
 }
-.form-group.attention {
+.p-form__group.p-attention {
   margin: 2.3rem 0;
 }
 
@@ -64,8 +64,8 @@ button[type="button"] {
 </style>
 
 <template>
-  <section class="form-group attention">
-    <section class="form-field">
+  <section class="p-form__group p-attention">
+    <section class="p-form__field">
       <button type="button"
         @click="onDelete"
         class="btn delete">アカウント削除する</button>

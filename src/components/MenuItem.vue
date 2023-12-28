@@ -11,15 +11,15 @@ const keywordStore = inject('keyword');
 const tagStore = inject('tag');
 
 const openSpMenu = (): void => {
-  const overlay = document.querySelector(".sp-nav-overlay") as HTMLElement;
-  const spNavBtn = document.querySelector(".sp-nav-button") as HTMLElement;
+  const overlay = document.querySelector(".p-sp__navOverlay") as HTMLElement;
+  const spNavBtn = document.querySelector(".p-sp__navButton") as HTMLElement;
   overlay.classList.add('visible');
   spNavBtn.classList.add('sp-nav-open');
 };
 const closeSpMenu = (): void => {
-  const overlay = document.querySelector(".sp-nav-overlay") as HTMLElement;
+  const overlay = document.querySelector(".p-sp__navOverlay") as HTMLElement;
   overlay.classList.remove('visible');
-  const spNavBtn = document.querySelector(".sp-nav-button") as HTMLElement;
+  const spNavBtn = document.querySelector(".p-sp__navButton") as HTMLElement;
   spNavBtn.classList.remove('sp-nav-open');
 };
 
@@ -37,36 +37,32 @@ const startLogout = (event): void => {
 </script>
 
 <style scoped>
-.service-icon {
+.c-service__icon {
   margin: 2rem;
 }
 
-.menu {
+.p-menu {
   display: flex;
 }
 
-.menu-item {
+.p-menu__item {
   display: flex;
   justify-content: center;
 }
 
-.menu-item li {
+.p-menu__item li {
   padding: 0.5em 1em;
   font-size: 1.0rem;
   font-weight: 700;
 }
 
-.logout {
-  font-weight: 600;
-}
-
 /* SP */
-.sp-login {
+.p-sp__login {
   display: none;
   margin: 2rem 1rem;
 }
 
-.sp-nav-button {
+.p-sp__navButton {
   display: none;
   position: absolute;
   margin: 0 auto;
@@ -83,7 +79,7 @@ const startLogout = (event): void => {
   z-index: 10000;
 }
 
-.sp-nav-button .sp-nav-item {
+.p-sp__navButton .p-sp__navItem {
   position: absolute;
   left: 0;
   width: 100%;
@@ -92,18 +88,18 @@ const startLogout = (event): void => {
   background-color: #464646;
 }
 
-.sp-nav-button .sp-nav-item:nth-of-type(1) {
+.p-sp__navButton .p-sp__navItem:nth-of-type(1) {
   top: -5px;
 }
-.sp-nav-button .sp-nav-item:nth-of-type(2) {
+.p-sp__navButton .p-sp__navItem:nth-of-type(2) {
   top: 2.5px;
 }
-.sp-nav-button .sp-nav-item:nth-of-type(3) {
+.p-sp__navButton .p-sp__navItem:nth-of-type(3) {
   top: 10px;
 }
 
-.sp-nav-button .sp-nav-menu,
-.sp-nav-button .sp-nav-close {
+.p-sp__navButton .p-sp__navMenu,
+.p-sp__navButton .p-sp__navClose {
   display: block;
   position: absolute;
   bottom: 0;
@@ -114,33 +110,33 @@ const startLogout = (event): void => {
   color: white;
 }
 
-.sp-nav-button .sp-nav-close {
+.p-sp__navButton .p-sp__navClose {
   display: none;
 }
 
-.sp-nav-button.sp-nav-open .sp-nav-item {
+.p-sp__navButton.sp-nav-open .p-sp__navItem {
   height: 4px;
   transition: all .15s;
 }
-.sp-nav-button.sp-nav-open .sp-nav-item:nth-of-type(1) {
+.p-sp__navButton.sp-nav-open .p-sp__navItem:nth-of-type(1) {
   top: 4px;
   transform: rotate(45deg);
 }
-.sp-nav-button.sp-nav-open .sp-nav-item:nth-of-type(2) {
+.p-sp__navButton.sp-nav-open .p-sp__navItem:nth-of-type(2) {
   top: 4px;
   transform: rotate(-45deg);
 }
-.sp-nav-button.sp-nav-open .sp-nav-item:nth-of-type(3) {
+.p-sp__navButton.sp-nav-open .p-sp__navItem:nth-of-type(3) {
   display: none;
 }
-.sp-nav-button.sp-nav-open .sp-nav-menu {
+.p-sp__navButton.sp-nav-open .p-sp__navMenu {
   display: none;
 }
-.sp-nav-button.sp-nav-open .sp-nav-close {
+.p-sp__navButton.sp-nav-open .p-sp__navClose {
   display: block;
 }
 
-.sp-nav-overlay {
+.p-sp__navOverlay {
   position: fixed;
   opacity: 0;
   top: 0;
@@ -151,12 +147,12 @@ const startLogout = (event): void => {
   z-index: 9999;
   background-color: rgba(0,0,0,0.8);
 }
-.sp-nav-overlay.visible {
+.p-sp__navOverlay.visible {
   width: 100%;
   opacity: 1;
 }
 
-.sp-menu {
+.p-sp__menu {
   position: absolute;
   display: flex;
   flex-direction: column;
@@ -165,71 +161,71 @@ const startLogout = (event): void => {
   height: 100vh;
 }
 
-.sp-menu-item li {
+.p-sp__menuItem li {
   margin: 1rem 0;
   font-size: 1.3rem;
 }
 
 @media screen and (max-width: 768px) {
-  .service-icon {
+  .c-service__icon {
   margin: 2rem 1rem;
 }
 
-  .menu {
+  .p-menu {
     display: none;
   }
 
-  .sp-login {
+  .p-sp__login {
     display: block;
   }
 
-  .sp-nav-button {
+  .p-sp__navButton {
     display: block;
   }
 }
 </style>
 
 <template>
-  <section class="service-icon">サービスロゴ</section>
-  <nav class="menu">
-    <ul v-if="!auth0.isAuthenticated.value" class="menu-item">
+  <section class="c-service__icon">サービスロゴ</section>
+  <nav class="p-menu">
+    <ul v-if="!auth0.isAuthenticated.value" class="p-menu__item">
       <li>
         <span @click="login" class="btn register">ユーザ登録/ログイン</span>
       </li>
     </ul>
-    <ul v-else class="menu-item">
+    <ul v-else class="p-menu__item">
       <li>
         <router-link :to="{ name: 'usertop', params: { username: String(auth0?.user?.value?.nickname) } }" class="btn">
           {{ auth0?.user?.value?.nickname }}
         </router-link>
       </li>
       <li>
-        <span @click="startLogout" class="btn logout">ログアウト</span>
+        <span @click="startLogout" class="btn p-logout">ログアウト</span>
       </li>
     </ul>
   </nav>
   <!-- SP navigation -->
-  <section v-if="!auth0.isAuthenticated.value" class="sp-login">
+  <section v-if="!auth0.isAuthenticated.value" class="p-sp__login">
     <span @click="login" class="">ユーザ登録/ログイン</span>
   </section>
-  <button v-else class="sp-nav-button">
-    <span class="sp-nav-item"></span>
-    <span class="sp-nav-item"></span>
-    <span class="sp-nav-item"></span>
-    <span class="sp-nav-menu" @click="openSpMenu">MENU</span>
-    <span class="sp-nav-close" @click="closeSpMenu">CLOSE</span>
+  <button v-else class="p-sp__navButton">
+    <span class="p-sp__navItem"></span>
+    <span class="p-sp__navItem"></span>
+    <span class="p-sp__navItem"></span>
+    <span class="p-sp__navMenu" @click="openSpMenu">MENU</span>
+    <span class="p-sp__navClose" @click="closeSpMenu">CLOSE</span>
   </button>
   <!-- SP navigation menu item -->
-  <section v-if="auth0.isAuthenticated.value" class="sp-nav-overlay">
-    <nav class="sp-menu">
-      <ul class="sp-menu-item">
+  <section v-if="auth0.isAuthenticated.value" class="p-sp__navOverlay">
+    <nav class="p-sp__menu">
+      <ul class="p-sp__menuItem">
         <li>
           <router-link :to="{ name: 'usertop', params: { username: String(auth0?.user?.value?.nickname) } }" class="btn" @click="closeSpMenu">
             {{ auth0?.user?.value?.nickname }}
           </router-link>
         </li>
         <li>
-          <span @click="startLogout" class="btn logout">ログアウト</span>
+          <span @click="startLogout" class="btn p-logout">ログアウト</span>
         </li>
       </ul>
     </nav>

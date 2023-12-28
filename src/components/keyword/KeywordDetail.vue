@@ -55,17 +55,17 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
-.detail-body {
+.p-keyword__body {
   margin: 3rem 2rem;
 }
 
-.keyword-title {
+.p-keyword__title {
   margin: 2rem 1rem;
   font-size: 2.5rem;
   font-weight: 800;
 }
 
-.keyword-contents {
+.p-keyword__contents {
   margin: 2rem 1rem;
   font-size: 1.5rem;
 }
@@ -74,9 +74,9 @@ onUnmounted(() => {
 <template>
   <Dialog />
   <Breadcrumb />
-  <section class="detail-body">
-    <p class="keyword-title">{{ Keyword.title }}</p>
-    <p class="keyword-contents">{{ Keyword.content }}</p>
+  <section class="p-keyword__body">
+    <p class="p-keyword__title">{{ Keyword.title }}</p>
+    <p class="p-keyword__contents">{{ Keyword.content }}</p>
   </section>
   <TagList />
   <UnattachedTagList />
