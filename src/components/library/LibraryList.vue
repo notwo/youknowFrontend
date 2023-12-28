@@ -1,28 +1,5 @@
-<template>
-  <article id="library-list">
-    <LibraryModal :edit_state="edit_state" />
-    <section class="p-library__itemWrap" v-if="store.items.list.length > 0">
-      <LibraryItem
-        :edit_state="edit_state"
-        v-for="library in store.items.list"
-          :key="library.id"
-          :id="library.id"
-          :title="library.title"
-          :content="library.content"
-          :updated_at="library.updated_at"
-      />
-    </section>
-    <section v-else-if="store.firstLoaded.value && !store.isSearched()">
-      <p class="p-emptyMessage c-fadeIn--fast">まずはライブラリを追加してみましょう</p>
-    </section>
-    <section v-else>
-      <!-- ここにローディング -->
-    </section>
-  </article>
-</template>
-
-<script lang="ts">
-import { defineComponent, reactive, onMounted, onUnmounted, inject } from 'vue';
+<script setup lang="ts">
+import { reactive, onMounted, onUnmounted, inject } from 'vue';
 import axios, { AxiosResponse, AxiosError } from "axios";
 import { useAuth0 } from '@auth0/auth0-vue';
 import LibraryModal from '@/components/modal/LibraryModal.vue';
@@ -30,87 +7,73 @@ import LibraryItem from "@/components/library/LibraryItem.vue";
 import { pagination } from "@/../config.json";
 import { libraryApi } from '@/plugin/apis';
 
-export default defineComponent({
-  name: 'LibraryList',
-  components: {
-    LibraryModal,
-    LibraryItem
-  },
-  setup() {
-    const { user, isAuthenticated } = useAuth0();
-    const store = inject('library');
-    const dialogStore = inject('dialog');
+const { user, isAuthenticated } = useAuth0();
+const store = inject('library');
+const dialogStore = inject('dialog');
 
-    let edit_state = reactive({
-      title: '',
-      content: ''
+const edit_state = reactive({
+  title: '',
+  content: ''
+});
+
+interface LibraryResponse {
+  data: []
+};
+interface ErrorResponse {
+  error: string
+};
+
+let canLoadNext = true;
+let currentPage = 1;
+
+const api = libraryApi();
+const loadNext = async (): Promise<void> => {
+  const response = await axios.get<LibraryResponse>(
+    api.listUrl(user.value.sub, pagination.library.content_num, pagination.library.content_num * (currentPage -1))
+  );
+  if (response.data.next === null) {
+    canLoadNext = false;
+  }
+  store.concat(response.data.results);
+};
+
+const showMoreLibraryList = (event): void => {
+  // 下限まで一定距離になったら自動読み込み
+  if (document.body.scrollHeight - document.body.clientHeight - window.scrollY <= 500 && canLoadNext && !store.isSearched()) {
+    currentPage++;
+    loadNext();
+  }
+};
+
+onMounted(() => {
+  if (!isAuthenticated || !user.value.sub) {
+    location.href = window.location.origin;
+  }
+
+  // ライブラリ一覧に遷移した際にスクロール位置が戻っていないので、強制的にスクロールさせる
+  document.documentElement.scrollTop = 0;
+
+  const showLibraryList = async (): Promise<void> => {
+    await axios.get<LibraryResponse>(api.listUrl(user.value.sub, pagination.library.content_num))
+    .then((response: AxiosResponse) => {
+      canLoadNext = (response.data.next !== null);
+      store.setItem(response.data.results);
+    })
+    .catch((e: AxiosError<ErrorResponse>) => {
+      dialogStore.func.value('読み込みエラー', 'ライブラリ読み込み中にエラーが起きました。暫くお待ちいただいてから再度お試しください', 'error');
     });
 
-    interface LibraryResponse {
-      data: []
-    };
-    interface ErrorResponse {
-      error: string
-    };
+    window.addEventListener("scroll", showMoreLibraryList, { passive: true });
+  };
 
-    let canLoadNext = true;
-    let currentPage = 1;
+  showLibraryList();
+});
 
-    const api = libraryApi();
-    const loadNext = async (): Promise<void> => {
-      const response = await axios.get<LibraryResponse>(
-        api.listUrl(user.value.sub, pagination.library.content_num, pagination.library.content_num * (currentPage -1))
-      );
-      if (response.data.next === null) {
-        canLoadNext = false;
-      }
-      store.concat(response.data.results);
-    };
-
-    const showMoreLibraryList = (event): void => {
-      // 下限まで一定距離になったら自動読み込み
-      if (document.body.scrollHeight - document.body.clientHeight - window.scrollY <= 500 && canLoadNext && !store.isSearched()) {
-        currentPage++;
-        loadNext();
-      }
-    };
-
-    onMounted(() => {
-      if (!isAuthenticated || !user.value.sub) {
-        location.href = window.location.origin;
-      }
-
-      // ライブラリ一覧に遷移した際にスクロール位置が戻っていないので、強制的にスクロールさせる
-      document.documentElement.scrollTop = 0;
-
-      const showLibraryList = async (): Promise<void> => {
-        await axios.get<LibraryResponse>(api.listUrl(user.value.sub, pagination.library.content_num))
-        .then((response: AxiosResponse) => {
-          canLoadNext = (response.data.next !== null);
-          store.setItem(response.data.results);
-        })
-        .catch((e: AxiosError<ErrorResponse>) => {
-          dialogStore.func.value('読み込みエラー', 'ライブラリ読み込み中にエラーが起きました。暫くお待ちいただいてから再度お試しください', 'error');
-        });
-
-        window.addEventListener("scroll", showMoreLibraryList, { passive: true });
-      };
-
-      showLibraryList();
-    });
-
-    onUnmounted(() => {
-      store.allClear();
-      store.restoreSearched();
-      store.restoreFirstLoaded();
-      window.removeEventListener('scroll', showMoreLibraryList, false);
-    });
-
-    return {
-      edit_state,
-      store
-    };
-  },
+onUnmounted(() => {
+  store.allClear();
+  store.restoreSearched();
+  store.restoreFirstLoaded();
+  window.removeEventListener('scroll', showMoreLibraryList, false);
 });
 </script>
 
@@ -175,3 +138,26 @@ export default defineComponent({
   }
 }
 </style>
+
+<template>
+  <article id="library-list">
+    <LibraryModal :edit_state="edit_state" />
+    <section class="p-library__itemWrap" v-if="store.items.list.length > 0">
+      <LibraryItem
+        :edit_state="edit_state"
+        v-for="library in store.items.list"
+          :key="library.id"
+          :id="library.id"
+          :title="library.title"
+          :content="library.content"
+          :updated_at="library.updated_at"
+      />
+    </section>
+    <section v-else-if="store.firstLoaded.value && !store.isSearched()">
+      <p class="p-emptyMessage c-fadeIn--fast">まずはライブラリを追加してみましょう</p>
+    </section>
+    <section v-else>
+      <!-- ここにローディング -->
+    </section>
+  </article>
+</template>

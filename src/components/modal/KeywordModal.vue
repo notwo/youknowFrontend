@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import KeywordForm from '@/components/modal/KeywordForm.vue';
 
-const props = defineProps({
+defineProps({
   edit_state: Object
 });
 </script>

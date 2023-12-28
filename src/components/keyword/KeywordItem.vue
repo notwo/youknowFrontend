@@ -1,36 +1,5 @@
-<template>
-  <section class="p-keyword__item c-fadeIn--normal js-tooltip__content">
-    <router-link :to="{ name: 'keyword', params: {
-      username: String($route.params.username),
-      library_id: $route.params.library_id,
-      category_id: $route.params.category_id,
-      keyword_id: id
-    } }">
-    </router-link>
-    <section class="p-keyword__menu">
-      <section class="p-keyword__menuLink">
-        <KeywordEditButton :edit_state="edit_state" :id="id" :title="title" :content="content" />
-      </section>
-      <section class="p-keyword__menuLink">
-        <span @click="removeKeyword" class="p-delete__link" :data-id="id">削除</span>
-      </section>
-    </section>
-    <section class="p-keyword__body js-tooltip__title">
-      <p class="p-keyword__title">{{ titleForView(title, 'keyword') }}</p>
-      <p class="p-keyword__contents">{{ contentForView(content, 'keyword') }}</p>
-      <section class="p-keyword__tags">
-        <span class="p-keyword__tag" v-for="tag of tags" :key="tag.id">
-          {{ titleForView(tag.title, 'tag') }}
-        </span>
-      </section>
-    </section>
-    <span class="p-keyword__updated_at">{{ timeFormat(updated_at) }} 更新</span>
-  </section>
-  <Tooltip :message="title" />
-</template>
-
-<script lang="ts">
-import { defineComponent, inject } from 'vue';
+<script setup lang="ts">
+import { inject } from 'vue';
 import axios, { AxiosResponse, AxiosError } from "axios";
 import { useRoute } from 'vue-router';
 import { useAuth0 } from '@auth0/auth0-vue';
@@ -39,62 +8,46 @@ import { keywordApi } from '@/plugin/apis';
 import { timeFormat, titleForView, contentForView } from '@/plugin/util';
 import Tooltip from '@/components/Tooltip.vue';
 
-export default defineComponent({
-  name: 'KeywordItem',
-  components: {
-    KeywordEditButton,
-    Tooltip
-  },
-  props: {
-    edit_state: Object,
-    id: Number,
-    title: String,
-    content: String,
-    updated_at: String,
-    tags: Array
-  },
-  setup(props) {
-    const { user } = useAuth0();
-    const store = inject('keyword');
-    const dialogStore = inject('dialog');
-    const api = keywordApi();
-    const route = useRoute();
-
-    interface HTMLEvent<T extends EventTarget> extends Event {
-      target: T;
-    };
-
-    const removeKeyword = (event: HTMLEvent<HTMLButtonElement>): void => {
-      if (!window.confirm(`キーワード「${props.title}」が削除されますが宜しいですか？`)) {
-        return;
-      }
-
-      interface ErrorResponse {
-        message: String,
-        name: String,
-        code: String
-      };
-
-      store.remove(props.id); // api実行前に呼ばないとstoreの中身が検索できない
-      const id = event.currentTarget.getAttribute('data-id');
-      axios.delete(api.detailUrl(user.value.sub, route.params.library_id, route.params.category_id, id))
-      .then((response: AxiosResponse) => {
-        dialogStore.func.value('', 'キーワードを削除しました');
-      })
-      .catch((e: AxiosError<ErrorResponse>) => {
-        dialogStore.func.value('削除エラー', 'キーワード削除中にエラーが起きました。暫くお待ちいただいてから再度お試しください', 'error');
-      });
-    };
-
-    return {
-      user,
-      timeFormat,
-      titleForView,
-      contentForView,
-      removeKeyword
-    };
-  }
+const props = defineProps({
+  edit_state: Object,
+  id: Number,
+  title: String,
+  content: String,
+  updated_at: String,
+  tags: Array
 });
+
+const { user } = useAuth0();
+const store = inject('keyword');
+const dialogStore = inject('dialog');
+const api = keywordApi();
+const route = useRoute();
+
+interface HTMLEvent<T extends EventTarget> extends Event {
+  target: T;
+};
+
+const removeKeyword = (event: HTMLEvent<HTMLButtonElement>): void => {
+  if (!window.confirm(`キーワード「${props.title}」が削除されますが宜しいですか？`)) {
+    return;
+  }
+
+  interface ErrorResponse {
+    message: String,
+    name: String,
+    code: String
+  };
+
+  store.remove(props.id); // api実行前に呼ばないとstoreの中身が検索できない
+  const id = event.currentTarget.getAttribute('data-id') as String;
+  axios.delete(api.detailUrl(user.value.sub, route.params.library_id, route.params.category_id, id))
+  .then((response: AxiosResponse) => {
+    dialogStore.func.value('', 'キーワードを削除しました');
+  })
+  .catch((e: AxiosError<ErrorResponse>) => {
+    dialogStore.func.value('削除エラー', 'キーワード削除中にエラーが起きました。暫くお待ちいただいてから再度お試しください', 'error');
+  });
+};
 </script>
 
 <style scoped>
@@ -217,3 +170,34 @@ export default defineComponent({
   }
 }
 </style>
+
+<template>
+  <section class="p-keyword__item c-fadeIn--normal js-tooltip__content">
+    <router-link :to="{ name: 'keyword', params: {
+      username: String($route.params.username),
+      library_id: $route.params.library_id,
+      category_id: $route.params.category_id,
+      keyword_id: id
+    } }">
+    </router-link>
+    <section class="p-keyword__menu">
+      <section class="p-keyword__menuLink">
+        <KeywordEditButton :edit_state="edit_state" :id="id" :title="title" :content="content" />
+      </section>
+      <section class="p-keyword__menuLink">
+        <span @click="removeKeyword" class="p-delete__link" :data-id="id">削除</span>
+      </section>
+    </section>
+    <section class="p-keyword__body js-tooltip__title">
+      <p class="p-keyword__title">{{ titleForView(title, 'keyword') }}</p>
+      <p class="p-keyword__contents">{{ contentForView(content, 'keyword') }}</p>
+      <section class="p-keyword__tags">
+        <span class="p-keyword__tag" v-for="tag of tags" :key="tag.id">
+          {{ titleForView(tag.title, 'tag') }}
+        </span>
+      </section>
+    </section>
+    <span class="p-keyword__updated_at">{{ timeFormat(updated_at) }} 更新</span>
+  </section>
+  <Tooltip :message="title" />
+</template>

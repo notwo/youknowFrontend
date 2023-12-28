@@ -1,23 +1,8 @@
-<template>
-  <section class="l-overlay">
-    <section class="p-modal">
-      <CategoryForm :edit_state="edit_state" />
-    </section>
-  </section>
-</template>
-
-<script lang="ts">
-import { defineComponent } from 'vue';
+<script setup lang="ts">
 import CategoryForm from '@/components/modal/CategoryForm.vue';
 
-export default defineComponent({
-  name: 'CategoryModal',
-  components: {
-    CategoryForm
-  },
-  props: {
-    edit_state: Object
-  },
+defineProps({
+  edit_state: Object
 });
 </script>
 
@@ -67,3 +52,11 @@ export default defineComponent({
   }
 }
 </style>
+
+<template>
+  <section class="l-overlay">
+    <section class="p-modal">
+      <CategoryForm :edit_state="edit_state" />
+    </section>
+  </section>
+</template>

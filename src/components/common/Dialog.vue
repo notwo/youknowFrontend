@@ -9,7 +9,7 @@ const message = reactive({
 });
 
 const closeDialog = (): void => {
-  const dialog = document.getElementById('dialog');
+  const dialog = document.getElementById('dialog') as HTMLElement;
   dialog.classList.remove('open');
   dialog.classList.add('close');
   dialog.classList.add('c-fadeOut--fast');
@@ -20,7 +20,7 @@ const openDialog = (subject: String, body: String, mode: String = 'normal'): voi
   message.body = body;
   message.mode = mode;
 
-  const dialog = document.getElementById('dialog');
+  const dialog = document.getElementById('dialog') as HTMLElement;
   dialog.style.top = `${window.screenY+90}px`;
   dialog.classList.remove('close');
   dialog.classList.remove('c-fadeOut--fast');
@@ -29,7 +29,6 @@ const openDialog = (subject: String, body: String, mode: String = 'normal'): voi
 };
 
 dialogStore.setFunc(openDialog);
-
 </script>
 
 <style scoped>
