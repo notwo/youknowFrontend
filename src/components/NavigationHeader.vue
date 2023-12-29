@@ -11,11 +11,8 @@ import MenuItem from "@/components/MenuItem.vue";
   z-index: 9999;
 }
 .p-menuWrap {
-  display: flex;
-  justify-content: space-between;
   flex-wrap: wrap;
   padding: .2rem;
-  justify-content: space-between;
   background-color: black;
   z-index: 10000;
 }
@@ -23,7 +20,7 @@ import MenuItem from "@/components/MenuItem.vue";
 
 <template>
   <header class="l-header">
-    <section class="p-menuWrap c-color--white">
+    <section class="p-menuWrap c-flex--spaceBetween c-color--white">
       <MenuItem />
     </section>
   </header>

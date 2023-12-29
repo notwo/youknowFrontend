@@ -68,14 +68,12 @@ const removeKeyword = (event: HTMLEvent<HTMLButtonElement>): void => {
 .p-keyword__item a {
   position: absolute;
   width: 100%;
-  height: 100%;
+  height: 100vh;
   top: 0;
   left: 0;
 }
 
 .p-keyword__menu {
-  display: flex;
-  justify-content: flex-end;
   margin: .6rem;
   z-index: 1;
 }
@@ -180,7 +178,7 @@ const removeKeyword = (event: HTMLEvent<HTMLButtonElement>): void => {
       keyword_id: id
     } }">
     </router-link>
-    <section class="p-keyword__menu">
+    <section class="p-keyword__menu c-flex--end">
       <section class="p-keyword__menuLink">
         <KeywordEditButton :edit_state="edit_state" :id="id" :title="title" :content="content" />
       </section>

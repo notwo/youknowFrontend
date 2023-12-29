@@ -78,11 +78,6 @@ input.error {
   color: rgba(220,0,0,1);
 }
 
-.p-subText {
-  display: flex;
-  justify-content: space-between;
-}
-
 .p-count {
   margin: 1rem .3rem 0 auto;
   right: .5rem;
@@ -117,9 +112,6 @@ input.error {
     font-size: .9rem;
   }
 
-  .p-subText {
-  }
-
   .p-count {
     font-size: .7rem;
   }
@@ -144,7 +136,7 @@ input.error {
           :error-messages="v.title.$errors.map((e) => e.$message)"
           @blur="v.title.$touch"
           @input="v.title.$touch">
-        <section class="p-subText">
+        <section class="p-subText c-flex--spaceBetween">
           <section v-for="error of v.title.$errors" :key="error.$uid">
             <p class="p-error__message">{{ error.$message }}</p>
           </section>
@@ -158,7 +150,7 @@ input.error {
         <textarea v-model="state.content"
           :id="`${contentType}_content`"
           :placeholder="`${contentName}内容`" :maxlength="contentMaxLength"></textarea>
-        <section class="p-subText">
+        <section class="p-subText c-flex--spaceBetween">
           <span class="p-count">{{ state.content.length }} / {{ contentMaxLength }}</span>
         </section>
       </section>

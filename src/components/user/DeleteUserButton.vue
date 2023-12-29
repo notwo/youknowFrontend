@@ -68,7 +68,7 @@ button[type="button"] {
     <section class="p-form__field">
       <button type="button"
         @click="onDelete"
-        class="c-btn delete">アカウント削除する</button>
+        class="c-btn c-btn--delete">アカウント削除する</button>
     </section>
   </section>
 </template>

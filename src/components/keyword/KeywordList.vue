@@ -94,8 +94,6 @@ onUnmounted(() => {
 }
 
 .p-emptyMessage {
-  display: flex;
-  justify-content: center;
   font-size: 3.5rem;
 }
 
@@ -158,7 +156,7 @@ onUnmounted(() => {
       />
     </section>
     <section v-else-if="store.firstLoaded.value && !store.isSearched()">
-      <p class="p-emptyMessage c-fadeIn--fast">キーワードを追加してみましょう</p>
+      <p class="p-emptyMessage c-flex--center c-fadeIn--fast">キーワードを追加してみましょう</p>
     </section>
     <section v-else>
       <!-- ここにローディング -->

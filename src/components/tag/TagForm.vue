@@ -88,8 +88,6 @@ const addTag = (event: HTMLEvent<HTMLButtonElement>): void => {
 
 <style scoped>
 .p-formWrap {
-  display: flex;
-  justify-content: center;
   flex-wrap: wrap;
 }
 
@@ -101,10 +99,6 @@ const addTag = (event: HTMLEvent<HTMLButtonElement>): void => {
   padding: .47rem;
 }
 
-.p-error__messageWrap {
-  display: flex;
-  justify-content: center;
-}
 .p-error__message {
   margin: .8rem 0;
   font-weight: 700;
@@ -130,7 +124,7 @@ const addTag = (event: HTMLEvent<HTMLButtonElement>): void => {
 
 <template>
   <form action="" id="p-registerForm">
-    <section class="p-formWrap">
+    <section class="p-formWrap c-flex--center">
       <section class="p-form__group">
         <section class="p-form__field">
           <input type="text" class="p-tag__title" name="tag_title" id="tag_title"
@@ -142,7 +136,7 @@ const addTag = (event: HTMLEvent<HTMLButtonElement>): void => {
             @input="register_v$.title.$touch">
         </section>
         <section v-if="screenWidth < 416">
-          <section class="p-error__messageWrap" v-for="error of register_v$.title.$errors" :key="error.$uid">
+          <section class="p-error__messageWrap c-flex--center" v-for="error of register_v$.title.$errors" :key="error.$uid">
             <p class="p-error__message">{{ error.$message }}</p>
           </section>
         </section>
@@ -157,7 +151,7 @@ const addTag = (event: HTMLEvent<HTMLButtonElement>): void => {
       </section>
     </section>
     <section v-if="screenWidth >= 416">
-      <section class="p-error__messageWrap" v-for="error of register_v$.title.$errors" :key="error.$uid">
+      <section class="p-error__messageWrap c-flex--center" v-for="error of register_v$.title.$errors" :key="error.$uid">
         <p class="p-error__message">{{ error.$message }}</p>
       </section>
     </section>

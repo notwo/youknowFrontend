@@ -30,6 +30,26 @@ input.error {
 }
 
 /* components */
+.c-flex--start {
+  display: flex;
+  justify-content: start;
+}
+
+.c-flex--center {
+  display: flex;
+  justify-content: center;
+}
+
+.c-flex--spaceBetween {
+  display: flex;
+  justify-content: space-between;
+}
+
+.c-flex--end {
+  display: flex;
+  justify-content: flex-end;
+}
+
 .c-hidden {
   display: none;
 }
@@ -93,17 +113,17 @@ input.error {
 .c-btn--back:hover {
   background-color: #9bd9ec;
 }
-.c-btn.c-btn--register {
+.c-btn--register {
   border: none;
   background-color: rgba(27, 176, 27, 0.75);
 }
-.c-btn.c-btn--register:hover {
+.c-btn--register:hover {
   background-color: rgba(27, 196, 27, 0.75);
 }
-.c-btn.p-logout {
+.c-btn--logout {
   font-weight: 600;
 }
-.c-btn.p-logout:hover {
+.c-btn--logout:hover {
   background-color: rgba(50,50,50,0.75);
 }
 .c-btn:disabled {
@@ -113,11 +133,11 @@ input.error {
 .c-btn:disabled:hover {
   background-color: gray;
 }
-.c-btn.delete {
+.c-btn--delete {
   border: none;
   background-color: rgba(218, 24, 24, 0.75);
 }
-.c-btn.delete:hover {
+.c-btn--delete:hover {
   background-color: rgba(217, 56, 56, 0.75);
 }
 

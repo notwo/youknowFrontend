@@ -46,8 +46,6 @@ const startLogout = (event): void => {
 }
 
 .p-menu__item {
-  display: flex;
-  justify-content: center;
 }
 
 .p-menu__item li {
@@ -167,8 +165,8 @@ const startLogout = (event): void => {
 
 @media screen and (max-width: 768px) {
   .c-service__icon {
-  margin: 2rem 1rem;
-}
+    margin: 2rem 1rem;
+  }
 
   .p-menu {
     display: none;
@@ -187,19 +185,19 @@ const startLogout = (event): void => {
 <template>
   <section class="c-service__icon">サービスロゴ</section>
   <nav class="p-menu">
-    <ul v-if="!auth0.isAuthenticated.value" class="p-menu__item">
+    <ul v-if="!auth0.isAuthenticated.value" class="p-menu__item c-flex--spaceBetween">
       <li>
         <span @click="login" class="c-btn c-btn--register">ユーザ登録/ログイン</span>
       </li>
     </ul>
-    <ul v-else class="p-menu__item">
+    <ul v-else class="p-menu__item c-flex--spaceBetween">
       <li>
         <router-link :to="{ name: 'usertop', params: { username: String(auth0?.user?.value?.nickname) } }" class="c-btn">
           {{ auth0?.user?.value?.nickname }}
         </router-link>
       </li>
       <li>
-        <span @click="startLogout" class="c-btn p-logout">ログアウト</span>
+        <span @click="startLogout" class="c-btn c-btn--logout">ログアウト</span>
       </li>
     </ul>
   </nav>
@@ -224,7 +222,7 @@ const startLogout = (event): void => {
           </router-link>
         </li>
         <li>
-          <span @click="startLogout" class="c-btn p-logout">ログアウト</span>
+          <span @click="startLogout" class="c-btn c-btn--logout">ログアウト</span>
         </li>
       </ul>
     </nav>

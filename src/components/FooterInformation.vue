@@ -5,7 +5,6 @@
 .l-footer {
   padding: 3rem 0 0;
   background-color: black;
-  color: white;
 }
 
 .p-footer__contentsWrap {
@@ -16,8 +15,6 @@
 }
 
 .p-footer__list {
-  display: flex;
-  justify-content: space-between;
   flex-wrap: wrap;
 }
 
@@ -56,9 +53,9 @@
 </style>
 
 <template>
-  <footer class="l-footer">
+  <footer class="l-footer c-color--white">
     <section class="p-footer__contentsWrap">
-      <section class="p-footer__list">
+      <section class="p-footer__list c-flex--spaceBetween">
         <section class="p-footerContents">
           <section class="c-service__icon">サービスロゴ</section>
         </section>

@@ -14,11 +14,6 @@
   text-align: center;
 }
 
-.p-to__top {
-  display: flex;
-  justify-content: center;
-}
-
 .p-to__top a {
   color: #444;
   text-decoration: none;
@@ -44,7 +39,7 @@
     <p>お探しのページが見つかりませんでした。<br>
       入力されたURLが間違っているか、データが既に存在しない可能性があります。</p>
   </section>
-  <section class="p-to__top">
+  <section class="p-to__top c-flex--center">
     <router-link :to="{ name: 'top' }">
       You Know TOPへ戻る
     </router-link>

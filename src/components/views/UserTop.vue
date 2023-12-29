@@ -166,11 +166,6 @@ input.error {
   color: rgba(220,0,0,1);
 }
 
-.p-subText {
-  display: flex;
-  justify-content: space-between;
-}
-
 .p-count {
   margin: .8rem .3rem 0.8rem auto;
   right: .5rem;
@@ -249,7 +244,7 @@ button[type="button"] {
                 :error-messages="edit_v$.username.$errors.map((e) => e.$message)"
                 @blur="edit_v$.username.$touch"
                 @input="edit_v$.username.$touch">
-              <section class="p-subText">
+              <section class="p-subText c-flex--spaceBetween">
                 <section v-for="error of edit_v$.username.$errors" :key="error.$uid">
                   <section class="p-error__message">{{ error.$message }}</section>
                 </section>
@@ -271,7 +266,7 @@ button[type="button"] {
                 @blur="edit_v$.email.$touch"
                 @input="edit_v$.email.$touch">
             </section>
-            <section class="p-subText">
+            <section class="p-subText c-flex--spaceBetween">
               <section v-for="error of edit_v$.email.$errors" :key="error.$uid">
                 <section class="p-error__message">{{ error.$message }}</section>
               </section>

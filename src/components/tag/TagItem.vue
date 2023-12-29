@@ -71,8 +71,6 @@ const detachTag = (event: HTMLEvent<HTMLButtonElement>): void => {
 }
 
 .p-tag__menu {
-  display: flex;
-  justify-content: flex-end;
   margin: .2rem;
   z-index: 1;
 }
@@ -125,7 +123,7 @@ const detachTag = (event: HTMLEvent<HTMLButtonElement>): void => {
 
 <template>
   <section class="p-tag__item  c-fadeIn--normal">
-    <section class="p-tag__menu">
+    <section class="p-tag__menu c-flex--end">
       <section class="p-tag__menuLink">
         <span @click="detachTag" class="p-delete__link" :data-id="id">削除</span>
       </section>

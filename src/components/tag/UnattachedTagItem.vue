@@ -75,8 +75,6 @@ const selectTag = (event: HTMLEvent<HTMLButtonElement>): void => {
 }
 
 .p-unattachedTag__menu {
-  display: flex;
-  justify-content: flex-end;
   margin: .2rem;
   z-index: 1;
 }
@@ -114,7 +112,7 @@ const selectTag = (event: HTMLEvent<HTMLButtonElement>): void => {
 
 <template>
   <section class="p-unattachedTag__Item c-fadeIn--normal" @click="selectTag" :data-id="id">
-    <section class="p-unattachedTag__menu">
+    <section class="p-unattachedTag__menu c-flex--end">
       <section class="p-unattachedTag__menuLink">
         <span @click="removeTag" class="p-delete__link" :data-id="id">削除</span>
       </section>

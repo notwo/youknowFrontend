@@ -50,12 +50,6 @@ const closeModal = (event: HTMLEvent<HTMLButtonElement>): void => {
   color: #888;
 }
 
-#register-form {
-  display: none;
-}
-#edit-form {
-  display: none;
-}
 #register-form.visible {
   display: block;
 }
@@ -66,10 +60,10 @@ const closeModal = (event: HTMLEvent<HTMLButtonElement>): void => {
 
 <template>
   <span id="close" class="p-close" @click="closeModal">モーダルを閉じる</span>
-  <form action="" id="register-form" class="p-registerForm">
+  <form action="" id="register-form" class="p-registerForm c-hidden">
     <LibraryRegistrationForm :state="register_state" :v="register_v$" @closeEvent="closeModal" />
   </form>
-  <form action="" id="edit-form" class="p-editForm">
+  <form action="" id="edit-form" class="p-editForm c-hidden">
     <LibraryEditForm :state="edit_state" :v="edit_v$" @closeEvent="closeModal" />
   </form>
 </template>

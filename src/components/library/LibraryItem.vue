@@ -66,14 +66,12 @@ const removeLibrary = (event: HTMLEvent<HTMLButtonElement>): void => {
 .p-library__item a {
   position: absolute;
   width: 100%;
-  height: 100%;
+  height: 100vh%;
   top: 0;
   left: 0;
 }
 
 .p-library__menu {
-  display: flex;
-  justify-content: flex-end;
   margin: .6rem;
   z-index: 1;
 }
@@ -154,7 +152,7 @@ const removeLibrary = (event: HTMLEvent<HTMLButtonElement>): void => {
 <template>
   <section class="p-library__item c-fadeIn--normal js-tooltip__content">
     <router-link :to="{ name: 'categories', params: { username: String($route.params.username), library_id: id } }"></router-link>
-    <section class="p-library__menu">
+    <section class="p-library__menu c-flex--end">
       <section class="p-library__menuLink">
         <LibraryEditButton :edit_state="edit_state" :id="id" :title="title" :content="content" />
       </section>

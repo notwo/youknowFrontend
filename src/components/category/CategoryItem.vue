@@ -67,14 +67,12 @@ const removeCategory = (event: HTMLEvent<HTMLButtonElement>): void => {
 .p-category__item a {
   position: absolute;
   width: 100%;
-  height: 100%;
+  height: 100vh;
   top: 0;
   left: 0;
 }
 
 .p-category__menu {
-  display: flex;
-  justify-content: flex-end;
   margin: .6rem;
   z-index: 1;
 }
@@ -155,7 +153,7 @@ const removeCategory = (event: HTMLEvent<HTMLButtonElement>): void => {
 <template>
   <section class="p-category__item c-fadeIn--normal js-tooltip__content">
     <router-link :to="{ name: 'keywords', params: { username: String($route.params.username), library_id: $route.params.library_id, category_id: id } }"></router-link>
-    <section class="p-category__menu">
+    <section class="p-category__menu c-flex--end">
       <section class="p-category__menuLink">
         <CategoryEditButton :edit_state="edit_state" :id="id" :title="title" :content="content" />
       </section>
