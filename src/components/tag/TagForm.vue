@@ -87,25 +87,19 @@ const addTag = (event: HTMLEvent<HTMLButtonElement>): void => {
 </script>
 
 <style scoped>
-.form-wrap {
-  display: flex;
-  justify-content: center;
+.p-formWrap {
   flex-wrap: wrap;
 }
 
-.form-group {
+.p-form__group {
   margin: 0 .3rem;
 }
 
-.tag-title {
+.p-tag__title {
   padding: .47rem;
 }
 
-.error-message-wrap {
-  display: flex;
-  justify-content: center;
-}
-.error-message {
+.p-error__message {
   margin: .8rem 0;
   font-weight: 700;
   color: rgba(220,0,0,1);
@@ -113,12 +107,12 @@ const addTag = (event: HTMLEvent<HTMLButtonElement>): void => {
 
 /* sp */
 @media screen and (max-width: 414px) {
-  .form-wrap {
+  .p-formWrap {
     flex-direction: column;
     align-items: center;
   }
 
-  .form-group {
+  .p-form__group {
     margin: .8rem .3rem;
   }
 }
@@ -129,11 +123,11 @@ const addTag = (event: HTMLEvent<HTMLButtonElement>): void => {
 </style>
 
 <template>
-  <form action="" id="register-form">
-    <section class="form-wrap">
-      <section class="form-group">
-        <section class="form-field">
-          <input type="text" class="tag-title" name="tag_title" id="tag_title"
+  <form action="" id="p-registerForm">
+    <section class="p-formWrap c-flex--center">
+      <section class="p-form__group">
+        <section class="p-form__field">
+          <input type="text" class="p-tag__title" name="tag_title" id="tag_title"
             :class="[register_v$.title.$errors.length >= 1 ? 'error' : '']"
             v-model="register_state.title"
             :error-messages="register_v$.title.$errors.map((e) => e.$message)"
@@ -142,23 +136,23 @@ const addTag = (event: HTMLEvent<HTMLButtonElement>): void => {
             @input="register_v$.title.$touch">
         </section>
         <section v-if="screenWidth < 416">
-          <section class="error-message-wrap" v-for="error of register_v$.title.$errors" :key="error.$uid">
-            <p class="error-message">{{ error.$message }}</p>
+          <section class="p-error__messageWrap c-flex--center" v-for="error of register_v$.title.$errors" :key="error.$uid">
+            <p class="p-error__message">{{ error.$message }}</p>
           </section>
         </section>
       </section>
-      <section class="form-group">
-        <section class="form-field">
+      <section class="p-form__group">
+        <section class="p-form__field">
           <button type="button"
-          class="btn register"
+          class="c-btn c-btn--register"
           @click="addTag"
           :disabled="!(register_v$.title.$errors.length === 0 && register_state.title !== '')">このキーワードにタグを追加</button>
         </section>
       </section>
     </section>
     <section v-if="screenWidth >= 416">
-      <section class="error-message-wrap" v-for="error of register_v$.title.$errors" :key="error.$uid">
-        <p class="error-message">{{ error.$message }}</p>
+      <section class="p-error__messageWrap c-flex--center" v-for="error of register_v$.title.$errors" :key="error.$uid">
+        <p class="p-error__message">{{ error.$message }}</p>
       </section>
     </section>
   </form>

@@ -104,13 +104,13 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.page-title {
+.p-pageTitle {
   margin: .2rem .9rem;
   font-size: 2rem;
   text-align: center;
 }
 
-.form-wrap {
+.p-formWrap {
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -119,10 +119,10 @@ onMounted(() => {
   margin: 2rem 5rem;
 }
 
-.form-group {
+.p-form__group {
   margin: 1.3rem 0;
 }
-.form-group.attention {
+.p-form__group.attention {
   margin: 2.3rem 0;
 }
 
@@ -160,19 +160,14 @@ input.error {
   border-color: rgba(220,0,0,0.3);
   background-color: rgba(220,0,0,0.3);
 }
-.error-message {
+.p-error__message {
   margin: .8rem 0;
   font-weight: 700;
   color: rgba(220,0,0,1);
 }
 
-.sub-text {
-  display: flex;
-  justify-content: space-between;
-}
-
-.count {
-  margin: 1rem .3rem 0 auto;
+.p-count {
+  margin: .8rem .3rem 0.8rem auto;
   right: .5rem;
   font-size: .9rem;
   color: #888;
@@ -184,13 +179,17 @@ button[type="button"] {
 
 /* sp */
 @media screen and (max-width: 414px) {
-  .page-title {
+  .p-pageTitle {
     margin: 1.2rem 1.4rem;
     font-size: 1.7rem;
   }
 
-  .form-wrap {
+  .p-formWrap {
     margin: auto;
+  }
+
+  .p-error__message {
+    font-size: .9rem;
   }
 
   input[type="text"] {
@@ -204,8 +203,12 @@ button[type="button"] {
 
 /* tablet */
 @media screen and (min-width: 415px) and (max-width: 640px) {
-  .form-wrap {
+  .p-formWrap {
     margin: auto;
+  }
+
+  .p-error__message {
+    font-size: .9rem;
   }
 
   input[type="text"] {
@@ -222,15 +225,15 @@ button[type="button"] {
   <Dialog />
   <BackButton />
   <!-- TODO: ここにユーザプロフィール画像を載せられるようにする -->
-  <section class="page-title">ユーザ情報の更新</section>
-  <section class="profile">
-    <section class="prof-content">
-      <section class="prof-image"></section>
-      <form action="">
-        <section class="form-wrap">
-          <section class="form-group">
+  <p class="p-pageTitle">ユーザ情報の更新</p>
+  <section class="p-profile">
+    <section class="p-profile__content">
+      <section class="p-profile__image"></section>
+      <form action="p-form">
+        <section class="p-formWrap">
+          <section class="p-form__group">
             <label for="username" class="required">ユーザ名</label>
-            <section class="form-field">
+            <section class="p-form__field">
               <input type="text"
                 :class="[edit_v$.username.$errors.length >= 1 ? 'error' : '']"
                 v-model="edit_state.username"
@@ -241,17 +244,17 @@ button[type="button"] {
                 :error-messages="edit_v$.username.$errors.map((e) => e.$message)"
                 @blur="edit_v$.username.$touch"
                 @input="edit_v$.username.$touch">
-              <section class="sub-text">
+              <section class="p-subText c-flex--spaceBetween">
                 <section v-for="error of edit_v$.username.$errors" :key="error.$uid">
-                  <section class="error-message">{{ error.$message }}</section>
+                  <section class="p-error__message">{{ error.$message }}</section>
                 </section>
-                <span class="count">{{ edit_state.username.length }} / 50</span>
+                <span class="p-count">{{ edit_state.username.length }} / 50</span>
               </section>
             </section>
           </section>
-          <section class="form-group">
+          <section class="p-form__group">
             <label for="email" class="required">メールアドレス</label>
-            <section class="form-field">
+            <section class="p-form__field">
               <input type="email"
                 :class="[edit_v$.email.$errors.length >= 1 ? 'error' : '']"
                 v-model="edit_state.email"
@@ -263,22 +266,22 @@ button[type="button"] {
                 @blur="edit_v$.email.$touch"
                 @input="edit_v$.email.$touch">
             </section>
-            <section class="sub-text">
+            <section class="p-subText c-flex--spaceBetween">
               <section v-for="error of edit_v$.email.$errors" :key="error.$uid">
-                <section class="error-message">{{ error.$message }}</section>
+                <section class="p-error__message">{{ error.$message }}</section>
               </section>
-              <span class="count">{{ edit_state.email.length }} / 150</span>
+              <span class="p-count">{{ edit_state.email.length }} / 150</span>
             </section>
           </section>
-          <section class="form-group">
-            <section class="form-field">
+          <section class="p-form__group">
+            <section class="p-form__field">
               <button type="button"
                 @click="onSubmit"
                 :disabled="!(
                   (edit_v$.username.$errors.length === 0 && edit_state.username !== '') &&
                   (edit_v$.email.$errors.length === 0 && edit_state.email !== '')
                 )"
-                class="btn register">ユーザ情報を更新する</button>
+                class="c-btn c-btn--register">ユーザ情報を更新する</button>
             </section>
           </section>
           <DeleteUserButton />

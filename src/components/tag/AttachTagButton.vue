@@ -17,11 +17,17 @@ const api = {
 
 interface KeywordRequest {
   custom_user: String,
-  content: String
+  tags: Array<Object>
+};
+
+interface ErrorResponse {
+  message: String,
+  name: String,
+  code: String
 };
 
 const AttachTag = (): void => {
-  const selectedTags = document.getElementsByClassName('selected');
+  const selectedTags = document.getElementsByClassName('selected') as HTMLCollectionOf<HTMLElement>;
   const tagIds = tagStore.items.list.map((tag) =>
     {
       return { id: tag.id };
@@ -52,12 +58,12 @@ const AttachTag = (): void => {
 </script>
 
 <style scoped>
-.form-wrap {
+.p-formWrap {
   margin: 0 auto;
   max-width: 20rem;
 }
 
-.form-field .btn {
+.p-form__field .c-btn {
   display: block;
   margin: 0 auto;
   font-size: 1rem;
@@ -66,11 +72,11 @@ const AttachTag = (): void => {
 </style>
 
 <template>
-  <form action="" class="">
-    <section class="form-wrap">
-      <section class="form-group">
-        <section class="form-field">
-          <button type="button" @click="AttachTag" id="attachButton" class="btn register" :disabled="true">選択したタグをキーワードにつける</button>
+  <form action="" class="p-attachTagForm">
+    <section class="p-formWrap">
+      <section class="p-form__group">
+        <section class="p-form__field">
+          <button type="button" @click="AttachTag" id="attachButton" class="c-btn c-btn--register" :disabled="true">選択したタグをキーワードにつける</button>
         </section>
       </section>
     </section>

@@ -2,19 +2,18 @@
 import { onMounted, onUnmounted } from 'vue';
 
 let scrollId: number = 0;
-const f = (): void => {
+const showButton = (): void => {
   const button = document.getElementById('scrollToTopButton') as HTMLElement;
-  button.classList.remove('hidden-no-animation');
   if (window.scrollY === 0) {
-    button.classList.add('hidden');
+    button.classList.add('js-fadeOut');
     clearInterval(scrollId);
   } else {
-    button.classList.remove('hidden');
+    button.classList.remove('js-fadeOut');
   }
 };
 
 const scrollToTop = (event): Boolean => {
-  const scroll = () => {
+  const scroll = (): void => {
     window.scrollTo(0, window.scrollY - window.scrollY / 10);
   };
 
@@ -24,21 +23,21 @@ const scrollToTop = (event): Boolean => {
 };
 
 onMounted(() => {
-  window.addEventListener("scroll", f, { passive: true });
+  window.addEventListener("scroll", showButton, { passive: true });
 });
 onUnmounted(() => {
-  window.removeEventListener("scroll", f, false);
+  window.removeEventListener("scroll", showButton, false);
 });
 </script>
 
 <style scoped>
-.scroll-to-top-button {
+.p-scrollToTopButton {
   position: fixed;
   bottom: 1.6rem;
   right: 2rem;
   z-index: 9000;
 }
-.scroll-to-top-button a {
+.p-scrollToTopButton a {
   display: block;
   position: relative;
   border-radius: 50%;
@@ -47,16 +46,12 @@ onUnmounted(() => {
   cursor: pointer;
   background-color: rgba(180,180,180,.6);
   overflow: hidden;
-  animation: fadeIn .3s ease;
 }
-.scroll-to-top-button a.hidden-no-animation {
-  display: none;
-}
-.scroll-to-top-button a.hidden {
+.p-scrollToTopButton a.js-fadeOut {
   animation: fadeOut .3s ease 0s;
   animation-fill-mode: forwards;
 }
-.scroll-to-top-button a:before {
+.p-scrollToTopButton a:before {
   display: inline-block;
   content: "";
   position: absolute;
@@ -70,26 +65,9 @@ onUnmounted(() => {
   transform: rotate(-45deg);
 }
 
-@keyframes fadeIn {
-  0%{
-    display: none;
-    opacity: 0;
-  }
-  100%{
-    opacity: 1;
-  }
-}
-@keyframes fadeOut {
-  0%{ opacity: 1; }
-  100%{
-    display: none;
-    opacity: 0;
-  }
-}
-
 /* sp */
 @media screen and (max-width: 1024px) {
-  .scroll-to-top-button {
+  .p-scrollToTopButton {
     bottom: .3rem;
     right: .3rem;
   }
@@ -97,7 +75,7 @@ onUnmounted(() => {
 
 /* tablet */
 @media screen and (min-width: 1025px) and (max-width: 1409px) {
-  .scroll-to-top-button {
+  .p-scrollToTopButton {
     bottom: 1rem;
     right: 1rem;
   }
@@ -105,7 +83,7 @@ onUnmounted(() => {
 </style>
 
 <template>
-  <section class="scroll-to-top-button">
-    <a id="scrollToTopButton" @click="scrollToTop" class="hidden hidden-no-animation"></a>
+  <section class="p-scrollToTopButton">
+    <a id="scrollToTopButton" @click="scrollToTop" class="js-fadeOut c-fadeIn--fast"></a>
   </section>
 </template>

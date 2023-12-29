@@ -39,14 +39,14 @@ onMounted(() => {
 </script>
 
 <style scoped>
-#unattached-tag-list {
+#p-unattached__tagList {
   position: relative;
   margin: 5rem .8rem;
   border: 1px solid #888;
   border-radius: .4rem;
 }
 
-#unattached-tag-list .subject {
+#p-unattached__tagList .p-subject {
   display: inline-block;
   position: absolute;
   padding: 0 .5rem;
@@ -59,23 +59,28 @@ onMounted(() => {
   background-color: rgb(250, 250, 252);
 }
 
-.unattached-tag-body {
+.p-tag__body {
   margin: .8rem;
 }
 
-.unattached-tag-item-wrap {
-  display: flex;
-  justify-content: start;
+.p-tag__itemWrap {
   flex-wrap: wrap;
   margin: 1.4rem 0;
+}
+
+/* sp */
+@media screen and (max-width: 768px) {
+  #p-unattached__tagList .p-subject {
+    transform: translateX(34%);
+  }
 }
 </style>
 
 <template>
-  <article v-if="TagList.length > 0" id="unattached-tag-list">
-    <section class="subject">未登録のタグ</section>
-    <section class="unattached-tag-body">
-      <section class="unattached-tag-item-wrap">
+  <article v-if="TagList.length > 0" id="p-unattached__tagList">
+    <span class="p-subject">未登録のタグ</span>
+    <section class="p-tag__body">
+      <section class="p-tag__itemWrap c-flex--start">
         <UnattachedTagItem
           v-for="tag in TagList"
             :key="tag.id"

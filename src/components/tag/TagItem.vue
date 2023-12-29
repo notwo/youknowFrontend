@@ -33,14 +33,14 @@ interface HTMLEvent<T extends EventTarget> extends Event {
 };
 
 const detachTag = (event: HTMLEvent<HTMLButtonElement>): void => {
-  const tagId = event.currentTarget.getAttribute('data-id');
+  const tagId = event.currentTarget.getAttribute('data-id') as String;
   const tagIds = tagStore.items.list.map((tag) =>
     {
       return { id: tag.id };
     }
-  );
+  ) as Array<Object>;
 
-  const detachTargetTag = tagStore.items.list.filter(tag => tag.id === Number(tagId));
+  const detachTargetTag = tagStore.items.list.filter(tag => tag.id === Number(tagId)) as Array<Object>;
  
   const requestParam: KeywordRequest = {
     custom_user: user.value.sub,
@@ -60,7 +60,7 @@ const detachTag = (event: HTMLEvent<HTMLButtonElement>): void => {
 </script>
 
 <style scoped>
-.tag-item {
+.p-tag__item {
   position: relative;
   margin: .9rem .4rem;
   padding: .3rem;
@@ -68,41 +68,28 @@ const detachTag = (event: HTMLEvent<HTMLButtonElement>): void => {
   border-radius: .3rem;
   z-index: 0;
   background: rgba(255,255,255,.9);
-  animation: fadeIn .7s ease;
 }
 
-@keyframes fadeIn {
-  0%{
-    display: none;
-    opacity: 0;
-  }
-  100%{
-    opacity: 1;
-  }
-}
-
-.tag-menu {
-  display: flex;
-  justify-content: flex-end;
+.p-tag__menu {
   margin: .2rem;
   z-index: 1;
 }
 
-.tag-menu-item {
+.p-tag__menuLink {
   margin: .3rem;
   z-index: 1;
 }
 
-.tag-menu-item:hover {
+.p-tag__menuLink:hover {
   color: #888;
   cursor: pointer;
 }
 
-.tag-item-body {
+.p-tag__body {
   margin: .5rem .5rem;
 }
 
-.title {
+.p-tag__title {
   padding: .3rem 0;
   font-size: 1.4rem;
   font-weight: 800;
@@ -110,20 +97,20 @@ const detachTag = (event: HTMLEvent<HTMLButtonElement>): void => {
 
 /* sp */
 @media screen and (max-width: 767px) {
-  .tag-item {
+  .p-tag__item {
     margin: .6rem .3rem;
     padding: .2rem;
   }
 
-  .tag-menu {
+  .p-tag__menu {
     margin: .1rem;
   }
 
-  .delete-item {
+  .p-delete__link {
     font-size: .8rem;
   }
 
-  .title {
+  .p-tag__title {
     font-size: .9rem;
     font-weight: 300;
   }
@@ -135,14 +122,14 @@ const detachTag = (event: HTMLEvent<HTMLButtonElement>): void => {
 </style>
 
 <template>
-  <section class="tag-item">
-    <section class="tag-menu">
-      <section class="tag-menu-item">
-        <span @click="detachTag" class="delete-item" :data-id="id">削除</span>
+  <section class="p-tag__item  c-fadeIn--normal">
+    <section class="p-tag__menu c-flex--end">
+      <section class="p-tag__menuLink">
+        <span @click="detachTag" class="p-delete__link" :data-id="id">削除</span>
       </section>
     </section>
-    <section class="tag-item-body">
-      <p class="title">{{ titleForView(title, 'tag') }}</p>
+    <section class="p-tag__body">
+      <p class="p-tag__title">{{ titleForView(title, 'tag') }}</p>
     </section>
   </section>
 </template>

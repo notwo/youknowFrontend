@@ -10,32 +10,28 @@ const onSearch = (event): void => {
 </script>
 
 <style scoped>
-.search-form {
-  display: flex;
-  justify-content: center;
+.p-searchWrap {
   padding: 1rem 0;
 }
 
-.search {
+.p-search {
   padding: .6rem;
   width: 85%;
   border: none;
 }
 
-.search-button {
+.p-searchButton {
   cursor: pointer;
   border: none;
 }
 
 /* sp */
 @media screen and (max-width: 414px) {
-  .search-form {
-    display: flex;
-    justify-content: center;
+  .p-searchWrap {
     padding: 1rem 0;
   }
 
-  .search {
+  .p-search {
     padding: .6rem;
     width: 65%;
   }
@@ -47,11 +43,11 @@ const onSearch = (event): void => {
 </style>
 
 <template>
-  <form action="">
-    <section class="search-form">
-      <input type="text" name="search" id="search" class="search" :placeholder="`${contentName}を検索`">
-      <button type="button" class="search-button" @click="onSearch">
-        <img src="@/assets/images/search.png" width="20" alt="search" loading="lazy">
+  <form action="" class="p-searchForm">
+    <section class="p-searchWrap c-flex--center">
+      <input type="text" name="search" id="search" class="p-search" :placeholder="`${contentName}を検索`">
+      <button type="button" class="p-searchButton" @click="onSearch">
+        <img src="@/assets/images/search.png" width="20" alt="search" loading="lazy" class="p-searchImg">
       </button>
     </section>
   </form>

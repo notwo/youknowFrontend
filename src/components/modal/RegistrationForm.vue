@@ -15,12 +15,12 @@ const onSubmit = (event): void => {
 </script>
 
 <style scoped>
-.form-wrap {
+.p-formWrap {
   margin: 0 auto;
   max-width: 23rem;
 }
 
-.form-group {
+.p-form__group {
   margin: 3rem 0;
 }
 
@@ -72,18 +72,13 @@ input.error {
   border-color: rgba(220,0,0,0.3);
   background-color: rgba(220,0,0,0.3);
 }
-.error-message {
+.p-error__message {
   margin: .8rem 0;
   font-weight: 700;
   color: rgba(220,0,0,1);
 }
 
-.sub-text {
-  display: flex;
-  justify-content: space-between;
-}
-
-.count {
+.p-count {
   margin: 1rem .3rem 0 auto;
   right: .5rem;
   font-size: .9rem;
@@ -92,7 +87,7 @@ input.error {
 
 /* sp */
 @media screen and (max-width: 414px) {
-  .form-wrap {
+  .p-formWrap {
     max-width: 15.5rem;
     margin: 0 auto;
   }
@@ -101,7 +96,7 @@ input.error {
     margin: .75rem 0;
   }
 
-  .form-field {
+  .p-form__field {
     text-align: center;
   }
 
@@ -113,14 +108,11 @@ input.error {
     width: 13rem;
   }
 
-  .error-message {
+  .p-error__message {
     font-size: .9rem;
   }
 
-  .sub-text {
-  }
-
-  .count {
+  .p-count {
     font-size: .7rem;
   }
 }
@@ -131,10 +123,10 @@ input.error {
 </style>
 
 <template>
-  <section class="form-wrap">
-    <section class="form-group">
+  <section class="p-formWrap">
+    <section class="p-form__group">
       <label :for="`${contentType}_title`" class="required">{{ contentName }}名</label>
-      <section class="form-field">
+      <section class="p-form__field">
         <input type="text"
           :class="[v.title.$errors.length >= 1 ? 'error' : '']"
           v-model="state.title"
@@ -144,31 +136,31 @@ input.error {
           :error-messages="v.title.$errors.map((e) => e.$message)"
           @blur="v.title.$touch"
           @input="v.title.$touch">
-        <section class="sub-text">
+        <section class="p-subText c-flex--spaceBetween">
           <section v-for="error of v.title.$errors" :key="error.$uid">
-            <p class="error-message">{{ error.$message }}</p>
+            <p class="p-error__message">{{ error.$message }}</p>
           </section>
-          <span class="count">{{ state.title.length }} / {{ titleMaxLength }}</span>
+          <span class="p-count">{{ state.title.length }} / {{ titleMaxLength }}</span>
         </section>
       </section>
     </section>
-    <section class="form-group">
+    <section class="p-form__group">
       <label :for="`${contentType}_content`" class="">内容</label>
-      <section class="form-field">
+      <section class="p-form__field">
         <textarea v-model="state.content"
           :id="`${contentType}_content`"
           :placeholder="`${contentName}内容`" :maxlength="contentMaxLength"></textarea>
-        <section class="sub-text">
-          <span class="count">{{ state.content.length }} / {{ contentMaxLength }}</span>
+        <section class="p-subText c-flex--spaceBetween">
+          <span class="p-count">{{ state.content.length }} / {{ contentMaxLength }}</span>
         </section>
       </section>
     </section>
-    <section class="form-group">
-      <section class="form-field">
+    <section class="p-form__group">
+      <section class="p-form__field">
         <button type="button"
           @click="onSubmit"
           :disabled="!(v.title.$errors.length === 0 && state.title !== '')"
-          class="btn register">{{ contentName }}を追加する</button>
+          class="c-btn c-btn--register">{{ contentName }}を追加する</button>
       </section>
     </section>
   </section>

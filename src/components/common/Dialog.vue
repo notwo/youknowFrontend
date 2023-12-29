@@ -9,9 +9,10 @@ const message = reactive({
 });
 
 const closeDialog = (): void => {
-  const dialog = document.getElementById('dialog');
+  const dialog = document.getElementById('dialog') as HTMLElement;
   dialog.classList.remove('open');
   dialog.classList.add('close');
+  dialog.classList.add('c-fadeOut--fast');
 };
 
 const openDialog = (subject: String, body: String, mode: String = 'normal'): void => {
@@ -19,15 +20,15 @@ const openDialog = (subject: String, body: String, mode: String = 'normal'): voi
   message.body = body;
   message.mode = mode;
 
-  const dialog = document.getElementById('dialog');
+  const dialog = document.getElementById('dialog') as HTMLElement;
   dialog.style.top = `${window.screenY+90}px`;
   dialog.classList.remove('close');
+  dialog.classList.remove('c-fadeOut--fast');
   dialog.classList.add('open');
   setTimeout(closeDialog, 1600);
 };
 
 dialogStore.setFunc(openDialog);
-
 </script>
 
 <style scoped>
@@ -50,7 +51,7 @@ dialogStore.setFunc(openDialog);
 }
 */
 
-.dialog {
+.p-dialog {
   position: fixed;
   display: none;
   border-radius: .3rem;
@@ -58,75 +59,50 @@ dialogStore.setFunc(openDialog);
   z-index: 9997;
   background-color: rgba(245,245,245,.9);
   box-shadow: 1px 1px 1px 1px black;
-  animation: fadeIn .3s ease;
 }
-.dialog.open {
+.p-dialog.open {
   display: block;
 }
-.dialog.close {
+.p-dialog.close {
   display: none;
-  animation: fadeOut .3s ease;
 }
 
-@keyframes fadeIn {
-  0%{
-    display: none;
-    opacity: 0;
-  }
-  100%{
-    opacity: 1;
-  }
+.p-dialogWrap {
 }
 
-@keyframes fadeOut {
-  0%{
-    display: block;
-    opacity: 1;
-  }
-  100%{
-    opacity: 0;
-  }
-}
-
-.dialog-wrap {
-}
-
-.dialog-contents {
+.p-dialogContents {
   padding: .3rem .5rem;
   text-align: center;
 }
 
-.subject {
+.p-dialog__subject {
   margin: .6rem 0;
   font-weight: 600;
   font-size: 1rem;
 }
 
-.body {
+.p-dialog__body {
   font-size: .8rem;
 }
 
-.error {
-  color: red;
-}
 </style>
 
 <template>
-  <dialog class="dialog" id="dialog">
-    <section class="dialog-wrap">
-      <section class="dialog-contents" v-if="message.mode === 'normal'">
-        <p class="subject" v-if="message.subject.length > 0">{{ message.subject }}</p>
-        <p class="body">{{ message.body }}</p>
+  <dialog class="p-dialog c-fadeIn--fast" id="dialog">
+    <section class="p-dialogWrap">
+      <section class="p-dialogContents" v-if="message.mode === 'normal'">
+        <p class="p-dialog__subject" v-if="message.subject.length > 0">{{ message.subject }}</p>
+        <p class="p-dialog__body">{{ message.body }}</p>
       </section>
-      <section class="dialog-contents error" v-if="message.mode === 'error'">
-        <p class="subject error" v-if="message.subject.length > 0">{{ message.subject }}</p>
-        <p class="body error">{{ message.body }}</p>
+      <section class="p-dialogContents c-color--red" v-if="message.mode === 'error'">
+        <p class="p-dialog__subject c-color--red" v-if="message.subject.length > 0">{{ message.subject }}</p>
+        <p class="p-dialog__body c-color--red">{{ message.body }}</p>
       </section>
     </section>
     <!--
     <section class="dialog-overlay">
-      <section class="dialog">
-        <section class="dialog-contents">
+      <section class="p-dialog">
+        <section class="p-dialogContents">
           こ↑こ↓
         </section>
       </section>

@@ -10,61 +10,9 @@ body {
 
 #app {
   height: 100vh;
-}
-
-.hidden {
-  display: none;
-}
-
-.btn {
-  display: block;
-  margin: 0 auto;
-  border-radius: 0.5rem;
-  cursor: pointer;
-  padding: 0.5rem 0.8rem;
-  text-align: center;
-  font-weight: 700;
-  font-size: 0.9rem;
-  line-height: 1.5;
-  color: #eeeeee;
-  text-decoration: none;
-  letter-spacing: 0.1em;
-}
-.btn.back {
-  border: none;
-  background-color: #9ac9ec;
-}
-.btn.back:hover {
-  background-color: #9bd9ec;
-}
-.btn.register {
-  border: none;
-  background-color: rgba(27, 176, 27, 0.75);
-}
-.btn.register:hover {
-  background-color: rgba(27, 196, 27, 0.75);
-}
-.btn.logout:hover {
-  background-color: rgba(50,50,50,0.75);
-}
-.btn:disabled {
-  background-color: rgba(150,150,150,0.8);
-  pointer-events: none;
-}
-.btn:disabled:hover {
-  background-color: gray;
-}
-.btn.delete {
-  border: none;
-  background-color: rgba(218, 24, 24, 0.75);
-}
-.btn.delete:hover {
-  background-color: rgba(217, 56, 56, 0.75);
-}
-
-/* google fonts */
-a,p,span,li,button,input,textarea,label {
-  font-family: 'Noto Serif JP', serif;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
 ol,ul {
@@ -79,4 +27,121 @@ input.error {
   border-radius: .2rem;
   border-color: rgba(220,0,0,0.3);
   background-color: rgba(220,0,0,0.3);
+}
+
+/* components */
+.c-flex--start {
+  display: flex;
+  justify-content: start;
+}
+
+.c-flex--center {
+  display: flex;
+  justify-content: center;
+}
+
+.c-flex--spaceBetween {
+  display: flex;
+  justify-content: space-between;
+}
+
+.c-flex--end {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.c-hidden {
+  display: none;
+}
+
+.c-color--white {
+  color: white;
+}
+
+.c-color--red {
+  color: red;
+}
+
+.c-fadeIn--fast {
+  animation: fadeIn .3s ease;
+}
+.c-fadeIn--normal {
+  animation: fadeIn .7s ease;
+}
+@keyframes fadeIn {
+  0%{
+    display: none;
+    opacity: 0;
+  }
+  100%{
+    opacity: 1;
+  }
+}
+
+.c-fadeOut--fast {
+  animation: fadeOut .3s ease;
+}
+@keyframes fadeOut {
+  0%{
+    display: block;
+    opacity: 1;
+  }
+  100%{
+    opacity: 0;
+  }
+}
+
+/** button **/
+.c-btn {
+  display: block;
+  margin: 0 auto;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  padding: 0.5rem 0.8rem;
+  text-align: center;
+  font-weight: 700;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: #eeeeee;
+  text-decoration: none;
+  letter-spacing: 0.1em;
+}
+.c-btn--back {
+  border: none;
+  background-color: #9ac9ec;
+}
+.c-btn--back:hover {
+  background-color: #9bd9ec;
+}
+.c-btn--register {
+  border: none;
+  background-color: rgba(27, 176, 27, 0.75);
+}
+.c-btn--register:hover {
+  background-color: rgba(27, 196, 27, 0.75);
+}
+.c-btn--logout {
+  font-weight: 600;
+}
+.c-btn--logout:hover {
+  background-color: rgba(50,50,50,0.75);
+}
+.c-btn:disabled {
+  background-color: rgba(150,150,150,0.8);
+  pointer-events: none;
+}
+.c-btn:disabled:hover {
+  background-color: gray;
+}
+.c-btn--delete {
+  border: none;
+  background-color: rgba(218, 24, 24, 0.75);
+}
+.c-btn--delete:hover {
+  background-color: rgba(217, 56, 56, 0.75);
+}
+
+/* google fonts */
+a,p,span,li,button,input,textarea,label {
+  font-family: 'Noto Serif JP', serif;
 }

@@ -8,7 +8,7 @@ const login = (event): void => {
 </script>
 
 <style scoped>
-.main-contents {
+.p-mainContents {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -16,23 +16,23 @@ const login = (event): void => {
   margin: 2rem 5rem;
 }
 
-.main-contents a {
+.p-mainContents a {
   color: #444;
   text-decoration: none;
 }
 
-.box {
+.p-mainContents__box {
   padding:  3rem 2rem;
   border: 1px #85ccff solid;
   border-radius: .6rem;
   width: 70%;
   cursor: pointer;
 }
-.box:hover {
+.p-mainContents__box:hover {
   border: 1px rgb(74, 92, 255) solid;
 }
 
-.box p {
+.p-mainContents__box p {
   font-size: 2rem;
   font-weight: 800;
   text-align: center;
@@ -40,34 +40,34 @@ const login = (event): void => {
 
 /* sp */
 @media screen and (max-width: 414px) {
-  .main-contents {
+  .p-mainContents {
     margin: 2rem 1rem;
   }
 
-  .box {
+  .p-mainContents__box {
     width: 80%;
   }
 
-  .box p {
+  .p-mainContents__box p {
     font-size: 1.2rem;
   }
 }
 
 /* tablet */
 @media screen and (min-width: 415px) and (max-width: 1024px) {
-  .box {
+  .p-mainContents__box {
     width: 80%;
   }
 }
 </style>
 
 <template>
-  <section class="main-contents">
-    <router-link :to="{ name: 'libraries', params: { username: String(auth0?.user?.value?.nickname) } }" class="box" v-if="auth0.isAuthenticated.value">
-      <p>データを登録してみる</p>
+  <section class="p-mainContents">
+    <router-link :to="{ name: 'libraries', params: { username: String(auth0?.user?.value?.nickname) } }" class="p-mainContents__box" v-if="auth0.isAuthenticated.value">
+      <p class="p-mainContents__message">データを登録してみる</p>
     </router-link>
-    <section v-else @click="login" class="box">
-      <p>データを登録してみる</p>
+    <section v-else @click="login" class="p-mainContents__box">
+      <p class="p-mainContents__message">データを登録してみる</p>
     </section>
   </section>
 </template>

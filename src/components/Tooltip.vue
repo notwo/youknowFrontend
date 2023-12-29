@@ -8,12 +8,12 @@ const props = defineProps({
 let timeoutId: Number = 0;
 const showTooltip = (e): void => {
   const currentContent = e.currentTarget as HTMLElement;
-  const title = currentContent.getElementsByClassName('title') as HTMLCollectionOf<HTMLElement>;
+  const title = currentContent.getElementsByClassName('js-tooltip__title') as HTMLCollectionOf<HTMLElement>;
   const tooltip = currentContent.nextElementSibling as HTMLElement;
   const _showTooltip = (): void => {
     tooltip.style.left = `${title[0].getBoundingClientRect().left + window.scrollX}px`;
     tooltip.style.top = `${title[0].getBoundingClientRect().bottom + window.scrollY - 23}px`;
-    tooltip.classList.add('tooltip-open');
+    tooltip.classList.add('p-tooltip__open');
   };
   timeoutId = setTimeout(_showTooltip, 300);
 };
@@ -21,11 +21,11 @@ const hideTooltip = (e): void => {
   clearTimeout(timeoutId);
   const currentContent = e.currentTarget as HTMLElement;
   const tooltip = currentContent.nextElementSibling as HTMLElement;
-  tooltip.classList.remove('tooltip-open');
+  tooltip.classList.remove('p-tooltip__open');
 };
 
 onMounted(() => {
-  const tooltipContents = document.querySelectorAll('.tooltip-content');
+  const tooltipContents = document.querySelectorAll('.js-tooltip__content');
   tooltipContents.forEach((content) => {
     timeoutId = 0;
     content.addEventListener('mouseover', showTooltip);
@@ -34,7 +34,7 @@ onMounted(() => {
 });
 
 onUnmounted(() => {
-  const tooltipContents = document.querySelectorAll('.tooltip-content');
+  const tooltipContents = document.querySelectorAll('.js-tooltip__content');
   tooltipContents.forEach((content) => {
     content.removeEventListener('mouseover', showTooltip);
     content.removeEventListener('mouseover', hideTooltip);
@@ -43,36 +43,24 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
-.tooltip {
+.p-tooltip {
   position: absolute;
   display: none;
-  padding: .7rem;
+  padding: .3rem .7rem;
   line-height: 1.3;
   transform: translateY(80%);
   font-size: 0.8rem;
   border-radius: .3rem;
-  color: white;
   background-color: rgb(74, 92, 255);
-  animation: fadeIn .1s ease;
 }
 
-@keyframes fadeIn {
-  0%{
-    display: none;
-    opacity: 0;
-  }
-  100%{
-    opacity: 1;
-  }
-}
-
-.tooltip-box {
+.p-tooltip__box {
   content: '';
   top: 0.2rem;
   left: 0.2rem;
   overflow-wrap: break-word;
 }
-.tooltip-box::before {
+.p-tooltip__box::before {
   content: '';
   position: absolute;
   top: -.8rem;
@@ -81,14 +69,14 @@ onUnmounted(() => {
   border-bottom: .5rem solid rgb(74, 92, 255);
 }
 
-.tooltip-open {
+.p-tooltip__open {
   display: block;
 }
 </style>
 
 <template>
-  <section class="tooltip">
-    <section class="message">{{ props.message }}</section>
-    <section class="tooltip-box"></section>
+  <section class="p-tooltip c-fadeIn--fast c-color--white">
+    <p class="p-message">{{ props.message }}</p>
+    <p class="p-tooltip__box"></p>
   </section>
 </template>
