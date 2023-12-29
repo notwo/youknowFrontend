@@ -15,7 +15,22 @@ body {
   min-height: 100vh;
 }
 
-.hidden {
+ol,ul {
+  list-style: none;
+  padding-inline-start: 0;
+}
+
+input {
+  border-radius: .2rem;
+}
+input.error {
+  border-radius: .2rem;
+  border-color: rgba(220,0,0,0.3);
+  background-color: rgba(220,0,0,0.3);
+}
+
+/* components */
+.c-hidden {
   display: none;
 }
 
@@ -56,8 +71,8 @@ body {
   }
 }
 
-/* button */
-.btn {
+/** button **/
+.c-btn {
   display: block;
   margin: 0 auto;
   border-radius: 0.5rem;
@@ -71,56 +86,42 @@ body {
   text-decoration: none;
   letter-spacing: 0.1em;
 }
-.btn.back {
+.c-btn--back {
   border: none;
   background-color: #9ac9ec;
 }
-.btn.back:hover {
+.c-btn--back:hover {
   background-color: #9bd9ec;
 }
-.btn.register {
+.c-btn.c-btn--register {
   border: none;
   background-color: rgba(27, 176, 27, 0.75);
 }
-.btn.register:hover {
+.c-btn.c-btn--register:hover {
   background-color: rgba(27, 196, 27, 0.75);
 }
-.btn.p-logout {
+.c-btn.p-logout {
   font-weight: 600;
 }
-.btn.p-logout:hover {
+.c-btn.p-logout:hover {
   background-color: rgba(50,50,50,0.75);
 }
-.btn:disabled {
+.c-btn:disabled {
   background-color: rgba(150,150,150,0.8);
   pointer-events: none;
 }
-.btn:disabled:hover {
+.c-btn:disabled:hover {
   background-color: gray;
 }
-.btn.delete {
+.c-btn.delete {
   border: none;
   background-color: rgba(218, 24, 24, 0.75);
 }
-.btn.delete:hover {
+.c-btn.delete:hover {
   background-color: rgba(217, 56, 56, 0.75);
 }
 
 /* google fonts */
 a,p,span,li,button,input,textarea,label {
   font-family: 'Noto Serif JP', serif;
-}
-
-ol,ul {
-  list-style: none;
-  padding-inline-start: 0;
-}
-
-input {
-  border-radius: .2rem;
-}
-input.error {
-  border-radius: .2rem;
-  border-color: rgba(220,0,0,0.3);
-  background-color: rgba(220,0,0,0.3);
 }

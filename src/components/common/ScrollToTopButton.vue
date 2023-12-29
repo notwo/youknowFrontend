@@ -4,17 +4,16 @@ import { onMounted, onUnmounted } from 'vue';
 let scrollId: number = 0;
 const showButton = (): void => {
   const button = document.getElementById('scrollToTopButton') as HTMLElement;
-  button.classList.remove('c-hiddenNoAnimation');
   if (window.scrollY === 0) {
-    button.classList.add('c-hidden');
+    button.classList.add('js-fadeOut');
     clearInterval(scrollId);
   } else {
-    button.classList.remove('c-hidden');
+    button.classList.remove('js-fadeOut');
   }
 };
 
 const scrollToTop = (event): Boolean => {
-  const scroll = () => {
+  const scroll = (): void => {
     window.scrollTo(0, window.scrollY - window.scrollY / 10);
   };
 
@@ -47,9 +46,8 @@ onUnmounted(() => {
   cursor: pointer;
   background-color: rgba(180,180,180,.6);
   overflow: hidden;
-  animation: fadeIn .3s ease;
 }
-.p-scrollToTopButton a.c-hidden {
+.p-scrollToTopButton a.js-fadeOut {
   animation: fadeOut .3s ease 0s;
   animation-fill-mode: forwards;
 }
@@ -65,23 +63,6 @@ onUnmounted(() => {
   border-top: 5px solid #000;
   font-size: 2rem;
   transform: rotate(-45deg);
-}
-
-@keyframes fadeIn {
-  0%{
-    display: none;
-    opacity: 0;
-  }
-  100%{
-    opacity: 1;
-  }
-}
-@keyframes fadeOut {
-  0%{ opacity: 1; }
-  100%{
-    display: none;
-    opacity: 0;
-  }
 }
 
 /* sp */
@@ -103,6 +84,6 @@ onUnmounted(() => {
 
 <template>
   <section class="p-scrollToTopButton">
-    <a id="scrollToTopButton" @click="scrollToTop" class="c-hidden"></a>
+    <a id="scrollToTopButton" @click="scrollToTop" class="js-fadeOut c-fadeIn--fast"></a>
   </section>
 </template>

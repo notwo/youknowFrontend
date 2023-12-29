@@ -286,7 +286,7 @@ button[type="button"] {
                   (edit_v$.username.$errors.length === 0 && edit_state.username !== '') &&
                   (edit_v$.email.$errors.length === 0 && edit_state.email !== '')
                 )"
-                class="btn register">ユーザ情報を更新する</button>
+                class="c-btn c-btn--register">ユーザ情報を更新する</button>
             </section>
           </section>
           <DeleteUserButton />

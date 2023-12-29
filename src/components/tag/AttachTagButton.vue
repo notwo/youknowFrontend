@@ -27,7 +27,7 @@ interface ErrorResponse {
 };
 
 const AttachTag = (): void => {
-  const selectedTags = document.getElementsByClassName('selected');
+  const selectedTags = document.getElementsByClassName('selected') as HTMLCollectionOf<HTMLElement>;
   const tagIds = tagStore.items.list.map((tag) =>
     {
       return { id: tag.id };
@@ -63,7 +63,7 @@ const AttachTag = (): void => {
   max-width: 20rem;
 }
 
-.p-form__field .btn {
+.p-form__field .c-btn {
   display: block;
   margin: 0 auto;
   font-size: 1rem;
@@ -76,7 +76,7 @@ const AttachTag = (): void => {
     <section class="p-formWrap">
       <section class="p-form__group">
         <section class="p-form__field">
-          <button type="button" @click="AttachTag" id="attachButton" class="btn register" :disabled="true">選択したタグをキーワードにつける</button>
+          <button type="button" @click="AttachTag" id="attachButton" class="c-btn c-btn--register" :disabled="true">選択したタグをキーワードにつける</button>
         </section>
       </section>
     </section>

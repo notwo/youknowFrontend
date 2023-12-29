@@ -150,7 +150,7 @@ const addTag = (event: HTMLEvent<HTMLButtonElement>): void => {
       <section class="p-form__group">
         <section class="p-form__field">
           <button type="button"
-          class="btn register"
+          class="c-btn c-btn--register"
           @click="addTag"
           :disabled="!(register_v$.title.$errors.length === 0 && register_state.title !== '')">このキーワードにタグを追加</button>
         </section>

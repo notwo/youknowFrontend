@@ -161,7 +161,7 @@ input.error {
       <section class="p-form__field">
         <button @click="onSubmit"
           :disabled="!(v.title.$errors.length === 0 && state.title !== '')"
-          class="btn register">{{ contentName }}を更新する</button>
+          class="c-btn c-btn--register">{{ contentName }}を更新する</button>
       </section>
     </section>
   </section>

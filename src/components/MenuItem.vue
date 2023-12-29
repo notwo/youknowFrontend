@@ -189,17 +189,17 @@ const startLogout = (event): void => {
   <nav class="p-menu">
     <ul v-if="!auth0.isAuthenticated.value" class="p-menu__item">
       <li>
-        <span @click="login" class="btn register">ユーザ登録/ログイン</span>
+        <span @click="login" class="c-btn c-btn--register">ユーザ登録/ログイン</span>
       </li>
     </ul>
     <ul v-else class="p-menu__item">
       <li>
-        <router-link :to="{ name: 'usertop', params: { username: String(auth0?.user?.value?.nickname) } }" class="btn">
+        <router-link :to="{ name: 'usertop', params: { username: String(auth0?.user?.value?.nickname) } }" class="c-btn">
           {{ auth0?.user?.value?.nickname }}
         </router-link>
       </li>
       <li>
-        <span @click="startLogout" class="btn p-logout">ログアウト</span>
+        <span @click="startLogout" class="c-btn p-logout">ログアウト</span>
       </li>
     </ul>
   </nav>
@@ -219,12 +219,12 @@ const startLogout = (event): void => {
     <nav class="p-sp__menu">
       <ul class="p-sp__menuItem">
         <li>
-          <router-link :to="{ name: 'usertop', params: { username: String(auth0?.user?.value?.nickname) } }" class="btn" @click="closeSpMenu">
+          <router-link :to="{ name: 'usertop', params: { username: String(auth0?.user?.value?.nickname) } }" class="c-btn" @click="closeSpMenu">
             {{ auth0?.user?.value?.nickname }}
           </router-link>
         </li>
         <li>
-          <span @click="startLogout" class="btn p-logout">ログアウト</span>
+          <span @click="startLogout" class="c-btn p-logout">ログアウト</span>
         </li>
       </ul>
     </nav>

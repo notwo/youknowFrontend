@@ -168,7 +168,7 @@ input.error {
         <button type="button"
           @click="onSubmit"
           :disabled="!(v.title.$errors.length === 0 && state.title !== '')"
-          class="btn register">{{ contentName }}を追加する</button>
+          class="c-btn c-btn--register">{{ contentName }}を追加する</button>
       </section>
     </section>
   </section>

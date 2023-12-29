@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const origin = window.history.state.back;
+const origin = window.history.state.back as String;
 </script>
 
 <style scoped>
@@ -24,7 +24,7 @@ const origin = window.history.state.back;
 <template>
   <section class="p-backButton">
     <router-link :to="origin">
-      <button type="button" class="btn back">戻る</button>
+      <button type="button" class="c-btn c-btn--back">戻る</button>
     </router-link>
   </section>
 </template>
