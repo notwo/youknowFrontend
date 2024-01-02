@@ -86,7 +86,6 @@ const router = createRouter({
 });
 
 router.afterEach((to) => {
-  console.log(to.meta.title)
   const title = to.meta.title as String;
   document.title = title;
 });
