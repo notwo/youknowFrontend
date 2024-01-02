@@ -78,13 +78,23 @@ dialogStore.setFunc(openDialog);
 .p-dialog__subject {
   margin: .6rem 0;
   font-weight: 600;
-  font-size: 1rem;
+  font-size: 1.5rem;
 }
 
 .p-dialog__body {
-  font-size: .8rem;
+  font-size: 1.2rem;
 }
 
+/* sp */
+@media screen and (max-width: 768px) {
+  .p-dialog__subject {
+    font-size: 1rem;
+  }
+
+  .p-dialog__body {
+    font-size: .8rem;
+  }
+}
 </style>
 
 <template>
