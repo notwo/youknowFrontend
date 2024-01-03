@@ -154,5 +154,10 @@ export function loadingStore() {
     hide.value = _func;
   }
 
-  return { element: readonly(element), show: readonly(show), hide: readonly(hide), setElement, setShowFunc, setHideFunc };
+  return {
+    element: readonly(element),
+    show: readonly(show),
+    hide: readonly(hide),
+    setElement, setShowFunc, setHideFunc
+  };
 };

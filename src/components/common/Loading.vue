@@ -9,16 +9,12 @@ const showLoading = () => {
     loadingStore.setElement(loading);
   }
   loadingStore.element.value.classList.add('js-open');
-  console.log(loadingStore.element.value)
   const base = document.querySelector('.js-loadingBase');
-  console.log(base)
   base?.appendChild(loadingStore.element.value);
 };
 
 const hideLoading = () => {
   loadingStore.element.value.classList.remove('js-open');
-  //const base = document.querySelector('.js-loadingBase');
-  //base?.removeChild(loading);
 };
 
 loadingStore.setShowFunc(showLoading);

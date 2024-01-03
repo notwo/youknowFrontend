@@ -27,15 +27,15 @@ interface ErrorResponse {
 let canLoadNext = true;
 let currentPage = 1;
 
-const hideLoadingArea = (): void => {
-  const loadNextBase = document.querySelector('.js-library__loadNextBase') as HTMLElement;
-  loadNextBase.classList.add('c-hidden');
+const hideLoadNextBase = (): void => {
+  const loadNextBase = document.querySelector('.js-loadNextBase') as HTMLElement;
+  loadNextBase.classList.remove('js-open');
   loadingStore.hide.value();
 };
 
-const showLoadingArea = () => {
-  const loadNextBase = document.querySelector('.js-library__loadNextBase') as HTMLElement;
-  loadNextBase.classList.remove('c-hidden');
+const showLoadNextBase = (): void => {
+  const loadNextBase = document.querySelector('.js-loadNextBase') as HTMLElement;
+  loadNextBase.classList.add('js-open');
   loadingStore.show.value();
 };
 
@@ -48,14 +48,14 @@ const loadNext = async (): Promise<void> => {
     canLoadNext = false;
   }
   store.concat(response.data.results);
-  hideLoadingArea();
+  hideLoadNextBase();
 };
 
 const showMoreLibraryList = (event): void => {
   // 下限まで一定距離になったら自動読み込み
   if (document.body.scrollHeight - document.body.clientHeight - window.scrollY <= 500 && canLoadNext && !store.isSearched()) {
     currentPage++;
-    showLoadingArea();
+    showLoadNextBase();
     loadNext();
   }
 };
@@ -72,14 +72,14 @@ onMounted(() => {
 
   const showLibraryList = async (): Promise<void> => {
     await axios.get<LibraryResponse>(api.listUrl(user.value.sub, pagination.library.content_num))
-    .then((response: AxiosResponse) => {
-      canLoadNext = (response.data.next !== null);
-      store.setItem(response.data.results);
-      loadingStore.hide.value();
-    })
-    .catch((e: AxiosError<ErrorResponse>) => {
-      dialogStore.func.value('読み込みエラー', 'ライブラリ読み込み中にエラーが起きました。暫くお待ちいただいてから再度お試しください', 'error');
-    });
+      .then((response: AxiosResponse) => {
+        canLoadNext = (response.data.next !== null);
+        store.setItem(response.data.results);
+        loadingStore.hide.value();
+      })
+      .catch((e: AxiosError<ErrorResponse>) => {
+        dialogStore.func.value('読み込みエラー', 'ライブラリ読み込み中にエラーが起きました。暫くお待ちいただいてから再度お試しください', 'error');
+      });
 
     window.addEventListener("scroll", showMoreLibraryList, { passive: true });
   };
@@ -108,9 +108,13 @@ onUnmounted(() => {
   margin: 1rem;
 }
 
-.p-library__loadNextBase {
+.p-loadNextBase {
+  display: none;
   margin: 0 auto;
   width: 100%;
+}
+.p-loadNextBase.js-open {
+  display: block;
 }
 
 .p-emptyMessage {
@@ -173,7 +177,7 @@ onUnmounted(() => {
           :content="library.content"
           :updated_at="library.updated_at"
       />
-      <section class="js-loadingBase js-library__loadNextBase p-library__loadNextBase c-hidden"></section>
+      <section class="js-loadingBase js-loadNextBase p-loadNextBase"></section>
     </section>
     <section v-else-if="store.firstLoaded.value && !store.isSearched()">
       <p class="p-emptyMessage c-flex--center c-fadeIn--fast">まずはライブラリを追加してみましょう</p>
