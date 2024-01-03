@@ -10,6 +10,7 @@ import { libraryApi } from '@/plugin/apis';
 const { user, isAuthenticated } = useAuth0();
 const store = inject('library');
 const dialogStore = inject('dialog');
+const loadingStore = inject('loading');
 
 const edit_state = reactive({
   title: '',
@@ -26,6 +27,18 @@ interface ErrorResponse {
 let canLoadNext = true;
 let currentPage = 1;
 
+const hideLoadingArea = (): void => {
+  const loadNextBase = document.querySelector('.js-library__loadNextBase') as HTMLElement;
+  loadNextBase.classList.add('c-hidden');
+  loadingStore.hide.value();
+};
+
+const showLoadingArea = () => {
+  const loadNextBase = document.querySelector('.js-library__loadNextBase') as HTMLElement;
+  loadNextBase.classList.remove('c-hidden');
+  loadingStore.show.value();
+};
+
 const api = libraryApi();
 const loadNext = async (): Promise<void> => {
   const response = await axios.get<LibraryResponse>(
@@ -35,12 +48,14 @@ const loadNext = async (): Promise<void> => {
     canLoadNext = false;
   }
   store.concat(response.data.results);
+  hideLoadingArea();
 };
 
 const showMoreLibraryList = (event): void => {
   // 下限まで一定距離になったら自動読み込み
   if (document.body.scrollHeight - document.body.clientHeight - window.scrollY <= 500 && canLoadNext && !store.isSearched()) {
     currentPage++;
+    showLoadingArea();
     loadNext();
   }
 };
@@ -53,11 +68,14 @@ onMounted(() => {
   // ライブラリ一覧に遷移した際にスクロール位置が戻っていないので、強制的にスクロールさせる
   document.documentElement.scrollTop = 0;
 
+  loadingStore.show.value();
+
   const showLibraryList = async (): Promise<void> => {
     await axios.get<LibraryResponse>(api.listUrl(user.value.sub, pagination.library.content_num))
     .then((response: AxiosResponse) => {
       canLoadNext = (response.data.next !== null);
       store.setItem(response.data.results);
+      loadingStore.hide.value();
     })
     .catch((e: AxiosError<ErrorResponse>) => {
       dialogStore.func.value('読み込みエラー', 'ライブラリ読み込み中にエラーが起きました。暫くお待ちいただいてから再度お試しください', 'error');
@@ -88,6 +106,11 @@ onUnmounted(() => {
   display: block;
   width: 30%;
   margin: 1rem;
+}
+
+.p-library__loadNextBase {
+  margin: 0 auto;
+  width: 100%;
 }
 
 .p-emptyMessage {
@@ -150,11 +173,12 @@ onUnmounted(() => {
           :content="library.content"
           :updated_at="library.updated_at"
       />
+      <section class="js-loadingBase js-library__loadNextBase p-library__loadNextBase c-hidden"></section>
     </section>
     <section v-else-if="store.firstLoaded.value && !store.isSearched()">
       <p class="p-emptyMessage c-flex--center c-fadeIn--fast">まずはライブラリを追加してみましょう</p>
     </section>
-    <section v-else>
+    <section v-else-if="!store.firstLoaded.value" class="js-loadingBase">
       <!-- ここにローディング -->
     </section>
   </article>

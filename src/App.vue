@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { provide } from "vue";
-import { useStore, editStore, titles, userStore, dialogStore } from '@/store/index';
+import { useStore, editStore, titles, userStore, dialogStore, loadingStore } from '@/store/index';
 import NavigationHeader from "@/components/NavigationHeader.vue";
 import FooterInformation from "@/components/FooterInformation.vue";
 
@@ -15,6 +15,7 @@ const _unattachedTagStore = useStore();
 const _titlesStore = titles();
 const _userStore = userStore();
 const _dialogStore = dialogStore();
+const _loadingStore = loadingStore();
 
 provide('library', _libraryStore);
 provide('category', _categoryStore);
@@ -27,6 +28,7 @@ provide('keywordEdit', _keywordEditStore);
 provide('titles', _titlesStore);
 provide('user', _userStore);
 provide('dialog', _dialogStore);
+provide('loading', _loadingStore);
 </script>
 
 <style scoped>
