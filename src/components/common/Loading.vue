@@ -3,17 +3,17 @@ import { inject } from 'vue';
 
 const loadingStore = inject('loading');
 
-const showLoading = () => {
+const showLoading = (): void => {
   const loading = document.getElementById('loading') as HTMLElement;
   if (loading !== null) {
     loadingStore.setElement(loading);
   }
   loadingStore.element.value.classList.add('js-open');
-  const base = document.querySelector('.js-loadingBase');
+  const base = document.querySelector('.js-loadingBase') as HTMLElement;
   base?.appendChild(loadingStore.element.value);
 };
 
-const hideLoading = () => {
+const hideLoading = (): void => {
   loadingStore.element.value.classList.remove('js-open');
 };
 
