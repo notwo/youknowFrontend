@@ -45,6 +45,14 @@ const closeSpMenu = (): void => {
   margin: 2rem 1rem;
 }
 
+.p-sp__waiting {
+  margin: 0 auto;
+  position: absolute;
+  top: 34px;
+  bottom: 0;
+  right: 34px;
+}
+
 .p-sp__navButton {
   display: none;
   position: absolute;
@@ -160,7 +168,12 @@ const closeSpMenu = (): void => {
 </style>
 
 <template>
-  <section v-if="!auth0.isAuthenticated.value" class="p-sp__login">
+  <section v-if="auth0.isLoading.value" class="p-waiting">
+    <span class="p-sp__waiting">
+      Now Loading...
+    </span>
+  </section>
+  <section v-else-if="!auth0.isAuthenticated.value" class="p-sp__login">
     <span @click="login" class="p-login">ユーザ登録/ログイン</span>
   </section>
   <button v-else class="p-sp__navButton">

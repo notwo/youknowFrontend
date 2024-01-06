@@ -36,9 +36,18 @@ const startLogout = (event): void => {
 }
 
 .p-menu__item li {
-  padding: 0.5em 1em;
+  padding: .5rem 1rem;
   font-size: 1.0rem;
   font-weight: 700;
+}
+
+.p-waiting {
+  display: block;
+  margin: 0 auto;
+  padding: 0.5rem 0.8rem;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  letter-spacing: 0.1em;
 }
 
 @media screen and (max-width: 768px) {
@@ -55,7 +64,14 @@ const startLogout = (event): void => {
 <template>
   <section class="c-service__icon">サービスロゴ</section>
   <nav class="p-menu">
-    <ul v-if="!auth0.isAuthenticated.value" class="p-menu__item c-flex--spaceBetween">
+    <ul v-if="auth0.isLoading.value" class="p-menu__item c-flex--spaceBetween">
+      <li>
+        <span class="p-waiting">
+          Now Loading...
+        </span>
+      </li>
+    </ul>
+    <ul v-else-if="!auth0.isAuthenticated.value" class="p-menu__item c-flex--spaceBetween">
       <li>
         <span @click="login" class="c-btn c-btn--register">ユーザ登録/ログイン</span>
       </li>
