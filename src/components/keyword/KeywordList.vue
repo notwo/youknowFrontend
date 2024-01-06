@@ -12,6 +12,7 @@ const { user, isAuthenticated } = useAuth0();
 const store = inject('keyword');
 const titlesStore = inject('titles');
 const dialogStore = inject('dialog');
+const loadingStore = inject('loading');
 
 const edit_state = reactive({
   title: '',
@@ -28,18 +29,21 @@ interface ErrorResponse {
 let canLoadNext = true;
 let currentPage = 1;
 
+const hideLoadNextBase = (): void => {
+  const loadNextBase = document.querySelector('.js-loadNextBase') as HTMLElement;
+  loadNextBase.classList.remove('js-open');
+  loadingStore.hide.value();
+};
+
+const showLoadNextBase = (): void => {
+  const loadNextBase = document.querySelector('.js-loadNextBase') as HTMLElement;
+  loadNextBase.classList.add('js-open');
+  loadingStore.show.value();
+};
+
 const api = keywordApi();
 const cApi = categoryApi();
 const route = useRoute();
-
-const showMoreKeywordList = (event): void => {
-  // 下限まで一定距離になったら自動読み込み
-  if (document.body.scrollHeight - document.body.clientHeight - window.scrollY <= 500 && canLoadNext && !store.isSearched()) {
-    currentPage++;
-    loadNext();
-  }
-};
-
 const loadNext = async (): Promise<void> => {
   const response = await axios.get<KeywordResponse>(
     api.listUrl(user.value.sub, route.params.library_id, route.params.category_id, pagination.keyword.content_num, pagination.keyword.content_num * (currentPage -1))
@@ -48,6 +52,16 @@ const loadNext = async (): Promise<void> => {
     canLoadNext = false;
   }
   store.concat(response.data.results);
+  hideLoadNextBase();
+};
+
+const showMoreKeywordList = (event): void => {
+  // 下限まで一定距離になったら自動読み込み
+  if (document.body.scrollHeight - document.body.clientHeight - window.scrollY <= 500 && canLoadNext && !store.isSearched()) {
+    currentPage++;
+    showLoadNextBase();
+    loadNext();
+  }
 };
 
 onMounted(() => {
@@ -58,19 +72,20 @@ onMounted(() => {
   // キーワード一覧に遷移した際にスクロール位置が戻っていないので、強制的にスクロールさせる
   document.documentElement.scrollTop = 0;
 
+  loadingStore.show.value();
+
   const showKeywordList = async (): Promise<void> => {
-    await axios.get<KeywordResponse>(
-      cApi.detailUrl(user.value.sub, route.params.library_id, route.params.category_id)
-    )
-    .then((response: AxiosResponse) => {
-      canLoadNext = (response.data.paginated_keywords.next);
-      titlesStore.setLibrary(`「${response.data.library_title}」のカテゴリ`);
-      titlesStore.setCategory(`「${response.data.title}」のキーワード`);
-      store.setItem(response.data.paginated_keywords.data);
-    })
-    .catch((e: AxiosError<ErrorResponse>) => {
-      dialogStore.func.value('読み込みエラー', 'キーワード読み込み中にエラーが起きました。暫くお待ちいただいてから再度お試しください', 'error');
-    });
+    await axios.get<KeywordResponse>(cApi.detailUrl(user.value.sub, route.params.library_id, route.params.category_id))
+      .then((response: AxiosResponse) => {
+        canLoadNext = (response.data.paginated_keywords.next);
+        titlesStore.setLibrary(`「${response.data.library_title}」のカテゴリ`);
+        titlesStore.setCategory(`「${response.data.title}」のキーワード`);
+        store.setItem(response.data.paginated_keywords.data);
+        loadingStore.hide.value();
+      })
+      .catch((e: AxiosError<ErrorResponse>) => {
+        dialogStore.func.value('読み込みエラー', 'キーワード読み込み中にエラーが起きました。暫くお待ちいただいてから再度お試しください', 'error');
+      });
 
     window.addEventListener("scroll", showMoreKeywordList, { passive: true });
   };
@@ -91,6 +106,15 @@ onUnmounted(() => {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
+}
+
+.p-loadNextBase {
+  display: none;
+  margin: 0 auto;
+  width: 100%;
+}
+.p-loadNextBase.js-open {
+  display: block;
 }
 
 .p-emptyMessage {
@@ -154,11 +178,12 @@ onUnmounted(() => {
           :updated_at="keyword.updated_at"
           :tags="keyword.tags"
       />
+      <section class="js-loadingBase js-loadNextBase p-loadNextBase"></section>
     </section>
     <section v-else-if="store.firstLoaded.value && !store.isSearched()">
       <p class="p-emptyMessage c-flex--center c-fadeIn--fast">キーワードを追加してみましょう</p>
     </section>
-    <section v-else>
+    <section v-else-if="!store.firstLoaded.value" class="js-loadingBase">
       <!-- ここにローディング -->
     </section>
   </article>

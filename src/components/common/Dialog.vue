@@ -10,8 +10,8 @@ const message = reactive({
 
 const closeDialog = (): void => {
   const dialog = document.getElementById('dialog') as HTMLElement;
-  dialog.classList.remove('open');
-  dialog.classList.add('close');
+  dialog.classList.remove('js-open');
+  dialog.classList.add('js-close');
   dialog.classList.add('c-fadeOut--fast');
 };
 
@@ -22,9 +22,9 @@ const openDialog = (subject: String, body: String, mode: String = 'normal'): voi
 
   const dialog = document.getElementById('dialog') as HTMLElement;
   dialog.style.top = `${window.screenY+90}px`;
-  dialog.classList.remove('close');
+  dialog.classList.remove('js-close');
   dialog.classList.remove('c-fadeOut--fast');
-  dialog.classList.add('open');
+  dialog.classList.add('js-open');
   setTimeout(closeDialog, 1600);
 };
 
@@ -60,10 +60,10 @@ dialogStore.setFunc(openDialog);
   background-color: rgba(245,245,245,.9);
   box-shadow: 1px 1px 1px 1px black;
 }
-.p-dialog.open {
+.p-dialog.js-open {
   display: block;
 }
-.p-dialog.close {
+.p-dialog.js-close {
   display: none;
 }
 

@@ -66,7 +66,7 @@ const removeLibrary = (event: HTMLEvent<HTMLButtonElement>): void => {
 .p-library__item a {
   position: absolute;
   width: 100%;
-  height: 100vh;
+  height: 100%;
   top: 0;
   left: 0;
 }
