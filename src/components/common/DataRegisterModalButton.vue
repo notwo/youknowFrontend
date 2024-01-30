@@ -35,7 +35,7 @@ onUnmounted(() => {
   position: fixed;
   top: 8rem;
   right: 6rem;
-  z-index: 9998;
+  z-index: 8998;
 }
 .p-btn__register a {
   display: block;
