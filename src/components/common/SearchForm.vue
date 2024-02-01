@@ -28,11 +28,19 @@ const hideOverlay = (event: HTMLEvent<HTMLButtonElement>): void => {
   padding: 1rem 0;
 }
 
-.p-search {
-  padding: .6rem;
-  width: 85%;
+.p-searchType {
+  display: block;
+  margin-right: -.2rem;
   border: none;
   border-radius: .3rem 0 0 .3rem;
+  z-index: 9001;
+}
+
+.p-search {
+  padding: .6rem;
+  width: 75%;
+  border: none;
+  border-radius: 0 0 0 0;
   z-index: 9001;
 }
 
@@ -80,6 +88,10 @@ const hideOverlay = (event: HTMLEvent<HTMLButtonElement>): void => {
 <template>
   <form action="" class="p-searchForm">
     <section class="p-searchWrap c-flex--center">
+      <select id="search-type" class="p-searchType">
+        <option>全て</option>
+        <option>タグで検索</option>
+      </select>
       <input type="text" name="search" id="search" class="p-search" :placeholder="`${contentName}を検索`" @focus="showOverlay">
       <button type="button" class="p-searchButton" @click="onSearch">
         <img src="@/assets/images/search.png" width="20" alt="search" loading="lazy" class="p-searchImg">
