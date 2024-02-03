@@ -41,15 +41,19 @@ export function libraryApi() {
   function createUrl(sub: String) {
     return `${apiBaseUrl}/api/users/${sub}/libraries/`;
   }
-  function searchUrl(sub: String, word: String) {
-    return `${apiBaseUrl}/api/users/${sub}/libraries/?title=${word}`;
+  function searchUrl(sub: String, title: String) {
+    return `${apiBaseUrl}/api/users/${sub}/libraries/?title=${title}`;
+  }
+  function searchByTagUrl(sub: String, title: String) {
+    return `${apiBaseUrl}/api/users/${sub}/libraries/search_by_tag/?title=${title}`;
   }
 
   return {
     listUrl,
     detailUrl,
     createUrl,
-    searchUrl
+    searchUrl,
+    searchByTagUrl
   }
 };
 
@@ -63,15 +67,19 @@ export function categoryApi() {
   function createUrl(sub: String, library_id: Number) {
     return `${apiBaseUrl}/api/users/${sub}/libraries/${library_id}/categories/`;
   }
-  function searchUrl(sub: String, library_id: Number, word: String) {
-    return `${apiBaseUrl}/api/users/${sub}/libraries/${library_id}/categories/?title=${word}`;
+  function searchUrl(sub: String, library_id: Number, title: String) {
+    return `${apiBaseUrl}/api/users/${sub}/libraries/${library_id}/categories/?title=${title}`;
+  }
+  function searchByTagUrl(sub: String, library_id: Number, title: String) {
+    return `${apiBaseUrl}/api/users/${sub}/libraries/${library_id}/categories/search_by_tag/?title=${title}`;
   }
 
   return {
     listUrl,
     detailUrl,
     createUrl,
-    searchUrl
+    searchUrl,
+    searchByTagUrl
   }
 };
 
@@ -85,15 +93,19 @@ export function keywordApi() {
   function createUrl(sub: String, library_id: Number, category_id: Number) {
     return `${apiBaseUrl}/api/users/${sub}/libraries/${library_id}/categories/${category_id}/keywords/`;
   }
-  function searchUrl(sub: String, library_id: Number, category_id: Number, word: String) {
-    return `${apiBaseUrl}/api/users/${sub}/libraries/${library_id}/categories/${category_id}/keywords?title=${word}`;
+  function searchUrl(sub: String, library_id: Number, category_id: Number, title: String) {
+    return `${apiBaseUrl}/api/users/${sub}/libraries/${library_id}/categories/${category_id}/keywords?title=${title}`;
+  }
+  function searchByTagUrl(sub: String, library_id: Number, category_id: Number, title: String) {
+    return `${apiBaseUrl}/api/users/${sub}/libraries/${library_id}/categories/${category_id}/keywords/search_by_tag/?title=${title}`;
   }
 
   return {
     listUrl,
     detailUrl,
     createUrl,
-    searchUrl
+    searchUrl,
+    searchByTagUrl
   }
 };
 
@@ -110,8 +122,8 @@ export function tagApi() {
   function detailUrl(sub: String, id: Number) {
     return `${apiBaseUrl}/api/users/${sub}/tags/${id}/`;
   }
-  function searchUrl(sub: String, word: String) {
-    return `${apiBaseUrl}/api/users/${sub}/tags?title=${word}`;
+  function searchUrl(sub: String, title: String) {
+    return `${apiBaseUrl}/api/users/${sub}/tags?title=${title}`;
   }
 
   return {

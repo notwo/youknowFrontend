@@ -22,14 +22,16 @@ interface HTMLEvent<T extends EventTarget> extends Event {
 };
 
 const api = categoryApi();
-const onSearch = (event: HTMLEvent<HTMLButtonElement>): void => {
-  const word = document.getElementById('search');
-  if (word.value === '') {
+const onSearch = (event: HTMLEvent<HTMLButtonElement>, searchType, title): void => {
+  if (title === '') {
     store.restore();
     return;
   }
 
-  axios.get(api.searchUrl(user.value.sub, route.params.library_id, word.value))
+  const url = Number(searchType) === 0 ?
+    api.searchUrl(user.value.sub, route.params.library_id, title) :
+    api.searchByTagUrl(user.value.sub, route.params.library_id, title);
+  axios.get(url)
     .then((response: AxiosResponse) => {
       // 検索後は一括で結果を返すようにしておく。今後検索後に対してもページングする場合はコメントアウトを外す(更にAPIの修正も必要)
       //if (response.data.results.length <= 0) {

@@ -142,6 +142,6 @@ input.error {
 }
 
 /* google fonts */
-a,p,span,li,button,input,textarea,label {
+a,p,span,li,button,input,textarea,select,label {
   font-family: 'Noto Serif JP', serif;
 }
