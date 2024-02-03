@@ -9,7 +9,9 @@ interface HTMLEvent<T extends EventTarget> extends Event {
 
 const emits = defineEmits<{(e: 'click', event: Object): void}>();
 const onSearch = (event): void => {
-  emits('click', event)
+  const searchType = document.getElementById('search-type').value;
+  const title = document.getElementById('search').value;
+  emits('click', event, searchType, title);
 };
 
 const showOverlay = (event: HTMLEvent<HTMLButtonElement>): void => {
@@ -89,8 +91,8 @@ const hideOverlay = (event: HTMLEvent<HTMLButtonElement>): void => {
   <form action="" class="p-searchForm">
     <section class="p-searchWrap c-flex--center">
       <select id="search-type" class="p-searchType">
-        <option>全て</option>
-        <option>タグで検索</option>
+        <option value="0">タイトルで検索</option>
+        <option value="1">タグで検索</option>
       </select>
       <input type="text" name="search" id="search" class="p-search" :placeholder="`${contentName}を検索`" @focus="showOverlay">
       <button type="button" class="p-searchButton" @click="onSearch">
