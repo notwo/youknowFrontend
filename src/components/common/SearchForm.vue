@@ -77,6 +77,11 @@ const hideOverlay = (event: HTMLEvent<HTMLButtonElement>): void => {
     padding: 1rem 0;
   }
 
+  .p-searchType {
+    padding: .6rem;
+    width: 50%;
+  }
+
   .p-search {
     padding: .6rem;
     width: 65%;
@@ -84,13 +89,17 @@ const hideOverlay = (event: HTMLEvent<HTMLButtonElement>): void => {
 }
 
 /* tablet */
-@media screen and (min-width: 415px) and (max-width: 1024px) {
+@media screen and (min-width: 415px) and (max-width: 768px) {
+  .p-searchType {
+    padding: .6rem;
+    width: 50%;
+  }
 }
 </style>
 
 <template>
   <form action="" class="p-searchForm">
-    <section class="p-searchWrap c-flex--center">
+    <section class="p-searchWrap c-flex--center c-flex-wrap">
       <select id="search-type" class="p-searchType">
         <option value="0">タイトルで検索</option>
         <option value="1">タグで検索</option>

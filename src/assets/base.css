@@ -50,6 +50,10 @@ input.error {
   justify-content: flex-end;
 }
 
+.c-flex-wrap {
+  flex-wrap: wrap;
+}
+
 .c-hidden {
   display: none;
 }

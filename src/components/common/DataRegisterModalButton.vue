@@ -64,23 +64,25 @@ onUnmounted(() => {
 }
 
 /* sp */
-@media screen and (max-width: 1024px) {
+@media screen and (max-width: 768px) {
   .p-btn__register {
     right: .3rem;
-    top: 13.6rem;
+    top: 10.6rem;
   }
+  .p-btn__register.scroll {
+    top: 6.5rem;
+  }
+}
+@media screen and (max-width: 768px) {
   .p-btn__register.scroll {
     top: 6.5rem;
   }
 }
 
 /* tablet */
-@media screen and (min-width: 1025px) and (max-width: 1409px) {
+@media screen and (min-width: 768px) and (max-width: 1409px) {
   .p-btn__register {
     right: 1rem;
-  }
-  .p-btn__register.scroll {
-    top: 1rem;
   }
 }
 </style>
