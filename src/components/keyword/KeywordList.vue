@@ -74,6 +74,8 @@ onMounted(() => {
 
   loadingStore.show.value();
 
+  store.allClear();
+  store.restoreSearched();
   const showKeywordList = async (): Promise<void> => {
     await axios.get<KeywordResponse>(cApi.detailUrl(user.value.sub, route.params.library_id, route.params.category_id))
       .then((response: AxiosResponse) => {
@@ -95,7 +97,6 @@ onMounted(() => {
 
 onUnmounted(() => {
   store.allClear();
-  store.restoreSearched();
   store.restoreFirstLoaded();
   window.removeEventListener('scroll', showMoreKeywordList, false);
 });

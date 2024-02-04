@@ -70,6 +70,8 @@ onMounted(() => {
 
   loadingStore.show.value();
 
+  store.allClear();
+  store.restoreSearched();
   const showLibraryList = async (): Promise<void> => {
     await axios.get<LibraryResponse>(api.listUrl(user.value.sub, pagination.library.content_num))
       .then((response: AxiosResponse) => {
@@ -89,7 +91,6 @@ onMounted(() => {
 
 onUnmounted(() => {
   store.allClear();
-  store.restoreSearched();
   store.restoreFirstLoaded();
   window.removeEventListener('scroll', showMoreLibraryList, false);
 });

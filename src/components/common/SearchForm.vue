@@ -35,6 +35,7 @@ const hideOverlay = (event: HTMLEvent<HTMLButtonElement>): void => {
   margin-right: -.2rem;
   border: none;
   border-radius: .3rem 0 0 .3rem;
+  text-align: center;
   z-index: 9001;
 }
 

@@ -24,6 +24,7 @@ interface HTMLEvent<T extends EventTarget> extends Event {
 
 const onSearch = (event: HTMLEvent<HTMLButtonElement>, searchType, title): void => {
   if (title === '') {
+    store.allClear();
     store.restore();
     return;
   }

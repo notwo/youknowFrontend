@@ -22,6 +22,7 @@ interface HTMLEvent<T extends EventTarget> extends Event {
 const api = libraryApi();
 const onSearch = (event: HTMLEvent<HTMLButtonElement>, searchType, title): void => {
   if (title === '') {
+    store.allClear();
     store.restore();
     return;
   }
@@ -32,11 +33,11 @@ const onSearch = (event: HTMLEvent<HTMLButtonElement>, searchType, title): void 
       // 検索後は一括で結果を返すようにしておく。今後検索後に対してもページングする場合はコメントアウトを外す(更にAPIの修正も必要)
       //if (response.data.results.length <= 0) {
       if (response.data.length <= 0) {
-        store.search(response.data);
+        store.search(response.data, searchType);
         return;
       }
       //store.search(response.data.results);
-      store.search(response.data);
+      store.search(response.data, searchType);
     })
     .catch((e: AxiosError<ErrorResponse>) => {
       store.allClear();

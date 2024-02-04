@@ -10,6 +10,7 @@ import { libraryApi, categoryApi } from '@/plugin/apis';
 
 const { user, isAuthenticated } = useAuth0();
 const store = inject('category');
+const lstore = inject('library');
 const titlesStore = inject('titles');
 const dialogStore = inject('dialog');
 const loadingStore = inject('loading');
@@ -74,6 +75,8 @@ onMounted(() => {
 
   loadingStore.show.value();
 
+  store.allClear();
+  store.restoreSearched();
   const showCategoryList = async (): Promise<void> => {
     await axios.get<CategoryResponse>(lApi.detailUrl(user.value.sub, route.params.library_id))
       .then((response: AxiosResponse) => {
@@ -94,7 +97,6 @@ onMounted(() => {
 
 onUnmounted(() => {
   store.allClear();
-  store.restoreSearched();
   store.restoreFirstLoaded();
   window.removeEventListener('scroll', showMoreCategoryList, false);
 });
