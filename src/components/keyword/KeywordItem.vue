@@ -168,7 +168,7 @@ const removeKeyword = (event: HTMLEvent<HTMLButtonElement>): void => {
 </style>
 
 <template>
-  <section class="p-keyword__item c-flex-wrap c-fadeIn--normal js-tooltip__content">
+  <section class="p-keyword__item c-flex--wrap c-fadeIn--normal js-tooltip__content">
     <router-link :to="{ name: 'keyword', params: {
       username: String($route.params.username),
       library_id: $route.params.library_id,
@@ -187,7 +187,7 @@ const removeKeyword = (event: HTMLEvent<HTMLButtonElement>): void => {
     <section class="p-keyword__body js-tooltip__title">
       <p class="p-keyword__title">{{ titleForView(title, 'keyword') }}</p>
       <p class="p-keyword__contents">{{ contentForView(content, 'keyword') }}</p>
-      <section class="p-keyword__tags c-flex-wrap">
+      <section class="p-keyword__tags c-flex--wrap">
         <span class="p-keyword__tag" v-for="tag of tags" :key="tag.id">
           {{ titleForView(tag.title, 'tag') }}
         </span>

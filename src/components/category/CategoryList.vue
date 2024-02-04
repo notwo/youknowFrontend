@@ -104,8 +104,6 @@ onUnmounted(() => {
 
 <style scoped>
 .p-category__itemWrap {
-  display: flex;
-  justify-content: center;
 }
 
 .p-loadNextBase {
@@ -132,7 +130,6 @@ onUnmounted(() => {
   .p-emptyMessage {
     margin: 2rem;
     font-size: 2rem;
-    text-align: center;
   }
 }
 
@@ -153,7 +150,6 @@ onUnmounted(() => {
   .p-emptyMessage {
     margin: 2rem;
     font-size: 3rem;
-    text-align: center;
   }
 }
 </style>
@@ -161,7 +157,7 @@ onUnmounted(() => {
 <template>
   <article id="category-list">
     <CategoryModal :edit_state="edit_state" />
-    <section class="p-category__itemWrap c-flex-wrap" v-if="store.items.list.length > 0">
+    <section class="p-category__itemWrap c-flex--center c-flex--wrap" v-if="store.items.list.length > 0">
       <CategoryItem
         :edit_state="edit_state"
         v-for="category in store.items.list"
@@ -174,7 +170,7 @@ onUnmounted(() => {
       <section class="js-loadingBase js-loadNextBase p-loadNextBase"></section>
     </section>
     <section v-else-if="store.firstLoaded.value && !store.isSearched()">
-      <p class="p-emptyMessage c-flex--center c-fadeIn--fast">カテゴリを追加してみましょう</p>
+      <p class="p-emptyMessage c-flex--center c-fadeIn--fast c-text--center">カテゴリを追加してみましょう</p>
     </section>
     <section v-else-if="!store.firstLoaded.value" class="js-loadingBase">
       <!-- ここにローディング -->

@@ -35,7 +35,6 @@ const hideOverlay = (event: HTMLEvent<HTMLButtonElement>): void => {
   margin-right: -.2rem;
   border: none;
   border-radius: .3rem 0 0 .3rem;
-  text-align: center;
   z-index: 9001;
 }
 
@@ -99,8 +98,8 @@ const hideOverlay = (event: HTMLEvent<HTMLButtonElement>): void => {
 
 <template>
   <form action="" class="p-searchForm">
-    <section class="p-searchWrap c-flex--center c-flex-wrap">
-      <select id="search-type" class="p-searchType">
+    <section class="p-searchWrap c-flex--center c-flex--wrap">
+      <select id="search-type" class="p-searchType c-text--center">
         <option value="0">タイトルで検索</option>
         <option value="1">タグで検索</option>
       </select>

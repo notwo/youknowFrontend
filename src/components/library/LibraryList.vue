@@ -98,8 +98,6 @@ onUnmounted(() => {
 
 <style scoped>
 .p-library__itemWrap {
-  display: flex;
-  justify-content: space-between;
 }
 .p-library__itemWrap::after {
   content: "";
@@ -138,7 +136,6 @@ onUnmounted(() => {
   .p-emptyMessage {
     margin: 2rem;
     font-size: 2rem;
-    text-align: center;
   }
 }
 
@@ -159,7 +156,6 @@ onUnmounted(() => {
   .p-emptyMessage {
     margin: 2rem;
     font-size: 3rem;
-    text-align: center;
   }
 }
 </style>
@@ -167,7 +163,7 @@ onUnmounted(() => {
 <template>
   <article id="library-list">
     <LibraryModal :edit_state="edit_state" />
-    <section class="p-library__itemWrap c-flex-wrap" v-if="store.items.list.length > 0">
+    <section class="p-library__itemWrap c-flex--spaceBetween c-flex--wrap" v-if="store.items.list.length > 0">
       <LibraryItem
         :edit_state="edit_state"
         v-for="library in store.items.list"
@@ -180,7 +176,7 @@ onUnmounted(() => {
       <section class="js-loadingBase js-loadNextBase p-loadNextBase"></section>
     </section>
     <section v-else-if="store.firstLoaded.value && !store.isSearched()">
-      <p class="p-emptyMessage c-flex--center c-fadeIn--fast">まずはライブラリを追加してみましょう</p>
+      <p class="p-emptyMessage c-flex--center c-fadeIn--fast c-text--center">まずはライブラリを追加してみましょう</p>
     </section>
     <section v-else-if="!store.firstLoaded.value" class="js-loadingBase">
       <!-- ここにローディング -->

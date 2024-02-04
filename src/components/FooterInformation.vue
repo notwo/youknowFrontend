@@ -24,7 +24,6 @@
 .p-copyright {
   margin: .8rem 0;
   font-size: .78rem;
-  text-align: center;
 }
 
 /* sp */
@@ -51,7 +50,7 @@
 <template>
   <footer class="l-footer c-color--white">
     <section class="p-footer__contentsWrap">
-      <section class="p-footer__list c-flex--spaceBetween c-flex-wrap">
+      <section class="p-footer__list c-flex--spaceBetween c-flex--wrap">
         <section class="p-footerContents">
           <section class="c-service__icon">サービスロゴ</section>
         </section>
@@ -74,7 +73,7 @@
           </nav>
         </section>
       </section>
-      <span class="p-copyright">
+      <span class="p-copyright c-text--center">
         © 2023 YouKnow
       </span>
     </section>

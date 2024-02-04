@@ -107,7 +107,6 @@ onMounted(() => {
 .p-pageTitle {
   margin: .2rem .9rem;
   font-size: 2rem;
-  text-align: center;
 }
 
 .p-formWrap {
@@ -224,12 +223,12 @@ button[type="button"] {
   <Dialog />
   <BackButton />
   <!-- TODO: ここにユーザプロフィール画像を載せられるようにする -->
-  <p class="p-pageTitle">ユーザ情報の更新</p>
+  <p class="p-pageTitle c-text--center">ユーザ情報の更新</p>
   <section class="p-profile">
     <section class="p-profile__content">
       <section class="p-profile__image"></section>
       <form action="p-form">
-        <section class="p-formWrap c-flex-wrap">
+        <section class="p-formWrap c-flex--wrap">
           <section class="p-form__group">
             <label for="username" class="required">ユーザ名</label>
             <section class="p-form__field">

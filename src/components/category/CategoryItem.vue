@@ -150,7 +150,7 @@ const removeCategory = (event: HTMLEvent<HTMLButtonElement>): void => {
 </style>
 
 <template>
-  <section class="p-category__item c-flex-wrap c-fadeIn--normal js-tooltip__content">
+  <section class="p-category__item c-flex--wrap c-fadeIn--normal js-tooltip__content">
     <router-link :to="{ name: 'keywords', params: { username: String($route.params.username), library_id: $route.params.library_id, category_id: id } }"></router-link>
     <section class="p-category__menu c-flex--end">
       <section class="p-category__menuLink">

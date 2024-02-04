@@ -97,7 +97,6 @@ input.error {
   }
 
   .p-form__field {
-    text-align: center;
   }
 
   #library_title,#category_title,#keyword_title {
@@ -126,7 +125,7 @@ input.error {
   <section class="p-formWrap">
     <section class="p-form__group">
       <label :for="`${contentType}_title`" class="required">{{ contentName }}名</label>
-      <section class="p-form__field">
+      <section class="p-form__field c-text--center">
         <input type="text"
           :class="[v.title.$errors.length >= 1 ? 'error' : '']"
           v-model="state.title"
@@ -146,7 +145,7 @@ input.error {
     </section>
     <section class="p-form__group">
       <label :for="`${contentType}_content`" class="">内容</label>
-      <section class="p-form__field">
+      <section class="p-form__field c-text--center">
         <textarea v-model="state.content"
           :id="`${contentType}_content`"
           :placeholder="`${contentName}内容`" :maxlength="contentMaxLength"></textarea>
@@ -156,7 +155,7 @@ input.error {
       </section>
     </section>
     <section class="p-form__group">
-      <section class="p-form__field">
+      <section class="p-form__field c-text--center">
         <button type="button"
           @click="onSubmit"
           :disabled="!(v.title.$errors.length === 0 && state.title !== '')"
