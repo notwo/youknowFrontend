@@ -88,7 +88,6 @@ const addTag = (event: HTMLEvent<HTMLButtonElement>): void => {
 
 <style scoped>
 .p-formWrap {
-  flex-wrap: wrap;
 }
 
 .p-form__group {
@@ -124,7 +123,7 @@ const addTag = (event: HTMLEvent<HTMLButtonElement>): void => {
 
 <template>
   <form action="" id="p-registerForm">
-    <section class="p-formWrap c-flex--center">
+    <section class="p-formWrap c-flex--center c-flex-wrap">
       <section class="p-form__group">
         <section class="p-form__field">
           <input type="text" class="p-tag__title" name="tag_title" id="tag_title"

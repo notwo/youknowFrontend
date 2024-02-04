@@ -34,7 +34,6 @@ onUnmounted(() => {
 }
 
 .p-tag__itemWrap {
-  flex-wrap: wrap;
   margin: 3rem .8rem;
 }
 
@@ -65,7 +64,7 @@ onUnmounted(() => {
   <article id="p-tagList">
     <TagForm />
     <section class="p-tag__body" v-if="store.items.list.length > 0">
-      <section class="p-tag__itemWrap c-flex--start">
+      <section class="p-tag__itemWrap c-flex-wrap c-flex--start">
         <TagItem
           v-for="tag in store.items.list"
             :key="tag.id"

@@ -106,7 +106,6 @@ onUnmounted(() => {
 .p-keyword__itemWrap {
   display: flex;
   justify-content: center;
-  flex-wrap: wrap;
 }
 
 .p-loadNextBase {
@@ -168,7 +167,7 @@ onUnmounted(() => {
 <template>
   <article id="keyword-list">
     <KeywordModal :edit_state="edit_state" />
-    <section class="p-keyword__itemWrap" v-if="store.items.list.length > 0">
+    <section class="p-keyword__itemWrap c-flex-wrap" v-if="store.items.list.length > 0">
       <KeywordItem
         :edit_state="edit_state"
         v-for="keyword in store.items.list"

@@ -14,10 +14,6 @@
   margin: 0 auto;
 }
 
-.p-footer__list {
-  flex-wrap: wrap;
-}
-
 .p-footerContents__subject {
   font-weight: bold;
 }
@@ -55,7 +51,7 @@
 <template>
   <footer class="l-footer c-color--white">
     <section class="p-footer__contentsWrap">
-      <section class="p-footer__list c-flex--spaceBetween">
+      <section class="p-footer__list c-flex--spaceBetween c-flex-wrap">
         <section class="p-footerContents">
           <section class="c-service__icon">サービスロゴ</section>
         </section>

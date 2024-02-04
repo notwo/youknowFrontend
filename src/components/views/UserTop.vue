@@ -115,7 +115,6 @@ onMounted(() => {
   justify-content: center;
   flex-direction: column;
   align-items: center;
-  flex-wrap: wrap;
   margin: 2rem 5rem;
 }
 
@@ -230,7 +229,7 @@ button[type="button"] {
     <section class="p-profile__content">
       <section class="p-profile__image"></section>
       <form action="p-form">
-        <section class="p-formWrap">
+        <section class="p-formWrap c-flex-wrap">
           <section class="p-form__group">
             <label for="username" class="required">ユーザ名</label>
             <section class="p-form__field">

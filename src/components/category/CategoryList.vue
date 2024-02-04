@@ -106,7 +106,6 @@ onUnmounted(() => {
 .p-category__itemWrap {
   display: flex;
   justify-content: center;
-  flex-wrap: wrap;
 }
 
 .p-loadNextBase {
@@ -162,7 +161,7 @@ onUnmounted(() => {
 <template>
   <article id="category-list">
     <CategoryModal :edit_state="edit_state" />
-    <section class="p-category__itemWrap" v-if="store.items.list.length > 0">
+    <section class="p-category__itemWrap c-flex-wrap" v-if="store.items.list.length > 0">
       <CategoryItem
         :edit_state="edit_state"
         v-for="category in store.items.list"

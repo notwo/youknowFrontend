@@ -100,7 +100,6 @@ onUnmounted(() => {
 .p-library__itemWrap {
   display: flex;
   justify-content: space-between;
-  flex-wrap: wrap;
 }
 .p-library__itemWrap::after {
   content: "";
@@ -168,7 +167,7 @@ onUnmounted(() => {
 <template>
   <article id="library-list">
     <LibraryModal :edit_state="edit_state" />
-    <section class="p-library__itemWrap" v-if="store.items.list.length > 0">
+    <section class="p-library__itemWrap c-flex-wrap" v-if="store.items.list.length > 0">
       <LibraryItem
         :edit_state="edit_state"
         v-for="library in store.items.list"
