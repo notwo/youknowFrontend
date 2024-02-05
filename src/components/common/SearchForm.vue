@@ -7,7 +7,7 @@ interface HTMLEvent<T extends EventTarget> extends Event {
   target: T;
 };
 
-const emits = defineEmits<{(e: 'click', event: Object): void}>();
+const emits = defineEmits<{(e: 'click', event: Object, searchType: Number, title: String): void}>();
 const onSearch = (event): void => {
   const searchType = document.getElementById('search-type').value;
   const title = document.getElementById('search').value;
@@ -104,6 +104,7 @@ const hideOverlay = (event: HTMLEvent<HTMLButtonElement>): void => {
       <select id="search-type" class="p-searchType c-text--center">
         <option value="0">タイトルで検索</option>
         <option value="1">タグで検索</option>
+        <option value="2">本文で検索</option>
       </select>
       <input type="text" name="search" id="search" class="p-search" :placeholder="`${contentName}を検索`" @focus="showOverlay">
       <button type="button" class="p-searchButton" @click="onSearch">

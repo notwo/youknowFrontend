@@ -27,17 +27,28 @@ const onSearch = (event: HTMLEvent<HTMLButtonElement>, searchType, title): void 
     return;
   }
 
-  const url = Number(searchType) === 0 ? api.searchUrl(user.value.sub, title) : api.searchByTagUrl(user.value.sub, title);
+  const urlBySearchType = (searchType) => {
+    switch (searchType) {
+      case 0:
+        return api.searchUrl(user.value.sub, title);
+      case 1:
+        return api.searchByTagUrl(user.value.sub, title);
+      case 2:
+        return api.searchByContentUrl(user.value.sub, title);
+    }
+  };
+  const url = urlBySearchType(Number(searchType));
+
   axios.get(url)
     .then((response: AxiosResponse) => {
       // 検索後は一括で結果を返すようにしておく。今後検索後に対してもページングする場合はコメントアウトを外す(更にAPIの修正も必要)
       //if (response.data.results.length <= 0) {
       if (response.data.length <= 0) {
-        store.search(response.data, searchType);
+        store.search(response.data, searchType, title);
         return;
       }
       //store.search(response.data.results);
-      store.search(response.data, searchType);
+      store.search(response.data, searchType, title);
     })
     .catch((e: AxiosError<ErrorResponse>) => {
       store.allClear();

@@ -47,13 +47,17 @@ export function libraryApi() {
   function searchByTagUrl(sub: String, title: String) {
     return `${apiBaseUrl}/api/users/${sub}/libraries/search_by_tag/?title=${title}`;
   }
+  function searchByContentUrl(sub: String, content: String) {
+    return `${apiBaseUrl}/api/users/${sub}/libraries/search_by_content/?content=${content}`;
+  }
 
   return {
     listUrl,
     detailUrl,
     createUrl,
     searchUrl,
-    searchByTagUrl
+    searchByTagUrl,
+    searchByContentUrl
   }
 };
 
@@ -73,13 +77,17 @@ export function categoryApi() {
   function searchByTagUrl(sub: String, library_id: Number, title: String) {
     return `${apiBaseUrl}/api/users/${sub}/libraries/${library_id}/categories/search_by_tag/?title=${title}`;
   }
+  function searchByContentUrl(sub: String, library_id: Number, content: String) {
+    return `${apiBaseUrl}/api/users/${sub}/libraries/${library_id}/categories/search_by_content/?content=${content}`;
+  }
 
   return {
     listUrl,
     detailUrl,
     createUrl,
     searchUrl,
-    searchByTagUrl
+    searchByTagUrl,
+    searchByContentUrl
   }
 };
 
@@ -99,13 +107,17 @@ export function keywordApi() {
   function searchByTagUrl(sub: String, library_id: Number, category_id: Number, title: String) {
     return `${apiBaseUrl}/api/users/${sub}/libraries/${library_id}/categories/${category_id}/keywords/search_by_tag/?title=${title}`;
   }
+  function searchByContentUrl(sub: String, library_id: Number, category_id: Number, content: String) {
+    return `${apiBaseUrl}/api/users/${sub}/libraries/${library_id}/categories/${category_id}/keywords/search_by_content/?content=${content}`;
+  }
 
   return {
     listUrl,
     detailUrl,
     createUrl,
     searchUrl,
-    searchByTagUrl
+    searchByTagUrl,
+    searchByContentUrl
   }
 };
 
