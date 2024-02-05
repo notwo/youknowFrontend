@@ -96,7 +96,6 @@ input.error {
     margin: .75rem 0;
   }
   .p-form__field {
-    text-align: center;
   }
   #edit_library_title,#edit_category_title,#edit_keyword_title {
     width: auto;
@@ -121,7 +120,7 @@ input.error {
   <section class="p-formWrap">
     <section class="p-form__group">
       <label :for="`edit_${contentType}_title`" class="required">{{ contentName }}名</label>
-      <section class="p-form__field">
+      <section class="p-form__field c-text--center">
         <input type="text"
           :class="[v.title.$errors.length >= 1 ? 'error' : '']"
           v-model="state.title"
@@ -141,7 +140,7 @@ input.error {
     </section>
     <section class="p-form__group">
       <label :for="`edit_${contentType}_content`" class="">内容</label>
-      <section class="p-form__field">
+      <section class="p-form__field c-text--center">
         <textarea v-model="state.content"
           :id="`edit_${contentType}_content`"
           :placeholder="`${contentName}の内容`" :maxlength="contentMaxLength"></textarea>
@@ -151,7 +150,7 @@ input.error {
       </section>
     </section>
     <section class="p-form__group">
-      <section class="p-form__field">
+      <section class="p-form__field c-text--center">
         <button @click="onSubmit"
           :disabled="!(v.title.$errors.length === 0 && state.title !== '')"
           class="c-btn c-btn--register">{{ contentName }}を更新する</button>

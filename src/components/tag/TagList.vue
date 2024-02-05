@@ -34,7 +34,6 @@ onUnmounted(() => {
 }
 
 .p-tag__itemWrap {
-  flex-wrap: wrap;
   margin: 3rem .8rem;
 }
 
@@ -47,7 +46,6 @@ onUnmounted(() => {
   .p-emptyMessage {
     margin: 2rem;
     font-size: 2rem;
-    text-align: center;
   }
 }
 
@@ -56,7 +54,6 @@ onUnmounted(() => {
   .p-emptyMessage {
     margin: 2rem;
     font-size: 3rem;
-    text-align: center;
   }
 }
 </style>
@@ -65,7 +62,7 @@ onUnmounted(() => {
   <article id="p-tagList">
     <TagForm />
     <section class="p-tag__body" v-if="store.items.list.length > 0">
-      <section class="p-tag__itemWrap c-flex--start">
+      <section class="p-tag__itemWrap c-flex--wrap c-flex--start">
         <TagItem
           v-for="tag in store.items.list"
             :key="tag.id"
@@ -75,7 +72,7 @@ onUnmounted(() => {
       </section>
     </section>
     <section v-else-if="store.firstLoaded.value">
-      <p class="p-emptyMessage c-flex--center c-fadeIn--fast">タグを追加してみましょう</p>
+      <p class="p-emptyMessage c-flex--center c-fadeIn--fast c-text--center">タグを追加してみましょう</p>
     </section>
     <section v-else>
       <!-- ここにローディング -->

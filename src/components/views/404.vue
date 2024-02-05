@@ -11,7 +11,6 @@
 }
 
 .p-error__message p {
-  text-align: center;
 }
 
 .p-to__top a {
@@ -35,7 +34,7 @@
 
 <template>
   <!-- TODO: ここにYouKnowの404画像を載せたい -->
-  <section class="p-error__message">
+  <section class="p-error__message c-text--center">
     <p>お探しのページが見つかりませんでした。<br>
       入力されたURLが間違っているか、データが既に存在しない可能性があります。</p>
   </section>

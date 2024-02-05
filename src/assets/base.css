@@ -50,8 +50,16 @@ input.error {
   justify-content: flex-end;
 }
 
+.c-flex--wrap {
+  flex-wrap: wrap;
+}
+
 .c-hidden {
   display: none;
+}
+
+.c-text--center {
+  text-align: center;
 }
 
 .c-color--white {

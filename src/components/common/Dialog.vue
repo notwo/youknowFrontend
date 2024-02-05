@@ -72,7 +72,6 @@ dialogStore.setFunc(openDialog);
 
 .p-dialogContents {
   padding: .3rem .5rem;
-  text-align: center;
 }
 
 .p-dialog__subject {
@@ -100,11 +99,11 @@ dialogStore.setFunc(openDialog);
 <template>
   <dialog class="p-dialog c-fadeIn--fast" id="dialog">
     <section class="p-dialogWrap">
-      <section class="p-dialogContents" v-if="message.mode === 'normal'">
+      <section class="p-dialogContents c-text--center" v-if="message.mode === 'normal'">
         <p class="p-dialog__subject" v-if="message.subject.length > 0">{{ message.subject }}</p>
         <p class="p-dialog__body">{{ message.body }}</p>
       </section>
-      <section class="p-dialogContents c-color--red" v-if="message.mode === 'error'">
+      <section class="p-dialogContents c-color--red c-text--center" v-if="message.mode === 'error'">
         <p class="p-dialog__subject c-color--red" v-if="message.subject.length > 0">{{ message.subject }}</p>
         <p class="p-dialog__body c-color--red">{{ message.body }}</p>
       </section>
@@ -112,7 +111,7 @@ dialogStore.setFunc(openDialog);
     <!--
     <section class="dialog-overlay">
       <section class="p-dialog">
-        <section class="p-dialogContents">
+        <section class="p-dialogContents c-text--center">
           こ↑こ↓
         </section>
       </section>

@@ -64,7 +64,6 @@ onMounted(() => {
 }
 
 .p-tag__itemWrap {
-  flex-wrap: wrap;
   margin: 1.4rem 0;
 }
 
@@ -80,7 +79,7 @@ onMounted(() => {
   <article v-if="TagList.length > 0" id="p-unattached__tagList">
     <span class="p-subject">未登録のタグ</span>
     <section class="p-tag__body">
-      <section class="p-tag__itemWrap c-flex--start">
+      <section class="p-tag__itemWrap c-flex--start c-flex--wrap">
         <UnattachedTagItem
           v-for="tag in TagList"
             :key="tag.id"

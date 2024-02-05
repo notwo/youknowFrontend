@@ -5,6 +5,8 @@ export function useStore() {
   let backupList: Array<Object> = [];
   const firstLoaded = ref(false);
   const searched = ref(false);
+  const searchType = ref(0);
+  const searchTitle = ref('');
 
   function setItem<T>(list: T[]) {
     items.list = ref(list);
@@ -49,34 +51,47 @@ export function useStore() {
     });
   }
 
-  function search<T>(list: T[]) {
+  function search<T>(list: T[], searchTypeValue: Number = 0, searchTitleValue: String) {
     allClear();
     list.map((_obj: object) => {
       items.list.unshift(_obj);
     });
     searched.value = true;
-  }
-
-  function restore() {
-    if (items.list.length === backupList.length) { return; }
-
-    allClear();
-    backupList.map((_obj: Object) => {
-      items.list.push(_obj);
-    });
-    searched.value = false;
+    searchType.value = searchTypeValue;
+    searchTitle.value = searchTitleValue;
   }
 
   function isSearched() {
     return searched.value;
   }
 
+  function searchedType() {
+    return searchType.value;
+  }
+
+  function searchedTitle() {
+    return searchTitle.value;
+  }
+
   function allClear() {
     items.list.splice(0);
   }
 
+  function restore() {
+    if (items.list.length === backupList.length) { return; }
+
+    backupList.map((_obj: Object) => {
+      items.list.push(_obj);
+    });
+    searched.value = false;
+    searchType.value = 0;
+    searchTitle.value = '';
+  }
+
   function restoreSearched() {
     searched.value = false;
+    searchType.value = 0;
+    searchTitle.value = '';
   }
 
   function restoreFirstLoaded() {
@@ -88,7 +103,7 @@ export function useStore() {
   }
 
   return { items: readonly(items), firstLoaded: readonly(firstLoaded),
-    setItem, add, concat, update, remove, removeList, search, restore, isSearched, allClear, restoreSearched, restoreFirstLoaded, confirmItems };
+    setItem, add, concat, update, remove, removeList, search, isSearched, searchedType, searchedTitle, restore, allClear, restoreSearched, restoreFirstLoaded, confirmItems };
 };
 
 export const editStore = reactive({

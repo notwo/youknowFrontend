@@ -74,6 +74,8 @@ onMounted(() => {
 
   loadingStore.show.value();
 
+  store.allClear();
+  store.restoreSearched();
   const showKeywordList = async (): Promise<void> => {
     await axios.get<KeywordResponse>(cApi.detailUrl(user.value.sub, route.params.library_id, route.params.category_id))
       .then((response: AxiosResponse) => {
@@ -95,7 +97,6 @@ onMounted(() => {
 
 onUnmounted(() => {
   store.allClear();
-  store.restoreSearched();
   store.restoreFirstLoaded();
   window.removeEventListener('scroll', showMoreKeywordList, false);
 });
@@ -103,9 +104,6 @@ onUnmounted(() => {
 
 <style scoped>
 .p-keyword__itemWrap {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
 }
 
 .p-loadNextBase {
@@ -138,7 +136,6 @@ onUnmounted(() => {
   .p-emptyMessage {
     margin: 2rem;
     font-size: 2rem;
-    text-align: center;
   }
 }
 
@@ -159,7 +156,6 @@ onUnmounted(() => {
   .p-emptyMessage {
     margin: 2rem;
     font-size: 3rem;
-    text-align: center;
   }
 }
 </style>
@@ -167,7 +163,7 @@ onUnmounted(() => {
 <template>
   <article id="keyword-list">
     <KeywordModal :edit_state="edit_state" />
-    <section class="p-keyword__itemWrap" v-if="store.items.list.length > 0">
+    <section class="p-keyword__itemWrap c-flex--center c-flex--wrap" v-if="store.items.list.length > 0">
       <KeywordItem
         :edit_state="edit_state"
         v-for="keyword in store.items.list"
@@ -181,7 +177,7 @@ onUnmounted(() => {
       <section class="js-loadingBase js-loadNextBase p-loadNextBase"></section>
     </section>
     <section v-else-if="store.firstLoaded.value && !store.isSearched()">
-      <p class="p-emptyMessage c-flex--center c-fadeIn--fast">キーワードを追加してみましょう</p>
+      <p class="p-emptyMessage c-flex--center c-fadeIn--fast c-text--center">キーワードを追加してみましょう</p>
     </section>
     <section v-else-if="!store.firstLoaded.value" class="js-loadingBase">
       <!-- ここにローディング -->

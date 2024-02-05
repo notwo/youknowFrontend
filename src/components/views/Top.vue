@@ -35,7 +35,6 @@ const login = (event): void => {
 .p-mainContents__box p {
   font-size: 2rem;
   font-weight: 800;
-  text-align: center;
 }
 
 /* sp */
@@ -63,10 +62,11 @@ const login = (event): void => {
 
 <template>
   <section class="p-mainContents">
-    <router-link :to="{ name: 'libraries', params: { username: String(auth0?.user?.value?.nickname) } }" class="p-mainContents__box" v-if="auth0.isAuthenticated.value">
+    <router-link v-if="auth0.isAuthenticated.value"
+      :to="{ name: 'libraries', params: { username: String(auth0?.user?.value?.nickname) } }" class="p-mainContents__box c-text--center">
       <p class="p-mainContents__message">データを登録してみる</p>
     </router-link>
-    <section v-else @click="login" class="p-mainContents__box">
+    <section v-else @click="login" class="p-mainContents__box c-text--center">
       <p class="p-mainContents__message">データを登録してみる</p>
     </section>
   </section>

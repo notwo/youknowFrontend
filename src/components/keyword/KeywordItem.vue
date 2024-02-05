@@ -53,7 +53,6 @@ const removeKeyword = (event: HTMLEvent<HTMLButtonElement>): void => {
 <style scoped>
 .p-keyword__item {
   position: relative;
-  flex-wrap: wrap;
   width: 90%;
   height: auto;
   margin: 1rem;
@@ -111,7 +110,6 @@ const removeKeyword = (event: HTMLEvent<HTMLButtonElement>): void => {
 .p-keyword__tags {
   display: flex;
   justify-content: flex-start;
-  flex-wrap: wrap;
   margin: .6rem .4rem;
   max-height: 6rem;
   background: rgba(101, 75, 250, 0.9);
@@ -170,7 +168,7 @@ const removeKeyword = (event: HTMLEvent<HTMLButtonElement>): void => {
 </style>
 
 <template>
-  <section class="p-keyword__item c-fadeIn--normal js-tooltip__content">
+  <section class="p-keyword__item c-flex--wrap c-fadeIn--normal js-tooltip__content">
     <router-link :to="{ name: 'keyword', params: {
       username: String($route.params.username),
       library_id: $route.params.library_id,
@@ -189,7 +187,7 @@ const removeKeyword = (event: HTMLEvent<HTMLButtonElement>): void => {
     <section class="p-keyword__body js-tooltip__title">
       <p class="p-keyword__title">{{ titleForView(title, 'keyword') }}</p>
       <p class="p-keyword__contents">{{ contentForView(content, 'keyword') }}</p>
-      <section class="p-keyword__tags">
+      <section class="p-keyword__tags c-flex--wrap">
         <span class="p-keyword__tag" v-for="tag of tags" :key="tag.id">
           {{ titleForView(tag.title, 'tag') }}
         </span>
