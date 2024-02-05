@@ -79,11 +79,13 @@ const hideOverlay = (event: HTMLEvent<HTMLButtonElement>): void => {
   .p-searchType {
     padding: .6rem;
     width: 50%;
+    border-radius: .3rem;
   }
 
   .p-search {
     padding: .6rem;
     width: 65%;
+    border-radius: .3rem 0 0 .3rem;
   }
 }
 
