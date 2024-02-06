@@ -47,7 +47,7 @@ const removeKeyword = (event: HTMLEvent<HTMLButtonElement>): void => {
 </script>
 
 <style scoped>
-.p-keyword__menu {
+.p-keyword__menuArea {
   margin: .6rem;
   z-index: 1;
 }
@@ -57,20 +57,46 @@ const removeKeyword = (event: HTMLEvent<HTMLButtonElement>): void => {
   z-index: 1;
 }
 
-.p-keyword__menuLink:hover {
+.p-keyword__menuLink:hover .p-keyword__menuList {
+  visibility: visible;
+}
+.p-keyword__menuLink .p-keyword__menuButton {
+  font-size: 2.1rem;
+}
+
+.p-keyword__menuList {
+  position: absolute;
+  margin: 1.3rem .3rem;
+  padding: .3rem;
+  visibility: hidden;
+  right: .3rem;
+  top: 1.3rem;
+  border-radius: .3rem;
+  background-color: #EEEEEE;
+}
+
+.p-keyword__menu {
+  margin: .9rem .5rem;
+  font-size: 1.3rem;
+}
+.p-keyword__menu:hover, .p-keyword__menu:active {
   color: #888;
   cursor: pointer;
 }
-
 </style>
 
 <template>
-  <section class="p-keyword__menu c-flex--end">
+  <section class="p-keyword__menuArea c-flex--end">
     <section class="p-keyword__menuLink">
-      <KeywordEditButton :edit_state="edit_state" :id="id" :title="title" :content="content" />
-    </section>
-    <section class="p-keyword__menuLink">
-      <span @click="removeKeyword" class="p-delete__link" :data-id="id">削除</span>
+      <span class="p-keyword__menuButton">…</span>
+      <ul class="p-keyword__menuList">
+        <li class="p-keyword__menu">
+          <KeywordEditButton :edit_state="edit_state" :id="id" :title="title" :content="content" />
+        </li>
+        <li class="p-keyword__menu">
+          <span @click="removeKeyword" class="p-delete__link" :data-id="id">削除</span>
+        </li>
+      </ul>
     </section>
   </section>
 </template>
