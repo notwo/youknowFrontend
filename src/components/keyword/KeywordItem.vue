@@ -1,12 +1,7 @@
 <script setup lang="ts">
-import { inject } from 'vue';
-import axios, { AxiosResponse, AxiosError } from "axios";
-import { useRoute } from 'vue-router';
-import { useAuth0 } from '@auth0/auth0-vue';
-import KeywordEditButton from "@/components/keyword/KeywordEditButton.vue";
-import { keywordApi } from '@/plugin/apis';
 import { timeFormat, titleForView, contentForView } from '@/plugin/util';
 import Tooltip from '@/components/Tooltip.vue';
+import CassetteMenu from '@/components/keyword/CassetteMenu.vue';
 
 const props = defineProps({
   edit_state: Object,
@@ -16,38 +11,6 @@ const props = defineProps({
   updated_at: String,
   tags: Array
 });
-
-const { user } = useAuth0();
-const store = inject('keyword');
-const dialogStore = inject('dialog');
-const api = keywordApi();
-const route = useRoute();
-
-interface HTMLEvent<T extends EventTarget> extends Event {
-  target: T;
-};
-
-const removeKeyword = (event: HTMLEvent<HTMLButtonElement>): void => {
-  if (!window.confirm(`キーワード「${props.title}」が削除されますが宜しいですか？`)) {
-    return;
-  }
-
-  interface ErrorResponse {
-    message: String,
-    name: String,
-    code: String
-  };
-
-  store.remove(props.id); // api実行前に呼ばないとstoreの中身が検索できない
-  const id = event.currentTarget.getAttribute('data-id') as String;
-  axios.delete(api.detailUrl(user.value.sub, route.params.library_id, route.params.category_id, id))
-  .then((response: AxiosResponse) => {
-    dialogStore.func.value('', 'キーワードを削除しました');
-  })
-  .catch((e: AxiosError<ErrorResponse>) => {
-    dialogStore.func.value('削除エラー', 'キーワード削除中にエラーが起きました。暫くお待ちいただいてから再度お試しください', 'error');
-  });
-};
 </script>
 
 <style scoped>
@@ -70,21 +33,6 @@ const removeKeyword = (event: HTMLEvent<HTMLButtonElement>): void => {
   height: 100%;
   top: 0;
   left: 0;
-}
-
-.p-keyword__menu {
-  margin: .6rem;
-  z-index: 1;
-}
-
-.p-keyword__menuLink {
-  margin: .3rem;
-  z-index: 1;
-}
-
-.p-keyword__menuLink:hover {
-  color: #888;
-  cursor: pointer;
 }
 
 .p-keyword__body {
@@ -176,14 +124,7 @@ const removeKeyword = (event: HTMLEvent<HTMLButtonElement>): void => {
       keyword_id: id
     } }">
     </router-link>
-    <section class="p-keyword__menu c-flex--end">
-      <section class="p-keyword__menuLink">
-        <KeywordEditButton :edit_state="edit_state" :id="id" :title="title" :content="content" />
-      </section>
-      <section class="p-keyword__menuLink">
-        <span @click="removeKeyword" class="p-delete__link" :data-id="id">削除</span>
-      </section>
-    </section>
+    <CassetteMenu :edit_state="edit_state" :id="id" :title="title" :content="content" />
     <section class="p-keyword__body js-tooltip__title">
       <p class="p-keyword__title">{{ titleForView(title, 'keyword') }}</p>
       <p class="p-keyword__contents">{{ contentForView(content, 'keyword') }}</p>
