@@ -1,12 +1,7 @@
 <script setup lang="ts">
-import { inject } from 'vue';
-import { useRoute } from 'vue-router';
-import axios, { AxiosResponse, AxiosError } from "axios";
-import { useAuth0 } from '@auth0/auth0-vue';
-import CategoryEditButton from "@/components/category/CategoryEditButton.vue";
 import { timeFormat, titleForView, contentForView } from '@/plugin/util';
-import { categoryApi } from '@/plugin/apis';
 import Tooltip from '@/components/Tooltip.vue';
+import CassetteMenu from '@/components/category/CassetteMenu.vue';
 
 const props = defineProps({
   edit_state: Object,
@@ -15,38 +10,6 @@ const props = defineProps({
   content: String,
   updated_at: String
 });
-
-const { user } = useAuth0();
-
-interface ErrorResponse {
-  message: String,
-  name: String,
-  code: String
-};
-
-interface HTMLEvent<T extends EventTarget> extends Event {
-  target: T;
-};
-
-const api = categoryApi();
-const route = useRoute();
-const store = inject('category');
-const dialogStore = inject('dialog');
-const removeCategory = (event: HTMLEvent<HTMLButtonElement>): void => {
-  if (!window.confirm(`カテゴリ「${props.title}」が削除されますが宜しいですか？`)) {
-    return;
-  }
-
-  store.remove(props.id); // api実行前に呼ばないとstoreの中身が検索できない
-  const id = event.currentTarget.getAttribute('data-id') as String;
-  axios.delete(api.detailUrl(user.value.sub, route.params.library_id, id))
-    .then((response: AxiosResponse) => {
-      dialogStore.func.value('', 'カテゴリを削除しました');
-    })
-    .catch((e: AxiosError<ErrorResponse>) => {
-      dialogStore.func.value('削除エラー', 'カテゴリ削除中にエラーが起きました。暫くお待ちいただいてから再度お試しください', 'error');
-    });
-};
 </script>
 
 <style scoped>
@@ -69,21 +32,6 @@ const removeCategory = (event: HTMLEvent<HTMLButtonElement>): void => {
   height: 100%;
   top: 0;
   left: 0;
-}
-
-.p-category__menu {
-  margin: .6rem;
-  z-index: 1;
-}
-
-.p-category__menuLink {
-  margin: .3rem;
-  z-index: 1;
-}
-
-.p-category__menuLink:hover {
-  color: #888;
-  cursor: pointer;
 }
 
 .p-category__body {
@@ -152,14 +100,7 @@ const removeCategory = (event: HTMLEvent<HTMLButtonElement>): void => {
 <template>
   <section class="p-category__item c-flex--wrap c-fadeIn--normal js-tooltip__content">
     <router-link :to="{ name: 'keywords', params: { username: String($route.params.username), library_id: $route.params.library_id, category_id: id } }"></router-link>
-    <section class="p-category__menu c-flex--end">
-      <section class="p-category__menuLink">
-        <CategoryEditButton :edit_state="edit_state" :id="id" :title="title" :content="content" />
-      </section>
-      <section class="p-category__menuLink">
-        <span @click="removeCategory" class="p-delete__link" :data-id="id">削除</span>
-      </section>
-    </section>
+    <CassetteMenu :edit_state="edit_state" :id="id" :title="title" :content="content" />
     <section class="p-category__body js-tooltip__title">
       <p class="p-category__title">{{ titleForView(title, 'category') }}</p>
       <p class="p-category__contents">{{ contentForView(content, 'category') }}</p>
