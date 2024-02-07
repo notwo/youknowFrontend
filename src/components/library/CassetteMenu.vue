@@ -56,6 +56,7 @@ const removeLibrary = (event: HTMLEvent<HTMLButtonElement>): void => {
   z-index: 1;
 }
 .p-library__menuLink:hover .p-library__menuList {
+  transform: scale(1.2);
   visibility: visible;
 }
 
@@ -71,6 +72,9 @@ const removeLibrary = (event: HTMLEvent<HTMLButtonElement>): void => {
   right: .3rem;
   top: 1.3rem;
   border-radius: .3rem;
+  transform-origin: 100% 0;
+  transform: scale(.1);
+  transition: all .2s;
   background-color: #EEEEEE;
 }
 

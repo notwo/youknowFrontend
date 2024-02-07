@@ -58,6 +58,7 @@ const removeCategory = (event: HTMLEvent<HTMLButtonElement>): void => {
   z-index: 1;
 }
 .p-category__menuLink:hover .p-category__menuList {
+  transform: scale(1.2);
   visibility: visible;
 }
 .p-category__menuLink .p-category__menuButton {
@@ -72,6 +73,9 @@ const removeCategory = (event: HTMLEvent<HTMLButtonElement>): void => {
   right: .3rem;
   top: 1.3rem;
   border-radius: .3rem;
+  transform-origin: 100% 0;
+  transform: scale(.1);
+  transition: all .2s;
   background-color: #EEEEEE;
 }
 
@@ -94,7 +98,7 @@ const removeCategory = (event: HTMLEvent<HTMLButtonElement>): void => {
           <CategoryEditButton :edit_state="edit_state" :id="id" :title="title" :content="content" />
         </li>
         <li class="p-category__menu">
-          <span class="p-delete__link" :data-id="id">削除</span>
+          <span @click="removeCategory" class="p-delete__link" :data-id="id">削除</span>
         </li>
       </ul>
     </section>

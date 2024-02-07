@@ -37,13 +37,33 @@ const removeKeyword = (event: HTMLEvent<HTMLButtonElement>): void => {
   store.remove(props.id); // api実行前に呼ばないとstoreの中身が検索できない
   const id = event.currentTarget.getAttribute('data-id') as String;
   axios.delete(api.detailUrl(user.value.sub, route.params.library_id, route.params.category_id, id))
-  .then((response: AxiosResponse) => {
-    dialogStore.func.value('', 'キーワードを削除しました');
-  })
-  .catch((e: AxiosError<ErrorResponse>) => {
-    dialogStore.func.value('削除エラー', 'キーワード削除中にエラーが起きました。暫くお待ちいただいてから再度お試しください', 'error');
-  });
+    .then((response: AxiosResponse) => {
+      dialogStore.func.value('', 'キーワードを削除しました');
+    })
+    .catch((e: AxiosError<ErrorResponse>) => {
+      dialogStore.func.value('削除エラー', 'キーワード削除中にエラーが起きました。暫くお待ちいただいてから再度お試しください', 'error');
+    });
 };
+
+/*
+const moveToOtherCategory = (event: HTMLEvent<HTMLButtonElement>): void => {
+  interface ErrorResponse {
+    message: String,
+    name: String,
+    code: String
+  };
+
+  const id = event.currentTarget.getAttribute('data-id') as String;
+  axios.patch(api.moveUrl(user.value.sub, route.params.library_id, route.params.category_id, id))
+    .then((response: AxiosResponse) => {
+      console.log('')
+      //dialogStore.func.value('', 'キーワードを削除しました');
+    })
+    .catch((e: AxiosError<ErrorResponse>) => {
+      //dialogStore.func.value('削除エラー', 'キーワード削除中にエラーが起きました。暫くお待ちいただいてから再度お試しください', 'error');
+    });
+};
+*/
 </script>
 
 <style scoped>
@@ -58,6 +78,7 @@ const removeKeyword = (event: HTMLEvent<HTMLButtonElement>): void => {
 }
 
 .p-keyword__menuLink:hover .p-keyword__menuList {
+  transform: scale(1.2);
   visibility: visible;
 }
 .p-keyword__menuLink .p-keyword__menuButton {
@@ -72,6 +93,9 @@ const removeKeyword = (event: HTMLEvent<HTMLButtonElement>): void => {
   right: .3rem;
   top: 1.3rem;
   border-radius: .3rem;
+  transform-origin: 100% 0;
+  transform: scale(.1);
+  transition: all .2s;
   background-color: #EEEEEE;
 }
 
@@ -96,6 +120,11 @@ const removeKeyword = (event: HTMLEvent<HTMLButtonElement>): void => {
         <li class="p-keyword__menu">
           <span @click="removeKeyword" class="p-delete__link" :data-id="id">削除</span>
         </li>
+        <!--
+        <li class="p-keyword__menu">
+          <span @click="moveToOtherCategory" :data-id="id">カテゴリ移動</span>
+        </li>
+        -->
       </ul>
     </section>
   </section>
