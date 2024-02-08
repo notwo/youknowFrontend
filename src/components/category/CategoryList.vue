@@ -82,6 +82,7 @@ onMounted(() => {
       .then((response: AxiosResponse) => {
         canLoadNext = (response.data.paginated_categories.next);
         titlesStore.setLibrary(`「${response.data.title}」のカテゴリ`);
+        document.title = `「${response.data.title}」のカテゴリ - You Know`;
         store.setItem(response.data.paginated_categories.data);
         loadingStore.hide.value();
       })

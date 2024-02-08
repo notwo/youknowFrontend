@@ -40,6 +40,7 @@ onMounted(() => {
     api.detailUrl(user.value.sub, route.params.library_id, route.params.category_id, route.params.keyword_id)
   )
     .then((response: AxiosResponse) => {
+      document.title = `${response.data.title} - You Know`;
       titlesStore.setKeyword(response.data.title);
       Keyword.value = response.data;
       store.setItem(Keyword.value.tags);
