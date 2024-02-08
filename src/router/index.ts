@@ -1,6 +1,7 @@
 import { useAuth0 } from '@auth0/auth0-vue';
 import { createRouter, createWebHistory, RouteRecordRaw  } from 'vue-router';
 
+/* titleに関してはここでは一時的に埋め込んだ物を使うが、実際にはそれぞれのvueファイル内で書き換え */
 const routes: Array<RouteRecordRaw> = [
   { path: '/', name: 'top', component: () => import('../components/views/Top.vue'), meta: { title: 'You Know - 自分の知識集約サイト' }},
   { path: '/callback', name: 'callback', component: () => import('../components/views/Callback.vue'), meta: { title: '遷移中...' }},
@@ -76,6 +77,7 @@ const routes: Array<RouteRecordRaw> = [
         next('/')
       }
     },
+    meta: { title: 'キーワード - You Know' }
   },
   { path: '/:matchAll(.*)', name: 'error', component: () => import('../components/views/404.vue'), meta: { title: 'お探しのページが見つかりませんでした - You Know' } },
 ];

@@ -82,6 +82,7 @@ onMounted(() => {
         canLoadNext = (response.data.paginated_keywords.next);
         titlesStore.setLibrary(`「${response.data.library_title}」のカテゴリ`);
         titlesStore.setCategory(`「${response.data.title}」のキーワード`);
+        document.title = `「${response.data.title}」のキーワード - You Know`;
         store.setItem(response.data.paginated_keywords.data);
         loadingStore.hide.value();
       })
