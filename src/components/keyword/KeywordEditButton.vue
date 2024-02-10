@@ -15,7 +15,7 @@ interface HTMLEvent<T extends EventTarget> extends Event {
 };
 
 const openEditKeywordForm = (event: HTMLEvent<HTMLButtonElement>): void => {
-  const modal = document.querySelector('.l-overlay') as HTMLElement;
+  const modal = document.querySelector('.js-overlay') as HTMLElement;
   modal.classList.add('visible');
   document.getElementById('edit_keyword_title').value = props.title;
   document.getElementById('edit_keyword_content').value = props.content;

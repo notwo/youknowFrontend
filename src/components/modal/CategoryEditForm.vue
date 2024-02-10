@@ -34,13 +34,13 @@ interface HTMLEvent<T extends EventTarget> extends Event {
 
 const api = categoryApi();
 const route = useRoute();
-const onSubmit = (event: HTMLEvent<HTMLButtonElement>): void => {
+const onSubmit = (event: HTMLEvent<HTMLButtonElement>, title: String, content: String): void => {
   event.preventDefault();
   const requestParam: CategoryRequest = {
     custom_user: user.value.sub,
     library: route.params.library_id,
-    title: document.getElementById('edit_category_title').value,
-    content: document.getElementById('edit_category_content').value
+    title: title,
+    content: content
   };
 
   axios.patch(api.detailUrl(user.value.sub, route.params.library_id, editStore.id), requestParam)

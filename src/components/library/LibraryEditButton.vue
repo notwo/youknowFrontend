@@ -15,7 +15,7 @@ interface HTMLEvent<T extends EventTarget> extends Event {
 };
 
 const openEditLibraryForm = (event: HTMLEvent<HTMLButtonElement>): void => {
-  const overlay = document.querySelector('.l-overlay') as HTMLElement;
+  const overlay = document.querySelector('.js-overlay') as HTMLElement;
   overlay.classList.add('visible');
   document.getElementById('edit_library_title').value = props.title;
   document.getElementById('edit_library_content').value = props.content;

@@ -24,8 +24,11 @@ interface ErrorResponse {
 
 interface KeywordRequest {
   custom_user: String,
+  library: String,
+  category: String,
   title: String
-  content: String
+  content: String,
+  tags: Array<String>
 };
 
 interface HTMLEvent<T extends EventTarget> extends Event {
@@ -34,13 +37,13 @@ interface HTMLEvent<T extends EventTarget> extends Event {
 
 const api = keywordApi();
 const route = useRoute();
-const onSubmit = (event: HTMLEvent<HTMLButtonElement>): void => {
+const onSubmit = (event: HTMLEvent<HTMLButtonElement>, title: String, content: String): void => {
   const requestParam: KeywordRequest = {
     custom_user: user.value.sub,
     library: route.params.library_id,
     category: route.params.category_id,
-    title: document.getElementById('keyword_title').value,
-    content: document.getElementById('keyword_content').value,
+    title: title,
+    content: content,
     tags: []
   };
 

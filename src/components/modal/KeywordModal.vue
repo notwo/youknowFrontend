@@ -66,7 +66,7 @@ defineProps({
 </style>
 
 <template>
-  <section class="l-overlay">
+  <section class="l-overlay js-overlay">
     <section class="p-modal">
       <KeywordForm :edit_state="edit_state" />
     </section>

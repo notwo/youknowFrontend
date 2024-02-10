@@ -35,12 +35,12 @@ interface HTMLEvent<T extends EventTarget> extends Event {
 
 const api = keywordApi();
 const route = useRoute();
-const onSubmit = (event: HTMLEvent<HTMLButtonElement>): void => {
+const onSubmit = (event: HTMLEvent<HTMLButtonElement>, title: String, content: String): void => {
   event.preventDefault();
   const requestParam: KeywordRequest = {
     custom_user: user.value.sub,
-    title: document.getElementById('edit_keyword_title').value,
-    content: document.getElementById('edit_keyword_content').value
+    title: title,
+    content: content
   };
 
   axios.patch(api.detailUrl(user.value.sub, route.params.library_id, route.params.category_id, editStore.id), requestParam)

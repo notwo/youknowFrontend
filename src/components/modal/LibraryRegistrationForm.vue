@@ -32,11 +32,11 @@ interface HTMLEvent<T extends EventTarget> extends Event {
 };
 
 const api = libraryApi();
-const onSubmit = (event: HTMLEvent<HTMLButtonElement>): void => {
+const onSubmit = (event: HTMLEvent<HTMLButtonElement>, title: String, content: String): void => {
   const requestParam: LibraryRequest = {
     custom_user: user.value.sub,
-    title: document.getElementById('library_title').value,
-    content: document.getElementById('library_content').value
+    title: title,
+    content: content
   };
 
   axios.post(api.createUrl(user.value.sub), requestParam)

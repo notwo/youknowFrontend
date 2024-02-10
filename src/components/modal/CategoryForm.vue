@@ -25,8 +25,8 @@ const edit_v$ = useVuelidate(editRules('カテゴリ名', store), props.edit_sta
 const closeModal = (event: HTMLEvent<HTMLButtonElement>): void => {
   event.preventDefault();
   document.body.style.removeProperty("overflow");
-  const modal = document.getElementsByClassName('l-overlay') as HTMLCollectionOf<HTMLElement>;
-  modal[0].classList.remove('visible');
+  const overlay = document.querySelector('.js-overlay') as HTMLElement;
+  overlay.classList.remove('visible');
   // フォーム初期化
   register_state.title = '';
   register_state.content = '';
