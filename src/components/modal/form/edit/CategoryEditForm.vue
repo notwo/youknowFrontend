@@ -1,19 +1,19 @@
 <script setup lang="ts">
 import { inject } from 'vue';
-import axios, { AxiosResponse, AxiosError } from "axios";
 import { useRoute } from 'vue-router';
 import { useAuth0 } from '@auth0/auth0-vue';
-import { keywordApi } from '@/plugin/apis';
-import RegistrationForm from '@/components/modal/RegistrationForm.vue';
+import axios, { AxiosResponse, AxiosError } from "axios";
+import { categoryApi } from '@/plugin/apis';
+import EditForm from '@/components/modal/form/edit/EditForm.vue';
 
 defineProps({
   v: Object,
   state: Object,
 })
 const emits = defineEmits<{(e: 'closeEvent', event: Object): void}>();
-
 const { user } = useAuth0();
-const store = inject('keyword');
+const store = inject('category');
+const editStore = inject('categoryEdit');
 const dialogStore = inject('dialog');
 
 interface ErrorResponse {
@@ -22,39 +22,35 @@ interface ErrorResponse {
   code: String
 };
 
-interface KeywordRequest {
+interface CategoryRequest {
   custom_user: String,
-  library: String,
-  category: String,
   title: String
-  content: String,
-  tags: Array<String>
+  content: String
 };
 
 interface HTMLEvent<T extends EventTarget> extends Event {
   target: T;
 };
 
-const api = keywordApi();
+const api = categoryApi();
 const route = useRoute();
 const onSubmit = (event: HTMLEvent<HTMLButtonElement>, title: String, content: String): void => {
-  const requestParam: KeywordRequest = {
+  event.preventDefault();
+  const requestParam: CategoryRequest = {
     custom_user: user.value.sub,
     library: route.params.library_id,
-    category: route.params.category_id,
     title: title,
-    content: content,
-    tags: []
+    content: content
   };
 
-  axios.post(api.createUrl(user.value.sub, route.params.library_id, route.params.category_id), requestParam)
+  axios.patch(api.detailUrl(user.value.sub, route.params.library_id, editStore.id), requestParam)
     .then((response: AxiosResponse) => {
-      store.add(response.data);
-      dialogStore.func.value('キーワード登録', `「${response.data.title}」を登録しました`);
+      store.update(response.data);
+      dialogStore.func.value('', 'カテゴリを更新しました');
       emits('closeEvent', event);
     })
     .catch((e: AxiosError<ErrorResponse>) => {
-      dialogStore.func.value('登録エラー', 'キーワード登録中にエラーが起きました。暫くお待ちいただいてから再度お試しください', 'error');
+      dialogStore.func.value('更新エラー', 'カテゴリ更新中にエラーが起きました。暫くお待ちいただいてから再度お試しください', 'error');
     });
 };
 </script>
@@ -63,11 +59,11 @@ const onSubmit = (event: HTMLEvent<HTMLButtonElement>, title: String, content: S
 </style>
 
 <template>
-  <RegistrationForm
+  <EditForm
     :v="v"
     :state="state"
-    contentType="keyword"
-    contentName="キーワード"
+    contentType="category"
+    contentName="カテゴリ"
     :titleMaxLength="50"
     :contentMaxLength="50"
     @click="onSubmit" />

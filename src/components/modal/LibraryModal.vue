@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import LibraryForm from '@/components/modal/LibraryForm.vue';
+import LibraryForm from '@/components/modal/form/LibraryForm.vue';
 
 const props = defineProps({
   edit_state: Object

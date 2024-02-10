@@ -4,7 +4,7 @@ import axios, { AxiosResponse, AxiosError } from "axios";
 import { useRoute } from 'vue-router';
 import { useAuth0 } from '@auth0/auth0-vue';
 import { categoryApi } from '@/plugin/apis';
-import RegistrationForm from '@/components/modal/RegistrationForm.vue';
+import RegistrationForm from '@/components/modal/form/register/RegistrationForm.vue';
 
 defineProps({
   v: Object,

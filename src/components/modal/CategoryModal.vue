@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import CategoryForm from '@/components/modal/CategoryForm.vue';
+import CategoryForm from '@/components/modal/form/CategoryForm.vue';
 
 defineProps({
   edit_state: Object

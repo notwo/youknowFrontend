@@ -2,8 +2,8 @@
 import { reactive, inject } from 'vue';
 import { useVuelidate } from "@vuelidate/core";
 import { registerRules, editRules } from '@/plugin/validatorMessage';
-import CategoryRegistrationForm from '@/components/modal/CategoryRegistrationForm.vue';
-import CategoryEditForm from '@/components/modal/CategoryEditForm.vue';
+import CategoryRegistrationForm from '@/components/modal/form/register/CategoryRegistrationForm.vue';
+import CategoryEditForm from '@/components/modal/form/edit/CategoryEditForm.vue';
 
 const props = defineProps({
   edit_state: Object

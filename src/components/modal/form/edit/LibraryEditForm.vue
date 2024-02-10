@@ -3,7 +3,7 @@ import { inject } from 'vue';
 import { useAuth0 } from '@auth0/auth0-vue';
 import axios, { AxiosResponse, AxiosError } from "axios";
 import { libraryApi } from '@/plugin/apis';
-import EditForm from '@/components/modal/EditForm.vue';
+import EditForm from '@/components/modal/form/edit/EditForm.vue';
 
 defineProps({
   v: Object,

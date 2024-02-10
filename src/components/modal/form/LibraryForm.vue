@@ -2,8 +2,8 @@
 import { reactive, inject } from 'vue';
 import { useVuelidate } from "@vuelidate/core";
 import { registerRules, editRules } from '@/plugin/validatorMessage';
-import LibraryRegistrationForm from '@/components/modal/LibraryRegistrationForm.vue';
-import LibraryEditForm from '@/components/modal/LibraryEditForm.vue';
+import LibraryRegistrationForm from '@/components/modal/form/register/LibraryRegistrationForm.vue';
+import LibraryEditForm from '@/components/modal/form/edit/LibraryEditForm.vue';
 
 const props = defineProps({
   edit_state: Object

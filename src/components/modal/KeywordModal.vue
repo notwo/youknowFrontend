@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import KeywordForm from '@/components/modal/KeywordForm.vue';
+import KeywordForm from '@/components/modal/form/KeywordForm.vue';
 
 defineProps({
   edit_state: Object

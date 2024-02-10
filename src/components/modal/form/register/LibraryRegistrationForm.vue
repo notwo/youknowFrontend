@@ -1,19 +1,18 @@
 <script setup lang="ts">
 import { inject } from 'vue';
-import { useRoute } from 'vue-router';
-import { useAuth0 } from '@auth0/auth0-vue';
 import axios, { AxiosResponse, AxiosError } from "axios";
-import { categoryApi } from '@/plugin/apis';
-import EditForm from '@/components/modal/EditForm.vue';
+import { useAuth0 } from '@auth0/auth0-vue';
+import { libraryApi } from '@/plugin/apis';
+import RegistrationForm from '@/components/modal/form/register/RegistrationForm.vue';
 
 defineProps({
   v: Object,
   state: Object,
 })
 const emits = defineEmits<{(e: 'closeEvent', event: Object): void}>();
+
 const { user } = useAuth0();
-const store = inject('category');
-const editStore = inject('categoryEdit');
+const store = inject('library');
 const dialogStore = inject('dialog');
 
 interface ErrorResponse {
@@ -22,7 +21,7 @@ interface ErrorResponse {
   code: String
 };
 
-interface CategoryRequest {
+interface LibraryRequest {
   custom_user: String,
   title: String
   content: String
@@ -32,25 +31,22 @@ interface HTMLEvent<T extends EventTarget> extends Event {
   target: T;
 };
 
-const api = categoryApi();
-const route = useRoute();
+const api = libraryApi();
 const onSubmit = (event: HTMLEvent<HTMLButtonElement>, title: String, content: String): void => {
-  event.preventDefault();
-  const requestParam: CategoryRequest = {
+  const requestParam: LibraryRequest = {
     custom_user: user.value.sub,
-    library: route.params.library_id,
     title: title,
     content: content
   };
 
-  axios.patch(api.detailUrl(user.value.sub, route.params.library_id, editStore.id), requestParam)
+  axios.post(api.createUrl(user.value.sub), requestParam)
     .then((response: AxiosResponse) => {
-      store.update(response.data);
-      dialogStore.func.value('', 'カテゴリを更新しました');
+      store.add(response.data);
+      dialogStore.func.value('ライブラリ登録', `「${response.data.title}」を登録しました`);
       emits('closeEvent', event);
     })
     .catch((e: AxiosError<ErrorResponse>) => {
-      dialogStore.func.value('更新エラー', 'カテゴリ更新中にエラーが起きました。暫くお待ちいただいてから再度お試しください', 'error');
+      dialogStore.func.value('登録エラー', 'ライブラリ登録中にエラーが起きました。暫くお待ちいただいてから再度お試しください', 'error');
     });
 };
 </script>
@@ -59,11 +55,11 @@ const onSubmit = (event: HTMLEvent<HTMLButtonElement>, title: String, content: S
 </style>
 
 <template>
-  <EditForm
+  <RegistrationForm
     :v="v"
     :state="state"
-    contentType="category"
-    contentName="カテゴリ"
+    contentType="library"
+    contentName="ライブラリ"
     :titleMaxLength="50"
     :contentMaxLength="50"
     @click="onSubmit" />
