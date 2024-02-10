@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import { provide } from "vue";
-import { useStore, editStore, titles, userStore, dialogStore, loadingStore } from '@/store/index';
+import { useStore, editStore } from '@/store/index';
+import { userStore } from '@/store/user';
+import { titles } from '@/store/titles';
+import { dialogStore } from '@/store/dialog';
+import { loadingStore } from '@/store/loading';
 import NavigationHeader from "@/components/NavigationHeader.vue";
 import FooterInformation from "@/components/FooterInformation.vue";
 
