@@ -15,9 +15,9 @@ export const registerRules = (contentName) => {
       required: helpers.withMessage(requiredMsg(contentName), required),
       duplicated: helpers.withMessage(duplicateMsg(contentName), function (val: String) {
         // TODO: API経由で結果を返却させるように後で修正
-        const _titles = document.getElementsByClassName('title');
+        const _titles = document.getElementsByClassName('js-title');
         if (_titles.length <= 0) { return true; }
-        const _target = Array.from(_titles).find((element) => element.innerText === val);
+        const _target = Array.from(_titles).find((element) => element.dataset.title === val);
         return !_target;
       })
     }
@@ -30,11 +30,11 @@ export const editRules = (contentName, defaultVal) => {
       required: helpers.withMessage(requiredMsg(contentName), required),
       duplicated: helpers.withMessage(duplicateMsg(contentName), function (val: String) {
         // TODO: API経由で結果を返却させるように後で修正
-        const _titles = document.getElementsByClassName('title');
+        const _titles = document.getElementsByClassName('js-title');
         if (_titles.length <= 0) { return true; }
-        const _target = Array.from(_titles).find((element) => element.innerText === val);
+        const _target = Array.from(_titles).find((element) => element.dataset.title === val);
         if (!_target) { return true; }
-        return _target.innerText === defaultVal.title;
+        return _target.dataset.title === defaultVal.title;
       })
     },
   };
