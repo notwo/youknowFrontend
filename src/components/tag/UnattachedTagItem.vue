@@ -30,7 +30,7 @@ const removeTag = (event: HTMLEvent<HTMLButtonElement>): void => {
   }
 
   store.remove(props.id); // api実行前に呼ばないとstoreの中身が検索できない
-  const id = event.currentTarget.getAttribute('data-id') as String;
+  const id = event.currentTarget.dataset.id as String;
   axios.delete(api.detailUrl(user.value.sub, id))
     .then((response: AxiosResponse) => {
       dialogStore.func.value('', 'タグを削除しました');
