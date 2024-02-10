@@ -15,8 +15,8 @@ interface HTMLEvent<T extends EventTarget> extends Event {
 };
 
 const openEditCategoryForm = async (event: HTMLEvent<HTMLButtonElement>): Promise<void> => {
-  const modal = document.getElementsByClassName('l-overlay') as HTMLCollectionOf<HTMLElement>;
-  modal[0].classList.add('visible');
+  const modal = document.querySelector('.l-overlay') as HTMLElement;
+  modal.classList.add('visible');
   document.getElementById('edit_category_title').value = props.title;
   document.getElementById('edit_category_content').value = props.content;
   props.edit_state.title = props.title;

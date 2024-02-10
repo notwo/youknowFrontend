@@ -6,8 +6,8 @@ interface HTMLEvent<T extends EventTarget> extends Event {
 };
 
 const openModal = (event: HTMLEvent<HTMLButtonElement>): void => {
-  const modal = document.getElementsByClassName('l-overlay') as HTMLCollectionOf<HTMLElement>;
-  modal[0].classList.add('visible');
+  const modal = document.querySelector('.l-overlay') as HTMLElement;
+  modal.classList.add('visible');
   document.getElementById('register-form').classList.add('visible');
   document.getElementById('edit-form').classList.remove('visible');
 };
@@ -35,6 +35,7 @@ onUnmounted(() => {
   position: fixed;
   top: 8rem;
   right: 6rem;
+  transition: .2s;
   z-index: 8998;
 }
 .p-btn__register a {
@@ -57,10 +58,6 @@ onUnmounted(() => {
   color: #FFF;
   font-size: 2rem;
   content: "+";
-}
-
-.c-floating {
-  transition: .2s;
 }
 
 /* sp */
@@ -88,7 +85,7 @@ onUnmounted(() => {
 </style>
 
 <template>
-  <section id="registerBtn" class="p-btn__register c-floating">
+  <section id="registerBtn" class="p-btn__register">
     <a @click="openModal"></a>
   </section>
 </template>

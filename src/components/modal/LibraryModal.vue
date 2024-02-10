@@ -37,6 +37,17 @@ const props = defineProps({
   max-height: 90%;
   overscroll-behavior-y: none;
 }
+.p-modal::-webkit-scrollbar {
+  width: .5rem;
+}
+.modal::-webkit-scrollbar-track {
+  border-radius: .5rem;
+  background-color: #CCC;
+}
+.p-modal::-webkit-scrollbar-thumb {
+  border-radius: .5rem;
+  background-color: rgba(213, 213, 213, 0.9);
+}
 
 /* sp */
 @media screen and (max-width: 640px) {
