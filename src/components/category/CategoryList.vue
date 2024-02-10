@@ -27,8 +27,8 @@ interface ErrorResponse {
   error: string
 };
 
-let canLoadNext = true;
-let currentPage = 1;
+let canLoadNext: Boolean = true;
+let currentPage: Number = 1;
 
 const hideLoadNextBase = (): void => {
   const loadNextBase = document.querySelector('.js-loadNextBase') as HTMLElement;

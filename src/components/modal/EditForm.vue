@@ -10,8 +10,8 @@ const props = defineProps({
 
 const emits = defineEmits<{(e: 'click', event: Object, title: String, content: String): void}>();
 const onSubmit = (event): void => {
-  const title = document.getElementById(`edit_${props.contentType}_title`).value;
-  const content = document.getElementById(`edit_${props.contentType}_content`).value;
+  const title = document.getElementById(`edit_${props.contentType}_title`).value as String;
+  const content = document.getElementById(`edit_${props.contentType}_content`).value as String;
   emits('click', event, title, content)
 }
 </script>
