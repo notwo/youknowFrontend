@@ -103,7 +103,7 @@ const closeModal = (event: HTMLEvent<HTMLButtonElement>): void => {
 </style>
 
 <template>
-  <section id="overlay" class="l-overlay js-overlay">
+  <section id="overlay" class="l-overlay">
     <section class="p-modal">
       <span id="close" class="p-close" @click="closeModal">モーダルを閉じる</span>
       <form action="" id="register-form" class="p-registerForm c-hidden">
