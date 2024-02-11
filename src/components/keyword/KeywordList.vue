@@ -4,6 +4,7 @@ import axios, { AxiosResponse, AxiosError } from "axios";
 import { useRoute } from 'vue-router';
 import { useAuth0 } from '@auth0/auth0-vue';
 import KeywordModal from '@/components/modal/KeywordModal.vue';
+import KeywordEditModal from '@/components/modal/KeywordEditModal.vue';
 import KeywordItem from "@/components/keyword/KeywordItem.vue";
 import { pagination } from "@/../config.json";
 import { categoryApi, keywordApi } from '@/plugin/apis';
@@ -163,7 +164,9 @@ onUnmounted(() => {
 
 <template>
   <article id="keyword-list">
-    <KeywordModal :edit_state="edit_state" />
+    <KeywordModal />
+    <KeywordEditModal :edit_state="edit_state" />
+
     <section class="p-keyword__itemWrap c-flex--center c-flex--wrap" v-if="store.items.list.length > 0">
       <KeywordItem
         :edit_state="edit_state"

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { reactive, inject } from 'vue';
+import { inject } from 'vue';
 import { useVuelidate } from "@vuelidate/core";
 import { editRules } from '@/plugin/validatorMessage';
 import LibraryEditForm from '@/components/modal/form/edit/LibraryEditForm.vue';

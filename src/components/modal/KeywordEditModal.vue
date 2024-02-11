@@ -1,15 +1,15 @@
 <script setup lang="ts">
-import { reactive } from 'vue';
+import { inject } from 'vue';
 import { useVuelidate } from "@vuelidate/core";
-import { registerRules } from '@/plugin/validatorMessage';
-import CategoryRegistrationForm from '@/components/modal/form/register/CategoryRegistrationForm.vue';
+import { editRules } from '@/plugin/validatorMessage';
+import KeywordEditForm from '@/components/modal/form/edit/KeywordEditForm.vue';
 
-const state = reactive({
-  title: '',
-  content: ''
+const props = defineProps({
+  edit_state: Object
 });
 
-const v$ = useVuelidate(registerRules('カテゴリ名'), state);
+const store = inject('keywordEdit');
+const v$ = useVuelidate(editRules('キーワード名', store), props.edit_state);
 
 interface HTMLEvent<T extends EventTarget> extends Event {
   target: T;
@@ -18,13 +18,13 @@ interface HTMLEvent<T extends EventTarget> extends Event {
 const closeModal = (event: HTMLEvent<HTMLButtonElement>): void => {
   event.preventDefault();
   document.body.style.removeProperty("overflow");
-  document.getElementById('register-form').classList.remove('visible');
+  document.getElementById('edit-form').classList.remove('visible');
 
-  const overlay = document.querySelector('#overlay') as HTMLElement;
+  const overlay = document.querySelector('#overlay-edit') as HTMLElement;
   overlay.classList.remove('visible');
   // フォーム初期化
-  state.title = '';
-  state.content = '';
+  props.edit_state.title = '';
+  props.edit_state.content = '';
   v$.value.$reset();
 };
 </script>
@@ -56,7 +56,7 @@ const closeModal = (event: HTMLEvent<HTMLButtonElement>): void => {
   height: auto;
   border-radius: .4rem;
   background-color: white;
-  overflow: auto;
+  overflow : auto;
   max-height: 90%;
   overscroll-behavior-y: none;
 }
@@ -72,19 +72,16 @@ const closeModal = (event: HTMLEvent<HTMLButtonElement>): void => {
   background-color: rgba(213, 213, 213, 0.9);
 }
 
-.p-close {
+.p-closeEdit {
   display: block;
   width: 8rem;
   margin: 1.5rem 1.5rem 0 auto;
   cursor: pointer;
 }
-.p-close:hover {
+.p-closeEdit:hover {
   color: #888;
 }
 
-#register-form.visible {
-  display: block;
-}
 #edit-form.visible {
   display: block;
 }
@@ -105,11 +102,11 @@ const closeModal = (event: HTMLEvent<HTMLButtonElement>): void => {
 </style>
 
 <template>
-  <section id="overlay" class="l-overlay js-overlay">
+  <section id="overlay-edit" class="l-overlay js-overlay">
     <section class="p-modal">
-      <span id="close" class="p-close" @click="closeModal">モーダルを閉じる</span>
-      <form action="" id="register-form" class="p-registerForm c-hidden">
-        <CategoryRegistrationForm :state="state" :v="v$" @closeEvent="closeModal" />
+      <span id="close-edit" class="p-closeEdit" @click="closeModal">モーダルを閉じる</span>
+      <form action="" id="edit-form" class="p-editForm c-hidden">
+        <KeywordEditForm :state="edit_state" :v="v$" @closeEvent="closeModal" />
       </form>
     </section>
   </section>
