@@ -9,7 +9,7 @@ import RegistrationForm from '@/components/modal/form/register/RegistrationForm.
 defineProps({
   v: Object,
   state: Object,
-})
+});
 const emits = defineEmits<{(e: 'closeEvent', event: Object): void}>();
 
 const { user } = useAuth0();

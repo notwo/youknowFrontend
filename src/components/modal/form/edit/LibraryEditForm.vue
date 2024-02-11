@@ -8,7 +8,7 @@ import EditForm from '@/components/modal/form/edit/EditForm.vue';
 defineProps({
   v: Object,
   state: Object,
-})
+});
 const emits = defineEmits<{(e: 'closeEvent', event: Object): void}>();
 
 const { user } = useAuth0();

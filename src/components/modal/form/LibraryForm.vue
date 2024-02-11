@@ -7,7 +7,7 @@ import LibraryEditForm from '@/components/modal/form/edit/LibraryEditForm.vue';
 
 const props = defineProps({
   edit_state: Object
-})
+});
 const register_state = reactive({
   title: '',
   content: ''
