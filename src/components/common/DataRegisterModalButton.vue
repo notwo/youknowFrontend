@@ -6,10 +6,9 @@ interface HTMLEvent<T extends EventTarget> extends Event {
 };
 
 const openModal = (event: HTMLEvent<HTMLButtonElement>): void => {
-  const modal = document.querySelector('.l-overlay') as HTMLElement;
-  modal.classList.add('visible');
+  const overlay = document.querySelector('#overlay') as HTMLElement;
+  overlay.classList.add('visible');
   document.getElementById('register-form').classList.add('visible');
-  document.getElementById('edit-form').classList.remove('visible');
 };
 
 const setFixedToButton = (event): void => {
