@@ -33,7 +33,7 @@ interface HTMLEvent<T extends EventTarget> extends Event {
 };
 
 const detachTag = (event: HTMLEvent<HTMLButtonElement>): void => {
-  const tagId = event.currentTarget.getAttribute('data-id') as String;
+  const tagId = event.currentTarget.dataset.id as String;
   const tagIds = tagStore.items.list.map((tag) =>
     {
       return { id: tag.id };

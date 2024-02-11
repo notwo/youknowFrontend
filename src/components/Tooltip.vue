@@ -8,11 +8,11 @@ const props = defineProps({
 let timeoutId: Number = 0;
 const showTooltip = (e): void => {
   const currentContent = e.currentTarget as HTMLElement;
-  const title = currentContent.getElementsByClassName('js-tooltip__title') as HTMLCollectionOf<HTMLElement>;
+  const title = currentContent.querySelector('.js-tooltip__title') as HTMLElement;
   const tooltip = currentContent.nextElementSibling as HTMLElement;
   const _showTooltip = (): void => {
-    tooltip.style.left = `${title[0].getBoundingClientRect().left + window.scrollX}px`;
-    tooltip.style.top = `${title[0].getBoundingClientRect().bottom + window.scrollY - 23}px`;
+    tooltip.style.left = `${title.getBoundingClientRect().left + window.scrollX}px`;
+    tooltip.style.top = `${title.getBoundingClientRect().bottom + window.scrollY - 23}px`;
     tooltip.classList.add('p-tooltip__open');
   };
   timeoutId = setTimeout(_showTooltip, 300);

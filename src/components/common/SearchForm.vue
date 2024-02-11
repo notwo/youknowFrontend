@@ -9,8 +9,8 @@ interface HTMLEvent<T extends EventTarget> extends Event {
 
 const emits = defineEmits<{(e: 'click', event: Object, searchType: Number, title: String): void}>();
 const onSearch = (event): void => {
-  const searchType = document.getElementById('search-type').value;
-  const title = document.getElementById('search').value;
+  const searchType = document.getElementById('search-type').value as String;
+  const title = document.getElementById('search').value as String;
   emits('click', event, searchType, title);
 };
 

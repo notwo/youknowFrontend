@@ -4,6 +4,7 @@ import axios, { AxiosResponse, AxiosError } from "axios";
 import { useRoute } from 'vue-router';
 import { useAuth0 } from '@auth0/auth0-vue';
 import CategoryModal from '@/components/modal/CategoryModal.vue';
+import CategoryEditModal from '@/components/modal/CategoryEditModal.vue';
 import CategoryItem from "@/components/category/CategoryItem.vue";
 import { pagination } from "@/../config.json";
 import { libraryApi, categoryApi } from '@/plugin/apis';
@@ -27,8 +28,8 @@ interface ErrorResponse {
   error: string
 };
 
-let canLoadNext = true;
-let currentPage = 1;
+let canLoadNext: Boolean = true;
+let currentPage: Number = 1;
 
 const hideLoadNextBase = (): void => {
   const loadNextBase = document.querySelector('.js-loadNextBase') as HTMLElement;
@@ -157,7 +158,9 @@ onUnmounted(() => {
 
 <template>
   <article id="category-list">
-    <CategoryModal :edit_state="edit_state" />
+    <CategoryModal  />
+    <CategoryEditModal :edit_state="edit_state" />
+
     <section class="p-category__itemWrap c-flex--center c-flex--wrap" v-if="store.items.list.length > 0">
       <CategoryItem
         :edit_state="edit_state"

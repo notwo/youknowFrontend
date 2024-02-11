@@ -1,9 +1,32 @@
 <script setup lang="ts">
-import KeywordForm from '@/components/modal/KeywordForm.vue';
+import { reactive } from 'vue';
+import { useVuelidate } from "@vuelidate/core";
+import { registerRules } from '@/plugin/validatorMessage';
+import KeywordRegistrationForm from '@/components/modal/form/register/KeywordRegistrationForm.vue';
 
-defineProps({
-  edit_state: Object
+const state = reactive({
+  title: '',
+  content: ''
 });
+
+const v$ = useVuelidate(registerRules('キーワード名'), state);
+
+interface HTMLEvent<T extends EventTarget> extends Event {
+  target: T;
+};
+
+const closeModal = (event: HTMLEvent<HTMLButtonElement>): void => {
+  event.preventDefault();
+  document.body.style.removeProperty("overflow");
+  document.getElementById('register-form').classList.remove('visible');
+
+  const overlay = document.querySelector('#overlay') as HTMLElement;
+  overlay.classList.remove('visible');
+  // フォーム初期化
+  state.title = '';
+  state.content = '';
+  v$.value.$reset();
+};
 </script>
 
 <style scoped>
@@ -37,6 +60,31 @@ defineProps({
   max-height: 90%;
   overscroll-behavior-y: none;
 }
+.p-modal::-webkit-scrollbar {
+  width: .5rem;
+}
+.modal::-webkit-scrollbar-track {
+  border-radius: .5rem;
+  background-color: #CCC;
+}
+.p-modal::-webkit-scrollbar-thumb {
+  border-radius: .5rem;
+  background-color: rgba(213, 213, 213, 0.9);
+}
+
+.p-close {
+  display: block;
+  width: 8rem;
+  margin: 1.5rem 1.5rem 0 auto;
+  cursor: pointer;
+}
+.p-close:hover {
+  color: #888;
+}
+
+#register-form.visible {
+  display: block;
+}
 
 /* sp */
 @media screen and (max-width: 640px) {
@@ -55,9 +103,12 @@ defineProps({
 </style>
 
 <template>
-  <section class="l-overlay">
+  <section id="overlay" class="l-overlay">
     <section class="p-modal">
-      <KeywordForm :edit_state="edit_state" />
+      <span id="close" class="p-close" @click="closeModal">モーダルを閉じる</span>
+      <form action="" id="register-form" class="p-registerForm c-hidden">
+        <KeywordRegistrationForm :state="state" :v="v$" @closeEvent="closeModal" />
+      </form>
     </section>
   </section>
 </template>

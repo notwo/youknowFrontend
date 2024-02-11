@@ -1,28 +1,29 @@
 <script setup lang="ts">
 import { inject } from 'vue';
-import axios, { AxiosResponse, AxiosError } from "axios";
 import { useAuth0 } from '@auth0/auth0-vue';
+import axios, { AxiosResponse, AxiosError } from "axios";
 import { libraryApi } from '@/plugin/apis';
-import RegistrationForm from '@/components/modal/RegistrationForm.vue';
+import EditForm from '@/components/modal/form/edit/EditForm.vue';
 
 defineProps({
   v: Object,
   state: Object,
-})
+});
 const emits = defineEmits<{(e: 'closeEvent', event: Object): void}>();
 
 const { user } = useAuth0();
 const store = inject('library');
+const editStore = inject('libraryEdit');
 const dialogStore = inject('dialog');
 
 interface ErrorResponse {
-  message: String,
-  name: String,
+  message: String
+  name: String
   code: String
 };
 
 interface LibraryRequest {
-  custom_user: String,
+  custom_user: String
   title: String
   content: String
 };
@@ -32,30 +33,32 @@ interface HTMLEvent<T extends EventTarget> extends Event {
 };
 
 const api = libraryApi();
-const onSubmit = (event: HTMLEvent<HTMLButtonElement>): void => {
+const onSubmit = (event: HTMLEvent<HTMLButtonElement>, title: String, content: String): void => {
+  event.preventDefault();
   const requestParam: LibraryRequest = {
     custom_user: user.value.sub,
-    title: document.getElementById('library_title').value,
-    content: document.getElementById('library_content').value
+    title: title,
+    content: content
   };
 
-  axios.post(api.createUrl(user.value.sub), requestParam)
+  axios.patch(api.detailUrl(user.value.sub, editStore.id), requestParam)
     .then((response: AxiosResponse) => {
-      store.add(response.data);
-      dialogStore.func.value('ライブラリ登録', `「${response.data.title}」を登録しました`);
+      store.update(response.data);
+      dialogStore.func.value('', 'ライブラリを更新しました');
       emits('closeEvent', event);
     })
     .catch((e: AxiosError<ErrorResponse>) => {
-      dialogStore.func.value('登録エラー', 'ライブラリ登録中にエラーが起きました。暫くお待ちいただいてから再度お試しください', 'error');
+      dialogStore.func.value('更新エラー', 'ライブラリ更新中にエラーが起きました。暫くお待ちいただいてから再度お試しください', 'error');
     });
 };
+
 </script>
 
 <style scoped>
 </style>
 
 <template>
-  <RegistrationForm
+  <EditForm
     :v="v"
     :state="state"
     contentType="library"

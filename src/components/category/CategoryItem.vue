@@ -102,7 +102,7 @@ const props = defineProps({
     <router-link :to="{ name: 'keywords', params: { username: String($route.params.username), library_id: $route.params.library_id, category_id: id } }"></router-link>
     <CassetteMenu :edit_state="edit_state" :id="id" :title="title" :content="content" />
     <section class="p-category__body js-tooltip__title">
-      <p class="p-category__title">{{ titleForView(title, 'category') }}</p>
+      <p class="p-category__title js-title" :data-title="title">{{ titleForView(title, 'category') }}</p>
       <p class="p-category__contents">{{ contentForView(content, 'category') }}</p>
     </section>
     <span class="p-category__updated_at">{{ timeFormat(updated_at) }} 更新</span>

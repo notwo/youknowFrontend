@@ -35,7 +35,7 @@ const removeKeyword = (event: HTMLEvent<HTMLButtonElement>): void => {
   };
 
   store.remove(props.id); // api実行前に呼ばないとstoreの中身が検索できない
-  const id = event.currentTarget.getAttribute('data-id') as String;
+  const id = event.currentTarget.dataset.id as String;
   axios.delete(api.detailUrl(user.value.sub, route.params.library_id, route.params.category_id, id))
     .then((response: AxiosResponse) => {
       dialogStore.func.value('', 'キーワードを削除しました');

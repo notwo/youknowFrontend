@@ -3,6 +3,7 @@ import { reactive, onMounted, onUnmounted, inject } from 'vue';
 import axios, { AxiosResponse, AxiosError } from "axios";
 import { useAuth0 } from '@auth0/auth0-vue';
 import LibraryModal from '@/components/modal/LibraryModal.vue';
+import LibraryEditModal from '@/components/modal/LibraryEditModal.vue';
 import LibraryItem from "@/components/library/LibraryItem.vue";
 import { pagination } from "@/../config.json";
 import { libraryApi } from '@/plugin/apis';
@@ -162,7 +163,9 @@ onUnmounted(() => {
 
 <template>
   <article id="library-list">
-    <LibraryModal :edit_state="edit_state" />
+    <LibraryModal />
+    <LibraryEditModal :edit_state="edit_state" />
+
     <section class="p-library__itemWrap c-flex--spaceBetween c-flex--wrap" v-if="store.items.list.length > 0">
       <LibraryItem
         :edit_state="edit_state"

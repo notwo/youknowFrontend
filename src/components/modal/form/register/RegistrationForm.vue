@@ -1,5 +1,5 @@
 <script setup lang="ts">
-defineProps({
+const props = defineProps({
   v: Object,
   state: Object,
   contentType: String,
@@ -8,9 +8,11 @@ defineProps({
   contentMaxLength: Number
 })
 
-const emits = defineEmits<{(e: 'click', event: Object): void}>();
+const emits = defineEmits<{(e: 'click', event: Object, title: String, content: String): void}>();
 const onSubmit = (event): void => {
-  emits('click', event);
+  const title = document.getElementById(`${props.contentType}_title`).value as String;
+  const content = document.getElementById(`${props.contentType}_content`).value as String;
+  emits('click', event, title, content);
 }
 </script>
 

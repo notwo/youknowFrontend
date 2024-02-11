@@ -29,7 +29,7 @@ const onSearch = (event: HTMLEvent<HTMLButtonElement>, searchType, title): void 
     return;
   }
 
-  const urlBySearchType = (searchType) => {
+  const urlBySearchType = (searchType): String => {
     switch (searchType) {
       case 0:
         return api.searchUrl(user.value.sub, title);
@@ -39,7 +39,7 @@ const onSearch = (event: HTMLEvent<HTMLButtonElement>, searchType, title): void 
         return api.searchByContentUrl(user.value.sub, route.params.library_id, title);
     }
   };
-  const url = urlBySearchType(Number(searchType));
+  const url = urlBySearchType(Number(searchType)) as String;
 
   axios.get(url)
     .then((response: AxiosResponse) => {

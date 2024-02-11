@@ -126,7 +126,7 @@ const props = defineProps({
     </router-link>
     <CassetteMenu :edit_state="edit_state" :id="id" :title="title" :content="content" />
     <section class="p-keyword__body js-tooltip__title">
-      <p class="p-keyword__title">{{ titleForView(title, 'keyword') }}</p>
+      <p class="p-keyword__title js-title" :data-title="title">{{ titleForView(title, 'keyword') }}</p>
       <p class="p-keyword__contents">{{ contentForView(content, 'keyword') }}</p>
       <section class="p-keyword__tags c-flex--wrap">
         <span class="p-keyword__tag" v-for="tag of tags" :key="tag.id">
