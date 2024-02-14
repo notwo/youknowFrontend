@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { inject } from 'vue';
+import { inject, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import axios, { AxiosResponse, AxiosError } from "axios";
 import { useAuth0 } from '@auth0/auth0-vue';
-import { keywordApi } from '@/plugin/apis';
+import { keywordApi, categoryApi } from '@/plugin/apis';
+import { pagination } from "@/../config.json";
 import KeywordEditButton from "@/components/keyword/KeywordEditButton.vue";
 
 const props = defineProps({
@@ -16,7 +17,9 @@ const props = defineProps({
 const { user } = useAuth0();
 const store = inject('keyword');
 const dialogStore = inject('dialog');
+const moveStore = inject('keywordMove');
 const api = keywordApi();
+const cApi = categoryApi();
 const route = useRoute();
 
 interface HTMLEvent<T extends EventTarget> extends Event {
@@ -45,25 +48,30 @@ const removeKeyword = (event: HTMLEvent<HTMLButtonElement>): void => {
     });
 };
 
-/*
-const moveToOtherCategory = (event: HTMLEvent<HTMLButtonElement>): void => {
+const openKeywordMoveModal = (event: HTMLEvent<HTMLButtonElement>): void => {
+  const overlay = document.getElementById('overlay-move') as HTMLElement;
+  overlay.classList.add('visible');
+  document.getElementById('move-form').classList.add('visible');
+
+  const id = event.currentTarget.dataset.id as String;
+
   interface ErrorResponse {
     message: String,
     name: String,
     code: String
   };
 
-  const id = event.currentTarget.getAttribute('data-id') as String;
-  axios.patch(api.moveUrl(user.value.sub, route.params.library_id, route.params.category_id, id))
+  axios.get(cApi.listUrl(user.value.sub, route.params.library_id, pagination.category.content_num))
     .then((response: AxiosResponse) => {
-      console.log('')
-      //dialogStore.func.value('', 'キーワードを削除しました');
+      moveStore.id.value = id;
+      // 自身のカテゴリIDは除外
+      const result = response.data.results.filter((_obj) => { return _obj.id !== Number(route.params.category_id)})
+      moveStore.list = ref(result);
     })
     .catch((e: AxiosError<ErrorResponse>) => {
-      //dialogStore.func.value('削除エラー', 'キーワード削除中にエラーが起きました。暫くお待ちいただいてから再度お試しください', 'error');
+      dialogStore.func.value('読み込みエラー', 'カテゴリ読み込み中にエラーが起きました。暫くお待ちいただいてから再度お試しください', 'error');
     });
 };
-*/
 </script>
 
 <style scoped>
@@ -101,11 +109,15 @@ const moveToOtherCategory = (event: HTMLEvent<HTMLButtonElement>): void => {
 
 .p-keyword__menu {
   margin: .9rem .5rem;
-  font-size: 1.3rem;
+  font-size: 1rem;
 }
 .p-keyword__menu:hover, .p-keyword__menu:active {
   color: #888;
   cursor: pointer;
+}
+
+.p-delete__link {
+  background-color: #FFee99;
 }
 </style>
 
@@ -120,11 +132,9 @@ const moveToOtherCategory = (event: HTMLEvent<HTMLButtonElement>): void => {
         <li class="p-keyword__menu">
           <span @click="removeKeyword" class="p-delete__link" :data-id="id">削除</span>
         </li>
-        <!--
         <li class="p-keyword__menu">
-          <span @click="moveToOtherCategory" :data-id="id">カテゴリ移動</span>
+          <span @click="openKeywordMoveModal" :data-id="id">カテゴリ移動</span>
         </li>
-        -->
       </ul>
     </section>
   </section>

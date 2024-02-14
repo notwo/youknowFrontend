@@ -1,32 +1,21 @@
 <script setup lang="ts">
-import { reactive } from 'vue';
-import { useVuelidate } from "@vuelidate/core";
-import { registerRules } from '@/plugin/validatorMessage';
-import KeywordRegistrationForm from '@/components/modal/form/register/KeywordRegistrationForm.vue';
-
-const state = reactive({
-  title: '',
-  content: ''
-});
-
-const v$ = useVuelidate(registerRules('キーワード名'), state);
+import { inject } from 'vue';
+import KeywordMoveForm from '@/components/modal/form/move/KeywordMoveForm.vue';
 
 interface HTMLEvent<T extends EventTarget> extends Event {
   target: T;
 };
 
+const moveStore = inject('keywordMove');
+
 const closeModal = (event: HTMLEvent<HTMLButtonElement>): void => {
   event.preventDefault();
   document.body.style.removeProperty("overflow");
 
-  const overlay = document.querySelector('#overlay') as HTMLElement;
+  const overlay = document.getElementById('overlay-move') as HTMLElement;
   overlay.classList.remove('visible');
-  document.getElementById('register-form').classList.remove('visible');
-  // フォーム初期化
-  state.title = '';
-  state.content = '';
-  v$.value.$reset();
 };
+
 </script>
 
 <style scoped>
@@ -82,7 +71,7 @@ const closeModal = (event: HTMLEvent<HTMLButtonElement>): void => {
   color: #888;
 }
 
-#register-form.visible {
+#move-form.visible {
   display: block;
 }
 
@@ -103,11 +92,11 @@ const closeModal = (event: HTMLEvent<HTMLButtonElement>): void => {
 </style>
 
 <template>
-  <section id="overlay" class="l-overlay">
+  <section id="overlay-move" class="l-overlay">
     <section class="p-modal">
-      <span id="close" class="p-close" @click="closeModal">モーダルを閉じる</span>
-      <form action="" id="register-form" class="p-registerForm c-hidden">
-        <KeywordRegistrationForm :state="state" :v="v$" @closeEvent="closeModal" />
+      <span id="close-move" class="p-close" @click="closeModal">モーダルを閉じる</span>
+      <form action="" id="move-form" class="p-moveForm c-hidden">
+        <KeywordMoveForm />
       </form>
     </section>
   </section>

@@ -111,7 +111,6 @@ export function keywordApi() {
     return `${apiBaseUrl}/api/users/${sub}/libraries/${library_id}/categories/${category_id}/keywords/search_by_content/?content=${content}`;
   }
   function moveUrl(sub: String, library_id: Number, category_id: Number, id: Number) {
-    //return `${apiBaseUrl}/api/users/${sub}/libraries/${library_id}/categories/${category_id}/keywords/move/?id=${id}`;
     return `${apiBaseUrl}/api/users/${sub}/libraries/${library_id}/categories/${category_id}/keywords/${id}/move/`;
   }
 

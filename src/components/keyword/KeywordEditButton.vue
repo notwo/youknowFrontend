@@ -24,7 +24,6 @@ const openEditKeywordForm = (event: HTMLEvent<HTMLButtonElement>): void => {
   editStore.id = props.id;
   editStore.title = props.title;
   editStore.content = props.content;
-  document.getElementById('register-form').classList.remove('visible');
   document.getElementById('edit-form').classList.add('visible');
 };
 </script>

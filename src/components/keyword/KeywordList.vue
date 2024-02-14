@@ -5,6 +5,7 @@ import { useRoute } from 'vue-router';
 import { useAuth0 } from '@auth0/auth0-vue';
 import KeywordModal from '@/components/modal/KeywordModal.vue';
 import KeywordEditModal from '@/components/modal/KeywordEditModal.vue';
+import KeywordMoveModal from '@/components/modal/KeywordMoveModal.vue';
 import KeywordItem from "@/components/keyword/KeywordItem.vue";
 import { pagination } from "@/../config.json";
 import { categoryApi, keywordApi } from '@/plugin/apis';
@@ -166,6 +167,7 @@ onUnmounted(() => {
   <article id="keyword-list">
     <KeywordModal />
     <KeywordEditModal :edit_state="edit_state" />
+    <KeywordMoveModal />
 
     <section class="p-keyword__itemWrap c-flex--center c-flex--wrap" v-if="store.items.list.length > 0">
       <KeywordItem
