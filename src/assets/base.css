@@ -111,6 +111,10 @@ input.error {
   }
 }
 
+.c-radio {
+  display: none;
+}
+
 /** button **/
 .c-btn {
   display: block;

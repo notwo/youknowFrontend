@@ -54,6 +54,7 @@ const openKeywordMoveModal = (event: HTMLEvent<HTMLButtonElement>): void => {
   document.getElementById('move-form').classList.add('visible');
 
   const id = event.currentTarget.dataset.id as String;
+  const title = event.currentTarget.dataset.title as String;
 
   interface ErrorResponse {
     message: String,
@@ -67,6 +68,7 @@ const openKeywordMoveModal = (event: HTMLEvent<HTMLButtonElement>): void => {
       // 自身のカテゴリIDは除外
       const result = response.data.results.filter((_obj) => { return _obj.id !== Number(route.params.category_id)})
       moveStore.list = ref(result);
+      moveStore.title = ref(title);
     })
     .catch((e: AxiosError<ErrorResponse>) => {
       dialogStore.func.value('読み込みエラー', 'カテゴリ読み込み中にエラーが起きました。暫くお待ちいただいてから再度お試しください', 'error');
@@ -117,7 +119,6 @@ const openKeywordMoveModal = (event: HTMLEvent<HTMLButtonElement>): void => {
 }
 
 .p-delete__link {
-  background-color: #FFee99;
 }
 </style>
 
@@ -133,7 +134,7 @@ const openKeywordMoveModal = (event: HTMLEvent<HTMLButtonElement>): void => {
           <span @click="removeKeyword" class="p-delete__link" :data-id="id">削除</span>
         </li>
         <li class="p-keyword__menu">
-          <span @click="openKeywordMoveModal" :data-id="id">カテゴリ移動</span>
+          <span @click="openKeywordMoveModal" :data-id="id" :data-title="title">カテゴリ移動</span>
         </li>
       </ul>
     </section>

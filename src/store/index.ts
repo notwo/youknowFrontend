@@ -114,5 +114,6 @@ export const editStore = reactive({
 
 export const moveStore = reactive({
   id: Number,
+  title: String,
   list: Array<Object>
 });

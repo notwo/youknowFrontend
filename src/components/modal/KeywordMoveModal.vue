@@ -6,8 +6,6 @@ interface HTMLEvent<T extends EventTarget> extends Event {
   target: T;
 };
 
-const moveStore = inject('keywordMove');
-
 const closeModal = (event: HTMLEvent<HTMLButtonElement>): void => {
   event.preventDefault();
   document.body.style.removeProperty("overflow");
@@ -96,7 +94,7 @@ const closeModal = (event: HTMLEvent<HTMLButtonElement>): void => {
     <section class="p-modal">
       <span id="close-move" class="p-close" @click="closeModal">モーダルを閉じる</span>
       <form action="" id="move-form" class="p-moveForm c-hidden">
-        <KeywordMoveForm />
+        <KeywordMoveForm @closeEvent="closeModal" />
       </form>
     </section>
   </section>
