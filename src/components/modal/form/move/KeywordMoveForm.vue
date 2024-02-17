@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { inject } from 'vue';
+import { ref, inject } from 'vue';
 import { useRoute } from 'vue-router';
 import axios, { AxiosResponse, AxiosError } from "axios";
 import { useAuth0 } from '@auth0/auth0-vue';
@@ -16,10 +16,17 @@ interface HTMLEvent<T extends EventTarget> extends Event {
   target: T;
 };
 
-const resetCategory = (event: HTMLEvent<HTMLButtonElement>) => {
-  const categoryRadios = document.getElementsByClassName('js-category__radio');
-  console.log(categoryRadios)
+const switchRadioChecked = (event: HTMLEvent<HTMLInputElement>) => {
+  moveStore.checked = ref(true);
 };
+
+const resetCategory = (event: HTMLEvent<HTMLButtonElement>) => {
+  const categoryRadio = document.querySelector<HTMLInputElement>('input[type="radio"].js-category__radio:checked');
+  if (!categoryRadio) { return; }
+  categoryRadio.checked = false;
+  moveStore.checked = ref(false);
+};
+defineExpose({ resetCategory });
 
 const emits = defineEmits<{(e: 'closeEvent', event: Object): void}>();
 const onSubmit = (event: HTMLEvent<HTMLButtonElement>) => {
@@ -32,12 +39,13 @@ const onSubmit = (event: HTMLEvent<HTMLButtonElement>) => {
   };
 
   const selected = document.querySelector('input.p-category__radio[type="radio"]:checked') as HTMLElement;
+  if (!selected) { return; }
   const targetTitle = selected.dataset.title;
 
   axios.patch(api.moveUrl(user.value.sub, route.params.library_id, route.params.category_id, moveStore.id.value, selected.dataset.id))
     .then((response: AxiosResponse) => {
       store.remove(response.data.id);
-      dialogStore.func.value('', `キーワードを${targetTitle}に移動しました`);
+      dialogStore.func.value('', `キーワード「${String(moveStore.title)}」を${targetTitle}に移動しました`);
       emits('closeEvent', event);
     })
     .catch((e: AxiosError<ErrorResponse>) => {
@@ -50,6 +58,11 @@ const onSubmit = (event: HTMLEvent<HTMLButtonElement>) => {
 .p-formWrap {
   margin: 0 auto;
   max-width: 23rem;
+}
+
+.p-keyword__title {
+  margin: .6rem 0;
+  font-size: 2rem;
 }
 
 .p-form__group {
@@ -67,10 +80,13 @@ const onSubmit = (event: HTMLEvent<HTMLButtonElement>) => {
   padding: .6rem;
   text-align: center;
 }
+.p-category input[type="radio"] + label {
+  background-color: rgba(0,180,180,.2);
+}
 .p-category input[type="radio"]:checked + label {
   padding: .6rem;
   color: #fff;
-  background-color: rgba(0,180,180,.6);
+  background-color: rgba(0,180,180,.9);
 }
 
 .p-category__label {
@@ -84,14 +100,14 @@ const onSubmit = (event: HTMLEvent<HTMLButtonElement>) => {
 </style>
 
 <template>
-  <section class="p-keyword__title">{{ moveStore.title.value }}</section>
   <section class="p-formWrap">
     <section class="p-form__group">
+      <section class="p-keyword__title c-text--center"><span>{{ moveStore.title }}</span></section>
       <section class="p-form__field">
         <section class="p-categoryList c-flex--start c-flex--wrap">
           <section v-for="category in moveStore.list" class="p-category c-flex--center">
-            <input type='radio' :id="`category_${category.id}`" :name="category" class='p-category__radio js-category__radio c-radio'
-              :data-title="`${category.title}`" :data-id="`${category.id}`">
+            <input type='radio' :id="`category_${category.id}`" name="category" class='p-category__radio js-category__radio c-radio'
+              :data-title="`${category.title}`" :data-id="`${category.id}`" @click="switchRadioChecked">
             <label :for="`category_${category.id}`" class="p-category__label">
               <span class="p-category__title">{{ category.title }}</span>
             </label>
@@ -101,7 +117,9 @@ const onSubmit = (event: HTMLEvent<HTMLButtonElement>) => {
     </section>
     <section class="p-form__group">
       <section class="p-form__field c-text--center">
-        <button @click="onSubmit"></button>
+        <button type="button" @click="onSubmit"
+          :disabled="!moveStore.checked"
+          class="c-btn c-btn--register">{{ moveStore.title }}を移動する</button>
       </section>
     </section>
   </section>

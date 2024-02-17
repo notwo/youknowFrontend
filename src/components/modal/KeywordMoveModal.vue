@@ -1,10 +1,12 @@
 <script setup lang="ts">
-import { inject } from 'vue';
+import { ref } from 'vue';
 import KeywordMoveForm from '@/components/modal/form/move/KeywordMoveForm.vue';
 
 interface HTMLEvent<T extends EventTarget> extends Event {
   target: T;
 };
+
+const moveFormComponent = ref(null);
 
 const closeModal = (event: HTMLEvent<HTMLButtonElement>): void => {
   event.preventDefault();
@@ -12,6 +14,7 @@ const closeModal = (event: HTMLEvent<HTMLButtonElement>): void => {
 
   const overlay = document.getElementById('overlay-move') as HTMLElement;
   overlay.classList.remove('visible');
+  moveFormComponent.value.resetCategory();
 };
 
 </script>
@@ -94,7 +97,7 @@ const closeModal = (event: HTMLEvent<HTMLButtonElement>): void => {
     <section class="p-modal">
       <span id="close-move" class="p-close" @click="closeModal">モーダルを閉じる</span>
       <form action="" id="move-form" class="p-moveForm c-hidden">
-        <KeywordMoveForm @closeEvent="closeModal" />
+        <KeywordMoveForm @closeEvent="closeModal" ref="moveFormComponent" />
       </form>
     </section>
   </section>

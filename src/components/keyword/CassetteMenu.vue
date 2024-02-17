@@ -62,6 +62,8 @@ const openKeywordMoveModal = (event: HTMLEvent<HTMLButtonElement>): void => {
     code: String
   };
 
+  moveStore.checked = ref(false);
+
   axios.get(cApi.listUrl(user.value.sub, route.params.library_id, pagination.category.content_num))
     .then((response: AxiosResponse) => {
       moveStore.id.value = id;
