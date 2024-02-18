@@ -33,13 +33,13 @@ const AttachTag = (): void => {
       return { id: tag.id };
     }
   );
-  const unattachedTagIds = Array.from(selectedTags).map((tag) => {
+  const unattachedTagIds = Array.from(selectedTags).map((tag): Number => {
     return Number(tag.dataset.id);
   });
 
   const requestParam: KeywordRequest = {
     custom_user: user.value.sub,
-    tags: tagIds.concat(unattachedTagIds.map((_tagId) => {
+    tags: tagIds.concat(unattachedTagIds.map((_tagId): Object => {
       return { id: _tagId };
     }))
   };

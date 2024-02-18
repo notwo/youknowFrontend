@@ -27,6 +27,9 @@ const startLogout = (event): void => {
 .c-service__icon {
   margin: 2rem;
 }
+.c-service__icon a {
+  color: white;
+}
 
 .p-menu {
   display: flex;
@@ -62,7 +65,9 @@ const startLogout = (event): void => {
 </style>
 
 <template>
-  <section class="c-service__icon">サービスロゴ</section>
+  <section class="c-service__icon">
+    <router-link :to="{ name: 'top', params: {} }">サービスロゴ</router-link>
+  </section>
   <nav class="p-menu">
     <ul v-if="auth0.isLoading.value" class="p-menu__item c-flex--spaceBetween">
       <li>
