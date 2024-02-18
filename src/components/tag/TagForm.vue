@@ -49,7 +49,7 @@ interface HTMLEvent<T extends EventTarget> extends Event {
 const AttachTag = (tagId: Number): void => {
   const requestParam: KeywordRequest = {
     custom_user: user.value.sub,
-    tags: store.items.list.map((tag) =>
+    tags: store.items.list.map((tag): Object =>
       {
         return { id: tag.id };
       }

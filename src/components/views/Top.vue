@@ -37,10 +37,14 @@ const login = (event): void => {
   font-weight: 800;
 }
 
+.p-mainContents__loading {
+  font-size: 5rem;
+}
+
 /* sp */
 @media screen and (max-width: 414px) {
   .p-mainContents {
-    margin: 2rem 1rem;
+    margin: 0 1rem;
   }
 
   .p-mainContents__box {
@@ -66,8 +70,8 @@ const login = (event): void => {
       :to="{ name: 'libraries', params: { username: String(auth0?.user?.value?.nickname) } }" class="p-mainContents__box c-text--center">
       <p class="p-mainContents__message">データを登録してみる</p>
     </router-link>
-    <section v-else @click="login" class="p-mainContents__box c-text--center">
-      <p class="p-mainContents__message">データを登録してみる</p>
+    <section v-else class="p-mainContents__loadingBox c-text--center">
+      <p class="p-mainContents__loading">Loading...</p>
     </section>
   </section>
 </template>
