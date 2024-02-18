@@ -44,14 +44,14 @@ const onSubmit = (event: HTMLEvent<HTMLButtonElement>, title: String, content: S
   };
 
   axios.post(api.createUrl(user.value.sub, route.params.library_id), requestParam)
-  .then((response: AxiosResponse) => {
-    store.add(response.data);
-    dialogStore.func.value('カテゴリ登録', `「${response.data.title}」を登録しました`);
-    emits('closeEvent', event);
-  })
-  .catch((e: AxiosError<ErrorResponse>) => {
-    dialogStore.func.value('登録エラー', 'カテゴリ登録中にエラーが起きました。暫くお待ちいただいてから再度お試しください', 'error');
-  });
+    .then((response: AxiosResponse) => {
+      store.add(response.data);
+      dialogStore.func.value('カテゴリ登録', `「${response.data.title}」を登録しました`);
+      emits('closeEvent', event);
+    })
+    .catch((e: AxiosError<ErrorResponse>) => {
+      dialogStore.func.value('登録エラー', 'カテゴリ登録中にエラーが起きました。暫くお待ちいただいてから再度お試しください', 'error');
+    });
 };
 </script>
 

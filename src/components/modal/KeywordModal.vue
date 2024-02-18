@@ -21,7 +21,6 @@ const closeModal = (event: HTMLEvent<HTMLButtonElement>): void => {
 
   const overlay = document.querySelector('#overlay') as HTMLElement;
   overlay.classList.remove('visible');
-  document.getElementById('register-form').classList.remove('visible');
   // フォーム初期化
   state.title = '';
   state.content = '';
