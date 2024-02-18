@@ -18,7 +18,6 @@ interface HTMLEvent<T extends EventTarget> extends Event {
 const closeModal = (event: HTMLEvent<HTMLButtonElement>): void => {
   event.preventDefault();
   document.body.style.removeProperty("overflow");
-  document.getElementById('register-form').classList.remove('visible');
 
   const overlay = document.querySelector('#overlay') as HTMLElement;
   overlay.classList.remove('visible');
