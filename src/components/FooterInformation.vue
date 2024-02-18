@@ -7,6 +7,11 @@
   background-color: black;
 }
 
+.c-service__icon a {
+  font-weight: bold;
+  color: white;
+}
+
 .p-footer__contentsWrap {
   display: flex;
   flex-direction: column;
@@ -52,7 +57,9 @@
     <section class="p-footer__contentsWrap">
       <section class="p-footer__list c-flex--spaceBetween c-flex--wrap">
         <section class="p-footerContents">
-          <section class="c-service__icon">サービスロゴ</section>
+          <section class="c-service__icon">
+            <router-link :to="{ name: 'top', params: {} }">サービスロゴ</router-link>
+          </section>
         </section>
         <section class="p-footerContents">
           <nav>
