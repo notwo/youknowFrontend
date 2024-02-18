@@ -1,9 +1,39 @@
 <script setup lang="ts">
 import { onMounted, onUnmounted } from 'vue';
 
+const props = defineProps({
+  idPrefix: String,
+  width: String,
+  height: String,
+  right: String,
+  backgroundColor: String,
+  parentElementString: String,
+});
+
+const prefix = props.idPrefix ? props.idPrefix : "" as String;
+
+const setStyle = (): void => {
+  const link = document.getElementById(`${prefix}scrollToTopButton`) as HTMLElement;
+  const button = link.parentElement as HTMLElement;
+
+  if (props.width) {
+    button.style.width = props.width;
+  }
+  if (props.height) {
+    button.style.height = props.height;
+  }
+  if (props.right) {
+    button.style.right = props.right;
+  }
+  if (props.backgroundColor) {
+    link.style.backgroundColor = props.backgroundColor;
+  }
+};
+
 let scrollId: number = 0;
 const showButton = (): void => {
-  const button = document.getElementById('scrollToTopButton') as HTMLElement;
+  const button = document.getElementById(`${prefix}scrollToTopButton`) as HTMLElement;
+
   if (window.scrollY === 0) {
     button.classList.add('js-fadeOut');
     clearInterval(scrollId);
@@ -12,21 +42,56 @@ const showButton = (): void => {
   }
 };
 
-const scrollToTop = (event): Boolean => {
-  const scroll = (): void => {
-    window.scrollTo(0, window.scrollY - window.scrollY / 10);
-  };
+let scrollIdExtra: number = 0;
+const showButtonExtra = (): void => {
+  const button = document.getElementById(`${prefix}scrollToTopButton`) as HTMLElement;
+  const parentElement = props.parentElementString ? document.querySelector(props.parentElementString) : null;
+  const self = button.parentElement as HTMLElement;
+  self.style.bottom = `-${parentElement?.scrollTop}px`;
 
-  scrollId = setInterval(scroll, 10);
+  if (parentElement.scrollTop === 0) {
+    button.classList.add('js-fadeOut');
+    clearInterval(scrollIdExtra);
+  } else {
+    button.classList.remove('js-fadeOut');
+  }
+};
+
+const scrollToTop = (event): Boolean => {
+  const parentElement = props.parentElementString ? document.querySelector(props.parentElementString) : null;
+
+  if (parentElement) {
+    const scroll = (): void => {
+      parentElement.scrollTo(0, parentElement.scrollTop - parentElement.scrollTop / 10);
+    };
+    scrollIdExtra = setInterval(scroll, 10);
+  } else {
+    const scroll = (): void => {
+      window.scrollTo(0, window.scrollY - window.scrollY / 10);
+    };
+    scrollId = setInterval(scroll, 10);
+  }
 
   return false;
 };
 
 onMounted(() => {
-  window.addEventListener("scroll", showButton, { passive: true });
+  setStyle();
+
+  const parentElement = props.parentElementString ? document.querySelector(props.parentElementString) : null;
+  if (parentElement) {
+    parentElement.addEventListener("scroll", showButtonExtra, { passive: true });
+  } else {
+    window.addEventListener("scroll", showButton, { passive: true });
+  }
 });
 onUnmounted(() => {
-  window.removeEventListener("scroll", showButton, false);
+  const parentElement = props.parentElementString ? document.querySelector(props.parentElementString) : null;
+  if (parentElement) {
+    parentElement.removeEventListener("scroll", showButtonExtra, false);
+  } else {
+    window.removeEventListener("scroll", showButton, false);
+  }
 });
 </script>
 
@@ -84,6 +149,6 @@ onUnmounted(() => {
 
 <template>
   <section class="p-scrollToTopButton">
-    <a id="scrollToTopButton" @click="scrollToTop" class="js-fadeOut c-fadeIn--fast"></a>
+    <a :id="`${prefix}scrollToTopButton`" @click="scrollToTop" class="js-fadeOut c-fadeIn--fast"></a>
   </section>
 </template>

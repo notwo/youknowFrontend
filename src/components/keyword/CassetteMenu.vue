@@ -56,13 +56,16 @@ const openKeywordMoveModal = (event: HTMLEvent<HTMLButtonElement>): void => {
   const id = event.currentTarget.dataset.id as String;
   const title = event.currentTarget.dataset.title as String;
 
+  // modalオープン時にスクロール位置が戻っていないので、強制的にスクロールさせる
+  document.querySelector('#overlay-move .p-modal').scrollTop = 0;
+
+  moveStore.checked = ref(false);
+
   interface ErrorResponse {
     message: String,
     name: String,
     code: String
   };
-
-  moveStore.checked = ref(false);
 
   axios.get(cApi.listUrl(user.value.sub, route.params.library_id, pagination.category.content_num))
     .then((response: AxiosResponse) => {

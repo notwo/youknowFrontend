@@ -16,11 +16,11 @@ interface HTMLEvent<T extends EventTarget> extends Event {
   target: T;
 };
 
-const switchRadioChecked = (event: HTMLEvent<HTMLInputElement>) => {
+const switchRadioChecked = (event: HTMLEvent<HTMLInputElement>): void => {
   moveStore.checked = ref(true);
 };
 
-const resetCategory = (event: HTMLEvent<HTMLButtonElement>) => {
+const resetCategory = (event: HTMLEvent<HTMLButtonElement>): void => {
   const categoryRadio = document.querySelector<HTMLInputElement>('input[type="radio"].js-category__radio:checked');
   if (!categoryRadio) { return; }
   categoryRadio.checked = false;
@@ -29,7 +29,7 @@ const resetCategory = (event: HTMLEvent<HTMLButtonElement>) => {
 defineExpose({ resetCategory });
 
 const emits = defineEmits<{(e: 'closeEvent', event: Object): void}>();
-const onSubmit = (event: HTMLEvent<HTMLButtonElement>) => {
+const onSubmit = (event: HTMLEvent<HTMLButtonElement>): void => {
   event.preventDefault();
 
   interface ErrorResponse {

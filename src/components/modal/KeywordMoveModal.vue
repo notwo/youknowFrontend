@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import KeywordMoveForm from '@/components/modal/form/move/KeywordMoveForm.vue';
+import ScrollToTopButton from '@/components/common/ScrollToTopButton.vue';
 
 interface HTMLEvent<T extends EventTarget> extends Event {
   target: T;
@@ -16,7 +17,6 @@ const closeModal = (event: HTMLEvent<HTMLButtonElement>): void => {
   overlay.classList.remove('visible');
   moveFormComponent.value.resetCategory();
 };
-
 </script>
 
 <style scoped>
@@ -53,9 +53,9 @@ const closeModal = (event: HTMLEvent<HTMLButtonElement>): void => {
 .p-modal::-webkit-scrollbar {
   width: .5rem;
 }
-.modal::-webkit-scrollbar-track {
+.p-modal::-webkit-scrollbar-track {
   border-radius: .5rem;
-  background-color: #CCC;
+  background-color: #BBB;
 }
 .p-modal::-webkit-scrollbar-thumb {
   border-radius: .5rem;
@@ -99,6 +99,7 @@ const closeModal = (event: HTMLEvent<HTMLButtonElement>): void => {
       <form action="" id="move-form" class="p-moveForm c-hidden">
         <KeywordMoveForm @closeEvent="closeModal" ref="moveFormComponent" />
       </form>
+      <ScrollToTopButton :idPrefix="'moveModal_'" :backgroundColor="'rgba(170,200,200,.6)'" :right="'.1rem'" :parentElementString="'#overlay-move .p-modal'" />
     </section>
   </section>
 </template>
