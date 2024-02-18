@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { provide } from "vue";
-import { useStore, editStore } from '@/store/index';
+import { useStore, editStore, moveStore } from '@/store/index';
 import { userStore } from '@/store/user';
 import { titles } from '@/store/titles';
 import { dialogStore } from '@/store/dialog';
@@ -14,6 +14,7 @@ const _categoryStore = useStore();
 const _categoryEditStore = editStore;
 const _keywordStore = useStore();
 const _keywordEditStore = editStore;
+const _keywordMoveStore = moveStore;
 const _tagStore = useStore();
 const _unattachedTagStore = useStore();
 const _titlesStore = titles();
@@ -29,6 +30,7 @@ provide('unattachedTag', _unattachedTagStore);
 provide('libraryEdit', _libraryEditStore);
 provide('categoryEdit', _categoryEditStore);
 provide('keywordEdit', _keywordEditStore);
+provide('keywordMove', _keywordMoveStore);
 provide('titles', _titlesStore);
 provide('user', _userStore);
 provide('dialog', _dialogStore);
