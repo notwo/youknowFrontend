@@ -14,7 +14,6 @@ const login = (event): void => {
   justify-content: center;
   align-items: center;
   margin: 2rem 5rem;
-  width: 80%;
 }
 
 .p-mainContents a {
