@@ -54,6 +54,10 @@ const startLogout = (event): void => {
 }
 
 @media screen and (max-width: 768px) {
+  .p-waiting {
+    display: none;
+  }
+
   .c-service__icon {
     margin: 2rem 1rem;
   }

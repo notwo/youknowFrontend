@@ -46,6 +46,7 @@ const closeSpMenu = (): void => {
 }
 
 .p-sp__waiting {
+  display: none;
   margin: 0 auto;
   position: absolute;
   top: 34px;
@@ -157,6 +158,10 @@ const closeSpMenu = (): void => {
 }
 
 @media screen and (max-width: 768px) {
+  .p-sp__waiting {
+    display: block;
+  }
+
   .p-sp__login {
     display: block;
   }
