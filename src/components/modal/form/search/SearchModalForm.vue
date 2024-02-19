@@ -2,12 +2,17 @@
 import { inject } from 'vue';
 import { useAuth0 } from '@auth0/auth0-vue';
 import axios, { AxiosResponse, AxiosError } from "axios";
-import { libraryApi } from '@/plugin/apis';
+import { searchApi } from '@/plugin/apis';
 import SearchForm from "@/components/common/SearchForm.vue";
 
 const { user } = useAuth0();
 const store = inject('library');
 const dialogStore = inject('dialog');
+
+const props = defineProps({
+  contentType: String,
+  contentName: String,
+});
 
 interface ErrorResponse {
   message: String,
@@ -19,10 +24,9 @@ interface HTMLEvent<T extends EventTarget> extends Event {
   target: T;
 };
 
-const emits = defineEmits<{(e: 'closeEvent', event: Object): void}>();
+const emits = defineEmits<{(e: 'closeEvent', event: HTMLEvent<HTMLButtonElement>): void}>();
 
-const api = libraryApi();
-const onSearch = (event: HTMLEvent<HTMLButtonElement>, searchType, title): void => {
+const onSearch = (event: HTMLEvent<HTMLButtonElement>, searchType: String, title: String): void => {
   if (title === '') {
     store.allClear();
     store.restore();
@@ -30,17 +34,7 @@ const onSearch = (event: HTMLEvent<HTMLButtonElement>, searchType, title): void 
     return;
   }
 
-  const urlBySearchType = (searchType): String => {
-    switch (searchType) {
-      case 0:
-        return api.searchUrl(user.value.sub, title);
-      case 1:
-        return api.searchByTagUrl(user.value.sub, title);
-      case 2:
-        return api.searchByContentUrl(user.value.sub, title);
-    }
-  };
-  const url = urlBySearchType(Number(searchType)) as String;
+  const url = searchApi().urlBySearchType(user, title, props.contentType, Number(searchType)) as String;
 
   axios.get(url)
     .then((response: AxiosResponse) => {
@@ -58,7 +52,7 @@ const onSearch = (event: HTMLEvent<HTMLButtonElement>, searchType, title): void 
     .catch((e: AxiosError<ErrorResponse>) => {
       store.allClear();
       emits('closeEvent', event);
-      dialogStore.func.value('検索エラー', 'ライブラリ検索中にエラーが起きました。暫くお待ちいただいてから再度お試しください', 'error');
+      dialogStore.func.value('検索エラー', `${props.contentName}検索中にエラーが起きました。暫くお待ちいただいてから再度お試しください`, 'error');
     });
 }
 </script>
@@ -68,6 +62,6 @@ const onSearch = (event: HTMLEvent<HTMLButtonElement>, searchType, title): void 
 
 <template>
   <SearchForm
-    contentName="ライブラリ"
+    :contentName="props.contentName"
     @click="onSearch" />
 </template>

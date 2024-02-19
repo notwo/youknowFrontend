@@ -149,3 +149,41 @@ export function tagApi() {
     searchUrl
   }
 };
+
+export function searchApi() {
+  function urlBySearchType(user, title: String, contentType: String, searchType: Number, route = null) {
+    switch (contentType) {
+      case 'library':
+        switch (searchType) {
+          case 0:
+            return libraryApi().searchUrl(user.value.sub, title);
+          case 1:
+            return libraryApi().searchByTagUrl(user.value.sub, title);
+          case 2:
+            return libraryApi().searchByContentUrl(user.value.sub, title);
+        }
+      case 'category':
+        switch (searchType) {
+          case 0:
+            return categoryApi().searchUrl(user.value.sub, title);
+          case 1:
+            return categoryApi().searchByTagUrl(user.value.sub, route?.params?.library_id, title);
+          case 2:
+            return categoryApi().searchByContentUrl(user.value.sub, route?.params?.library_id, title);
+        }
+      case 'keyword':
+        switch (searchType) {
+          case 0:
+            return keywordApi().searchUrl(user.value.sub, title);
+          case 1:
+            return keywordApi().searchByTagUrl(user.value.sub, route?.params?.library_id, route?.params?.category_id, title);
+          case 2:
+            return keywordApi().searchByContentUrl(user.value.sub, route?.params?.library_id, route?.params?.category_id, title);
+        }
+    };
+  };
+
+  return {
+    urlBySearchType
+  };
+};

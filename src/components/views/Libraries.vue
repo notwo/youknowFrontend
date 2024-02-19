@@ -14,7 +14,7 @@ import ScrollToTopButton from '@/components/common/ScrollToTopButton.vue';
   <Loading />
   <DataRegisterModalButton />
   <SearchModalButton />
-  <SearchModal />
+  <SearchModal :contentType="'library'" :contentName="'ライブラリ'" />
   <Breadcrumb />
   <LibraryList />
   <ScrollToTopButton />

@@ -1,6 +1,11 @@
 <script setup lang="ts">
 import SearchModalForm from '@/components/modal/form/search/SearchModalForm.vue';
 
+const props = defineProps({
+  contentType: String,
+  contentName: String,
+});
+
 interface HTMLEvent<T extends EventTarget> extends Event {
   target: T;
 };
@@ -91,7 +96,7 @@ const closeModal = (event: HTMLEvent<HTMLButtonElement>): void => {
     <section class="p-modal">
       <span id="close" class="p-close" @click="closeModal">モーダルを閉じる</span>
       <form action="" id="search-modal-form" class="p-searchModalForm c-hidden">
-        <SearchModalForm @closeEvent="closeModal" />
+        <SearchModalForm @closeEvent="closeModal" :contentType="props.contentType" :contentName="props.contentName" />
       </form>
     </section>
   </section>
