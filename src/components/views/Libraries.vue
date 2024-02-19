@@ -2,8 +2,9 @@
 import Dialog from '@/components/common/Dialog.vue';
 import Loading from '@/components/common/Loading.vue';
 import DataRegisterModalButton from '@/components/common/DataRegisterModalButton.vue';
+import SearchModalButton from '@/components/common/SearchModalButton.vue';
+import SearchModal from '@/components/modal/SearchModal.vue';
 import Breadcrumb from '@/components/Breadcrumb.vue';
-import LibrarySearchForm from '@/components/library/LibrarySearchForm.vue';
 import LibraryList from '@/components/library/LibraryList.vue';
 import ScrollToTopButton from '@/components/common/ScrollToTopButton.vue';
 </script>
@@ -12,8 +13,9 @@ import ScrollToTopButton from '@/components/common/ScrollToTopButton.vue';
   <Dialog />
   <Loading />
   <DataRegisterModalButton />
+  <SearchModalButton />
+  <SearchModal />
   <Breadcrumb />
-  <LibrarySearchForm />
   <LibraryList />
   <ScrollToTopButton />
 </template>

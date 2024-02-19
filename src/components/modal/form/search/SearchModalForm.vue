@@ -1,0 +1,73 @@
+<script setup lang="ts">
+import { inject } from 'vue';
+import { useAuth0 } from '@auth0/auth0-vue';
+import axios, { AxiosResponse, AxiosError } from "axios";
+import { libraryApi } from '@/plugin/apis';
+import SearchForm from "@/components/common/SearchForm.vue";
+
+const { user } = useAuth0();
+const store = inject('library');
+const dialogStore = inject('dialog');
+
+interface ErrorResponse {
+  message: String,
+  name: String,
+  code: String
+};
+
+interface HTMLEvent<T extends EventTarget> extends Event {
+  target: T;
+};
+
+const emits = defineEmits<{(e: 'closeEvent', event: Object): void}>();
+
+const api = libraryApi();
+const onSearch = (event: HTMLEvent<HTMLButtonElement>, searchType, title): void => {
+  if (title === '') {
+    store.allClear();
+    store.restore();
+    emits('closeEvent', event);
+    return;
+  }
+
+  const urlBySearchType = (searchType): String => {
+    switch (searchType) {
+      case 0:
+        return api.searchUrl(user.value.sub, title);
+      case 1:
+        return api.searchByTagUrl(user.value.sub, title);
+      case 2:
+        return api.searchByContentUrl(user.value.sub, title);
+    }
+  };
+  const url = urlBySearchType(Number(searchType)) as String;
+
+  axios.get(url)
+    .then((response: AxiosResponse) => {
+      // 検索後は一括で結果を返すようにしておく。今後検索後に対してもページングする場合はコメントアウトを外す(更にAPIの修正も必要)
+      //if (response.data.results.length <= 0) {
+      if (response.data.length <= 0) {
+        store.search(response.data, searchType, title);
+        emits('closeEvent', event);
+        return;
+      }
+      //store.search(response.data.results);
+      store.search(response.data, searchType, title);
+      emits('closeEvent', event);
+    })
+    .catch((e: AxiosError<ErrorResponse>) => {
+      store.allClear();
+      emits('closeEvent', event);
+      dialogStore.func.value('検索エラー', 'ライブラリ検索中にエラーが起きました。暫くお待ちいただいてから再度お試しください', 'error');
+    });
+}
+</script>
+
+<style scoped>
+</style>
+
+<template>
+  <SearchForm
+    contentName="ライブラリ"
+    @click="onSearch" />
+</template>
