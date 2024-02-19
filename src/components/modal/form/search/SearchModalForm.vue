@@ -1,18 +1,21 @@
 <script setup lang="ts">
 import { inject } from 'vue';
 import { useAuth0 } from '@auth0/auth0-vue';
+import { useRoute, } from 'vue-router';
 import axios, { AxiosResponse, AxiosError } from "axios";
 import { searchApi } from '@/plugin/apis';
 import SearchForm from "@/components/common/SearchForm.vue";
 
 const { user } = useAuth0();
-const store = inject('library');
+const route = useRoute();
 const dialogStore = inject('dialog');
 
 const props = defineProps({
   contentType: String,
   contentName: String,
 });
+
+const store = inject(props.contentType);
 
 interface ErrorResponse {
   message: String,
@@ -34,7 +37,8 @@ const onSearch = (event: HTMLEvent<HTMLButtonElement>, searchType: String, title
     return;
   }
 
-  const url = searchApi().urlBySearchType(user, title, props.contentType, Number(searchType)) as String;
+  const url = searchApi().urlBySearchType(user, title, props.contentType, Number(searchType), route) as String;
+  console.log(url)
 
   axios.get(url)
     .then((response: AxiosResponse) => {

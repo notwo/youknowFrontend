@@ -165,7 +165,7 @@ export function searchApi() {
       case 'category':
         switch (searchType) {
           case 0:
-            return categoryApi().searchUrl(user.value.sub, title);
+            return categoryApi().searchUrl(user.value.sub, route?.params?.library_id, title);
           case 1:
             return categoryApi().searchByTagUrl(user.value.sub, route?.params?.library_id, title);
           case 2:
@@ -174,7 +174,7 @@ export function searchApi() {
       case 'keyword':
         switch (searchType) {
           case 0:
-            return keywordApi().searchUrl(user.value.sub, title);
+            return keywordApi().searchUrl(user.value.sub, route?.params?.library_id, route?.params?.category_id, title);
           case 1:
             return keywordApi().searchByTagUrl(user.value.sub, route?.params?.library_id, route?.params?.category_id, title);
           case 2:
