@@ -38,7 +38,6 @@ const onSearch = (event: HTMLEvent<HTMLButtonElement>, searchType: String, title
   }
 
   const url = searchApi().urlBySearchType(user, title, props.contentType, Number(searchType), route) as String;
-  console.log(url)
 
   axios.get(url)
     .then((response: AxiosResponse) => {
