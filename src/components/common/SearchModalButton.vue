@@ -6,17 +6,17 @@ interface HTMLEvent<T extends EventTarget> extends Event {
 };
 
 const openModal = (event: HTMLEvent<HTMLButtonElement>): void => {
-  const overlay = document.querySelector('#overlay') as HTMLElement;
+  const overlay = document.querySelector('#search-modal-overlay') as HTMLElement;
   overlay.classList.add('visible');
-  document.getElementById('register-form').classList.add('visible');
+  document.getElementById('search-modal-form').classList.add('visible');
 };
 
 const setFixedToButton = (event): void => {
-  const registerBtn = document.getElementById('registerBtn') as HTMLElement;
-  if (window.scrollY <= 50) {
-    registerBtn.classList.remove('scroll');
+  const searchModalBtn = document.getElementById('searchModalBtn') as HTMLElement;
+  if (window.scrollY <= 150) {
+    searchModalBtn.classList.remove('scroll');
   } else {
-    registerBtn.classList.add('scroll');
+    searchModalBtn.classList.add('scroll');
   }
 };
 
@@ -30,64 +30,56 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
-.p-btn__register {
+.p-btn__searchModal {
   position: fixed;
-  top: 8rem;
+  top: 13rem;
   right: 2rem;
   transition: .2s;
   z-index: 8998;
 }
-.p-btn__register a {
+
+.p-btn__searchModal a {
   display: block;
   position: relative;
   border-radius: 50%;
   width: 3.5rem;
   height: 3.5rem;
   cursor: pointer;
-  background-color: rgba(0,180,180,.6);
+  background-color: rgba(0, 38, 255, 0.6);
   overflow: hidden;
 }
-.p-btn__register a:hover {
-  background-color: rgba(0, 225, 225, 0.6);
+
+.p-btn__searchModal a:hover {
+  background-color: rgba(67, 95, 255, 0.6);
 }
-.p-btn__register a:before {
-  display: block;
-  position: absolute;
-  top: 44%;
-  left: 53%;
-  margin-left: -23%;
-  margin-top: -28%;
-  color: #FFF;
-  font-size: 2rem;
-  content: "+";
+
+.p-btn__searchModal img {
+  transform: translate(44%, 44%);
 }
 
 /* sp */
 @media screen and (max-width: 768px) {
-  .p-btn__register {
+  .p-btn__searchModal {
     right: .3rem;
-    top: 10.6rem;
+    top: 15.6rem;
   }
-  .p-btn__register.scroll {
-    top: 6.5rem;
-  }
-}
-@media screen and (max-width: 768px) {
-  .p-btn__register.scroll {
-    top: 6.5rem;
+  .p-btn__searchModal.scroll {
+    top: 11.5rem;
   }
 }
 
 /* tablet */
 @media screen and (min-width: 768px) and (max-width: 1409px) {
-  .p-btn__register {
+  .p-btn__searchModal {
     right: 1rem;
   }
 }
 </style>
 
 <template>
-  <section id="registerBtn" class="p-btn__register">
-    <a @click="openModal"></a>
+  <section id="searchModalBtn" class="p-btn__searchModal">
+    <a @click="openModal">
+      <img src="@/assets/images/search.png" width="30" alt="searchModalBtn" loading="lazy" class="p-searchImg">
+    </a>
   </section>
 </template>

@@ -3,25 +3,11 @@ defineProps({
   contentName: String,
 });
 
-interface HTMLEvent<T extends EventTarget> extends Event {
-  target: T;
-};
-
-const emits = defineEmits<{(e: 'click', event: Object, searchType: Number, title: String): void}>();
+const emits = defineEmits<{(e: 'click', event: Object, searchType: String, title: String): void}>();
 const onSearch = (event): void => {
   const searchType = document.getElementById('search-type').value as String;
   const title = document.getElementById('search').value as String;
   emits('click', event, searchType, title);
-};
-
-const showOverlay = (event: HTMLEvent<HTMLButtonElement>): void => {
-  const ovelaySearch = document.querySelector('.js-overlay__search');
-  ovelaySearch.classList.add('visible');
-};
-
-const hideOverlay = (event: HTMLEvent<HTMLButtonElement>): void => {
-  const overlay = event.currentTarget;
-  overlay.classList.remove('visible');
 };
 </script>
 
@@ -88,11 +74,19 @@ const hideOverlay = (event: HTMLEvent<HTMLButtonElement>): void => {
     border-radius: .3rem 0 0 .3rem;
   }
 }
-
 /* tablet */
 @media screen and (min-width: 415px) and (max-width: 768px) {
   .p-searchType {
     padding: .6rem;
+    width: 50%;
+  }
+
+  .p-search {
+    width: 50%;
+  }
+}
+@media screen and (min-width: 768px) and (max-width: 1440px) {
+  .p-search {
     width: 50%;
   }
 }
@@ -106,11 +100,10 @@ const hideOverlay = (event: HTMLEvent<HTMLButtonElement>): void => {
         <option value="1">タグで検索</option>
         <option value="2">本文で検索</option>
       </select>
-      <input type="text" name="search" id="search" class="p-search" :placeholder="`${contentName}を検索`" @focus="showOverlay">
+      <input type="text" name="search" id="search" class="p-search" :placeholder="`${contentName}を検索`">
       <button type="button" class="p-searchButton" @click="onSearch">
         <img src="@/assets/images/search.png" width="20" alt="search" loading="lazy" class="p-searchImg">
       </button>
     </section>
   </form>
-  <section class="p-overlay__search js-overlay__search" @click="hideOverlay"></section>
 </template>

@@ -1,15 +1,10 @@
 <script setup lang="ts">
-import { reactive } from 'vue';
-import { useVuelidate } from "@vuelidate/core";
-import { registerRules } from '@/plugin/validatorMessage';
-import LibraryRegistrationForm from '@/components/modal/form/register/LibraryRegistrationForm.vue';
+import SearchModalForm from '@/components/modal/form/search/SearchModalForm.vue';
 
-const state = reactive({
-  title: '',
-  content: ''
+const props = defineProps({
+  contentType: String,
+  contentName: String,
 });
-
-const v$ = useVuelidate(registerRules('ライブラリ名'), state);
 
 interface HTMLEvent<T extends EventTarget> extends Event {
   target: T;
@@ -19,12 +14,8 @@ const closeModal = (event: HTMLEvent<HTMLButtonElement>): void => {
   event.preventDefault();
   document.body.style.removeProperty("overflow");
 
-  const overlay = document.querySelector('#overlay') as HTMLElement;
+  const overlay = document.querySelector('#search-modal-overlay') as HTMLElement;
   overlay.classList.remove('visible');
-  // フォーム初期化
-  state.title = '';
-  state.content = '';
-  v$.value.$reset();
 };
 </script>
 
@@ -51,7 +42,7 @@ const closeModal = (event: HTMLEvent<HTMLButtonElement>): void => {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 60%;
+  width: 30%;
   height: auto;
   border-radius: .4rem;
   background-color: white;
@@ -81,7 +72,7 @@ const closeModal = (event: HTMLEvent<HTMLButtonElement>): void => {
   color: #888;
 }
 
-#register-form.visible {
+#search-modal-form.visible {
   display: block;
 }
 
@@ -101,11 +92,11 @@ const closeModal = (event: HTMLEvent<HTMLButtonElement>): void => {
 </style>
 
 <template>
-  <section id="overlay" class="l-overlay">
+  <section id="search-modal-overlay" class="l-overlay">
     <section class="p-modal">
       <span id="close" class="p-close" @click="closeModal">モーダルを閉じる</span>
-      <form action="" id="register-form" class="p-registerForm c-hidden">
-        <LibraryRegistrationForm :state="state" :v="v$" @closeEvent="closeModal" />
+      <form action="" id="search-modal-form" class="p-searchModalForm c-hidden">
+        <SearchModalForm @closeEvent="closeModal" :contentType="props.contentType" :contentName="props.contentName" />
       </form>
     </section>
   </section>
