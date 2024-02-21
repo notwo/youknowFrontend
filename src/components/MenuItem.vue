@@ -42,7 +42,7 @@ const route = useRoute();
 }
 
 .p-menu__item li {
-  padding: .5rem 1rem;
+  padding: 0 1rem;
   font-size: 1.0rem;
   font-weight: 700;
 }
@@ -80,7 +80,6 @@ const route = useRoute();
     <ul v-if="auth0.isLoading.value" class="p-menu__item c-flex--spaceBetween">
       <li>
         <span class="p-waiting">
-          Now Loading...
         </span>
       </li>
     </ul>

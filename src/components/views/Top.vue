@@ -43,6 +43,10 @@ const login = (event): void => {
   width: 60%;
 }
 
+.p-mainContents__loadingBox p {
+  font-size: 1.5rem;
+}
+
 .p-mainContents__box p {
   font-size: 1.8rem;
   font-weight: 400;
@@ -74,7 +78,7 @@ const login = (event): void => {
 <template>
   <section class="p-mainContents">
     <router-link v-if="auth0.isAuthenticated.value"
-      :to="{ name: 'libraries', params: { username: String(auth0?.user?.value?.nickname) } }" class="p-mainContents__box c-text--center">
+      :to="{ name: 'libraries', params: { username: String(auth0?.user?.value?.nickname) } }" class="p-mainContents__box c-text--center c-fadeIn--fast">
       <p class="p-mainContents__message">データを登録してみる</p>
     </router-link>
     <section v-else-if="auth0.isLoading.value" class="p-mainContents__loadingBox c-text--center">
