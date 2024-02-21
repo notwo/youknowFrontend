@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useAuth0 } from '@auth0/auth0-vue';
 import { inject } from 'vue';
+import { useRoute } from 'vue-router';
 import SpMenuItem from "@/components/SpMenuItem.vue";
 
 const auth0 = useAuth0();
@@ -21,6 +22,8 @@ const startLogout = (event): void => {
   tagStore.allClear();
   logout({ logoutParams: { returnTo: `${import.meta.env.VITE_BASE_URL}` } });
 }
+
+const route = useRoute();
 </script>
 
 <style scoped>
@@ -39,7 +42,7 @@ const startLogout = (event): void => {
 }
 
 .p-menu__item li {
-  padding: .5rem 1rem;
+  padding: 0 1rem;
   font-size: 1.0rem;
   font-weight: 700;
 }
@@ -70,13 +73,13 @@ const startLogout = (event): void => {
 
 <template>
   <section class="c-service__icon">
-    <router-link :to="{ name: 'top', params: {} }">サービスロゴ</router-link>
+    <router-link v-if="route.fullPath !== '/'" :to="{ name: 'top', params: {} }">サービスロゴ</router-link>
+    <span v-else>サービスロゴ</span>
   </section>
   <nav class="p-menu">
     <ul v-if="auth0.isLoading.value" class="p-menu__item c-flex--spaceBetween">
       <li>
         <span class="p-waiting">
-          Now Loading...
         </span>
       </li>
     </ul>

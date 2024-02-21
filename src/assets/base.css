@@ -70,6 +70,10 @@ input.error {
   flex-wrap: wrap;
 }
 
+.c-align-center {
+  align-items: center;
+}
+
 .c-hidden {
   display: none;
 }

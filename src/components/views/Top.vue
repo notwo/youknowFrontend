@@ -22,7 +22,7 @@ const login = (event): void => {
 }
 
 .p-mainContents__box {
-  padding:  3rem 2rem;
+  padding: 3rem 2rem;
   border: 1px #85ccff solid;
   border-radius: .6rem;
   width: 70%;
@@ -37,8 +37,19 @@ const login = (event): void => {
   font-weight: 800;
 }
 
-.p-mainContents__loading {
-  font-size: 5rem;
+.p-mainContents__loadingBox {
+  padding: 3rem 2rem;
+  border-radius: .6rem;
+  width: 60%;
+}
+
+.p-mainContents__loadingBox p {
+  font-size: 1.5rem;
+}
+
+.p-mainContents__box p {
+  font-size: 1.8rem;
+  font-weight: 400;
 }
 
 /* sp */
@@ -67,13 +78,13 @@ const login = (event): void => {
 <template>
   <section class="p-mainContents">
     <router-link v-if="auth0.isAuthenticated.value"
-      :to="{ name: 'libraries', params: { username: String(auth0?.user?.value?.nickname) } }" class="p-mainContents__box c-text--center">
+      :to="{ name: 'libraries', params: { username: String(auth0?.user?.value?.nickname) } }" class="p-mainContents__box c-text--center c-fadeIn--fast">
       <p class="p-mainContents__message">データを登録してみる</p>
     </router-link>
     <section v-else-if="auth0.isLoading.value" class="p-mainContents__loadingBox c-text--center">
       <p class="p-mainContents__message">Now Loading...</p>
     </section>
-    <section v-else class="p-mainContents__loadingBox c-text--center">
+    <section v-else @click="login" class="p-mainContents__box c-text--center">
       <p class="p-mainContents__message">データを登録してみる</p>
     </section>
   </section>

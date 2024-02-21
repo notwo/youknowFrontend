@@ -45,8 +45,6 @@ provide('loading', _loadingStore);
 .l-container {
   margin: 0 auto;
   max-width: 1100px;
-  background: rgb(250, 250, 252); /** 一通りデザインを当ててコンテンツを配置し終わったら消す */
-  overflow: hidden;
 }
 
 .l-main__top  {
