@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import { useRoute } from 'vue-router';
+
+const route = useRoute();
 </script>
 
 <style scoped>
@@ -58,7 +61,8 @@
       <section class="p-footer__list c-flex--spaceBetween c-flex--wrap">
         <section class="p-footerContents">
           <section class="c-service__icon">
-            <router-link :to="{ name: 'top', params: {} }">サービスロゴ</router-link>
+            <router-link v-if="route.fullPath !== '/'" :to="{ name: 'top', params: {} }">サービスロゴ</router-link>
+            <span v-else>サービスロゴ</span>
           </section>
         </section>
         <section class="p-footerContents">
