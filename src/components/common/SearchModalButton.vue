@@ -13,7 +13,7 @@ const openModal = (event: HTMLEvent<HTMLButtonElement>): void => {
 
 const setFixedToButton = (event): void => {
   const searchModalBtn = document.getElementById('searchModalBtn') as HTMLElement;
-  if (window.scrollY <= 150) {
+  if (window.scrollY <= 50) {
     searchModalBtn.classList.remove('scroll');
   } else {
     searchModalBtn.classList.add('scroll');
@@ -54,17 +54,28 @@ onUnmounted(() => {
 }
 
 .p-btn__searchModal img {
-  transform: translate(44%, 44%);
+  filter: invert(100%);
+  transform: translate(45%, 45%);
 }
 
 /* sp */
 @media screen and (max-width: 768px) {
   .p-btn__searchModal {
     right: .3rem;
-    top: 15.6rem;
+    top: 13.6rem;
   }
   .p-btn__searchModal.scroll {
     top: 11.5rem;
+  }
+
+  .p-btn__searchModal a {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+
+  .p-btn__searchModal img {
+    width: 50%;
+    transform: translate(45%, 45%);
   }
 }
 

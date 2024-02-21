@@ -5,7 +5,11 @@ interface HTMLEvent<T extends EventTarget> extends Event {
   target: T;
 };
 
-const deleteCheckedItem = () => {};
+const deleteCheckedItem = (event): void => {
+  const checkedItems = document.querySelectorAll<HTMLInputElement>('.js-deleteCheckItem');
+  console.log(checkedItems)
+  if (checkedItems.length === 0) { return; }
+};
 
 const setFixedToButton = (event): void => {
   const deleteCheckBtn = document.getElementById('deleteCheckBtn') as HTMLElement;
@@ -66,10 +70,21 @@ onUnmounted(() => {
 @media screen and (max-width: 768px) {
   .p-btn__deleteCheck {
     right: .3rem;
-    top: 20.6rem;
+    top: 18.6rem;
   }
   .p-btn__deleteCheck.scroll {
     top: 16.5rem;
+  }
+
+  .p-btn__deleteCheck a {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+  .p-btn__deleteCheck a:before {
+    top: 47%;
+    left: 68%;
+    width: 4px;
+    height: 27px;
   }
 }
 @media screen and (max-width: 768px) {
