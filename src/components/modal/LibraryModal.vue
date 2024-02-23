@@ -51,7 +51,7 @@ const closeModal = (event: HTMLEvent<HTMLButtonElement>): void => {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 60%;
+  width: 30%;
   height: auto;
   border-radius: .4rem;
   background-color: white;

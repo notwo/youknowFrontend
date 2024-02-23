@@ -123,6 +123,10 @@ input.error {
   display: none;
 }
 
+.c-checkbox {
+  display: none;
+}
+
 /** button **/
 .c-btn {
   display: block;

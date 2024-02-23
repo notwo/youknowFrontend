@@ -54,7 +54,7 @@ onUnmounted(() => {
   display: block;
   position: absolute;
   content: "";
-  top: 50%;
+  top: 51%;
   left: 70%;
   width: 5px;
   height: 33px;
@@ -70,7 +70,7 @@ onUnmounted(() => {
 @media screen and (max-width: 768px) {
   .p-btn__deleteCheck {
     right: .3rem;
-    top: 18.6rem;
+    top: 17.6rem;
   }
   .p-btn__deleteCheck.scroll {
     top: 16.5rem;
@@ -81,7 +81,7 @@ onUnmounted(() => {
     height: 2.5rem;
   }
   .p-btn__deleteCheck a:before {
-    top: 47%;
+    top: 46%;
     left: 68%;
     width: 4px;
     height: 27px;

@@ -46,11 +46,6 @@ const removeLibrary = (event: HTMLEvent<HTMLButtonElement>): void => {
 </script>
 
 <style scoped>
-.p-library__menuArea {
-  margin: .6rem;
-  z-index: 1;
-}
-
 .p-library__menuLink {
   margin: .3rem;
   z-index: 1;
@@ -86,20 +81,28 @@ const removeLibrary = (event: HTMLEvent<HTMLButtonElement>): void => {
   color: #888;
   cursor: pointer;
 }
+
+@media screen and (max-width: 768px) {
+  .p-library__menuLink {
+    margin: .3rem 1.2rem;
+  }
+
+  .p-library__menuList {
+    right: 1.2rem;
+  }
+}
 </style>
 
 <template>
-  <section class="p-library__menuArea c-flex--end">
-    <section class="p-library__menuLink">
-      <span class="p-library__menuButton">…</span>
-      <ul class="p-library__menuList">
-        <li class="p-library__menu">
-          <LibraryEditButton :edit_state="edit_state" :id="id" :title="title" :content="content" />
-        </li>
-        <li class="p-library__menu">
-          <span @click="removeLibrary" class="p-delete__link" :data-id="id">削除</span>
-        </li>
-      </ul>
-    </section>
+  <section class="p-library__menuLink">
+    <span class="p-library__menuButton">…</span>
+    <ul class="p-library__menuList">
+      <li class="p-library__menu">
+        <LibraryEditButton :edit_state="edit_state" :id="id" :title="title" :content="content" />
+      </li>
+      <li class="p-library__menu">
+        <span @click="removeLibrary" class="p-delete__link" :data-id="id">削除</span>
+      </li>
+    </ul>
   </section>
 </template>

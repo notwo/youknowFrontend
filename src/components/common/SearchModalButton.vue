@@ -55,14 +55,14 @@ onUnmounted(() => {
 
 .p-btn__searchModal img {
   filter: invert(100%);
-  transform: translate(45%, 45%);
+  transform: translate(42%, 42%);
 }
 
 /* sp */
 @media screen and (max-width: 768px) {
   .p-btn__searchModal {
     right: .3rem;
-    top: 13.6rem;
+    top: 12.6rem;
   }
   .p-btn__searchModal.scroll {
     top: 11.5rem;
@@ -75,7 +75,7 @@ onUnmounted(() => {
 
   .p-btn__searchModal img {
     width: 50%;
-    transform: translate(45%, 45%);
+    transform: translate(47%, 47%);
   }
 }
 
