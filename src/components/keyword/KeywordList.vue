@@ -130,11 +130,13 @@ onUnmounted(() => {
     align-items: center;
   }
 
+  /*
   .p-keyword__itemWrap::after {
     content: "";
     display: block;
     width: 80%;
   }
+  */
 
   .p-emptyMessage {
     margin: 2rem;
