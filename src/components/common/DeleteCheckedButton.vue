@@ -1,14 +1,42 @@
 <script setup lang="ts">
-import { onMounted, onUnmounted } from "vue";
+import { inject, onMounted, onUnmounted } from 'vue';
+import axios, { AxiosResponse, AxiosError } from "axios";
+import { useAuth0 } from '@auth0/auth0-vue';
+import { libraryApi } from '@/plugin/apis';
+
+const props = defineProps({
+  contentType: String,
+  contentName: String,
+});
 
 interface HTMLEvent<T extends EventTarget> extends Event {
   target: T;
 };
 
+const { user } = useAuth0();
+const store = inject('library');
+const dialogStore = inject('dialog');
+
 const deleteCheckedItem = (event): void => {
-  const checkedItems = document.querySelectorAll<HTMLInputElement>('.js-deleteCheckItem');
-  console.log(checkedItems)
+  const checkedItems = document.querySelectorAll<HTMLInputElement>('.js-deleteCheckItem:checked');
   if (checkedItems.length === 0) { return; }
+  const ids = [] as Array<Number>;
+  checkedItems.forEach((input) => { ids.push(Number(input.dataset.id)); });
+
+  if (!window.confirm(`選択された${props.contentName}が削除されますが宜しいですか？`)) {
+    return;
+  }
+
+  const api = libraryApi();
+
+  axios.delete(api.multiDeleteUrl(user.value.sub, ids))
+    .then((response: AxiosResponse) => {
+      dialogStore.func.value('', 'ライブラリを削除しました');
+      store.removeList(ids);
+    })
+    .catch((e: AxiosError<ErrorResponse>) => {
+      dialogStore.func.value('削除エラー', 'ライブラリ削除中にエラーが起きました。暫くお待ちいただいてから再度お試しください', 'error');
+    });
 };
 
 const setFixedToButton = (event): void => {

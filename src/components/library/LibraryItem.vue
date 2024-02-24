@@ -107,7 +107,7 @@ const props = defineProps({
   <section class="p-library__item c-flex--wrap c-fadeIn--normal js-tooltip__content">
     <router-link :to="{ name: 'categories', params: { username: String($route.params.username), library_id: id } }"></router-link>
     <section class="p-library__menuArea c-flex--spaceBetween c-align-center">
-      <CassetteCheckbox :id="id" :contentType="'library'" />
+      <CassetteCheckbox :id="id" :contentName="'ライブラリ'" :contentType="'library'" />
       <CassetteMenu :edit_state="edit_state" :id="id" :title="title" :content="content" />
     </section>
     <section class="p-library__body js-tooltip__title">

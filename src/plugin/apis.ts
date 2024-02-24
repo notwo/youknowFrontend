@@ -41,23 +41,15 @@ export function libraryApi() {
   function createUrl(sub: String) {
     return `${apiBaseUrl}/api/users/${sub}/libraries/`;
   }
-  function searchUrl(sub: String, title: String) {
-    return `${apiBaseUrl}/api/users/${sub}/libraries/?title=${title}`;
-  }
-  function searchByTagUrl(sub: String, title: String) {
-    return `${apiBaseUrl}/api/users/${sub}/libraries/search_by_tag/?title=${title}`;
-  }
-  function searchByContentUrl(sub: String, content: String) {
-    return `${apiBaseUrl}/api/users/${sub}/libraries/search_by_content/?content=${content}`;
+  function multiDeleteUrl(sub: String, ids: Array<String>) {
+    return `${apiBaseUrl}/api/users/${sub}/libraries/multi_delete?ids=${ids}`;
   }
 
   return {
     listUrl,
     detailUrl,
     createUrl,
-    searchUrl,
-    searchByTagUrl,
-    searchByContentUrl
+    multiDeleteUrl
   }
 };
 
@@ -71,23 +63,11 @@ export function categoryApi() {
   function createUrl(sub: String, library_id: Number) {
     return `${apiBaseUrl}/api/users/${sub}/libraries/${library_id}/categories/`;
   }
-  function searchUrl(sub: String, library_id: Number, title: String) {
-    return `${apiBaseUrl}/api/users/${sub}/libraries/${library_id}/categories/?title=${title}`;
-  }
-  function searchByTagUrl(sub: String, library_id: Number, title: String) {
-    return `${apiBaseUrl}/api/users/${sub}/libraries/${library_id}/categories/search_by_tag/?title=${title}`;
-  }
-  function searchByContentUrl(sub: String, library_id: Number, content: String) {
-    return `${apiBaseUrl}/api/users/${sub}/libraries/${library_id}/categories/search_by_content/?content=${content}`;
-  }
 
   return {
     listUrl,
     detailUrl,
     createUrl,
-    searchUrl,
-    searchByTagUrl,
-    searchByContentUrl
   }
 };
 
@@ -101,15 +81,6 @@ export function keywordApi() {
   function createUrl(sub: String, library_id: Number, category_id: Number) {
     return `${apiBaseUrl}/api/users/${sub}/libraries/${library_id}/categories/${category_id}/keywords/`;
   }
-  function searchUrl(sub: String, library_id: Number, category_id: Number, title: String) {
-    return `${apiBaseUrl}/api/users/${sub}/libraries/${library_id}/categories/${category_id}/keywords?title=${title}`;
-  }
-  function searchByTagUrl(sub: String, library_id: Number, category_id: Number, title: String) {
-    return `${apiBaseUrl}/api/users/${sub}/libraries/${library_id}/categories/${category_id}/keywords/search_by_tag/?title=${title}`;
-  }
-  function searchByContentUrl(sub: String, library_id: Number, category_id: Number, content: String) {
-    return `${apiBaseUrl}/api/users/${sub}/libraries/${library_id}/categories/${category_id}/keywords/search_by_content/?content=${content}`;
-  }
   function moveUrl(sub: String, library_id: Number, category_id: Number, id: Number, move_category_id: Number) {
     return `${apiBaseUrl}/api/users/${sub}/libraries/${library_id}/categories/${category_id}/keywords/${id}/move/?move_category_id=${move_category_id}`;
   }
@@ -118,9 +89,6 @@ export function keywordApi() {
     listUrl,
     detailUrl,
     createUrl,
-    searchUrl,
-    searchByTagUrl,
-    searchByContentUrl,
     moveUrl
   }
 };
@@ -156,29 +124,29 @@ export function searchApi() {
       case 'library':
         switch (searchType) {
           case 0:
-            return libraryApi().searchUrl(user.value.sub, title);
+            return `${apiBaseUrl}/api/users/${user.value.sub}/libraries/?title=${title}`;
           case 1:
-            return libraryApi().searchByTagUrl(user.value.sub, title);
+            return `${apiBaseUrl}/api/users/${user.value.sub}/libraries/search_by_tag/?title=${title}`;
           case 2:
-            return libraryApi().searchByContentUrl(user.value.sub, title);
+            return `${apiBaseUrl}/api/users/${user.value.sub}/libraries/search_by_content/?content=${title}`;
         }
       case 'category':
         switch (searchType) {
           case 0:
-            return categoryApi().searchUrl(user.value.sub, route?.params?.library_id, title);
+            return `${apiBaseUrl}/api/users/${user.value.sub}/libraries/${route?.params?.library_id}/categories/?title=${title}`;
           case 1:
-            return categoryApi().searchByTagUrl(user.value.sub, route?.params?.library_id, title);
+            return `${apiBaseUrl}/api/users/${user.value.sub}/libraries/${route?.params?.library_id}/categories/search_by_tag/?title=${title}`;
           case 2:
-            return categoryApi().searchByContentUrl(user.value.sub, route?.params?.library_id, title);
+            return `${apiBaseUrl}/api/users/${user.value.sub}/libraries/${route?.params?.library_id}/categories/search_by_content/?content=${title}`;
         }
       case 'keyword':
         switch (searchType) {
           case 0:
-            return keywordApi().searchUrl(user.value.sub, route?.params?.library_id, route?.params?.category_id, title);
+            return `${apiBaseUrl}/api/users/${user.value.sub}/libraries/${route?.params?.library_id}/categories/${route?.params?.category_id}/keywords?title=${title}`;
           case 1:
-            return keywordApi().searchByTagUrl(user.value.sub, route?.params?.library_id, route?.params?.category_id, title);
+            return `${apiBaseUrl}/api/users/${user.value.sub}/libraries/${route?.params?.library_id}/categories/${route?.params?.category_id}/keywords/search_by_tag/?title=${title}`;
           case 2:
-            return keywordApi().searchByContentUrl(user.value.sub, route?.params?.library_id, route?.params?.category_id, title);
+            return `${apiBaseUrl}/api/users/${user.value.sub}/libraries/${route?.params?.library_id}/categories/${route?.params?.category_id}/keywords/search_by_content/?content=${title}`;
         }
     };
   };
