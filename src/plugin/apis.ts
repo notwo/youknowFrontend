@@ -118,6 +118,19 @@ export function tagApi() {
   }
 };
 
+export function multiApi() {
+  function multiDeleteUrl(sub: String, ids: Array<String>, contentType: String, route = null) {
+    switch (contentType) {
+      case 'library':
+        return `${apiBaseUrl}/api/users/${sub}/libraries/multi_delete?ids=${ids}`;
+    }
+  }
+
+  return {
+    multiDeleteUrl
+  };
+}
+
 export function searchApi() {
   function urlBySearchType(user, title: String, contentType: String, searchType: Number, route = null) {
     switch (contentType) {

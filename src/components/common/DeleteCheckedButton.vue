@@ -2,7 +2,7 @@
 import { inject, onMounted, onUnmounted } from 'vue';
 import axios, { AxiosResponse, AxiosError } from "axios";
 import { useAuth0 } from '@auth0/auth0-vue';
-import { libraryApi } from '@/plugin/apis';
+import { multiApi } from '@/plugin/apis';
 
 const props = defineProps({
   contentType: String,
@@ -14,7 +14,7 @@ interface HTMLEvent<T extends EventTarget> extends Event {
 };
 
 const { user } = useAuth0();
-const store = inject('library');
+const store = inject(props.contentType);
 const dialogStore = inject('dialog');
 
 const deleteCheckedItem = (event): void => {
@@ -27,15 +27,15 @@ const deleteCheckedItem = (event): void => {
     return;
   }
 
-  const api = libraryApi();
+  const api = multiApi();
 
-  axios.delete(api.multiDeleteUrl(user.value.sub, ids))
+  axios.delete(api.multiDeleteUrl(user.value.sub, ids, props.contentType))
     .then((response: AxiosResponse) => {
-      dialogStore.func.value('', 'ライブラリを削除しました');
+      dialogStore.func.value('', `${props.contentName}を削除しました`);
       store.removeList(ids);
     })
     .catch((e: AxiosError<ErrorResponse>) => {
-      dialogStore.func.value('削除エラー', 'ライブラリ削除中にエラーが起きました。暫くお待ちいただいてから再度お試しください', 'error');
+      dialogStore.func.value('削除エラー', `${props.contentName}削除中にエラーが起きました。暫くお待ちいただいてから再度お試しください`, 'error');
     });
 };
 
