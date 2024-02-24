@@ -61,7 +61,6 @@ onMounted(() => {
   border-radius: .2rem;
   font-weight: 800;
   background-color: #9ac9ec;
-  white-space: nowrap;
 }
 .p-breadcrumb__contents li {
   display: flex;
