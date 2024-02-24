@@ -41,15 +41,11 @@ export function libraryApi() {
   function createUrl(sub: String) {
     return `${apiBaseUrl}/api/users/${sub}/libraries/`;
   }
-  function multiDeleteUrl(sub: String, ids: Array<String>) {
-    return `${apiBaseUrl}/api/users/${sub}/libraries/multi_delete?ids=${ids}`;
-  }
 
   return {
     listUrl,
     detailUrl,
     createUrl,
-    multiDeleteUrl
   }
 };
 
@@ -123,6 +119,10 @@ export function multiApi() {
     switch (contentType) {
       case 'library':
         return `${apiBaseUrl}/api/users/${sub}/libraries/multi_delete?ids=${ids}`;
+      case 'category':
+        return `${apiBaseUrl}/api/users/${sub}/libraries/${route?.params?.library_id}/categories/multi_delete?ids=${ids}`;
+      case 'keyword':
+        return `${apiBaseUrl}/api/users/${sub}/libraries/${route?.params?.library_id}/categories/${route?.params?.category_id}/keywords/multi_delete?ids=${ids}`;
     }
   }
 

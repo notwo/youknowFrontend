@@ -128,20 +128,18 @@ const openKeywordMoveModal = (event: HTMLEvent<HTMLButtonElement>): void => {
 </style>
 
 <template>
-  <section class="p-keyword__menuArea c-flex--end">
-    <section class="p-keyword__menuLink">
-      <span class="p-keyword__menuButton">…</span>
-      <ul class="p-keyword__menuList">
-        <li class="p-keyword__menu">
-          <KeywordEditButton :edit_state="edit_state" :id="id" :title="title" :content="content" />
-        </li>
-        <li class="p-keyword__menu">
-          <span @click="removeKeyword" class="p-delete__link" :data-id="id">削除</span>
-        </li>
-        <li class="p-keyword__menu">
-          <span @click="openKeywordMoveModal" :data-id="id" :data-title="title">カテゴリ移動</span>
-        </li>
-      </ul>
-    </section>
+  <section class="p-keyword__menuLink">
+    <span class="p-keyword__menuButton">…</span>
+    <ul class="p-keyword__menuList">
+      <li class="p-keyword__menu">
+        <KeywordEditButton :edit_state="edit_state" :id="id" :title="title" :content="content" />
+      </li>
+      <li class="p-keyword__menu">
+        <span @click="removeKeyword" class="p-delete__link" :data-id="id">削除</span>
+      </li>
+      <li class="p-keyword__menu">
+        <span @click="openKeywordMoveModal" :data-id="id" :data-title="title">カテゴリ移動</span>
+      </li>
+    </ul>
   </section>
 </template>
