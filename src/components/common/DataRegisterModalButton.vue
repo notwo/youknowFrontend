@@ -66,10 +66,20 @@ onUnmounted(() => {
 @media screen and (max-width: 768px) {
   .p-btn__register {
     right: .3rem;
-    top: 10.6rem;
+    top: 7.6rem;
   }
   .p-btn__register.scroll {
     top: 6.5rem;
+  }
+
+  .p-btn__register a {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+
+  .p-btn__register a:before {
+    top: 34%;
+    left: 46%;
   }
 }
 @media screen and (max-width: 768px) {

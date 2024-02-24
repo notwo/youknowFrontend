@@ -2,6 +2,7 @@
 import { timeFormat, titleForView, contentForView } from '@/plugin/util';
 import Tooltip from '@/components/Tooltip.vue';
 import CassetteMenu from '@/components/library/CassetteMenu.vue';
+import CassetteCheckbox from '@/components/common/CassetteCheckbox.vue';
 
 const props = defineProps({
   edit_state: Object,
@@ -32,6 +33,11 @@ const props = defineProps({
   height: 100%;
   top: 0;
   left: 0;
+}
+
+.p-library__menuArea {
+  margin: .6rem;
+  z-index: 1;
 }
 
 .p-library__body {
@@ -100,7 +106,10 @@ const props = defineProps({
 <template>
   <section class="p-library__item c-flex--wrap c-fadeIn--normal js-tooltip__content">
     <router-link :to="{ name: 'categories', params: { username: String($route.params.username), library_id: id } }"></router-link>
-    <CassetteMenu :edit_state="edit_state" :id="id" :title="title" :content="content" />
+    <section class="p-library__menuArea c-flex--spaceBetween c-align-center">
+      <CassetteCheckbox :id="id" :contentName="'ライブラリ'" :contentType="'library'" />
+      <CassetteMenu :edit_state="edit_state" :id="id" :title="title" :content="content" />
+    </section>
     <section class="p-library__body js-tooltip__title">
       <p class="p-library__title js-title" :data-title="title">{{ titleForView(title, 'library') }}</p>
       <p class="p-library__contents">{{ contentForView(content, 'library') }}</p>

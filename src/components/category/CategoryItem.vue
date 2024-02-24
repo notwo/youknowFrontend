@@ -2,6 +2,7 @@
 import { timeFormat, titleForView, contentForView } from '@/plugin/util';
 import Tooltip from '@/components/Tooltip.vue';
 import CassetteMenu from '@/components/category/CassetteMenu.vue';
+import CassetteCheckbox from '@/components/common/CassetteCheckbox.vue';
 
 const props = defineProps({
   edit_state: Object,
@@ -32,6 +33,11 @@ const props = defineProps({
   height: 100%;
   top: 0;
   left: 0;
+}
+
+.p-category__menuArea {
+  margin: .6rem;
+  z-index: 1;
 }
 
 .p-category__body {
@@ -100,7 +106,10 @@ const props = defineProps({
 <template>
   <section class="p-category__item c-flex--wrap c-fadeIn--normal js-tooltip__content">
     <router-link :to="{ name: 'keywords', params: { username: String($route.params.username), library_id: $route.params.library_id, category_id: id } }"></router-link>
-    <CassetteMenu :edit_state="edit_state" :id="id" :title="title" :content="content" />
+    <section class="p-category__menuArea c-flex--spaceBetween c-align-center">
+      <CassetteCheckbox :id="id" :contentName="'カテゴリ'" :contentType="'category'" />
+      <CassetteMenu :edit_state="edit_state" :id="id" :title="title" :content="content" />
+    </section>
     <section class="p-category__body js-tooltip__title">
       <p class="p-category__title js-title" :data-title="title">{{ titleForView(title, 'category') }}</p>
       <p class="p-category__contents">{{ contentForView(content, 'category') }}</p>

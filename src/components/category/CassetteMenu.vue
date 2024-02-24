@@ -90,17 +90,15 @@ const removeCategory = (event: HTMLEvent<HTMLButtonElement>): void => {
 </style>
 
 <template>
-  <section class="p-category__menuArea c-flex--end">
-    <section class="p-category__menuLink">
-      <span class="p-category__menuButton">…</span>
-      <ul class="p-category__menuList">
-        <li class="p-category__menu">
-          <CategoryEditButton :edit_state="edit_state" :id="id" :title="title" :content="content" />
-        </li>
-        <li class="p-category__menu">
-          <span @click="removeCategory" class="p-delete__link" :data-id="id">削除</span>
-        </li>
-      </ul>
-    </section>
+  <section class="p-category__menuLink">
+    <span class="p-category__menuButton">…</span>
+    <ul class="p-category__menuList">
+      <li class="p-category__menu">
+        <CategoryEditButton :edit_state="edit_state" :id="id" :title="title" :content="content" />
+      </li>
+      <li class="p-category__menu">
+        <span @click="removeCategory" class="p-delete__link" :data-id="id">削除</span>
+      </li>
+    </ul>
   </section>
 </template>
