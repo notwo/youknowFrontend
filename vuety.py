@@ -26,7 +26,7 @@ def create_app_vue_output():
         print('')
 
 
-def create_directory_based_file_structure(directory_name, depth = 1):
+def create_directory_based_file_structure(directory_name, depth = 0):
     dir_pattern = re.compile(r'^[a-z][a-zA-Z0-9]+')
     vue_pattern = re.compile(r'^[A-Z][a-zA-Z0-9]+\.vue')
     js_pattern = re.compile(r'^[a-z][a-zA-Z0-9]+\.js')
@@ -34,7 +34,11 @@ def create_directory_based_file_structure(directory_name, depth = 1):
     css_pattern = re.compile(r'^[a-z][a-zA-Z0-9]+\.css')
     img_pattern = re.compile(r'^[a-z][a-zA-Z0-9]+\.(png|jpg|bmp|webp)')
 
-    print(' ' * 2 * (depth - 1) + directory_name)
+    depth += 1
+    prefix_space = ' ' * 2 * depth
+    if depth == 1:
+        print(' ' * 2 * (depth - 1) + directory_name)
+
     files = glob.glob(Template("./${dirname}/*").substitute(dirname=directory_name))
     for file in files:
         file_or_directory = file[6:len(file)]
@@ -47,7 +51,6 @@ def create_directory_based_file_structure(directory_name, depth = 1):
         css_result = css_pattern.search(splitted_name)
         img_result = img_pattern.search(splitted_name)
 
-        prefix_space = ' ' * 2 * depth
         if vue_result:
             print(prefix_space + vue_result.group())
         elif js_result:
@@ -56,9 +59,10 @@ def create_directory_based_file_structure(directory_name, depth = 1):
             print(prefix_space + ts_result.group())
         elif css_result:
             print(prefix_space + css_result.group())
+        elif img_result:
+            print(prefix_space + img_result.group())
         elif dir_result:
             print(prefix_space + Template('${dirname}/').substitute(dirname=dir_result.group()))
-            depth+=1
             create_directory_based_file_structure(directory_name + '/' + dir_result.group(), depth)
         else:
             print('')
