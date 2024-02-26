@@ -8,21 +8,16 @@ basic_tag_list = [
     'header', 'section', 'article', 'main', 'nav'
 ]
 
-def create_app_vue_output():
-    with open("src/App.vue", "r") as f:
+def create_loading_vue_output(fullpath, depth):
+    prefix_space = ' ' * 2 * (depth + 1)
+    with open(fullpath, "r", errors='ignore') as f:
         line = f.read()
 
-        router_view_pattern = re.compile(r'<router-view></router-view>')
-        result = router_view_pattern.search(line)
-        if not result:
-            print('no router-view in App.vue')
-
-        print('App.vue:')
-        vue_tag_pattern = re.compile(r'<[A-Z][a-zA-Z0-9]+ />')
+        vue_tag_pattern = re.compile(r'<[A-Z][a-zA-Z0-9]+( .*)?( />)?')
         for m in vue_tag_pattern.finditer(line, re.MULTILINE):
-            app_vue_load_pattern = re.compile(r'[A-Z][a-zA-Z0-9]+')
-            result = app_vue_load_pattern.search(m.group())
-            print(Template('  ${filename}.vue').substitute(filename=result.group()))
+            vue_load_pattern = re.compile(r'<[A-Z][a-zA-Z0-9]+( .*)?( />)?')
+            result = vue_load_pattern.search(m.group())
+            print(Template('${space}${filename}').substitute(filename=result.group(), space=prefix_space))
         print('')
 
 
@@ -52,7 +47,8 @@ def create_directory_based_file_structure(directory_name, depth = 0):
         img_result = img_pattern.search(splitted_name)
 
         if vue_result:
-            print(prefix_space + vue_result.group())
+            print(prefix_space + vue_result.group() + ':')
+            create_loading_vue_output(directory_name + '/' + vue_result.group(), depth)
         elif js_result:
             print(prefix_space + js_result.group())
         elif ts_result:
@@ -69,6 +65,5 @@ def create_directory_based_file_structure(directory_name, depth = 0):
 
 
 print('---------- start ----------')
-create_app_vue_output()
 create_directory_based_file_structure('src')
 print('---------- finish ----------')
