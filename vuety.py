@@ -149,6 +149,10 @@ def create_html_by_structure():
       a {
         text-decoration: none;
       }
+      a:hover {
+        color: red;
+        font-weight: 800;
+      }
 
       summary {
         display: block;
@@ -160,7 +164,7 @@ def create_html_by_structure():
 
       table {
         table-layout: auto;
-        width: 100%;
+        border-spacing: 2rem .2rem;
       }
 
       /*********** component ***********/
@@ -252,6 +256,19 @@ def create_html_by_structure():
         border-bottom: 3px solid #85ccff;
       }
 
+      .c-list {
+        position: relative;
+      }
+      .c-list:before {
+        position: absolute;
+        content: "◯";
+        left: -1.2rem;
+      }
+
+      .c-color--black {
+        color: black;
+      }
+
       /*********** main ***********/
       .l-header {
       }
@@ -286,6 +303,9 @@ def create_html_by_structure():
         border: 1px solid #000;
         border-radius: .2rem;
       }
+      .p-vue__contents:hover {
+        background-color: #85ccff;
+      }
 
       .p-vue__contentSummary {
         flex-direction: row;
@@ -296,7 +316,7 @@ def create_html_by_structure():
       }
 
       .p-vue__loadedFiles {
-        margin: .5rem 0;
+        margin: .5rem 0 .5rem 1.3rem;
       }
 
       .p-vue__loadedFilename {
@@ -363,7 +383,7 @@ def create_html_by_structure():
             s += \
                 f'''
             <details class="p-vue__contents">
-              <summary class="c-border--bottomBlack">
+              <summary id="{vue}" class="c-border--bottomBlack">
                 <span class="p-vue__filename c-border--bottomLightblue">{vue}</span>
                 <span class="c-toggleIcon"></span>
               </summary>
@@ -382,10 +402,13 @@ def create_html_by_structure():
 
             loaded = ''
             for loaded_vue in loaded_vues:
+                source = html.escape(search_fullpath(loaded_vue) or "")
                 loaded += \
                     f'''
                 <section class="p-vue__loadedFiles c-flex c-flex--column">
-                  <span class="p-vue__loadedFilename">{html.escape(search_fullpath(loaded_vue) or "")}</span>
+                  <a href="#{source}" class="c-color--black">
+                    <span class="p-vue__loadedFilename c-list">{source}</span>
+                  </a>
                 </section>
 '''
 
