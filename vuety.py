@@ -158,6 +158,11 @@ def create_html_by_structure():
         display: none;
       }
 
+      table {
+        table-layout: auto;
+        width: 100%;
+      }
+
       /*********** component ***********/
       .c-flex {
         display: flex;
@@ -483,6 +488,7 @@ def create_html_by_structure():
                         </td>
                         <td>
 '''
+
                 if func_arg_list:
                     for arg in func_arg_list:
                         arg_string = arg[0]
