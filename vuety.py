@@ -10,31 +10,64 @@ basic_tag_list = [
     'header', 'section', 'article', 'main', 'nav', 'aside', 'details', 'summary',
 ]
 
+fullpath_list = list()
 dependency_data = {}
-
+define_props_data = {}
+functions_data = {}
+functions_arg_data = {}
 
 def debug_print(message, debug=False):
     if debug:
         print(message)
 
 
-def format_vue(vue):
-    vue_tag_pattern = re.compile(r'<[A-Z][a-zA-Z0-9]+( .*)?( />)?')
+def search_fullpath(text):
+    for t in fullpath_list:
+        if text in t:
+            return t
 
 
 def create_loading_vue_output(fullpath, depth):
     prefix_space = ' ' * 2 * (depth + 1)
     with open(fullpath, "r", errors='ignore') as f:
-        line = f.read()
+        file_string = f.read()
 
-        dependency_data[fullpath] = []
-        vue_tag_pattern = re.compile(r'<[A-Z][a-zA-Z0-9]+( .*)?( />)?')
-        for m in vue_tag_pattern.finditer(line, re.MULTILINE):
-            vue_load_pattern = re.compile(r'<[A-Z][a-zA-Z0-9]+( .*)?( />)?')
+        fullpath_list.append(fullpath)
+        dependency_data[fullpath] = list()
+        define_props_data[fullpath] = list()
+        functions_data[fullpath] = list()
+        functions_arg_data[fullpath] = ''
+
+        # loading vue file pattern
+        vue_tag_pattern = re.compile(r'<[A-Z][a-zA-Z0-9]+ ?.+/')
+        for m in vue_tag_pattern.finditer(file_string, re.MULTILINE):
+            vue_load_pattern = re.compile(r'<[A-Z][a-zA-Z0-9]+')
             result = vue_load_pattern.search(m.group())
             loaded_vue = Template('${space}${filename}').substitute(filename=result.group(), space=prefix_space)
-            debug_print(loaded_vue)
-            dependency_data[fullpath].append(loaded_vue)
+            s = loaded_vue.replace(' ', '')
+            dependency_data[fullpath].append(s[1:])
+
+        # arguments pattern
+        arguments_pattern = re.compile(r'defineProps\(\{( |\r|\n|\r\n)*([a-zA-Z_]+: [a-zA-Z_]+,?( |\r|\n|\r\n)*)+')
+        arguments_result = arguments_pattern.search(file_string)
+        if arguments_result:
+            arg_detail_pattern = re.compile(r'[a-zA-Z_]+: [a-zA-Z_]+')
+            for m in arg_detail_pattern.finditer(arguments_result.group(), re.MULTILINE):
+                define_props_data[fullpath].append(m.group())
+
+        # functions pattern
+        functions_pattern = re.compile(r'[a-zA-Z_]+ *= *\(.*\): *([a-zA-Z_]| )*=>( |\r|\n|\r\n)*{')
+        func_detail_pattern = re.compile(r'[a-zA-Z_]+ *')
+        func_arg_pattern = re.compile(r'\(.*\)')
+        for m in functions_pattern.finditer(file_string, re.MULTILINE):
+            functions_result = func_detail_pattern.search(m.group())
+            if functions_result:
+                functions_data[fullpath].append(functions_result.group())
+
+            functions_arg_result = func_arg_pattern.search(m.group())
+            if functions_arg_result:
+                functions_arg_data[fullpath] = functions_arg_result.group()
+
         debug_print('')
 
 
@@ -198,6 +231,10 @@ def create_html_by_structure():
         margin: .6rem .5rem;
       }
 
+      .c-text--alignCenter {
+        text-align: center;
+      }
+
       .c-border--bottomGray {
         border-bottom: 2px solid #CCC;
       }
@@ -242,7 +279,7 @@ def create_html_by_structure():
         margin: 2rem;
         padding: .6rem 1rem;
         border: 1px solid #000;
-        border-radius: .3rem;
+        border-radius: .2rem;
       }
 
       .p-vue__contentSummary {
@@ -313,8 +350,11 @@ def create_html_by_structure():
             </summary>
             <!-- Vueファイルの読み込み内容等の詳細情報 -->
 '''
+
         for vue, loaded_vues in dependency_data.items():
-            debug_print(loaded_vues)
+            debug_print(loaded_vues, debug=False)
+
+            # loading vues
             s += \
                 f'''
             <details class="p-vue__contents">
@@ -326,31 +366,166 @@ def create_html_by_structure():
               <section class="p-vue__detailBox">
                 <h3 class="c-border--bottomGray">Loading Vue Files</h3>
 '''
+
+            if not loaded_vues:
+                s += \
+                    '''
+                <section class="p-vue__loadedFiles c-flex c-flex--column">
+                  <span class="p-vue__loadedFilename">No File...</span>
+                </section>
+'''
+
             loaded = ''
             for loaded_vue in loaded_vues:
                 loaded += \
                     f'''
                 <section class="p-vue__loadedFiles c-flex c-flex--column">
-                  <span class="p-vue__loadedFilename">{html.escape(loaded_vue)}</span>
+                  <span class="p-vue__loadedFilename">{html.escape(search_fullpath(loaded_vue) or "")}</span>
                 </section>
 '''
+
+            # arguments
             s += loaded
             s += \
                 '''
                 <h3 class="c-border--bottomGray">Arguments</h3>
-                <section class="p-vue__Arguments c-flex c-flex--column">
-                  <span class="p-vue__Argument">引数1</span>
-                  <span class="p-vue__Argument">引数2</span>
+                <section class="p-vue__Arguments">
+'''
+
+            if define_props_data[vue]:
+                s += \
+                    '''
+                  <table class="c-text--alignCenter">
+                    <thead>
+                      <tr>
+                        <th>Variables</th>
+                        <th>Var Type</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+'''
+
+            else:
+                s += \
+                    '''
+                  <span>No Arguments...</span>
+'''
+
+            argument = ''
+            for define_props in define_props_data[vue]:
+                split_prop = re.split(r': *', define_props)
+                argument += \
+                    f'''
+                      <tr>
+                        <td>
+                          <span>{split_prop[0]}</span>
+                        </td>
+                        <td>
+                          <span>{split_prop[1]}</span>
+                        </td>
+                      </tr>
+'''
+
+            s += argument
+            if define_props_data[vue]:
+                s += \
+                    '''
+                    </tbody>
+                  </table>
+'''
+
+            # functions
+            s += \
+                '''
                 </section>
 
                 <h3 class="c-border--bottomGray">Functions</h3>
-                <section class="p-vue__Functions c-flex c-flex--column">
-                  <span class="p-vue__Function">関数1</span>
-                  <span class="p-vue__Function">関数2</span>
+                <section class="p-vue__Functions">
+'''
+
+            if functions_data[vue]:
+                s += \
+                    '''
+                  <table class="c-text--alignCenter">
+                    <thead>
+                      <tr>
+                        <th>Name</th>
+                        <th>func arguments</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+'''
+
+            else:
+                s += \
+                    '''
+                  <span>No Functions...</span>
+'''
+
+            function = ''
+            func_arg_list = list()
+            for function_data in functions_data[vue]:
+                split_function = function_data.split(r' *=')
+
+                function_arg_string = functions_arg_data[vue].replace('(', '').replace(')', '')
+                if function_arg_string.find(',') != -1:
+                    multi_args = re.split(r', *', function_arg_string)
+                    for arg in multi_args:
+                        func_arg_list.append(re.split(r': *', arg))
+                elif function_arg_string.find(':') != -1:
+                    func_arg_list.append(re.split(r': *', function_arg_string))
+
+                function += \
+                    f'''
+                      <tr>
+                        <td>
+                          <span>{split_function[0]}</span>
+                        </td>
+                        <td>
+'''
+                if func_arg_list:
+                    for arg in func_arg_list:
+                        arg_string = arg[0]
+                        arg_type = arg[1]
+                        function += \
+                            f'''
+                          <span>{arg_string} ({arg_type})</span>
+                          <br>
+'''
+
+                elif function_arg_string != '':
+                    function += \
+                        f'''
+                          <span>{function_arg_string}</span>
+'''
+
+                else:
+                    function += \
+                        '''
+                          <span>No Func Arguments</span>
+'''
+
+                function += \
+                    '''
+                        </td>
+                      </tr>
+'''
+
+            s += function
+            if functions_data[vue]:
+                s += \
+                    '''
+                    </tbody>
+                  </table>
+'''
+
+            s += \
+                '''
                 </section>
               </section>
             </details>
 '''
+
         s += \
             '''
           </details>
@@ -363,12 +538,13 @@ def create_html_by_structure():
   </body>
 </html>
 '''
+
         s = s.strip()
         f.write(s)
 
 
 print('---------- start ----------')
 create_directory_based_file_structure('src')
-# print(dependency_data)
+debug_print(functions_data, debug=False)
 create_html_by_structure()
 print('---------- finish ----------')
