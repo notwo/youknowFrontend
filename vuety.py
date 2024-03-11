@@ -3,13 +3,6 @@ import re
 import glob
 from string import Template
 
-basic_tag_list = [
-    'html', 'body', 'script', 'noscript', 'style', 'link', 'template',
-    'a', 'b', 'p', 'div', 'span', 'ul', 'li', 'ol', 'table', 'tr', 'th', 'td', 'thead', 'tbody', 'img', 'form', 'input',
-    'button', 'label',
-    'header', 'section', 'article', 'main', 'nav', 'aside', 'details', 'summary',
-]
-
 structure_set = {}
 fullpath_list = list()
 dependency_data = {}
