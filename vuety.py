@@ -10,11 +10,13 @@ basic_tag_list = [
     'header', 'section', 'article', 'main', 'nav', 'aside', 'details', 'summary',
 ]
 
+structure_set = {}
 fullpath_list = list()
 dependency_data = {}
 define_props_data = {}
 functions_data = {}
 functions_arg_data = {}
+
 
 def debug_print(message, debug=False):
     if debug:
@@ -68,7 +70,7 @@ def create_loading_vue_output(fullpath, depth):
             if functions_arg_result:
                 functions_arg_data[fullpath] = functions_arg_result.group()
 
-        debug_print('')
+        debug_print('', debug=False)
 
 
 def create_directory_based_file_structure(directory_name, depth=0):
@@ -82,7 +84,9 @@ def create_directory_based_file_structure(directory_name, depth=0):
     depth += 1
     prefix_space = ' ' * 2 * depth
     if depth == 1:
-        debug_print(' ' * 2 * (depth - 1) + directory_name)
+        debug_print(' ' * 2 * (depth - 1) + directory_name, debug=False)
+
+    structure_set[directory_name] = list()
 
     files = glob.glob(Template("./${dirname}/*").substitute(dirname=directory_name))
     for file in files:
@@ -97,22 +101,27 @@ def create_directory_based_file_structure(directory_name, depth=0):
         img_result = img_pattern.search(split_name)
 
         if vue_result:
-            debug_print(prefix_space + vue_result.group() + ':')
+            structure_set[directory_name].append(prefix_space + vue_result.group())
+            debug_print(prefix_space + vue_result.group() + ':', debug=False)
             create_loading_vue_output(directory_name + '/' + vue_result.group(), depth)
         elif js_result:
-            debug_print(prefix_space + js_result.group())
-            # dependency_data[directory_name + '/' + vue_result.group()] = js_result.group()
+            structure_set[directory_name].append(prefix_space + js_result.group())
+            debug_print(prefix_space + js_result.group(), debug=False)
         elif ts_result:
-            debug_print(prefix_space + ts_result.group())
+            structure_set[directory_name].append(prefix_space + ts_result.group())
+            debug_print(prefix_space + ts_result.group(), debug=False)
         elif css_result:
-            debug_print(prefix_space + css_result.group())
+            structure_set[directory_name].append(prefix_space + css_result.group())
+            debug_print(prefix_space + css_result.group(), debug=False)
         elif img_result:
-            debug_print(prefix_space + img_result.group())
+            structure_set[directory_name].append(prefix_space + img_result.group())
+            debug_print(prefix_space + img_result.group(), debug=False)
         elif dir_result:
-            debug_print(prefix_space + Template('${dirname}/').substitute(dirname=dir_result.group()))
+            structure_set[directory_name].append(prefix_space + dir_result.group() + "/")
+            debug_print(prefix_space + Template('${dirname}/').substitute(dirname=dir_result.group()), debug=False)
             create_directory_based_file_structure(directory_name + '/' + dir_result.group(), depth)
         else:
-            debug_print('')
+            debug_print('', debug=False)
 
 
 def create_html_by_structure():
@@ -192,14 +201,14 @@ def create_html_by_structure():
         font-size: 2rem;
         transform: rotate(135deg);
         transition: .1s;
-        margin: 0 .5rem;
+        margin: .4rem .5rem;
       }
       details[open].p-vue__structure > summary > .c-toggleIcon:before {
         position: absolute;
         content: "";
         transform: rotate(-135deg) scaleY(-1);
         transition: .1s;
-        margin: .35rem .5rem;
+        margin: .75rem .5rem;
       }
       details.p-vue__dependency > summary > .c-toggleIcon:before {
         position: absolute;
@@ -244,6 +253,10 @@ def create_html_by_structure():
         text-align: center;
       }
 
+      .c-text--white {
+        color: white;
+      }
+
       .c-border--bottomGray {
         border-bottom: 2px solid #CCC;
       }
@@ -269,6 +282,10 @@ def create_html_by_structure():
         color: black;
       }
 
+      .c-font--weight800 {
+        font-weight: 800;
+      }
+
       /*********** main ***********/
       .l-header {
       }
@@ -289,12 +306,15 @@ def create_html_by_structure():
       .p-vue__structure {
       }
 
+      .p-vue__structureDetail {
+        background-color: black;
+      }
+
       .p-vue__dependency {
       }
 
       .p-vue__title {
         font-size: 1.5rem;
-        font-weight: 800;
       }
 
       .p-vue__contents {
@@ -355,10 +375,30 @@ def create_html_by_structure():
         <section class="p-vue__box">
           <details class="p-vue__structure">
             <summary>
-              <span>ファイル構造</span>
+              <span class="p-vue__title c-font--weight800">ファイル構造</span>
               <span class="c-toggleIcon"></span>
             </summary>
-            <!-- Vueファイルの読み込み内容等の詳細情報 -->
+            <!-- Vueファイル構造 -->
+            <section class="p-vue__structureDetail">
+'''
+
+        for dir in structure_set.keys():
+            slash_count = dir.count('/')
+            dir_parts = dir.split('/')
+            s += f'''
+              <section class="p-vue__structureDir c-text--white">{slash_count * '　' * 2 + dir_parts[len(dir_parts) - 1]}/</section>
+'''
+
+            for file in structure_set[dir]:
+                if file[-1] != "/":
+                    s += \
+                        f'''
+                <section class="p-vue__structureFile c-text--white">{file.replace(' ', '　')}</section>
+'''
+
+        s += \
+            '''
+            </section>
           </details>
         </section>
 
@@ -370,7 +410,7 @@ def create_html_by_structure():
         <section class="p-vue__box">
           <details class="p-vue__dependency c-flex c-flex--column">
             <summary>
-              <span class="p-vue__title">依存関係</span>
+              <span class="p-vue__title c-font--weight800">依存関係</span>
               <span class="c-toggleIcon"></span>
             </summary>
             <!-- Vueファイルの読み込み内容等の詳細情報 -->
@@ -574,6 +614,6 @@ def create_html_by_structure():
 
 print('---------- start ----------')
 create_directory_based_file_structure('src')
-debug_print(functions_data, debug=False)
+debug_print(structure_set, debug=True)
 create_html_by_structure()
 print('---------- finish ----------')
