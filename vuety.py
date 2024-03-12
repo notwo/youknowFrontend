@@ -2,6 +2,7 @@ import html
 import re
 import glob
 from string import Template
+from argparse import ArgumentParser
 
 structure_set = {}
 fullpath_list = list()
@@ -9,6 +10,15 @@ dependency_data = {}
 define_props_data = {}
 functions_data = {}
 functions_arg_data = {}
+
+
+def options():
+    argparse = ArgumentParser()
+    argparse.add_argument('-f', '--filename',
+                          type=str,
+                          default='./vue_structure.html',
+                          help='enter dict filename(.html)')
+    return argparse.parse_args()
 
 
 def debug_print(message, debug=False):
@@ -118,7 +128,8 @@ def create_directory_based_file_structure(directory_name, depth=0):
 
 
 def create_html_by_structure():
-    with open('./vue_structure.html', mode='w') as f:
+    args = options()
+    with open(args.filename, mode='w') as f:
         s = \
             '''
 <html>
@@ -607,6 +618,6 @@ def create_html_by_structure():
 
 print('---------- start ----------')
 create_directory_based_file_structure('src')
-debug_print(structure_set, debug=True)
+debug_print(structure_set, debug=False)
 create_html_by_structure()
 print('---------- finish ----------')
