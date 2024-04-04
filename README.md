@@ -23,8 +23,13 @@ npm run dev
 <details>
 <summary>ここをクリック</summary>
 
+## 認証
+外部サービスのAuth0を利用している
+
+コールバック関数の登録方法は[こちら](doc/Authentication.md)
+
 ## デプロイ
-[render.com](render.com)へデプロイする(GitHub連携済)
+[render.com](https://render.com)へデプロイする(GitHub連携済)
 
 mainブランチにマージされた際に自動でデプロイされる
 
